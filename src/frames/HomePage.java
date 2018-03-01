@@ -8,26 +8,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class HomePage extends SuperPage {
 
-    private JFrame frame;
-
     public HomePage() {
-	frame = new JFrame("ES2-2018-EIC2-01");
-	JPanel mainPanel = new JPanel();
-	mainPanel.setLayout(new BorderLayout());
-	mainPanel.setBackground(Color.WHITE);
+	super("ES2-2018-EIC2-01");
 
 	// add cover to main_panel
 	JLabel cover = new JLabel();
 	cover.setIcon(new ImageIcon("./src/frames/images/cover.jpg"));
-	mainPanel.add(cover);
-	frame.add(mainPanel, BorderLayout.CENTER);
+	frame.add(cover, BorderLayout.CENTER);
 
 	// create panel to add the buttons
 	JPanel buttonsPanel = new JPanel();
@@ -52,12 +45,6 @@ public class HomePage extends SuperPage {
 	});
 	buttonsPanel.add(cancelButton);
 	frame.add(buttonsPanel, BorderLayout.SOUTH);
-    }
-
-    @Override
-    public void launch() {
-	frame.pack();
-	frame.setVisible(true);
     }
 
     public static void main(String[] args) {
