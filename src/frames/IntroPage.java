@@ -38,7 +38,8 @@ public class IntroPage extends SuperPage {
 	submitButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		// TODO go to RegisterUserPage
+		frame.setVisible(false);
+		new RegisterUserPage(frame).launch();
 	    }
 	});
 	centerPanel.add(submitButton);
@@ -56,6 +57,10 @@ public class IntroPage extends SuperPage {
 
 	frame.add(centerPanel, BorderLayout.CENTER);
 
+	addButtons();
+    }
+
+    private void addButtons() {
 	JPanel buttonsPanel = new JPanel();
 	buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 	buttonsPanel.setBackground(Color.WHITE);
