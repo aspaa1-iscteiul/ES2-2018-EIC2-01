@@ -9,10 +9,11 @@ public abstract class SuperPage {
 
     public static final int WIDTH = 0, HEIGHT = 0;
 
-    protected JFrame frame;
+    protected JFrame frame, backPage;
 
-    public SuperPage(String frameTitle) {
+    public SuperPage(JFrame backPage, String frameTitle) {
 	frame = new JFrame(frameTitle);
+	this.backPage = backPage;
     }
 
     public void launch() {

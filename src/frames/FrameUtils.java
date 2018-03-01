@@ -5,6 +5,8 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class FrameUtils {
 
@@ -23,6 +25,11 @@ public class FrameUtils {
 	// BorderFactory.createLineBorder(Color.BLACK,3),
 	// BorderFactory.createEmptyBorder(0, 10, 0, 10))));
 	return button;
+    }
+    
+    public static void addEmptyLabels(JPanel panel, int times) {
+	for(int i = 0; i < times; i++)
+	    panel.add(new JLabel(" "));
     }
 
 }

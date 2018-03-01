@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 public class HomePage extends SuperPage {
 
     public HomePage() {
-	super("ES2-2018-EIC2-01");
+	super(null, "ES2-2018-EIC2-01");
 
 	// add cover to main_panel
 	JLabel cover = new JLabel();
@@ -31,16 +31,19 @@ public class HomePage extends SuperPage {
 	startButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
-		// TODO go to IntroPage
+		frame.setVisible(false);
+		new IntroPage(frame).launch();
 	    }
 	});
 	buttonsPanel.add(startButton);
+	
 	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+	
 	JButton cancelButton = FrameUtils.cuteButton("Cancel");
 	cancelButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		frame.dispose();
+		System.exit(0);
 	    }
 	});
 	buttonsPanel.add(cancelButton);
