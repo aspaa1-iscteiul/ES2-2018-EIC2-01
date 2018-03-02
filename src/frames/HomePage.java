@@ -1,44 +1,45 @@
 package frames;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 public class HomePage extends SuperPage {
 
-    public HomePage() {
-	super(null, "ES2-2018-EIC2-01");
+    /**
+     * Default
+     */
+    private static final long serialVersionUID = 1L;
 
-	// add cover to main_panel
+    public HomePage(UserInterface userInterface) {
+	super(userInterface);
+	userInterface.getFrame().setTitle("ES2-2018-EIC2-01");
+    }
+
+    @Override
+    public void createMainPanel() {
 	JLabel cover = new JLabel();
 	cover.setIcon(new ImageIcon("./src/frames/images/cover.jpg"));
-	frame.add(cover, BorderLayout.CENTER);
+	mainPanel.add(cover);
+    }
 
-	// create panel to add the buttons
-	JPanel buttonsPanel = new JPanel();
-	buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-	buttonsPanel.setBackground(Color.WHITE);
-	buttonsPanel.setBorder(new EmptyBorder(0, 0, 5, 5));
+    @Override
+    public void createButtonsPanel() {
 	JButton startButton = FrameUtils.cuteButton("Start");
 	startButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
-		frame.setVisible(false);
-		new IntroPage(frame).launch();
+		userInterface.nextPage();
 	    }
 	});
 	buttonsPanel.add(startButton);
-	
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-	
+
+	// to add space between the two buttons
+	buttonsPanel.add(new JLabel());
+
 	JButton cancelButton = FrameUtils.cuteButton("Cancel");
 	cancelButton.addActionListener(new ActionListener() {
 	    @Override
@@ -47,12 +48,6 @@ public class HomePage extends SuperPage {
 	    }
 	});
 	buttonsPanel.add(cancelButton);
-	frame.add(buttonsPanel, BorderLayout.SOUTH);
-    }
-
-    public static void main(String[] args) {
-	HomePage homePage = new HomePage();
-	homePage.launch();
     }
 
 }
