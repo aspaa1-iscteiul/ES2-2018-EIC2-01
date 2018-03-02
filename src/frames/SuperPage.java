@@ -9,38 +9,42 @@ import javax.swing.border.EmptyBorder;
 
 public abstract class SuperPage extends JPanel {
 
-    /**
-     * Default
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Default
+	 */
+	private static final long serialVersionUID = 1L;
 
-    protected JPanel mainPanel, buttonsPanel;
-    protected UserInterface userInterface;
+	protected JPanel mainPanel, buttonsPanel;
+	protected UserInterface userInterface;
 
-    public SuperPage(UserInterface userInterface) {
-	super();
-	this.setBackground(Color.WHITE);
-	this.setLayout(new BorderLayout());
+	public SuperPage(UserInterface userInterface) {
+		super();
+		this.setBackground(Color.WHITE);
+		this.setLayout(new BorderLayout());
 
-	this.userInterface = userInterface;
+		this.userInterface = userInterface;
 
-	mainPanel = new JPanel();
-	mainPanel.setBackground(Color.WHITE);
-	this.add(mainPanel, BorderLayout.CENTER);
+		mainPanel = new JPanel();
+		mainPanel.setBackground(Color.WHITE);
+		this.add(mainPanel, BorderLayout.CENTER);
 
-	buttonsPanel = new JPanel();
-	buttonsPanel.setBackground(Color.WHITE);
-	buttonsPanel.setBorder(new EmptyBorder(0, 0, 5, 5));
-	buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-	this.add(buttonsPanel, BorderLayout.SOUTH);
+		buttonsPanel = new JPanel();
+		buttonsPanel.setBackground(Color.WHITE);
+		buttonsPanel.setBorder(new EmptyBorder(0, 0, 5, 5));
+		buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		this.add(buttonsPanel, BorderLayout.SOUTH);
+		
+		initialize();
+		createMainPanel();
+		createButtonsPanel();
+	}
 	
-	createMainPanel();
-	createButtonsPanel();
-	this.userInterface.getFrame().add(this);
-    }
+	public abstract void initialize();
 
-    public abstract void createMainPanel();
+	public abstract void createMainPanel();
 
-    public abstract void createButtonsPanel();
+	public abstract void createButtonsPanel();
+
+	public abstract void onTop();
 
 }
