@@ -1,26 +1,50 @@
 package frames;
 
-import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
-public abstract class SuperPage {
+public abstract class SuperPage extends JPanel {
 
-    public static final int WIDTH = 0, HEIGHT = 0;
+	/**
+	 * Default
+	 */
+	private static final long serialVersionUID = 1L;
 
-    protected JFrame frame, backPage;
+	protected JPanel mainPanel, buttonsPanel;
+	protected UserInterface userInterface;
 
-    public SuperPage(JFrame backPage, String frameTitle) {
-	frame = new JFrame(frameTitle);
-	this.backPage = backPage;
-    }
+	public SuperPage(UserInterface userInterface) {
+		super();
+		this.setBackground(Color.WHITE);
+		this.setLayout(new BorderLayout());
 
-    public void launch() {
-	frame.pack();
-	frame.setLocation(new Point((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2,
-		(Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2));
-	frame.setVisible(true);
-    }
+		this.userInterface = userInterface;
+
+		mainPanel = new JPanel();
+		mainPanel.setBackground(Color.WHITE);
+		this.add(mainPanel, BorderLayout.CENTER);
+
+		buttonsPanel = new JPanel();
+		buttonsPanel.setBackground(Color.WHITE);
+		buttonsPanel.setBorder(new EmptyBorder(0, 0, 5, 5));
+		buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		this.add(buttonsPanel, BorderLayout.SOUTH);
+		
+		initialize();
+		createMainPanel();
+		createButtonsPanel();
+	}
+	
+	public abstract void initialize();
+
+	public abstract void createMainPanel();
+
+	public abstract void createButtonsPanel();
+
+	public abstract void onTop();
 
 }
