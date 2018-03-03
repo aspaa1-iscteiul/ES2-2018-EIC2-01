@@ -103,7 +103,8 @@ public class ProblemIdPage extends SuperPage {
 		problemDescription.setBackground(Color.WHITE);
 		problemDescription.setLineWrap(true);
 		problemDescription.setWrapStyleWord(true);
-		problemDescription.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+		problemDescription
+				.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 
 		JScrollPane scrollPane = new JScrollPane(problemDescription);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

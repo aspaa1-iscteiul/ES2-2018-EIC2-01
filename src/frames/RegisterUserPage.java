@@ -57,7 +57,7 @@ public class RegisterUserPage extends SuperPage {
 		emailPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		emailPanel.setBackground(Color.WHITE);
 		emailPanel.add(new JLabel("E-mail address:"));
-		email.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+		email.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 		email.addKeyListener(new KeyListener() {
 
 			@Override
@@ -83,14 +83,19 @@ public class RegisterUserPage extends SuperPage {
 		emailPanel.add(email);
 		mainPanel.add(emailPanel);
 
+		// to add space between the email text and info
 		FrameUtils.addEmptyLabels(mainPanel, 2);
 
 		JPanel infoPanel = new JPanel();
 		infoPanel.setLayout(new BorderLayout());
 		infoPanel.setBackground(Color.WHITE);
+		JPanel iconPanel = new JPanel();
+		iconPanel.setLayout(new BorderLayout());
+		iconPanel.setBackground(Color.WHITE);
 		JLabel infoIcon = new JLabel();
 		infoIcon.setIcon(new ImageIcon("./src/frames/images/info_icon.png"));
-		infoPanel.add(infoIcon, BorderLayout.WEST);
+		iconPanel.add(infoIcon, BorderLayout.NORTH);
+		infoPanel.add(iconPanel, BorderLayout.WEST);
 		JLabel infoLabel = new JLabel("<html>The e-mail provided will only be used to send help information "
 				+ "and/or<br>indications about the progress of the optimization process requested<br>"
 				+ "through the plantform (e.g., occurrence of errors). This data will not be<br>disclosed"
@@ -100,6 +105,7 @@ public class RegisterUserPage extends SuperPage {
 		infoPanel.add(infoLabel, BorderLayout.CENTER);
 		mainPanel.add(infoPanel);
 
+		// to add space between the info and check box
 		FrameUtils.addEmptyLabels(mainPanel, 4);
 
 		checkBox.setBackground(Color.WHITE);
