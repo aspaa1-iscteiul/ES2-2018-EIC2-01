@@ -3,13 +3,17 @@ package frames;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -17,6 +21,7 @@ import javax.swing.border.Border;
 public class DecisionVariablesObject {
 
 	private DecisionVariablesPage page;
+	private JPanel variablesPanel;
 	private JTextField name;
 	private final static String[] dataTypes = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean", "Char" };
 	private JComboBox<String> dataType;
@@ -31,6 +36,7 @@ public class DecisionVariablesObject {
 
 	public DecisionVariablesObject(DecisionVariablesPage page) {
 		this.setPage(page);
+		this.variablesPanel = new JPanel();
 		this.name = new JTextField(5);
 		this.dataType = FrameUtils.cuteComboBox(dataTypes);
 		this.lowerBound = new JTextField(5);
@@ -38,11 +44,34 @@ public class DecisionVariablesObject {
 		this.domain1 = FrameUtils.cuteComboBox(numberSets);
 		this.domain2 = FrameUtils.cuteComboBox(operations);
 		this.domain3 = new JTextField(5);
+		this.domain3.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if(!Pattern.matches("[,0-9]+", domain3.getText()) || domain3.getText().isEmpty()) {
+					domain3.setText(domain3.getText().substring(0, domain3.getText().length() - 1));
+					JOptionPane.showMessageDialog(variablesPanel, "Only numbers or ','", "InvalidInput", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 		this.deleteIcon = new JLabel();
 		this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 
 		DecisionVariablesObject tmp = this;
-		
+
 		this.deleteIcon.addMouseListener(new MouseListener() {
 
 			@Override
@@ -78,7 +107,6 @@ public class DecisionVariablesObject {
 	}
 
 	public JPanel transformIntoAPanel() {
-		JPanel variablesPanel = new JPanel();
 		variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		variablesPanel.setBackground(Color.WHITE);
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
