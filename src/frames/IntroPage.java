@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
@@ -55,7 +56,11 @@ public class IntroPage extends SuperPage {
 		importButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO open JFileChooser and then go to RegisterUserPage
+				JFileChooser chooser = new JFileChooser();
+				chooser.setDialogTitle("Select a problem configuration file");
+				if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(null)) {
+					userInterface.goToNextPage();
+				}
 			}
 		});
 		mainPanel.add(importButton);

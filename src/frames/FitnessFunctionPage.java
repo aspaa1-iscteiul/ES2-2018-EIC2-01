@@ -4,12 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,17 +19,15 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-public class DecisionVariablesPage extends SuperPage {
+public class FitnessFunctionPage extends SuperPage {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int standardNumberOfVariables = 3;
-	private ArrayList<DecisionVariablesObject> decisionVariableList;
-	private JPanel subSubMainPanel;
+	private static final int standardNumberOfVariables = 1;
 
-	public DecisionVariablesPage(UserInterface userInterface) {
+	public FitnessFunctionPage(UserInterface userInterface) {
 		super(userInterface);
 		// TODO Auto-generated constructor stub
 	}
@@ -40,7 +37,6 @@ public class DecisionVariablesPage extends SuperPage {
 	@Override
 	public void initialize() {
 		nextButton = FrameUtils.cuteButton("Next");	
-		decisionVariableList = new ArrayList<DecisionVariablesObject>();
 	}
 
 	@Override
@@ -52,9 +48,31 @@ public class DecisionVariablesPage extends SuperPage {
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		titlePanel.setBackground(Color.WHITE);
-		titlePanel.add(new JLabel("Decision Variables"));
+		titlePanel.add(new JLabel("Fitness Function"));
 		mainPanel.add(titlePanel);
 
+		FrameUtils.addEmptyLabels(mainPanel, 1);
+		
+		JPanel infoPanel = new JPanel();
+		infoPanel.setLayout(new BorderLayout());
+		infoPanel.setBackground(Color.WHITE);
+		JPanel iconPanel = new JPanel();
+		iconPanel.setLayout(new BorderLayout());
+		iconPanel.setBackground(Color.WHITE);
+		JLabel infoIcon = new JLabel();
+		infoIcon.setIcon(new ImageIcon("./src/frames/images/info_icon.png"));
+		iconPanel.add(infoIcon, BorderLayout.NORTH);
+		infoPanel.add(iconPanel, BorderLayout.WEST);
+		JLabel infoLabel = new JLabel("<html>Be advised that the plataform assumes that in the optimization process, "
+				+ "<br> optimization means minimizing the optimization criteria. Therefore, the <br>"
+				+ "implementation(s) of the objective function(s) provided should be consistent<br>"
+				+ "with this assumption.</html>");
+		infoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
+		infoPanel.add(infoLabel, BorderLayout.CENTER);
+		
+		mainPanel.add(infoPanel);
+		
 		FrameUtils.addEmptyLabels(mainPanel, 1);
 
 		JPanel subMainPanel = new JPanel();
@@ -63,30 +81,24 @@ public class DecisionVariablesPage extends SuperPage {
 		subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 				BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-		JPanel infoPanel = new JPanel();
-		infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-		infoPanel.setBackground(Color.WHITE);
-		JLabel name = new JLabel("Name");
-		name.setBorder(new EmptyBorder(0, 0, 0, 45)); //to add space between the labels
-		infoPanel.add(name);
-		JLabel dataType = new JLabel("Data Type");
-		dataType.setBorder(new EmptyBorder(0, 0, 0, 15));
-		infoPanel.add(dataType);
-		infoPanel.add(new JLabel("Lower Bound  "));
-		infoPanel.add(new JLabel("Upper Bound  "));
-		infoPanel.add(new JLabel("Domain"));
+		JPanel infoFieldPanel = new JPanel();
+		infoFieldPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+		infoFieldPanel.setBackground(Color.WHITE);
+		JLabel name = new JLabel("Fitness Function");
+		name.setBorder(new EmptyBorder(0, 0, 0, 43)); //to add space between the labels
+		infoFieldPanel.add(name);
+		infoFieldPanel.add(new JLabel("Optimization Criteria"));
 
-		subMainPanel.add(infoPanel);
+		subMainPanel.add(infoFieldPanel);
 
 
-		subSubMainPanel = new JPanel();
+		JPanel subSubMainPanel = new JPanel();
 		subSubMainPanel.setBackground(Color.WHITE);
 		subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
 		for(int i = 0; i != standardNumberOfVariables; i++) {
-			DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this);
-			decisionVariableList.add(decisionVariable);
-			subSubMainPanel.add(decisionVariable.transformIntoAPanel());
+			FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(this);
+			subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
 		}
 
 		subMainPanel.add(subSubMainPanel);
@@ -97,17 +109,18 @@ public class DecisionVariablesPage extends SuperPage {
 		JLabel addIcon = new JLabel();
 		addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
 
-		DecisionVariablesPage tmp = this;
-
+		FitnessFunctionPage tmp = this;
+		
 		addIcon.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EventQueue.invokeLater(new Runnable(){
-					public void run(){
-						DecisionVariablesObject decisionVariable = new DecisionVariablesObject(tmp);
-						decisionVariableList.add(decisionVariable);
-						subSubMainPanel.add(decisionVariable.transformIntoAPanel());
+				EventQueue.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(tmp);
+						subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
 						validate(); //to update window
 						repaint(); //to update window
 					}
@@ -132,12 +145,13 @@ public class DecisionVariablesPage extends SuperPage {
 
 		});
 		addOptionPanel.add(addIcon, BorderLayout.WEST);
-		addOptionPanel.add(new JLabel("Add new variable"));
+		addOptionPanel.add(new JLabel("Add new fitness function"));
 
 		subMainPanel.add(addOptionPanel);
 
 		JScrollPane scrollPane = new JScrollPane(subMainPanel);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		mainPanel.add(scrollPane);
 
@@ -182,12 +196,11 @@ public class DecisionVariablesPage extends SuperPage {
 	public void onTop() {
 		userInterface.getFrame().setTitle("Problem Solving App");
 	}
-
-	public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
-		decisionVariableList.remove(dvo);
-		subSubMainPanel.remove(dvo.transformIntoAPanel());
-		validate(); //to update window
-		repaint(); //to update window
-		userInterface.getFrame().pack();	
+	
+	public void refreshPage() {
+		userInterface.getFrame().validate();
+		userInterface.getFrame().repaint();
 	}
+
+
 }

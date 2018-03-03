@@ -56,6 +56,7 @@ public class UserInterface {
 		pages.add(new ProblemIdPage(this));
 		pages.add(new DecisionVariablesPage(this));
 		pages.add(new OptimizationCriteriaPage(this));
+		pages.add(new FitnessFunctionPage(this));
 	}
 
 	public JFrame getFrame() {
@@ -80,7 +81,6 @@ public class UserInterface {
 
 	private void launch() {
 		frame.add(pages.get(actualPageIndex));
-
 		frame.pack(); // XXX change to frame.setSize(width, height);
 		frame.setLocation(new Point((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2,
 				(Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2));
