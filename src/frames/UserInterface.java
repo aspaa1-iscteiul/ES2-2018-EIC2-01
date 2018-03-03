@@ -50,6 +50,7 @@ public class UserInterface {
 		});
 
 		pages = new ArrayList<>();
+		pages.add(new DecisionVariablesPage(this));
 		pages.add(new HomePage(this));
 		pages.add(new IntroPage(this));
 		pages.add(new RegisterUserPage(this));

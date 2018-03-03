@@ -33,8 +33,6 @@ public class ProblemIdPage extends SuperPage{
 	private JButton nextButton;
 	private boolean validName;
 
-	//Validar se começa com uma letra grande e se só tem letras e números
-
 	public ProblemIdPage(UserInterface userInterface) {
 		super(userInterface);
 	}
@@ -153,7 +151,7 @@ public class ProblemIdPage extends SuperPage{
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO go to ProblemIDPage
+				userInterface.goToNextPage();
 			}
 		});
 		buttonsPanel.add(nextButton);

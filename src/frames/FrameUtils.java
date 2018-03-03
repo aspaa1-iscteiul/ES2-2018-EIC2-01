@@ -5,8 +5,10 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 public class FrameUtils {
 
@@ -18,6 +20,15 @@ public class FrameUtils {
 				BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 		button.setFocusPainted(false); // disables highlight
 		return button;
+	}
+	
+	public static JComboBox<String> cuteComboBox(String[] content) {
+		JComboBox<String> comboBox = new JComboBox<String>(content);
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setUI(new BasicComboBoxUI());
+		comboBox.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+				BorderFactory.createEmptyBorder(0, 0, 0, 0)));
+		return comboBox;
 	}
 
 	public static void addEmptyLabels(JPanel panel, int times) {
