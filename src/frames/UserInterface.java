@@ -53,6 +53,7 @@ public class UserInterface {
 		pages.add(new HomePage(this));
 		pages.add(new IntroPage(this));
 		pages.add(new RegisterUserPage(this));
+		pages.add(new ProblemIdPage(this));
 	}
 
 	public JFrame getFrame() {

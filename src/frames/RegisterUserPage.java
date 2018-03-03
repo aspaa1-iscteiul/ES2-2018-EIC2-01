@@ -11,6 +11,7 @@ import java.awt.event.KeyListener;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class RegisterUserPage extends SuperPage {
@@ -49,11 +51,13 @@ public class RegisterUserPage extends SuperPage {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		// XXX change when frame size is set
 		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
 		JPanel emailPanel = new JPanel();
 		emailPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		emailPanel.setBackground(Color.WHITE);
 		emailPanel.add(new JLabel("E-mail address:"));
+		email.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 		email.addKeyListener(new KeyListener() {
 
 			@Override
@@ -136,7 +140,7 @@ public class RegisterUserPage extends SuperPage {
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO go to ProblemIDPage
+				userInterface.goToNextPage();
 			}
 		});
 		buttonsPanel.add(nextButton);
