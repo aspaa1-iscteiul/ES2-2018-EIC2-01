@@ -2,9 +2,7 @@ package frames;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -20,7 +18,7 @@ public class DecisionVariablesObject {
 
 	private DecisionVariablesPage page;
 	private JTextField name;
-	private final static String[] dataTypes = { "Byte", "Short", "Int", "Long", "Float", "Double", "Boolean", "Char" };
+	private final static String[] dataTypes = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean", "Char" };
 	private JComboBox<String> dataType;
 	private JTextField lowerBound;
 	private JTextField upperBound;
@@ -32,7 +30,7 @@ public class DecisionVariablesObject {
 	private JLabel deleteIcon;
 
 	public DecisionVariablesObject(DecisionVariablesPage page) {
-		this.page = page;
+		this.setPage(page);
 		this.name = new JTextField(5);
 		this.dataType = FrameUtils.cuteComboBox(dataTypes);
 		this.lowerBound = new JTextField(5);
@@ -157,6 +155,14 @@ public class DecisionVariablesObject {
 
 	public void setDomain3(JTextField domain3) {
 		this.domain3 = domain3;
+	}
+
+	public DecisionVariablesPage getPage() {
+		return page;
+	}
+
+	public void setPage(DecisionVariablesPage page) {
+		this.page = page;
 	}	
 
 
