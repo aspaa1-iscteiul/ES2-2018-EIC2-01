@@ -2,6 +2,7 @@ package frames;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -35,7 +36,7 @@ public class DecisionVariablesObject {
 	private JLabel deleteIcon;
 
 	public DecisionVariablesObject(DecisionVariablesPage page) {
-		this.setPage(page);
+		this.page = page;
 		this.variablesPanel = new JPanel();
 		this.name = new JTextField(5);
 		this.dataType = FrameUtils.cuteComboBox(dataTypes);
@@ -44,17 +45,17 @@ public class DecisionVariablesObject {
 		this.domain1 = FrameUtils.cuteComboBox(numberSets);
 		this.domain2 = FrameUtils.cuteComboBox(operations);
 		this.domain3 = new JTextField(5);
+
 		this.domain3.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				if(!Pattern.matches("[,0-9]+", domain3.getText()) || domain3.getText().isEmpty()) {
+				if(Pattern.matches("[,0-9]+", domain3.getText()) || domain3.getText().isEmpty()) {
+				}else {
 					domain3.setText(domain3.getText().substring(0, domain3.getText().length() - 1));
 					JOptionPane.showMessageDialog(variablesPanel, "Only numbers or ','", "InvalidInput", JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -62,21 +63,22 @@ public class DecisionVariablesObject {
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
-
 		});
+
 		this.deleteIcon = new JLabel();
 		this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 
 		DecisionVariablesObject tmp = this;
 
 		this.deleteIcon.addMouseListener(new MouseListener() {
-
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				page.removeDecisionVariableFromList(tmp);
+				EventQueue.invokeLater(new Runnable(){
+					public void run(){
+						page.removeDecisionVariableFromList(tmp);
+					}
+				});
 			}
 
 			@Override

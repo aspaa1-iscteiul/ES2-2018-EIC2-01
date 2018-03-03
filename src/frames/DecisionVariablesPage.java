@@ -28,6 +28,7 @@ public class DecisionVariablesPage extends SuperPage {
 	private static final long serialVersionUID = 1L;
 	private static final int standardNumberOfVariables = 3;
 	private ArrayList<DecisionVariablesObject> decisionVariableList;
+	private JPanel subSubMainPanel;
 
 	public DecisionVariablesPage(UserInterface userInterface) {
 		super(userInterface);
@@ -76,9 +77,9 @@ public class DecisionVariablesPage extends SuperPage {
 		infoPanel.add(new JLabel("Domain"));
 
 		subMainPanel.add(infoPanel);
-		
 
-		JPanel subSubMainPanel = new JPanel();
+
+		subSubMainPanel = new JPanel();
 		subSubMainPanel.setBackground(Color.WHITE);
 		subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
@@ -95,9 +96,9 @@ public class DecisionVariablesPage extends SuperPage {
 		addOptionPanel.setBackground(Color.WHITE);
 		JLabel addIcon = new JLabel();
 		addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
-		
+
 		DecisionVariablesPage tmp = this;
-		
+
 		addIcon.addMouseListener(new MouseListener() {
 
 			@Override
@@ -185,13 +186,10 @@ public class DecisionVariablesPage extends SuperPage {
 	}
 
 	public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
-		EventQueue.invokeLater(new Runnable(){
-			public void run(){
-				decisionVariableList.remove(dvo);
-				userInterface.getFrame().remove(dvo.transformIntoAPanel());
-				validate(); //to update window
-				repaint();
-			}
-		});
+		decisionVariableList.remove(dvo);
+		subSubMainPanel.remove(dvo.transformIntoAPanel());
+		validate(); //to update window
+		repaint(); //to update window
+		userInterface.getFrame().pack();	
 	}
 }
