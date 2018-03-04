@@ -13,10 +13,13 @@ public class UserInterface {
 
 	private JFrame frame;
 	private List<SuperPage> pages;
+	private ArrayList<KnownSolutionsObject> knownSolutionsFromDecisionVariables;
 	private int actualPageIndex = 0;
 
 	public UserInterface() {
 		frame = new JFrame("ES2-2018-EIC2-01");
+		knownSolutionsFromDecisionVariables = new ArrayList<KnownSolutionsObject>();
+		
 		frame.addWindowListener(new WindowListener() {
 
 			@Override
@@ -57,6 +60,8 @@ public class UserInterface {
 		pages.add(new DecisionVariablesPage(this));
 		pages.add(new OptimizationCriteriaPage(this));
 		pages.add(new FitnessFunctionPage(this));
+		pages.add(new KnownSolutionsPage(this));
+		
 	}
 
 	public JFrame getFrame() {
@@ -90,6 +95,17 @@ public class UserInterface {
 	public static void main(String[] args) {
 		UserInterface user = new UserInterface();
 		user.launch();
+	}
+	
+	public void setKnownSolutionsList(ArrayList<KnownSolutionsObject> list) {
+		for(KnownSolutionsObject kso: list) {
+			this.knownSolutionsFromDecisionVariables.add(kso);
+		}
+	}
+	
+
+	public ArrayList<KnownSolutionsObject> getKnownSolutionsList() {
+		return this.knownSolutionsFromDecisionVariables;
 	}
 
 }
