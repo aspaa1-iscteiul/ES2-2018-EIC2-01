@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -26,6 +28,7 @@ public class FitnessFunctionPage extends SuperPage {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final int standardNumberOfVariables = 1;
+	private ArrayList<FitnessFunctionObject> fitnessFunctionList;
 
 	public FitnessFunctionPage(UserInterface userInterface) {
 		super(userInterface);
@@ -37,6 +40,7 @@ public class FitnessFunctionPage extends SuperPage {
 	@Override
 	public void initialize() {
 		nextButton = FrameUtils.cuteButton("Next");	
+		fitnessFunctionList = new ArrayList<FitnessFunctionObject>();
 	}
 
 	@Override
@@ -52,7 +56,7 @@ public class FitnessFunctionPage extends SuperPage {
 		mainPanel.add(titlePanel);
 
 		FrameUtils.addEmptyLabels(mainPanel, 1);
-		
+
 		JPanel infoPanel = new JPanel();
 		infoPanel.setLayout(new BorderLayout());
 		infoPanel.setBackground(Color.WHITE);
@@ -70,9 +74,9 @@ public class FitnessFunctionPage extends SuperPage {
 		infoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 		infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		infoPanel.add(infoLabel, BorderLayout.CENTER);
-		
+
 		mainPanel.add(infoPanel);
-		
+
 		FrameUtils.addEmptyLabels(mainPanel, 1);
 
 		JPanel subMainPanel = new JPanel();
@@ -98,6 +102,7 @@ public class FitnessFunctionPage extends SuperPage {
 
 		for(int i = 0; i != standardNumberOfVariables; i++) {
 			FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(this);
+			fitnessFunctionList.add(fitnessFunctionObject);
 			subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
 		}
 
@@ -110,7 +115,7 @@ public class FitnessFunctionPage extends SuperPage {
 		addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
 
 		FitnessFunctionPage tmp = this;
-		
+
 		addIcon.addMouseListener(new MouseListener() {
 
 			@Override
@@ -120,6 +125,7 @@ public class FitnessFunctionPage extends SuperPage {
 					public void run()
 					{
 						FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(tmp);
+						fitnessFunctionList.add(fitnessFunctionObject);
 						subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
 						validate(); //to update window
 						repaint(); //to update window
@@ -195,8 +201,12 @@ public class FitnessFunctionPage extends SuperPage {
 	@Override
 	public void onTop() {
 		userInterface.getFrame().setTitle("Problem Solving App");
+		for(FitnessFunctionObject ffo : fitnessFunctionList) {
+					ffo.refreshOptimizationCriterias();
+		}
+		refreshPage();
 	}
-	
+
 	public void refreshPage() {
 		userInterface.getFrame().validate();
 		userInterface.getFrame().repaint();

@@ -195,8 +195,8 @@ public class DecisionVariablesPage extends SuperPage {
 	private ArrayList<KnownSolutionsObject> getKnownSolutionsFromDecisionVariables(){
 		ArrayList<KnownSolutionsObject> knownSolutions = new ArrayList<KnownSolutionsObject>();
 		for(DecisionVariablesObject dvo : decisionVariableList) {
-			if(!dvo.getName().getText().isEmpty()) {
-				knownSolutions.add(new KnownSolutionsObject(dvo.getName()));
+			if(!dvo.getName().getText().trim().isEmpty()) {
+				knownSolutions.add(new KnownSolutionsObject(dvo.getName().getText()));
 			}
 		}
 		return knownSolutions;

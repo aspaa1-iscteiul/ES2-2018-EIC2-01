@@ -16,17 +16,18 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 public class FitnessFunctionObject {
 
+	private FitnessFunctionPage page;
+	private JLabel addIcon;
 	private JButton uploadButton;
 	//TODO: This will be the optimizitaionCriteria given on the last page
-	private final static String[] optimizationCriterias = { "Optimization Criteria 1", "Optimization Criteria 2", "Optimization Criteria 3"};
+	private String[] optimizationCriterias = {"No optimization criterias available"};
 	private JComboBox<String> optimizationCriteria;
-	private JLabel addIcon;
-	private FitnessFunctionPage page;
-	
+
 	public FitnessFunctionObject(FitnessFunctionPage page){
 
 		this.page = page;
@@ -41,15 +42,14 @@ public class FitnessFunctionObject {
 				}
 			}
 		});
-
-		this.optimizationCriteria = FrameUtils.cuteComboBox( optimizationCriterias);
+		this.optimizationCriteria = FrameUtils.cuteComboBox(optimizationCriterias);
 	}
 
 	public JPanel transformIntoAPanel() {
 		JPanel overallPanel = new JPanel();
 		overallPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		overallPanel.setBackground(Color.WHITE);
-		
+
 		JPanel fieldsPanel = new JPanel();
 		fieldsPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		fieldsPanel.setBackground(Color.WHITE);
@@ -59,11 +59,11 @@ public class FitnessFunctionObject {
 		fieldsPanel.add(uploadButton);
 		fieldsPanel.add(optimizationCriteria);
 		overallPanel.add(fieldsPanel);
-		
+
 		JPanel addPanel = new JPanel();
 		addPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		addPanel.setBackground(Color.WHITE);
-		
+
 		this.addIcon = new JLabel();
 		this.addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
 		this.addIcon.addMouseListener(new MouseListener() {
@@ -93,13 +93,34 @@ public class FitnessFunctionObject {
 			public void mouseReleased(MouseEvent arg0) {
 			}
 		});
-		
+
 		addPanel.add(addIcon);
 		addPanel.add(new JLabel("Add another optimization criteria"));
 		overallPanel.add(addPanel);
-		
+
 		return overallPanel;
 	}
 
+	public void refreshOptimizationCriterias() {
+		if(page.userInterface.getOptimizationCriteriaFromPage().size()>0) {
+			int i = 0;
+			optimizationCriteria.removeAllItems();
+			optimizationCriterias = new String[page.userInterface.getOptimizationCriteriaFromPage().size()];
+			for(OptimizationCriteriaObject oco : page.userInterface.getOptimizationCriteriaFromPage()) {
+				this.optimizationCriterias[i] = oco.getName().getText();
+				optimizationCriteria.addItem(optimizationCriterias[i]);
+			}
+		} else {
+			optimizationCriteria.removeAllItems();
+			optimizationCriterias = new String[1];
+			optimizationCriteria.addItem("No optimization criterias available");
+		}
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				page.validate();
+				page.repaint();
+			}
+		});
+	}
 
 }

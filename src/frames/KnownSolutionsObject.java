@@ -1,7 +1,6 @@
 package frames;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
@@ -15,8 +14,8 @@ public class KnownSolutionsObject {
 	private JTextField solution1;
 	private JTextField solution2;
 	
-	public KnownSolutionsObject(JTextField name) {
-		this.name = name;
+	public KnownSolutionsObject(String string) {
+		this.name = new JTextField(string);
 		this.solution1 =  new JTextField(3);
 		this.solution2 =  new JTextField(3);
 	}

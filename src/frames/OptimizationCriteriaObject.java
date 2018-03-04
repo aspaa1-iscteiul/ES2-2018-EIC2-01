@@ -13,7 +13,7 @@ import javax.swing.border.Border;
 public class OptimizationCriteriaObject {
 
 	private JTextField name;
-	private final static String[] dataTypes = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean", "Char" };
+	private String[] dataTypes  = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean", "Char" };
 	private JComboBox<String> dataType;
 
 	public OptimizationCriteriaObject() {

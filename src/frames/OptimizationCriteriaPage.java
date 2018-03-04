@@ -166,6 +166,13 @@ public class OptimizationCriteriaPage extends SuperPage {
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
+				for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
+					if(!oco.getName().getText().isEmpty()) {
+						tmp.add(oco);
+					}
+				}
+				userInterface.setOptimizationCriteriaFromPage(tmp);
 				userInterface.goToNextPage();
 			}
 		});

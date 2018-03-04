@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -117,11 +115,27 @@ public class KnownSolutionsPage extends SuperPage {
 	@Override
 	public void onTop() {
 		userInterface.getFrame().setTitle("Problem Solving App");
-		for(KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
-			subSubMainPanel.add(kso.transformIntoAPanel());
+		JPanel warning = warningPanel();
+		subSubMainPanel.removeAll();
+		if(userInterface.getKnownSolutionsList().size()>0) {
+			for(KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
+				subSubMainPanel.add(kso.transformIntoAPanel());
+			}
+		} else {
+			subSubMainPanel.add(warning);
 		}
 		validate();
 		repaint();
+	}
+	
+	private JPanel warningPanel(){
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+		panel.setBackground(Color.WHITE);
+		JLabel warning = new JLabel("No variables created");
+		warning.setForeground(Color.red);
+		panel.add(warning);
+		return panel;
 	}
 
 }
