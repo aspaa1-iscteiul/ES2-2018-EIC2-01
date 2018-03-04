@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,13 +25,14 @@ public class FitnessFunctionObject {
 	private FitnessFunctionPage page;
 	private JLabel addIcon;
 	private JButton uploadButton;
-	//TODO: This will be the optimizitaionCriteria given on the last page
 	private String[] optimizationCriterias = {"No optimization criterias available"};
 	private JComboBox<String> optimizationCriteria;
+	private ArrayList<JComboBox<String>> comboBoxList;
 
 	public FitnessFunctionObject(FitnessFunctionPage page){
 
 		this.page = page;
+		this.comboBoxList = new ArrayList<JComboBox<String>>();
 		uploadButton = FrameUtils.cuteButton("Upload JAR file");
 		uploadButton.addActionListener(new ActionListener() {
 			@Override
@@ -43,6 +45,8 @@ public class FitnessFunctionObject {
 			}
 		});
 		this.optimizationCriteria = FrameUtils.cuteComboBox(optimizationCriterias);
+		refreshOptimizationCriteriasOfGivenComponent(optimizationCriteria);
+		comboBoxList.add(optimizationCriteria);
 	}
 
 	public JPanel transformIntoAPanel() {
@@ -71,7 +75,10 @@ public class FitnessFunctionObject {
 			public void mouseClicked(MouseEvent arg0) {
 				EventQueue.invokeLater(new Runnable(){
 					public void run(){
-						fieldsPanel.add(FrameUtils.cuteComboBox(optimizationCriterias));
+						JComboBox<String> clone = FrameUtils.cuteComboBox(optimizationCriterias);
+						fieldsPanel.add(clone);
+						comboBoxList.add(clone);
+						refreshOptimizationCriteriasOfGivenComponent(clone);
 						page.refreshPage();
 					}
 				});
@@ -100,20 +107,26 @@ public class FitnessFunctionObject {
 
 		return overallPanel;
 	}
-
-	public void refreshOptimizationCriterias() {
+	
+	public void refreshAll() {
+		for(JComboBox<String> comboBox : comboBoxList) {
+			refreshOptimizationCriteriasOfGivenComponent(comboBox);
+		}
+	}
+	
+	private void refreshOptimizationCriteriasOfGivenComponent(JComboBox<String> component) {
 		if(page.userInterface.getOptimizationCriteriaFromPage().size()>0) {
 			int i = 0;
-			optimizationCriteria.removeAllItems();
+			component.removeAllItems();
 			optimizationCriterias = new String[page.userInterface.getOptimizationCriteriaFromPage().size()];
 			for(OptimizationCriteriaObject oco : page.userInterface.getOptimizationCriteriaFromPage()) {
 				this.optimizationCriterias[i] = oco.getName().getText();
-				optimizationCriteria.addItem(optimizationCriterias[i]);
+				component.addItem(optimizationCriterias[i]);
 			}
 		} else {
-			optimizationCriteria.removeAllItems();
+			component.removeAllItems();
 			optimizationCriterias = new String[1];
-			optimizationCriteria.addItem("No optimization criterias available");
+			component.addItem("No optimization criterias available");
 		}
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

@@ -202,7 +202,7 @@ public class FitnessFunctionPage extends SuperPage {
 	public void onTop() {
 		userInterface.getFrame().setTitle("Problem Solving App");
 		for(FitnessFunctionObject ffo : fitnessFunctionList) {
-					ffo.refreshOptimizationCriterias();
+					ffo.refreshAll();
 		}
 		refreshPage();
 	}

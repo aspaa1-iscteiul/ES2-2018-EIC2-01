@@ -72,6 +72,7 @@ public class KnownSolutionsPage extends SuperPage {
 
 		JScrollPane scrollPane = new JScrollPane(subMainPanel);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		mainPanel.add(scrollPane);
 
@@ -119,6 +120,7 @@ public class KnownSolutionsPage extends SuperPage {
 		subSubMainPanel.removeAll();
 		if(userInterface.getKnownSolutionsList().size()>0) {
 			for(KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
+				kso.setPage(this);
 				subSubMainPanel.add(kso.transformIntoAPanel());
 			}
 		} else {
@@ -127,7 +129,7 @@ public class KnownSolutionsPage extends SuperPage {
 		validate();
 		repaint();
 	}
-	
+
 	private JPanel warningPanel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -136,6 +138,11 @@ public class KnownSolutionsPage extends SuperPage {
 		warning.setForeground(Color.red);
 		panel.add(warning);
 		return panel;
+	}
+
+	public void refreshPage() {
+		userInterface.getFrame().validate();
+		userInterface.getFrame().repaint();
 	}
 
 }

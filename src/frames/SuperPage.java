@@ -33,12 +33,12 @@ public abstract class SuperPage extends JPanel {
 		buttonsPanel.setBorder(new EmptyBorder(0, 0, 5, 5));
 		buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		this.add(buttonsPanel, BorderLayout.SOUTH);
-		
+
 		initialize();
 		createMainPanel();
 		createButtonsPanel();
 	}
-	
+
 	public abstract void initialize();
 
 	public abstract void createMainPanel();
