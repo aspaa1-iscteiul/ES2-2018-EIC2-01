@@ -28,9 +28,9 @@ public class DecisionVariablesObject {
 	private JComboBox<String> dataType;
 	private JTextField lowerBound;
 	private JTextField upperBound;
-	private final static String[] numberSets = { "N (Natural)", "Z (Integers)", "Q (Rational)", "A (Algebraic)", "R (Real)", "I (Imaginary)", "C (Complex)"};
+	private final static String[] numberSets = { "N (Natural)", "Z (Integers)", "Q (Rational)", "R (Real)"};
 	private JComboBox<String> domain1;
-	private final static String[] operations = {"U", "/"};
+	private final static String[] operations = {"  ", "U", "/"};
 	private JComboBox<String> domain2;
 	private JTextField domain3;
 	private JLabel deleteIcon;

@@ -1,14 +1,14 @@
 package utils;
 
+import java.util.ArrayList;
+
 public class Problem {
 
     protected String problemName;
     protected String problemDescription;
-    // protected Decision variables;
-    // protected HashMap<String, tipoDados> optimizationCriteria;
-    // protected fitnessFunction;
-    // protected knownSolutions;
-    // protected ArrayList<> algorithms;
+    protected ArrayList<DecisionVariable> decisionVariables;
+    protected ArrayList<FitnessFunction> fitnessFunctions;
+    protected ArrayList<String> optimizationAlgorithms;
     protected double idealTimeFrame;
     protected double maxTimeFrame;
     public static String newLine = System.getProperty("line.separator");
