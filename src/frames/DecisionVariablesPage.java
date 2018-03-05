@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 public class DecisionVariablesPage extends SuperPage {
@@ -28,6 +29,7 @@ public class DecisionVariablesPage extends SuperPage {
 	private static final long serialVersionUID = 1L;
 	private static final int standardNumberOfVariables = 3;
 	private ArrayList<DecisionVariablesObject> decisionVariableList;
+	private JPanel warningPanel;
 	private JPanel subSubMainPanel;
 
 	public DecisionVariablesPage(UserInterface userInterface) {
@@ -41,6 +43,16 @@ public class DecisionVariablesPage extends SuperPage {
 	public void initialize() {
 		nextButton = FrameUtils.cuteButton("Next");	
 		decisionVariableList = new ArrayList<DecisionVariablesObject>();
+
+		warningPanel = new JPanel();
+		warningPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+		warningPanel.setBackground(Color.WHITE);
+		JLabel warningIcon = new JLabel();
+		warningIcon.setIcon(new ImageIcon("./src/frames/images/warning_icon.png"));
+		warningPanel.add(warningIcon);
+		JLabel warning = new JLabel("Optimization criterias must have unique names");
+		warning.setForeground(Color.red);
+		warningPanel.add(warning);
 	}
 
 	@Override
@@ -172,8 +184,10 @@ public class DecisionVariablesPage extends SuperPage {
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				userInterface.goToNextPage();
-				userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
+				if(verifyIfNamesAreUnique()==true) {
+					userInterface.goToNextPage();
+					userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
+				}
 			}
 		});
 		buttonsPanel.add(nextButton);
@@ -187,9 +201,7 @@ public class DecisionVariablesPage extends SuperPage {
 	public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
 		decisionVariableList.remove(dvo);
 		subSubMainPanel.remove(dvo.transformIntoAPanel());
-		validate(); //to update window
-		repaint(); //to update window
-		userInterface.getFrame().pack();	
+		refreshPage();	
 	}
 
 	private ArrayList<KnownSolutionsObject> getKnownSolutionsFromDecisionVariables(){
@@ -201,4 +213,38 @@ public class DecisionVariablesPage extends SuperPage {
 		}
 		return knownSolutions;
 	}
+
+	private boolean verifyIfNamesAreUnique() {
+		boolean var = true;
+		for(DecisionVariablesObject dvo : decisionVariableList) {
+			String tmp = dvo.getName().getText();
+			int count = 0;
+			for(DecisionVariablesObject dvo2 : decisionVariableList) {
+				if(tmp.equals(dvo2.getName().getText()) && !dvo2.getName().getText().trim().isEmpty()) {
+					count++;
+					if(count > 1) {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								dvo2.getName().setBackground( new Color(219,151,149).brighter());
+								mainPanel.add(warningPanel);
+								refreshPage();
+							}
+						});
+						var = false;
+					} else {
+						dvo2.getName().setBackground(Color.white);
+						mainPanel.remove(warningPanel);
+					}
+				}
+			}
+		}
+		return var;
+	}
+
+	private void refreshPage() {
+		userInterface.getFrame().validate();
+		userInterface.getFrame().repaint();
+		userInterface.getFrame().pack();
+	}
+
 }
