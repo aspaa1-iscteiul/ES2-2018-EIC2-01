@@ -73,8 +73,7 @@ public class UserFileUtils {
 	return node;
     }
 
-    public static Problem readFromXML() {
-	String filePath = "./configFiles/userConfig.xml";
+    public static Problem readFromXML(String filePath) {
 	File xmlFile = new File(filePath);
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
@@ -119,7 +118,7 @@ public class UserFileUtils {
     public static void main(String[] args) {
 	Problem p = new Problem("ProblemaTeste", "Descrição do problema de teste", 2.0, 4.0);
 	writeToXML(p);
-	Problem p2 = readFromXML();
+	Problem p2 = readFromXML("./configFiles/userConfig.xml");
 	System.out.println(p2.toString());
 
     }

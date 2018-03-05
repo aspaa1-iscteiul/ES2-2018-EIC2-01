@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import utils.UserFileUtils;
 
 public class IntroPage extends SuperPage {
 
@@ -42,8 +46,7 @@ public class IntroPage extends SuperPage {
 		+ "evalution! According to the characteristics of your problem you will<br>be returned the "
 		+ "optimal solution found by our <font color=orange><b>Metaheuristics Algorithm</b></font>.</html>");
 
-	JLabel linkLabel = new JLabel(
-		"<html>Find out more about <a href=\"http://jmetal.sourceforge.net/\">jMetal framework</a>.</html>");
+	JLabel linkLabel = new JLabel("<html>Find out more about <a href=\"\">jMetal framework</a>.</html>");
 
 	messageLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
 	linkLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
@@ -73,26 +76,36 @@ public class IntroPage extends SuperPage {
 	importButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		JFileChooser chooser = new JFileChooser();
-		chooser.setDialogTitle("Select a problem configuration file");
-		if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(null)) {
+		if (importXMLFile())
 		    userInterface.goToNextPage();
-		}
 	    }
 	});
 	mainPanel.add(importButton);
+    }
+
+    private boolean importXMLFile() {
+	JFileChooser fileChooser = new JFileChooser();
+	// Launches the JFileChooser on the Desktop directory
+	fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+	fileChooser.setDialogTitle("Select a problem configuration file");
+	// Prevents selection of multiple options
+	fileChooser.setMultiSelectionEnabled(false);
+	// Only files with the XML extension are visible
+	fileChooser.setFileFilter(new FileNameExtensionFilter("XML File", "xml"));
+	fileChooser.setAcceptAllFileFilterUsed(false);
+
+	if (fileChooser.showOpenDialog(userInterface.getFrame()) == JFileChooser.APPROVE_OPTION) {
+	    userInterface.setProblem(UserFileUtils.readFromXML(fileChooser.getSelectedFile().getAbsolutePath()));
+	    return true;
+	}
+	return false;
     }
 
     private static boolean isBrowsingSupported() {
 	if (!Desktop.isDesktopSupported()) {
 	    return false;
 	}
-	boolean result = false;
-	Desktop desktop = java.awt.Desktop.getDesktop();
-	if (desktop.isSupported(Desktop.Action.BROWSE)) {
-	    result = true;
-	}
-	return result;
+	return Desktop.getDesktop().isSupported(Desktop.Action.BROWSE);
 
     }
 
