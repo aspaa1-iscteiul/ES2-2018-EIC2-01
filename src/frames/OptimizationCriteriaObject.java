@@ -3,9 +3,11 @@ package frames;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -13,7 +15,8 @@ import javax.swing.border.Border;
 public class OptimizationCriteriaObject {
 
 	private JTextField name;
-	private String[] dataTypes  = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean", "Char" };
+	private ArrayList<OptimizationCriteriaCheckbox> checkboxList;
+	private String[] dataTypes  = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean"};
 	private JComboBox<String> dataType;
 
 	public OptimizationCriteriaObject() {

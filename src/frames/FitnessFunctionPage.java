@@ -120,10 +120,8 @@ public class FitnessFunctionPage extends SuperPage {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EventQueue.invokeLater(new Runnable()
-				{
-					public void run()
-					{
+				EventQueue.invokeLater(new Runnable(){
+					public void run(){
 						FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(tmp);
 						fitnessFunctionList.add(fitnessFunctionObject);
 						subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
@@ -202,9 +200,9 @@ public class FitnessFunctionPage extends SuperPage {
 	public void onTop() {
 		userInterface.getFrame().setTitle("Problem Solving App");
 		for(FitnessFunctionObject ffo : fitnessFunctionList) {
-					ffo.refreshAll();
+			ffo.createComponents();
+			ffo.cleanData();
 		}
-		refreshPage();
 	}
 
 	public void refreshPage() {
@@ -212,5 +210,12 @@ public class FitnessFunctionPage extends SuperPage {
 		userInterface.getFrame().repaint();
 	}
 
+	public ArrayList<FitnessFunctionObject> getFitnessFunctionList() {
+		return fitnessFunctionList;
+	}
+
+	public void setFitnessFunctionList(ArrayList<FitnessFunctionObject> fitnessFunctionList) {
+		this.fitnessFunctionList = fitnessFunctionList;
+	}
 
 }

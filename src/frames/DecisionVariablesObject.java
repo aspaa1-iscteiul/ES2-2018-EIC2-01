@@ -24,7 +24,7 @@ public class DecisionVariablesObject {
 	private DecisionVariablesPage page;
 	private JPanel variablesPanel;
 	private JTextField name;
-	private final static String[] dataTypes = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean", "Char" };
+	private final static String[] dataTypes = {"Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean"};
 	private JComboBox<String> dataType;
 	private JTextField lowerBound;
 	private JTextField upperBound;
