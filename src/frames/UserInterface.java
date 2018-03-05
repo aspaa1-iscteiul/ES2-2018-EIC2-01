@@ -19,6 +19,7 @@ public class UserInterface {
 	private ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage;
 	private int actualPageIndex = 0;
 	private Problem problem;
+	private boolean isSingleobjective;
 
 	public UserInterface() {
 		frame = new JFrame("ES2-2018-EIC2-01");
@@ -66,7 +67,7 @@ public class UserInterface {
 		pages.add(new OptimizationCriteriaPage(this));
 		pages.add(new FitnessFunctionPage(this));
 		pages.add(new KnownSolutionsPage(this));
-
+		pages.add(new AlgorithmsPage(this));
 	}
 
 	public JFrame getFrame() {
@@ -97,11 +98,6 @@ public class UserInterface {
 		frame.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		UserInterface user = new UserInterface();
-		user.launch();
-	}
-
 	public void setKnownSolutionsList(ArrayList<KnownSolutionsObject> list) {
 		this.knownSolutionsFromDecisionVariables = list;
 	}
@@ -119,11 +115,24 @@ public class UserInterface {
 	}
 
 	public void setProblem(Problem problem) {
-	    this.problem = problem;
+		this.problem = problem;
 	}
-	
+
 	public Problem getProblem() {
-	    return problem;
+		return problem;
+	}
+
+	public void isSingleobjective(boolean b) {// XXX horrible name
+		isSingleobjective = b;
+	}
+
+	public boolean getIsSingleobjective() { // XXX horrible name
+		return isSingleobjective;
+	}
+
+	public static void main(String[] args) {
+		UserInterface user = new UserInterface();
+		user.launch();
 	}
 
 }

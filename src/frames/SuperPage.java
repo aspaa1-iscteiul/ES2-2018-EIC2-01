@@ -24,9 +24,13 @@ public abstract class SuperPage extends JPanel {
 
 		this.userInterface = userInterface;
 
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panel.setBackground(Color.WHITE);
 		mainPanel = new JPanel();
 		mainPanel.setBackground(Color.WHITE);
-		this.add(mainPanel, BorderLayout.CENTER);
+		panel.add(mainPanel);
+		this.add(panel, BorderLayout.CENTER);
 
 		buttonsPanel = new JPanel();
 		buttonsPanel.setBackground(Color.WHITE);

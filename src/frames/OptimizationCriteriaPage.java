@@ -40,7 +40,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	@Override
 	public void initialize() {
-		nextButton = FrameUtils.cuteButton("Next");	
+		nextButton = FrameUtils.cuteButton("Next");
 		optimizationCriteriaList = new ArrayList<OptimizationCriteriaObject>();
 
 		warningPanel = new JPanel();
@@ -78,18 +78,18 @@ public class OptimizationCriteriaPage extends SuperPage {
 		infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		infoPanel.setBackground(Color.WHITE);
 		JLabel name = new JLabel("Name");
-		name.setBorder(new EmptyBorder(0, 0, 0, 100)); //to add space between the labels
+		name.setBorder(new EmptyBorder(0, 0, 0, 100)); // to add space between
+														// the labels
 		infoPanel.add(name);
 		infoPanel.add(new JLabel("Data Type"));
 
 		subMainPanel.add(infoPanel);
 
-
 		JPanel subSubMainPanel = new JPanel();
 		subSubMainPanel.setBackground(Color.WHITE);
 		subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-		for(int i = 0; i != standardNumberOfVariables; i++) {
+		for (int i = 0; i != standardNumberOfVariables; i++) {
 			OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject();
 			optimizationCriteriaList.add(optimizationCriteria);
 			subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
@@ -107,15 +107,13 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EventQueue.invokeLater(new Runnable()
-				{
-					public void run()
-					{
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
 						OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject();
 						optimizationCriteriaList.add(optimizationCriteria);
 						subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
-						validate(); //to update window
-						repaint(); //to update window
+						validate(); // to update window
+						repaint(); // to update window
 					}
 				});
 			}
@@ -179,13 +177,14 @@ public class OptimizationCriteriaPage extends SuperPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
-				for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
-					if(!oco.getName().getText().isEmpty()) {
+				for (OptimizationCriteriaObject oco : optimizationCriteriaList) {
+					if (!oco.getName().getText().isEmpty()) {
 						tmp.add(oco);
 					}
 				}
 				userInterface.setOptimizationCriteriaFromPage(tmp);
-				if(verifyIfNamesAreUnique()==true) {
+				if (verifyIfNamesAreUnique() == true) {
+					userInterface.isSingleobjective(optimizationCriteriaList.size()==1);
 					userInterface.goToNextPage();
 				}
 			}
@@ -200,16 +199,16 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	private boolean verifyIfNamesAreUnique() {
 		boolean var = true;
-		for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
+		for (OptimizationCriteriaObject oco : optimizationCriteriaList) {
 			String tmp = oco.getName().getText();
 			int count = 0;
-			for(OptimizationCriteriaObject oco2 : optimizationCriteriaList) {
-				if(tmp.equals(oco2.getName().getText()) && !oco2.getName().getText().trim().isEmpty()) {
+			for (OptimizationCriteriaObject oco2 : optimizationCriteriaList) {
+				if (tmp.equals(oco2.getName().getText()) && !oco2.getName().getText().trim().isEmpty()) {
 					count++;
-					if(count > 1) {
+					if (count > 1) {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
-								oco2.getName().setBackground( new Color(219,151,149).brighter());
+								oco2.getName().setBackground(new Color(219, 151, 149).brighter());
 								mainPanel.add(warningPanel);
 								refreshPage();
 							}
