@@ -13,44 +13,73 @@ public class Problem {
     protected double maxTimeFrame;
     public static String newLine = System.getProperty("line.separator");
 
-
     public Problem() {
 
     }
 
-    public Problem(String name, String description, double idealTime, double maxTime) {
-	this.problemName = name;
-	this.problemDescription = description;
-	this.idealTimeFrame = idealTime;
-	this.maxTimeFrame = maxTime;
+    public Problem(String problemName, String problemDescription, ArrayList<DecisionVariable> decisionVariables,
+	    ArrayList<FitnessFunction> fitnessFunctions, ArrayList<String> optimizationAlgorithms,
+	    double idealTimeFrame, double maxTimeFrame) {
+	super();
+	this.problemName = problemName;
+	this.problemDescription = problemDescription;
+	this.decisionVariables = decisionVariables;
+	this.fitnessFunctions = fitnessFunctions;
+	this.optimizationAlgorithms = optimizationAlgorithms;
+	this.idealTimeFrame = idealTimeFrame;
+	this.maxTimeFrame = maxTimeFrame;
     }
 
     public String getProblemName() {
 	return problemName;
     }
 
-    public String getProblemDescription() {
-	return problemDescription;
-    }
-
-    public double getIdealTimeFrame() {
-	return idealTimeFrame;
-    }
-
-    public double getMaxTimeFrame() {
-	return maxTimeFrame;
-    }
-
     public void setProblemName(String problemName) {
 	this.problemName = problemName;
+    }
+
+    public String getProblemDescription() {
+	return problemDescription;
     }
 
     public void setProblemDescription(String problemDescription) {
 	this.problemDescription = problemDescription;
     }
 
+    public ArrayList<DecisionVariable> getDecisionVariables() {
+	return decisionVariables;
+    }
+
+    public void setDecisionVariables(ArrayList<DecisionVariable> decisionVariables) {
+	this.decisionVariables = decisionVariables;
+    }
+
+    public ArrayList<FitnessFunction> getFitnessFunctions() {
+	return fitnessFunctions;
+    }
+
+    public void setFitnessFunctions(ArrayList<FitnessFunction> fitnessFunctions) {
+	this.fitnessFunctions = fitnessFunctions;
+    }
+
+    public ArrayList<String> getOptimizationAlgorithms() {
+	return optimizationAlgorithms;
+    }
+
+    public void setOptimizationAlgorithms(ArrayList<String> optimizationAlgorithms) {
+	this.optimizationAlgorithms = optimizationAlgorithms;
+    }
+
+    public double getIdealTimeFrame() {
+	return idealTimeFrame;
+    }
+
     public void setIdealTimeFrame(double idealTimeFrame) {
 	this.idealTimeFrame = idealTimeFrame;
+    }
+
+    public double getMaxTimeFrame() {
+	return maxTimeFrame;
     }
 
     public void setMaxTimeFrame(double maxTimeFrame) {
@@ -59,8 +88,10 @@ public class Problem {
 
     @Override
     public String toString() {
-	return "Problem: " + newLine + "Problem Name = " + problemName + newLine + "Problem's Description = " + problemDescription
-		+ newLine + "Ideal Time Frame = " + idealTimeFrame + newLine + "Max Time Frame = " + maxTimeFrame;
+	return "Problem [problemName=" + problemName + ", problemDescription=" + problemDescription
+		+ ", decisionVariables=" + decisionVariables + ", fitnessFunctions=" + fitnessFunctions
+		+ ", optimizationAlgorithms=" + optimizationAlgorithms + ", idealTimeFrame=" + idealTimeFrame
+		+ ", maxTimeFrame=" + maxTimeFrame + "]";
     }
 
 }

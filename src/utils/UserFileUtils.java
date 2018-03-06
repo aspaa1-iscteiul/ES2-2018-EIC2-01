@@ -2,6 +2,9 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -24,9 +27,6 @@ public class UserFileUtils {
 	    dBuilder = dbFactory.newDocumentBuilder();
 	    Document doc = dBuilder.newDocument();
 
-	    // Create root element
-	    // doc.appendChild(getProblem(doc, "1", "Pankaj", "29", "Java
-	    // Developer", "Male"));
 	    doc.appendChild(getProblem(doc, problem));
 
 	    // Output to file
@@ -52,14 +52,63 @@ public class UserFileUtils {
 	// create name element
 	problemNode.appendChild(getProblemElements(doc, problemNode, "Name", problem.getProblemName()));
 
-	// create age element
+	// create description element
 	problemNode.appendChild(getProblemElements(doc, problemNode, "Description", problem.getProblemDescription()));
 
-	// create role element
+	// create list decision variables element
+	Element decisionVariblesNode = doc.createElement("DecisionVariables");
+	problemNode.appendChild(decisionVariblesNode);
+	for (DecisionVariable d : problem.getDecisionVariables()) {
+	    decisionVariblesNode.appendChild(getProblemElements(doc, decisionVariblesNode, "Name", d.getName()));
+	    decisionVariblesNode
+		    .appendChild(getProblemElements(doc, decisionVariblesNode, "DataType", "" + d.getDataType()));
+	    decisionVariblesNode
+		    .appendChild(getProblemElements(doc, decisionVariblesNode, "LowerBound", d.getLowerBound()));
+	    decisionVariblesNode
+		    .appendChild(getProblemElements(doc, decisionVariblesNode, "UpperBound", d.getUpperBound()));
+	    decisionVariblesNode.appendChild(getProblemElements(doc, decisionVariblesNode, "Domain", d.getDomain()));
+	    if (d.getKnownSolutions() != null) {
+		Element knownSolutionsNode = doc.createElement("KnownSolutions");
+		decisionVariblesNode.appendChild(knownSolutionsNode);
+		for (String solution : d.getKnownSolutions()) {
+		    knownSolutionsNode
+			    .appendChild(getProblemElements(doc, knownSolutionsNode, "KnownSolution", solution));
+		}
+	    }
+
+	}
+
+	// create list fitness function element
+	Element fitnessFunctionsNode = doc.createElement("FitnessFunctions");
+	problemNode.appendChild(fitnessFunctionsNode);
+	for (FitnessFunction f : problem.getFitnessFunctions()) {
+	    fitnessFunctionsNode
+		    .appendChild(getProblemElements(doc, fitnessFunctionsNode, "JarFilePath", f.getJarFilePath()));
+	    if (f.getOptimizationCriteria() != null) {
+		Element optimizationCriteriaNode = doc.createElement("OptimizationCriteria");
+		fitnessFunctionsNode.appendChild(optimizationCriteriaNode);
+		for (OptimizationCriteria criteria : f.getOptimizationCriteria()) {
+		    optimizationCriteriaNode
+			    .appendChild(getProblemElements(doc, optimizationCriteriaNode, "Name", criteria.getName()));
+		    optimizationCriteriaNode.appendChild(
+			    getProblemElements(doc, optimizationCriteriaNode, "DataType", "" + criteria.getDataType()));
+
+		}
+	    }
+
+	}
+
+	// create list optimization algorithms element
+	Element optimizationAlgorithmsNode = doc.createElement("OptimizationAlgorithms");
+	problemNode.appendChild(optimizationAlgorithmsNode);
+	for (String a : problem.getOptimizationAlgorithms())
+	    optimizationAlgorithmsNode.appendChild(getProblemElements(doc, optimizationAlgorithmsNode, "Algorithm", a));
+
+	// create ideal time frame element
 	problemNode
 		.appendChild(getProblemElements(doc, problemNode, "IdealTimeFrame", "" + problem.getIdealTimeFrame()));
 
-	// create gender element
+	// create maximum time frame element
 	problemNode
 		.appendChild(getProblemElements(doc, problemNode, "MaximumTimeFrame", "" + problem.getMaxTimeFrame()));
 
@@ -73,8 +122,7 @@ public class UserFileUtils {
 	return node;
     }
 
-    public static Problem readFromXML() {
-	String filePath = "./configFiles/userConfig.xml";
+    public static Problem readFromXML(String filePath) {
 	File xmlFile = new File(filePath);
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
@@ -97,7 +145,6 @@ public class UserFileUtils {
     }
 
     private static Problem getProblem(Node node) {
-	// XMLReaderDOM domReader = new XMLReaderDOM();
 	Problem problem = new Problem();
 	if (node.getNodeType() == Node.ELEMENT_NODE) {
 	    Element element = (Element) node;
@@ -117,9 +164,28 @@ public class UserFileUtils {
     }
 
     public static void main(String[] args) {
-	Problem p = new Problem("ProblemaTeste", "Descrição do problema de teste", 2.0, 4.0);
-	writeToXML(p);
-	Problem p2 = readFromXML();
+	ArrayList<String> knownSolutions = new ArrayList<String>();
+	knownSolutions.add("3");
+	knownSolutions.add("4");
+	DecisionVariable dv = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "Z except 0", knownSolutions);
+	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
+	decisionVariables.add(dv);
+
+	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", DataType.INTEGER);
+	ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
+	optimizationCriteria.add(oc1);
+	FitnessFunction ff = new FitnessFunction("path", optimizationCriteria);
+	ArrayList<FitnessFunction> fitnessFunctions = new ArrayList<>();
+	fitnessFunctions.add(ff);
+
+	ArrayList<String> optimizationAlgorithms = new ArrayList<>();
+	optimizationAlgorithms.add("NSGA");
+	optimizationAlgorithms.add("NSGA-2");
+
+	Problem p1 = new Problem("ProblemaTeste", "Descrição do problema de teste", decisionVariables, fitnessFunctions,
+		optimizationAlgorithms, 2.0, 4.0);
+	writeToXML(p1);
+	Problem p2 = readFromXML("./configFiles/userConfig.xml");
 	System.out.println(p2.toString());
 
     }
