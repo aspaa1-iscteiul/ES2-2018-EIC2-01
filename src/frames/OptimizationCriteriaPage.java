@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 public class OptimizationCriteriaPage extends SuperPage {
@@ -28,6 +29,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 	private static final long serialVersionUID = 1L;
 	private static final int standardNumberOfVariables = 3;
 	private ArrayList<OptimizationCriteriaObject> optimizationCriteriaList;
+	private JPanel warningPanel;
 
 	public OptimizationCriteriaPage(UserInterface userInterface) {
 		super(userInterface);
@@ -38,8 +40,18 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	@Override
 	public void initialize() {
-		nextButton = FrameUtils.cuteButton("Next");	
+		nextButton = FrameUtils.cuteButton("Next");
 		optimizationCriteriaList = new ArrayList<OptimizationCriteriaObject>();
+
+		warningPanel = new JPanel();
+		warningPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+		warningPanel.setBackground(Color.WHITE);
+		JLabel warningIcon = new JLabel();
+		warningIcon.setIcon(new ImageIcon("./src/frames/images/warning_icon.png"));
+		warningPanel.add(warningIcon);
+		JLabel warning = new JLabel("Optimization criterias must have unique names");
+		warning.setForeground(Color.red);
+		warningPanel.add(warning);
 	}
 
 	@Override
@@ -66,18 +78,18 @@ public class OptimizationCriteriaPage extends SuperPage {
 		infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		infoPanel.setBackground(Color.WHITE);
 		JLabel name = new JLabel("Name");
-		name.setBorder(new EmptyBorder(0, 0, 0, 100)); //to add space between the labels
+		name.setBorder(new EmptyBorder(0, 0, 0, 100)); // to add space between
+														// the labels
 		infoPanel.add(name);
 		infoPanel.add(new JLabel("Data Type"));
 
 		subMainPanel.add(infoPanel);
 
-
 		JPanel subSubMainPanel = new JPanel();
 		subSubMainPanel.setBackground(Color.WHITE);
 		subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-		for(int i = 0; i != standardNumberOfVariables; i++) {
+		for (int i = 0; i != standardNumberOfVariables; i++) {
 			OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject();
 			optimizationCriteriaList.add(optimizationCriteria);
 			subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
@@ -95,15 +107,13 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EventQueue.invokeLater(new Runnable()
-				{
-					public void run()
-					{
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
 						OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject();
 						optimizationCriteriaList.add(optimizationCriteria);
 						subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
-						validate(); //to update window
-						repaint(); //to update window
+						validate(); // to update window
+						repaint(); // to update window
 					}
 				});
 			}
@@ -167,13 +177,16 @@ public class OptimizationCriteriaPage extends SuperPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
-				for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
-					if(!oco.getName().getText().isEmpty()) {
+				for (OptimizationCriteriaObject oco : optimizationCriteriaList) {
+					if (!oco.getName().getText().isEmpty()) {
 						tmp.add(oco);
 					}
 				}
 				userInterface.setOptimizationCriteriaFromPage(tmp);
-				userInterface.goToNextPage();
+				if (verifyIfNamesAreUnique() == true) {
+					userInterface.isSingleobjective(optimizationCriteriaList.size()==1);
+					userInterface.goToNextPage();
+				}
 			}
 		});
 		buttonsPanel.add(nextButton);
@@ -182,6 +195,39 @@ public class OptimizationCriteriaPage extends SuperPage {
 	@Override
 	public void onTop() {
 		userInterface.getFrame().setTitle("Problem Solving App");
+	}
+
+	private boolean verifyIfNamesAreUnique() {
+		boolean var = true;
+		for (OptimizationCriteriaObject oco : optimizationCriteriaList) {
+			String tmp = oco.getName().getText();
+			int count = 0;
+			for (OptimizationCriteriaObject oco2 : optimizationCriteriaList) {
+				if (tmp.equals(oco2.getName().getText()) && !oco2.getName().getText().trim().isEmpty()) {
+					count++;
+					if (count > 1) {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								oco2.getName().setBackground(new Color(219, 151, 149).brighter());
+								mainPanel.add(warningPanel);
+								refreshPage();
+							}
+						});
+						var = false;
+					} else {
+						oco2.getName().setBackground(Color.white);
+						mainPanel.remove(warningPanel);
+					}
+				}
+			}
+		}
+		return var;
+	}
+
+	private void refreshPage() {
+		userInterface.getFrame().validate();
+		userInterface.getFrame().repaint();
+		userInterface.getFrame().pack();
 	}
 
 }

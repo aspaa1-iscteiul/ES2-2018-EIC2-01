@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import utils.Problem;
+
 public class UserInterface {
 
 	private JFrame frame;
@@ -16,6 +18,8 @@ public class UserInterface {
 	private ArrayList<KnownSolutionsObject> knownSolutionsFromDecisionVariables;
 	private ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage;
 	private int actualPageIndex = 0;
+	private Problem problem;
+	private boolean isSingleobjective;
 
 	public UserInterface() {
 		frame = new JFrame("ES2-2018-EIC2-01");
@@ -55,15 +59,15 @@ public class UserInterface {
 		});
 
 		pages = new ArrayList<>();
-		pages.add(new DecisionVariablesPage(this));
-		pages.add(new OptimizationCriteriaPage(this));
-		pages.add(new FitnessFunctionPage(this));
-		pages.add(new KnownSolutionsPage(this));
 		pages.add(new HomePage(this));
 		pages.add(new IntroPage(this));
 		pages.add(new RegisterUserPage(this));
 		pages.add(new ProblemIdPage(this));
-
+		pages.add(new DecisionVariablesPage(this));
+		pages.add(new OptimizationCriteriaPage(this));
+		pages.add(new FitnessFunctionPage(this));
+		pages.add(new KnownSolutionsPage(this));
+		pages.add(new AlgorithmsPage(this));
 	}
 
 	public JFrame getFrame() {
@@ -94,11 +98,6 @@ public class UserInterface {
 		frame.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		UserInterface user = new UserInterface();
-		user.launch();
-	}
-
 	public void setKnownSolutionsList(ArrayList<KnownSolutionsObject> list) {
 		this.knownSolutionsFromDecisionVariables = list;
 	}
@@ -113,6 +112,27 @@ public class UserInterface {
 
 	public void setOptimizationCriteriaFromPage(ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage) {
 		this.optimizationCriteriaFromPage = optimizationCriteriaFromPage;
+	}
+
+	public void setProblem(Problem problem) {
+		this.problem = problem;
+	}
+
+	public Problem getProblem() {
+		return problem;
+	}
+
+	public void isSingleobjective(boolean b) {// XXX horrible name
+		isSingleobjective = b;
+	}
+
+	public boolean getIsSingleobjective() { // XXX horrible name
+		return isSingleobjective;
+	}
+
+	public static void main(String[] args) {
+		UserInterface user = new UserInterface();
+		user.launch();
 	}
 
 }

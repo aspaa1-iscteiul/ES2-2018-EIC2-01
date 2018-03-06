@@ -3,8 +3,6 @@ package utils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -185,6 +183,7 @@ public class UserFileUtils {
 	Problem p1 = new Problem("ProblemaTeste", "Descrição do problema de teste", decisionVariables, fitnessFunctions,
 		optimizationAlgorithms, 2.0, 4.0);
 	writeToXML(p1);
+
 	Problem p2 = readFromXML("./configFiles/userConfig.xml");
 	System.out.println(p2.toString());
 
