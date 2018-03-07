@@ -88,10 +88,10 @@ public class Problem {
 
     @Override
     public String toString() {
-	return "Problem [problemName=" + problemName + ", problemDescription=" + problemDescription
-		+ ", decisionVariables=" + decisionVariables + ", fitnessFunctions=" + fitnessFunctions
-		+ ", optimizationAlgorithms=" + optimizationAlgorithms + ", idealTimeFrame=" + idealTimeFrame
-		+ ", maxTimeFrame=" + maxTimeFrame + "]";
+	return "Problem's Name: " + problemName + newLine + "Problem's Description: " + problemDescription + newLine
+		+ "Decision Variables: " + decisionVariables + newLine + "Fitness Functions: " + fitnessFunctions
+		+ newLine + "Optimization Algorithms: " + optimizationAlgorithms + newLine + "Ideal Time Frame: "
+		+ idealTimeFrame + newLine + "Maximum Time Frame: " + maxTimeFrame + newLine;
     }
 
 }

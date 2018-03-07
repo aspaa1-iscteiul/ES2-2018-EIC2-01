@@ -15,7 +15,6 @@ public class DecisionVariable {
 
     public DecisionVariable(String name, DataType dataType, String lowerBound, String upperBound, String domain,
 	    ArrayList<String> knownSolutions) {
-	super();
 	this.name = name;
 	this.dataType = dataType;
 	this.lowerBound = lowerBound;
@@ -25,59 +24,57 @@ public class DecisionVariable {
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public DataType getDataType() {
-        return dataType;
+	return dataType;
     }
 
     public void setDataType(DataType dataType) {
-        this.dataType = dataType;
+	this.dataType = dataType;
     }
 
     public String getLowerBound() {
-        return lowerBound;
+	return lowerBound;
     }
 
     public void setLowerBound(String lowerBound) {
-        this.lowerBound = lowerBound;
+	this.lowerBound = lowerBound;
     }
 
     public String getUpperBound() {
-        return upperBound;
+	return upperBound;
     }
 
     public void setUpperBound(String upperBound) {
-        this.upperBound = upperBound;
+	this.upperBound = upperBound;
     }
 
     public String getDomain() {
-        return domain;
+	return domain;
     }
 
     public void setDomain(String domain) {
-        this.domain = domain;
+	this.domain = domain;
     }
 
     public ArrayList<String> getKnownSolutions() {
-        return knownSolutions;
+	return knownSolutions;
     }
 
     public void setKnownSolutions(ArrayList<String> knownSolutions) {
-        this.knownSolutions = knownSolutions;
+	this.knownSolutions = knownSolutions;
     }
 
     @Override
     public String toString() {
-	return "DecisionVariable [name=" + name + ", dataType=" + dataType + ", lowerBound=" + lowerBound
-		+ ", upperBound=" + upperBound + ", domain=" + domain + ", knownSolutions=" + knownSolutions + "]";
+	return Problem.newLine + "\tName: " + name + ", Data Type: " + dataType + ", Lower Bound: " + lowerBound
+		+ ", Upper Bound: " + upperBound + ", Domain: " + domain + ", Known Solutions: " + knownSolutions;
     }
-    
-    
 
 }
