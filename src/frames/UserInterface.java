@@ -59,7 +59,7 @@ public class UserInterface {
 	});
 
 	pages = new ArrayList<>();
-	pages.add(new SaveProblemPage(this));
+	pages.add(new SendEmailPage(this));
 	pages.add(new HomePage(this));
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
@@ -69,6 +69,7 @@ public class UserInterface {
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
 	pages.add(new AlgorithmsPage(this));
+	pages.add(new SaveProblemPage(this));
     }
 
     public JFrame getFrame() {
