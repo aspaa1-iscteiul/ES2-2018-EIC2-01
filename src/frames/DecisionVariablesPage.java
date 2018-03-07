@@ -112,7 +112,7 @@ public class DecisionVariablesPage extends SuperPage {
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
 
-	DecisionVariablesPage tmp = this;
+	final DecisionVariablesPage tmp = this;
 
 	addIcon.addMouseListener(new MouseListener() {
 
@@ -189,11 +189,8 @@ public class DecisionVariablesPage extends SuperPage {
 	nextButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		// if (verifyIfNamesAreUnique() == true && validateAllData() ==
-		// true) {
 		userInterface.goToNextPage();
 		userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
-		// }
 	    }
 	});
 	buttonsPanel.add(nextButton);

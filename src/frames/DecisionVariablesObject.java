@@ -29,9 +29,7 @@ public class DecisionVariablesObject {
     private JTextField upperBound;
     private JLabel deleteIcon;
 
-    private int COUNT = 0;
-
-    public DecisionVariablesObject(DecisionVariablesPage page) {
+    public DecisionVariablesObject(final DecisionVariablesPage page) {
 	this.page = page;
 	this.variablesPanel = new JPanel();
 	DecisionVariablesObject tmp = this;
@@ -81,6 +79,7 @@ public class DecisionVariablesObject {
 
 	this.deleteIcon = new JLabel();
 	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
+
 	this.deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
@@ -174,7 +173,6 @@ public class DecisionVariablesObject {
     }
 
     private boolean isValidName() {
-	System.out.println(COUNT++ + " pass to isValidName"); // XXX remove
 	String text = name.getText().trim();
 	if (text.equals("") || page.isNameRepeated(text)) {
 	    dataType.setEnabled(false);
@@ -204,8 +202,6 @@ public class DecisionVariablesObject {
      * @return
      */
     private boolean isValidBound(boolean lower) {
-	System.out.println(COUNT++ + " pass to isValidBound with " + lower); // XXX
-									     // remove
 	JTextField bound = lower ? lowerBound : upperBound;
 	String type = (String) dataType.getSelectedItem();
 	if (type == null)

@@ -15,134 +15,133 @@ import javax.swing.border.EmptyBorder;
 
 public class KnownSolutionsPage extends SuperPage {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel subSubMainPanel;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    private JPanel subSubMainPanel;
 
-	public KnownSolutionsPage(UserInterface userInterface) {
-		super(userInterface);
-		// TODO Auto-generated constructor stub
+    public KnownSolutionsPage(UserInterface userInterface) {
+	super(userInterface);
+	// TODO Auto-generated constructor stub
+    }
+
+    private JButton nextButton;
+
+    @Override
+    public void initialize() {
+	nextButton = FrameUtils.cuteButton("Next");
+    }
+
+    @Override
+    public void createMainPanel() {
+	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+	// XXX change when frame size is set
+	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+	JPanel titlePanel = new JPanel();
+	titlePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	titlePanel.setBackground(Color.WHITE);
+	titlePanel.add(new JLabel("Known Solution(s)"));
+	mainPanel.add(titlePanel);
+
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+
+	JPanel subMainPanel = new JPanel();
+	subMainPanel.setBackground(Color.WHITE);
+	subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.Y_AXIS));
+	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
+	JPanel infoPanel = new JPanel();
+	infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	infoPanel.setBackground(Color.WHITE);
+	JLabel name = new JLabel("Name");
+	name.setBorder(new EmptyBorder(0, 0, 0, 45)); // to add space between the labels
+	infoPanel.add(name);
+	infoPanel.add(new JLabel("Solution(s)"));
+
+	subMainPanel.add(infoPanel);
+
+	subSubMainPanel = new JPanel();
+	subSubMainPanel.setBackground(Color.WHITE);
+	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
+
+	subMainPanel.add(subSubMainPanel);
+
+	JScrollPane scrollPane = new JScrollPane(subMainPanel);
+	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+	mainPanel.add(scrollPane);
+
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+
+    }
+
+    @Override
+    public void createButtonsPanel() {
+	JButton backButton = FrameUtils.cuteButton("Back");
+	backButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToPreviousPage();
+	    }
+	});
+	buttonsPanel.add(backButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton cancelButton = FrameUtils.cuteButton("Cancel");
+	cancelButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	    }
+	});
+	buttonsPanel.add(cancelButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	nextButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToNextPage();
+	    }
+	});
+	buttonsPanel.add(nextButton);
+    }
+
+    @Override
+    public void onTop() {
+	userInterface.getFrame().setTitle("Problem Solving App");
+	JPanel warning = warningPanel();
+	subSubMainPanel.removeAll();
+	if (userInterface.getKnownSolutionsList().size() > 0) {
+	    for (KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
+		kso.setPage(this);
+		subSubMainPanel.add(kso.transformIntoAPanel());
+	    }
+	} else {
+	    subSubMainPanel.add(warning);
 	}
+	validate();
+	repaint();
+    }
 
-	private JButton nextButton;
+    private JPanel warningPanel() {
+	JPanel panel = new JPanel();
+	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	panel.setBackground(Color.WHITE);
+	JLabel warning = new JLabel("No variables created");
+	warning.setForeground(Color.red);
+	panel.add(warning);
+	return panel;
+    }
 
-	@Override
-	public void initialize() {
-		nextButton = FrameUtils.cuteButton("Next");	
-	}
-
-	@Override
-	public void createMainPanel() {
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		// XXX change when frame size is set
-		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-
-		JPanel titlePanel = new JPanel();
-		titlePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-		titlePanel.setBackground(Color.WHITE);
-		titlePanel.add(new JLabel("Known Solution(s)"));
-		mainPanel.add(titlePanel);
-
-		FrameUtils.addEmptyLabels(mainPanel, 1);
-
-		JPanel subMainPanel = new JPanel();
-		subMainPanel.setBackground(Color.WHITE);
-		subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.Y_AXIS));
-		subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-				BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
-		JPanel infoPanel = new JPanel();
-		infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-		infoPanel.setBackground(Color.WHITE);
-		JLabel name = new JLabel("Name");
-		name.setBorder(new EmptyBorder(0, 0, 0, 45)); //to add space between the labels
-		infoPanel.add(name);
-		infoPanel.add(new JLabel("Solution(s)"));
-
-		subMainPanel.add(infoPanel);
-
-
-		subSubMainPanel = new JPanel();
-		subSubMainPanel.setBackground(Color.WHITE);
-		subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
-
-		subMainPanel.add(subSubMainPanel);
-
-		JScrollPane scrollPane = new JScrollPane(subMainPanel);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-		mainPanel.add(scrollPane);
-
-		FrameUtils.addEmptyLabels(mainPanel, 1);
-
-	}
-
-	@Override
-	public void createButtonsPanel() {
-		JButton backButton = FrameUtils.cuteButton("Back");
-		backButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				userInterface.goToPreviousPage();
-			}
-		});
-		buttonsPanel.add(backButton);
-
-		buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-		JButton cancelButton = FrameUtils.cuteButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		buttonsPanel.add(cancelButton);
-
-		buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-		nextButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				userInterface.goToNextPage();
-			}
-		});
-		buttonsPanel.add(nextButton);
-	}
-
-	@Override
-	public void onTop() {
-		userInterface.getFrame().setTitle("Problem Solving App");
-		JPanel warning = warningPanel();
-		subSubMainPanel.removeAll();
-		if(userInterface.getKnownSolutionsList().size()>0) {
-			for(KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
-				kso.setPage(this);
-				subSubMainPanel.add(kso.transformIntoAPanel());
-			}
-		} else {
-			subSubMainPanel.add(warning);
-		}
-		validate();
-		repaint();
-	}
-
-	private JPanel warningPanel(){
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.LEADING));
-		panel.setBackground(Color.WHITE);
-		JLabel warning = new JLabel("No variables created");
-		warning.setForeground(Color.red);
-		panel.add(warning);
-		return panel;
-	}
-
-	public void refreshPage() {
-		userInterface.getFrame().validate();
-		userInterface.getFrame().repaint();
-	}
+    public void refreshPage() {
+	userInterface.getFrame().validate();
+	userInterface.getFrame().repaint();
+    }
 
 }
