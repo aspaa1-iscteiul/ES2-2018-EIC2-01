@@ -59,6 +59,7 @@ public class UserInterface {
 	});
 
 	pages = new ArrayList<>();
+	pages.add(new SaveProblemPage(this));
 	pages.add(new HomePage(this));
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
