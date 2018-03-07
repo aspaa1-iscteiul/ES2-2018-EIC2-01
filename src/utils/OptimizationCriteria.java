@@ -28,4 +28,9 @@ public class OptimizationCriteria {
 	this.dataType = dataType;
     }
 
+    @Override
+    public String toString() {
+	return Problem.newLine + "\t \t Name: " + name + ", Data Type: " + dataType;
+    }
+
 }

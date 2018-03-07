@@ -15,21 +15,24 @@ public class FitnessFunction {
     }
 
     public String getJarFilePath() {
-        return jarFilePath;
+	return jarFilePath;
     }
 
     public void setJarFilePath(String jarFilePath) {
-        this.jarFilePath = jarFilePath;
+	this.jarFilePath = jarFilePath;
     }
 
     public ArrayList<OptimizationCriteria> getOptimizationCriteria() {
-        return optimizationCriteria;
+	return optimizationCriteria;
     }
 
     public void setOptimizationCriteria(ArrayList<OptimizationCriteria> optimizationCriteria) {
-        this.optimizationCriteria = optimizationCriteria;
+	this.optimizationCriteria = optimizationCriteria;
     }
-    
-    
+
+    @Override
+    public String toString() {
+	return Problem.newLine + "\t Jar File's Path: " + jarFilePath + ", Optimization Criteria: " + optimizationCriteria;
+    }
 
 }

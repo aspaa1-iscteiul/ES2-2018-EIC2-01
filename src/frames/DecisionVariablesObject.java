@@ -4,17 +4,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -24,53 +23,62 @@ public class DecisionVariablesObject {
     private DecisionVariablesPage page;
     private JPanel variablesPanel;
     private JTextField name;
-    private final static String[] dataTypes = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean" };
+    private final static String[] dataTypes = { "Integer", "Double" };
     private JComboBox<String> dataType;
     private JTextField lowerBound;
     private JTextField upperBound;
-    private final static String[] numberSets = { "N (Natural)", "Z (Integers)", "Q (Rational)", "R (Real)" };
-    private JComboBox<String> domain1;
-    private final static String[] operations = { "  ", "U", "/" };
-    private JComboBox<String> domain2;
-    private JTextField domain3;
     private JLabel deleteIcon;
 
     public DecisionVariablesObject(final DecisionVariablesPage page) {
 	this.page = page;
 	this.variablesPanel = new JPanel();
-	this.name = new JTextField(5);
+	DecisionVariablesObject tmp = this;
+	this.name = new JTextField(5) {
+	    private static final long serialVersionUID = 1L;
+
+	    @Override
+	    public void processKeyEvent(KeyEvent key) {
+		super.processKeyEvent(key);
+		isValidName();
+	    }
+	};
+
 	this.dataType = FrameUtils.cuteComboBox(dataTypes);
-	this.lowerBound = new JTextField(5);
-	this.upperBound = new JTextField(5);
-	this.domain1 = FrameUtils.cuteComboBox(numberSets);
-	this.domain2 = FrameUtils.cuteComboBox(operations);
-	this.domain3 = new JTextField(5);
-
-	this.domain3.addKeyListener(new KeyListener() {
-
+	dataType.setSelectedItem(null);
+	dataType.setEnabled(false);
+	dataType.addActionListener(new ActionListener() {
 	    @Override
-	    public void keyPressed(KeyEvent arg0) {
-	    }
-
-	    @Override
-	    public void keyReleased(KeyEvent arg0) {
-		if (Pattern.matches("[,0-9]+", domain3.getText()) || domain3.getText().isEmpty()) {
-		} else {
-		    domain3.setText(domain3.getText().substring(0, domain3.getText().length() - 1));
-		    JOptionPane.showMessageDialog(variablesPanel, "Only numbers or ','", "InvalidInput",
-			    JOptionPane.INFORMATION_MESSAGE);
-		}
-	    }
-
-	    @Override
-	    public void keyTyped(KeyEvent arg0) {
+	    public void actionPerformed(ActionEvent e) {
+		lowerBound.setEnabled(true);
+		upperBound.setEnabled(true);
+		if (isValidBound())
+		    page.blockNextButton(false);
 	    }
 	});
 
+	this.lowerBound = new JTextField(5) {
+	    private static final long serialVersionUID = 1L;
+
+	    @Override
+	    public void processKeyEvent(KeyEvent key) {
+		super.processKeyEvent(key);
+		isValidBound();
+	    }
+	};
+	lowerBound.setEnabled(false);
+	this.upperBound = new JTextField(5) {
+	    private static final long serialVersionUID = 1L;
+
+	    @Override
+	    public void processKeyEvent(KeyEvent key) {
+		super.processKeyEvent(key);
+		isValidBound();
+	    }
+	};
+	upperBound.setEnabled(false);
+
 	this.deleteIcon = new JLabel();
 	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
-
-	final DecisionVariablesObject tmp = this;
 
 	this.deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
@@ -84,26 +92,18 @@ public class DecisionVariablesObject {
 
 	    @Override
 	    public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	    }
 
 	    @Override
 	    public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	    }
 
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	    }
 
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	    }
 
 	});
@@ -112,22 +112,18 @@ public class DecisionVariablesObject {
     public JPanel transformIntoAPanel() {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	variablesPanel.setBackground(Color.WHITE);
-	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-	name.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	Border border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		BorderFactory.createEmptyBorder(0, 10, 0, 10));
+	name.setBorder(border);
 	name.setPreferredSize(new Dimension(10, 22));
-	lowerBound.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	lowerBound.setBorder(border);
 	lowerBound.setPreferredSize(new Dimension(10, 22));
-	upperBound.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	upperBound.setBorder(border);
 	upperBound.setPreferredSize(new Dimension(10, 22));
-	domain3.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
-	domain3.setPreferredSize(new Dimension(10, 22));
 	variablesPanel.add(name);
 	variablesPanel.add(dataType);
 	variablesPanel.add(lowerBound);
 	variablesPanel.add(upperBound);
-	variablesPanel.add(domain1);
-	variablesPanel.add(domain2);
-	variablesPanel.add(domain3);
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
     }
@@ -164,30 +160,6 @@ public class DecisionVariablesObject {
 	this.upperBound = upperBound;
     }
 
-    public JComboBox<String> getDomain1() {
-	return domain1;
-    }
-
-    public void setDomain1(JComboBox<String> domain1) {
-	this.domain1 = domain1;
-    }
-
-    public JComboBox<String> getDomain2() {
-	return domain2;
-    }
-
-    public void setDomain2(JComboBox<String> domain2) {
-	this.domain2 = domain2;
-    }
-
-    public JTextField getDomain3() {
-	return domain3;
-    }
-
-    public void setDomain3(JTextField domain3) {
-	this.domain3 = domain3;
-    }
-
     public DecisionVariablesPage getPage() {
 	return page;
     }
@@ -196,79 +168,92 @@ public class DecisionVariablesObject {
 	this.page = page;
     }
 
-    private boolean validateLowerBound() {
-	try {
-	    if (!name.getText().trim().isEmpty()) {
-		if (dataType.getSelectedItem().toString().equals("Byte")) {
-		    Byte.parseByte(lowerBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Short")) {
-		    Short.parseShort(lowerBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Integer")) {
-		    Integer.parseInt(lowerBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Long")) {
-		    Long.parseLong(lowerBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Float")) {
-		    Float.parseFloat(lowerBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Double")) {
-		    Double.parseDouble(lowerBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Boolean")) {
-		    Boolean.parseBoolean(lowerBound.getText());
-		}
-	    }
-	} catch (Exception e) {
-	    lowerBound.setBackground(new Color(219, 151, 149).brighter());
-	    page.refreshPage();
+    public boolean isWellFilled() {
+	return isValidName() && dataType.getSelectedItem() != null && isValidBound();
+    }
+
+    private boolean isValidName() {
+	String text = name.getText().trim();
+	if (text.equals("") || page.isNameRepeated(text)) {
+	    dataType.setEnabled(false);
+	    lowerBound.setEnabled(false);
+	    upperBound.setEnabled(false);
+	    page.blockNextButton(true);
+
+	    page.showWarning(page.isNameRepeated(text));
+
 	    return false;
 	}
-	lowerBound.setBackground(Color.white);
+	page.showWarning(false);
+	dataType.setEnabled(true);
+	if (dataType.getSelectedItem() != null) {
+	    lowerBound.setEnabled(true);
+	    upperBound.setEnabled(true);
+	    isValidBound();
+	}
 	return true;
     }
 
-    private boolean validateUpperBound() {
-	try {
-	    if (!name.getText().trim().isEmpty()) {
-		if (dataType.getSelectedItem().toString().equals("Byte")) {
-		    Byte.parseByte(upperBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Short")) {
-		    Short.parseShort(upperBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Integer")) {
-		    Integer.parseInt(upperBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Long")) {
-		    Long.parseLong(upperBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Float")) {
-		    Float.parseFloat(upperBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Double")) {
-		    Double.parseDouble(upperBound.getText());
-		}
-		if (dataType.getSelectedItem().toString().equals("Boolean")) {
-		    Boolean.parseBoolean(upperBound.getText());
-		}
-	    }
-	} catch (Exception e) {
-	    upperBound.setBackground(new Color(219, 151, 149).brighter());
-	    page.refreshPage();
+    /**
+     * 
+     * @param lower
+     *            true if is about {@link #lowerBound} otherwise is about
+     *            {@link #upperBound}
+     * @return
+     */
+    private boolean isValidBound(boolean lower) {
+	JTextField bound = lower ? lowerBound : upperBound;
+	String type = (String) dataType.getSelectedItem();
+	if (type == null)
 	    return false;
+	else {
+	    if (bound.getText().equals("")) {
+		page.showWarning2(false);
+		page.blockNextButton(false);
+		return true;
+	    }
+	    try {
+		if (type.equals("Integer"))
+		    Integer.parseInt(bound.getText());
+		else
+		    Double.parseDouble(bound.getText());
+	    } catch (NumberFormatException e) {
+		page.showWarning2(true);
+		page.blockNextButton(true);
+		return false;
+	    }
 	}
-	upperBound.setBackground(Color.white);
+	page.showWarning2(false);
+	page.blockNextButton(false);
 	return true;
     }
 
-    public boolean validateData() {
-	boolean tmp = true;
-	if (validateLowerBound() == false || validateUpperBound() == false) {
-	    tmp = false;
+    private boolean isValidBound() {
+	if (isValidBound(true) && isValidBound(false)) {
+	    if (!lowerBound.getText().equals("") && !upperBound.getText().equals("")) {
+		double lower, upper;
+		if (((String) dataType.getSelectedItem()).equals("Integer")) {
+		    lower = Integer.parseInt(lowerBound.getText());
+		    upper = Integer.parseInt(upperBound.getText());
+		} else {
+		    lower = Double.parseDouble(lowerBound.getText());
+		    upper = Double.parseDouble(upperBound.getText());
+		}
+		boolean awnser = lower >= upper;
+		page.showWarning3(awnser);
+		page.blockNextButton(awnser);
+		return awnser;
+	    } else {
+		page.showWarning3(false);
+		page.blockNextButton(false);
+		if (!lowerBound.getText().equals("")) {
+		    return isValidBound(true);
+		} else {
+		    return isValidBound(false);
+		}
+	    }
 	}
-	return tmp;
+	return false;
     }
+
 }
