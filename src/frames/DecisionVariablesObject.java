@@ -77,9 +77,13 @@ public class DecisionVariablesObject {
 	};
 	upperBound.setEnabled(false);
 
+	continueConstructor(tmp);
+    }
+
+    private void continueConstructor(DecisionVariablesObject tmp) {
 	this.deleteIcon = new JLabel();
 	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
-
+	
 	this.deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
@@ -89,23 +93,23 @@ public class DecisionVariablesObject {
 		    }
 		});
 	    }
-
+	    
 	    @Override
 	    public void mouseEntered(MouseEvent arg0) {
 	    }
-
+	    
 	    @Override
 	    public void mouseExited(MouseEvent arg0) {
 	    }
-
+	    
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
 	    }
-
+	    
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
-
+	    
 	});
     }
 
@@ -168,10 +172,32 @@ public class DecisionVariablesObject {
 	this.page = page;
     }
 
+    /**
+     * Returns {@code true} if {@linkplain DecisionVariablesObject} have a valid
+     * name and the {@linkplain #dataType} is not {@code null} and have a valid
+     * bound, otherwise {@code false}
+     * 
+     * @return {@code true} if {@linkplain DecisionVariablesObject} have a valid
+     *         name and the {@linkplain #dataType} is not {@code null} and have
+     *         a valid bound, otherwise {@code false}
+     * 
+     * @see #isValidName()
+     * @see #isValidBound()
+     */
     public boolean isWellFilled() {
 	return isValidName() && dataType.getSelectedItem() != null && isValidBound();
     }
 
+    /**
+     * Returns {@code true} if the name is not empty and is not repeated, also
+     * unlocks the {@linkplain #dataType}, otherwise places warnings and locks
+     * the next button in the {@linkplain DecisionVariablesPage}
+     * 
+     * @return {@code true} if the name is not empty and is not repeated,
+     *         otherwise {@code false}
+     * 
+     * @see DecisionVariablesPage#isNameRepeated(String)
+     */
     private boolean isValidName() {
 	String text = name.getText().trim();
 	if (text.equals("") || page.isNameRepeated(text)) {
@@ -180,11 +206,11 @@ public class DecisionVariablesObject {
 	    upperBound.setEnabled(false);
 	    page.blockNextButton(true);
 
-	    page.showWarning(page.isNameRepeated(text));
+	    page.showWarning(page.isNameRepeated(text), 1);
 
 	    return false;
 	}
-	page.showWarning(false);
+	page.showWarning(false, 1);
 	dataType.setEnabled(true);
 	if (dataType.getSelectedItem() != null) {
 	    lowerBound.setEnabled(true);
@@ -195,20 +221,27 @@ public class DecisionVariablesObject {
     }
 
     /**
+     * Returns {@code true} if the {@code JTextField}, indicated by
+     * <b>lower</b>, contains a valid number or is empty, otherwise places
+     * warnings and locks the next button in the
+     * {@linkplain DecisionVariablesPage}
      * 
      * @param lower
-     *            true if is about {@link #lowerBound} otherwise is about
-     *            {@link #upperBound}
-     * @return
+     *            {@code true} if it is to validate the number in
+     *            {@linkplain #lowerBound}, otherwise it is to validate the
+     *            number in {@linkplain #upperBound}
+     * 
+     * @return {@code true} if the JTextField contains a valid number or is
+     *         empty, otherwise {@code false}
      */
-    private boolean isValidBound(boolean lower) {
+    private boolean isValidNumber(boolean lower) {
 	JTextField bound = lower ? lowerBound : upperBound;
 	String type = (String) dataType.getSelectedItem();
 	if (type == null)
 	    return false;
 	else {
 	    if (bound.getText().equals("")) {
-		page.showWarning2(false);
+		page.showWarning(false, 2);
 		page.blockNextButton(false);
 		return true;
 	    }
@@ -218,18 +251,30 @@ public class DecisionVariablesObject {
 		else
 		    Double.parseDouble(bound.getText());
 	    } catch (NumberFormatException e) {
-		page.showWarning2(true);
+		page.showWarning(true, 2);
 		page.blockNextButton(true);
 		return false;
 	    }
 	}
-	page.showWarning2(false);
+	page.showWarning(false, 2);
 	page.blockNextButton(false);
 	return true;
     }
 
+    /**
+     * Returns {@code true} if {@linkplain #lowerBound} and
+     * {@linkplain #upperBound} have valid numbers and if the lower limit is
+     * less than the upper limit, otherwise places warnings and locks the next
+     * button in the {@linkplain DecisionVariablesPage}
+     * 
+     * @return {@code true} if the {@linkplain #lowerBound} and
+     *         {@linkplain #upperBound} have valid numbers and if the lower
+     *         limit is less than the upper limit, otherwise {@code false}
+     * 
+     * @see #isValidNumber(boolean)
+     */
     private boolean isValidBound() {
-	if (isValidBound(true) && isValidBound(false)) {
+	if (isValidNumber(true) && isValidNumber(false)) {
 	    if (!lowerBound.getText().equals("") && !upperBound.getText().equals("")) {
 		double lower, upper;
 		if (((String) dataType.getSelectedItem()).equals("Integer")) {
@@ -239,17 +284,17 @@ public class DecisionVariablesObject {
 		    lower = Double.parseDouble(lowerBound.getText());
 		    upper = Double.parseDouble(upperBound.getText());
 		}
-		boolean awnser = lower >= upper;
-		page.showWarning3(awnser);
-		page.blockNextButton(awnser);
+		boolean awnser = lower < upper;
+		page.showWarning(!awnser, 3);
+		page.blockNextButton(!awnser);
 		return awnser;
 	    } else {
-		page.showWarning3(false);
+		page.showWarning(false, 3);
 		page.blockNextButton(false);
 		if (!lowerBound.getText().equals("")) {
-		    return isValidBound(true);
+		    return isValidNumber(true);
 		} else {
-		    return isValidBound(false);
+		    return isValidNumber(false);
 		}
 	    }
 	}

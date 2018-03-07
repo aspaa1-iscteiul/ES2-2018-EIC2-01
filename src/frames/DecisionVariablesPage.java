@@ -29,20 +29,19 @@ public class DecisionVariablesPage extends SuperPage {
     private static final long serialVersionUID = 1L;
 
     private ArrayList<DecisionVariablesObject> decisionVariableList;
-    private JPanel subSubMainPanel, warningPanel, warningPanel2, warningPanel3;
+    private JPanel subSubMainPanel, warningPanel1, warningPanel2, warningPanel3;
+    private JButton nextButton;
 
     public DecisionVariablesPage(UserInterface userInterface) {
 	super(userInterface);
     }
-
-    private JButton nextButton;
 
     @Override
     public void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
 	decisionVariableList = new ArrayList<DecisionVariablesObject>();
 
-	warningPanel = createWarningPanel("Optimization criterias must have unique names");
+	warningPanel1 = createWarningPanel("Optimization criterias must have unique names");
 	warningPanel2 = createWarningPanel("Lower bound and upper bound must agree with the data type selected");
 	warningPanel3 = createWarningPanel("Lower bound must be lower then upper bound");
     }
@@ -92,7 +91,6 @@ public class DecisionVariablesPage extends SuperPage {
 	infoPanel.add(dataType);
 	infoPanel.add(new JLabel("Lower Bound  "));
 	infoPanel.add(new JLabel("Upper Bound  "));
-	// infoPanel.add(new JLabel("Domain"));
 
 	subMainPanel.add(infoPanel);
 
@@ -205,7 +203,12 @@ public class DecisionVariablesPage extends SuperPage {
 	decisionVariableList.remove(dvo);
 	subSubMainPanel.remove(dvo.transformIntoAPanel());
 
-	validateData();
+	// verifies that all remaining DecisionVariableObjects are well filled
+	for (DecisionVariablesObject dvo2 : decisionVariableList)
+	    if (!dvo2.isWellFilled()) {
+		nextButton.setEnabled(false);
+		return;
+	    }
 
 	refreshPage();
     }
@@ -226,6 +229,17 @@ public class DecisionVariablesPage extends SuperPage {
 	userInterface.getFrame().pack();
     }
 
+    /**
+     * Returns {@code true} if there is at least other variable with the same
+     * name, otherwise {@code false}
+     * 
+     * @param varName
+     *            the {@code String} to compare to the other variable names in
+     *            the {@linkplain #decisionVariableList}
+     * 
+     * @return {@code true} if there is at least other variable with the same
+     *         name, otherwise {@code false}
+     */
     public boolean isNameRepeated(String varName) {
 	int count = 0;
 	for (DecisionVariablesObject dvoList : decisionVariableList)
@@ -238,48 +252,32 @@ public class DecisionVariablesPage extends SuperPage {
 	nextButton.setEnabled(!b);
     }
 
-    public void showWarning(boolean show) {
+    /**
+     * If <b>show</b> is {@code true} it adds the warning panel's <b>number</b>,
+     * otherwise it removes the warning panel's <b>number</b>
+     * 
+     * @param show
+     *            {@code true} if it is to add the warning panel, {@code false}
+     *            if it is to remove
+     * 
+     * @param number
+     *            points to the respective warning panel
+     * 
+     * @see #warningPanel1
+     * @see #warningPanel2
+     * @see #warningPanel3
+     */
+    public void showWarning(boolean show, int number) {
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {
+		JPanel panel = number == 1 ? warningPanel1 : (number == 2 ? warningPanel2 : warningPanel3);
 		if (show)
-		    mainPanel.add(warningPanel);
+		    mainPanel.add(panel);
 		else
-		    mainPanel.remove(warningPanel);
+		    mainPanel.remove(panel);
 		refreshPage();
 	    }
 	});
-    }
-
-    public void showWarning2(boolean show) {
-	SwingUtilities.invokeLater(new Runnable() {
-	    public void run() {
-		if (show)
-		    mainPanel.add(warningPanel2);
-		else
-		    mainPanel.remove(warningPanel2);
-		refreshPage();
-	    }
-	});
-    }
-
-    public void showWarning3(boolean show) {
-	SwingUtilities.invokeLater(new Runnable() {
-	    public void run() {
-		if (show)
-		    mainPanel.add(warningPanel3);
-		else
-		    mainPanel.remove(warningPanel3);
-		refreshPage();
-	    }
-	});
-    }
-
-    private void validateData() {
-	for (DecisionVariablesObject dvo : decisionVariableList)
-	    if (!dvo.isWellFilled()) {
-		nextButton.setEnabled(false);
-		return;
-	    }
     }
 
 }
