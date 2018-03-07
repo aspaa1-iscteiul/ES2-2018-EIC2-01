@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -50,7 +51,10 @@ public class SendEmailPage extends SuperPage {
 	JPanel infoPanel = new JPanel();
 	infoPanel.setLayout(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
-	infoPanel.add(new JLabel("We will answer your email within 2 working days."), BorderLayout.WEST);
+	JLabel infoIcon = new JLabel();
+	infoIcon.setIcon(new ImageIcon("./src/frames/images/email_icon.png"));
+	infoPanel.add(infoIcon, BorderLayout.WEST);
+	infoPanel.add(new JLabel("   We will answer your email within 2 working days."), BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
 	
 	FrameUtils.addEmptyLabels(mainPanel, 1);
