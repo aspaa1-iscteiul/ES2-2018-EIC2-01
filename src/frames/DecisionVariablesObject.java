@@ -24,19 +24,18 @@ public class DecisionVariablesObject {
     private DecisionVariablesPage page;
     private JPanel variablesPanel;
     private JTextField name;
-    private final static String[] dataTypes = {"Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean"};
+    private final static String[] dataTypes = { "Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean" };
     private JComboBox<String> dataType;
     private JTextField lowerBound;
     private JTextField upperBound;
-    private final static String[] numberSets = { "N (Natural)", "Z (Integers)", "Q (Rational)", "R (Real)"};
+    private final static String[] numberSets = { "N (Natural)", "Z (Integers)", "Q (Rational)", "R (Real)" };
     private JComboBox<String> domain1;
-    private final static String[] operations = {"  ", "U", "/"};
+    private final static String[] operations = { "  ", "U", "/" };
     private JComboBox<String> domain2;
     private JTextField domain3;
     private JLabel deleteIcon;
 
-
-    public DecisionVariablesObject(DecisionVariablesPage page) {
+    public DecisionVariablesObject(final DecisionVariablesPage page) {
 	this.page = page;
 	this.variablesPanel = new JPanel();
 	this.name = new JTextField(5);
@@ -55,10 +54,11 @@ public class DecisionVariablesObject {
 
 	    @Override
 	    public void keyReleased(KeyEvent arg0) {
-		if(Pattern.matches("[,0-9]+", domain3.getText()) || domain3.getText().isEmpty()) {
-		}else {
+		if (Pattern.matches("[,0-9]+", domain3.getText()) || domain3.getText().isEmpty()) {
+		} else {
 		    domain3.setText(domain3.getText().substring(0, domain3.getText().length() - 1));
-		    JOptionPane.showMessageDialog(variablesPanel, "Only numbers or ','", "InvalidInput", JOptionPane.INFORMATION_MESSAGE);
+		    JOptionPane.showMessageDialog(variablesPanel, "Only numbers or ','", "InvalidInput",
+			    JOptionPane.INFORMATION_MESSAGE);
 		}
 	    }
 
@@ -70,13 +70,13 @@ public class DecisionVariablesObject {
 	this.deleteIcon = new JLabel();
 	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 
-	DecisionVariablesObject tmp = this;
+	final DecisionVariablesObject tmp = this;
 
 	this.deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
-		EventQueue.invokeLater(new Runnable(){
-		    public void run(){
+		EventQueue.invokeLater(new Runnable() {
+		    public void run() {
 			page.removeDecisionVariableFromList(tmp);
 		    }
 		});
@@ -113,13 +113,13 @@ public class DecisionVariablesObject {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	variablesPanel.setBackground(Color.WHITE);
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-	name.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	name.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	name.setPreferredSize(new Dimension(10, 22));
-	lowerBound.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	lowerBound.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	lowerBound.setPreferredSize(new Dimension(10, 22));
-	upperBound.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	upperBound.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	upperBound.setPreferredSize(new Dimension(10, 22));
-	domain3.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	domain3.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	domain3.setPreferredSize(new Dimension(10, 22));
 	variablesPanel.add(name);
 	variablesPanel.add(dataType);
@@ -194,34 +194,34 @@ public class DecisionVariablesObject {
 
     public void setPage(DecisionVariablesPage page) {
 	this.page = page;
-    }	
+    }
 
     private boolean validateLowerBound() {
 	try {
-	    if(!name.getText().trim().isEmpty()){
-		if(dataType.getSelectedItem().toString().equals("Byte")) {
+	    if (!name.getText().trim().isEmpty()) {
+		if (dataType.getSelectedItem().toString().equals("Byte")) {
 		    Byte.parseByte(lowerBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Short")) {
+		if (dataType.getSelectedItem().toString().equals("Short")) {
 		    Short.parseShort(lowerBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Integer")) {
+		if (dataType.getSelectedItem().toString().equals("Integer")) {
 		    Integer.parseInt(lowerBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Long")) {
+		if (dataType.getSelectedItem().toString().equals("Long")) {
 		    Long.parseLong(lowerBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Float")) {
+		if (dataType.getSelectedItem().toString().equals("Float")) {
 		    Float.parseFloat(lowerBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Double")) {
+		if (dataType.getSelectedItem().toString().equals("Double")) {
 		    Double.parseDouble(lowerBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Boolean")) {
+		if (dataType.getSelectedItem().toString().equals("Boolean")) {
 		    Boolean.parseBoolean(lowerBound.getText());
 		}
 	    }
-	}catch(Exception e) {
+	} catch (Exception e) {
 	    lowerBound.setBackground(new Color(219, 151, 149).brighter());
 	    page.refreshPage();
 	    return false;
@@ -232,30 +232,30 @@ public class DecisionVariablesObject {
 
     private boolean validateUpperBound() {
 	try {
-	    if(!name.getText().trim().isEmpty()){
-		if(dataType.getSelectedItem().toString().equals("Byte")) {
+	    if (!name.getText().trim().isEmpty()) {
+		if (dataType.getSelectedItem().toString().equals("Byte")) {
 		    Byte.parseByte(upperBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Short")) {
+		if (dataType.getSelectedItem().toString().equals("Short")) {
 		    Short.parseShort(upperBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Integer")) {
+		if (dataType.getSelectedItem().toString().equals("Integer")) {
 		    Integer.parseInt(upperBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Long")) {
+		if (dataType.getSelectedItem().toString().equals("Long")) {
 		    Long.parseLong(upperBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Float")) {
+		if (dataType.getSelectedItem().toString().equals("Float")) {
 		    Float.parseFloat(upperBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Double")) {
+		if (dataType.getSelectedItem().toString().equals("Double")) {
 		    Double.parseDouble(upperBound.getText());
 		}
-		if(dataType.getSelectedItem().toString().equals("Boolean")) {
+		if (dataType.getSelectedItem().toString().equals("Boolean")) {
 		    Boolean.parseBoolean(upperBound.getText());
 		}
 	    }
-	}catch(Exception e) {
+	} catch (Exception e) {
 	    upperBound.setBackground(new Color(219, 151, 149).brighter());
 	    page.refreshPage();
 	    return false;
@@ -266,7 +266,7 @@ public class DecisionVariablesObject {
 
     public boolean validateData() {
 	boolean tmp = true;
-	if(validateLowerBound()==false || validateUpperBound()==false) {
+	if (validateLowerBound() == false || validateUpperBound() == false) {
 	    tmp = false;
 	}
 	return tmp;

@@ -42,7 +42,7 @@ public class DecisionVariablesPage extends SuperPage {
 
     @Override
     public void initialize() {
-	nextButton = FrameUtils.cuteButton("Next");	
+	nextButton = FrameUtils.cuteButton("Next");
 	decisionVariableList = new ArrayList<DecisionVariablesObject>();
 
 	warningPanel = new JPanel();
@@ -90,7 +90,7 @@ public class DecisionVariablesPage extends SuperPage {
 	infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	infoPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Name");
-	name.setBorder(new EmptyBorder(0, 0, 0, 45)); //to add space between the labels
+	name.setBorder(new EmptyBorder(0, 0, 0, 45)); // to add space between the labels
 	infoPanel.add(name);
 	JLabel dataType = new JLabel("Data Type");
 	dataType.setBorder(new EmptyBorder(0, 0, 0, 15));
@@ -101,12 +101,11 @@ public class DecisionVariablesPage extends SuperPage {
 
 	subMainPanel.add(infoPanel);
 
-
 	subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
 	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-	for(int i = 0; i != standardNumberOfVariables; i++) {
+	for (int i = 0; i != standardNumberOfVariables; i++) {
 	    DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this);
 	    decisionVariableList.add(decisionVariable);
 	    subSubMainPanel.add(decisionVariable.transformIntoAPanel());
@@ -120,19 +119,19 @@ public class DecisionVariablesPage extends SuperPage {
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
 
-	DecisionVariablesPage tmp = this;
+	final DecisionVariablesPage tmp = this;
 
 	addIcon.addMouseListener(new MouseListener() {
 
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
-		EventQueue.invokeLater(new Runnable(){
-		    public void run(){
+		EventQueue.invokeLater(new Runnable() {
+		    public void run() {
 			DecisionVariablesObject decisionVariable = new DecisionVariablesObject(tmp);
 			decisionVariableList.add(decisionVariable);
 			subSubMainPanel.add(decisionVariable.transformIntoAPanel());
-			validate(); //to update window
-			repaint(); //to update window
+			validate(); // to update window
+			repaint(); // to update window
 		    }
 		});
 	    }
@@ -195,7 +194,7 @@ public class DecisionVariablesPage extends SuperPage {
 	nextButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		if(verifyIfNamesAreUnique()==true && validateAllData()==true) {
+		if (verifyIfNamesAreUnique() == true && validateAllData() == true) {
 		    userInterface.goToNextPage();
 		    userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
 		}
@@ -212,13 +211,13 @@ public class DecisionVariablesPage extends SuperPage {
     public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
 	decisionVariableList.remove(dvo);
 	subSubMainPanel.remove(dvo.transformIntoAPanel());
-	refreshPage();	
+	refreshPage();
     }
 
-    private ArrayList<KnownSolutionsObject> getKnownSolutionsFromDecisionVariables(){
+    private ArrayList<KnownSolutionsObject> getKnownSolutionsFromDecisionVariables() {
 	ArrayList<KnownSolutionsObject> knownSolutions = new ArrayList<KnownSolutionsObject>();
-	for(DecisionVariablesObject dvo : decisionVariableList) {
-	    if(!dvo.getName().getText().trim().isEmpty()) {
+	for (DecisionVariablesObject dvo : decisionVariableList) {
+	    if (!dvo.getName().getText().trim().isEmpty()) {
 		knownSolutions.add(new KnownSolutionsObject(null, dvo.getName().getText()));
 	    }
 	}
@@ -227,16 +226,16 @@ public class DecisionVariablesPage extends SuperPage {
 
     private boolean verifyIfNamesAreUnique() {
 	boolean var = true;
-	for(DecisionVariablesObject dvo : decisionVariableList) {
+	for (DecisionVariablesObject dvo : decisionVariableList) {
 	    String tmp = dvo.getName().getText();
 	    int count = 0;
-	    for(DecisionVariablesObject dvo2 : decisionVariableList) {
-		if(tmp.equals(dvo2.getName().getText()) && !dvo2.getName().getText().trim().isEmpty()) {
+	    for (final DecisionVariablesObject dvo2 : decisionVariableList) {
+		if (tmp.equals(dvo2.getName().getText()) && !dvo2.getName().getText().trim().isEmpty()) {
 		    count++;
-		    if(count > 1) {
+		    if (count > 1) {
 			SwingUtilities.invokeLater(new Runnable() {
 			    public void run() {
-				dvo2.getName().setBackground( new Color(219,151,149).brighter());
+				dvo2.getName().setBackground(new Color(219, 151, 149).brighter());
 				mainPanel.add(warningPanel);
 				refreshPage();
 			    }
@@ -252,10 +251,10 @@ public class DecisionVariablesPage extends SuperPage {
 	return var;
     }
 
-    private boolean validateAllData(){
+    private boolean validateAllData() {
 	boolean tmp = true;
-	for(DecisionVariablesObject dvo : decisionVariableList) {
-	    if(dvo.validateData() == false){
+	for (DecisionVariablesObject dvo : decisionVariableList) {
+	    if (dvo.validateData() == false) {
 		tmp = false;
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
