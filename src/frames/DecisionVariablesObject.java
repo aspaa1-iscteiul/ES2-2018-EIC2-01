@@ -66,6 +66,7 @@ public class DecisionVariablesObject {
 	    }
 	};
 	lowerBound.setEnabled(false);
+	
 	this.upperBound = new JTextField(5) {
 	    private static final long serialVersionUID = 1L;
 
@@ -130,6 +131,25 @@ public class DecisionVariablesObject {
 	variablesPanel.add(upperBound);
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
+    }
+    
+    public void setVariableName(String name) {
+	this.name.setText(name);
+    }
+    
+    public void setVariableDataType(String type) {
+	dataType.setEnabled(true);
+	dataType.setSelectedItem(type);
+    }
+    
+    public void setLowerBound(String lower) {
+	lowerBound.setEnabled(true);
+	lowerBound.setText(lower);
+    }
+    
+    public void setUpperBound(String upper) {
+	upperBound.setEnabled(true);
+	upperBound.setText(upper);
     }
 
     public JTextField getName() {

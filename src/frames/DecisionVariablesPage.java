@@ -4,19 +4,27 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -104,6 +112,19 @@ public class DecisionVariablesPage extends SuperPage {
 
 	subMainPanel.add(subSubMainPanel);
 
+	subMainPanel.add(addOptionPanel());
+
+	JScrollPane scrollPane = new JScrollPane(subMainPanel);
+	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+	mainPanel.add(scrollPane);
+
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+
+	importFromFile();
+    }
+
+    private JPanel addOptionPanel() {
 	JPanel addOptionPanel = new JPanel();
 	addOptionPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
@@ -147,16 +168,101 @@ public class DecisionVariablesPage extends SuperPage {
 	});
 	addOptionPanel.add(addIcon, BorderLayout.WEST);
 	addOptionPanel.add(new JLabel("Add new variable"));
+	return addOptionPanel;
+    }
 
-	subMainPanel.add(addOptionPanel);
+    private void importFromFile() {
+	JPanel panel = new JPanel();
+	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	panel.setBackground(Color.WHITE);
+	JButton importFromFile = FrameUtils.cuteButton("Import from file");
+	importFromFile.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		JOptionPane.showMessageDialog(userInterface.getFrame(),
+			"The file to import must have only one variable name per line");
 
-	JScrollPane scrollPane = new JScrollPane(subMainPanel);
-	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		JFileChooser fileChooser = new JFileChooser();
+		// Launches the JFileChooser on the Desktop directory
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+		fileChooser.setDialogTitle("Select a file with the variables names");
+		// Prevents selection of multiple options
+		fileChooser.setMultiSelectionEnabled(false);
 
-	mainPanel.add(scrollPane);
+		if (fileChooser.showOpenDialog(userInterface.getFrame()) == JFileChooser.APPROVE_OPTION) {
+		    String[] values = askUserConstraints();
+		    if (values != null)
+			readImportedFile(fileChooser.getSelectedFile(), values);
+		}
+	    }
+	});
+	panel.add(importFromFile);
+	mainPanel.add(panel);
+    }
 
-	FrameUtils.addEmptyLabels(mainPanel, 1);
+    private String[] askUserConstraints() {
+	JPanel inputPanel = new JPanel();
+	inputPanel.setLayout(new GridLayout(3, 2));
+	inputPanel.add(new JLabel("Data Type: "));
+	JComboBox<String> dataType = new JComboBox<String>(new String[] { "Integer", "Double" });
+	inputPanel.add(dataType);
+	inputPanel.add(new JLabel("Lower Bound: "));
+	JTextField lowerBound = new JTextField();
+	inputPanel.add(lowerBound);
+	inputPanel.add(new JLabel("Upper Bound: "));
+	JTextField upperBound = new JTextField();
+	inputPanel.add(upperBound);
 
+	if (JOptionPane.showConfirmDialog(userInterface.getFrame(), inputPanel,
+		"Enter the constraints to all variables", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+	    String type = (String) dataType.getSelectedItem();
+	    double lower, upper;
+	    try {
+		if (type.equals("Integer")) {
+		    lower = Integer.parseInt(lowerBound.getText());
+		    upper = Integer.parseInt(upperBound.getText());
+		} else {
+		    lower = Double.parseDouble(lowerBound.getText());
+		    upper = Double.parseDouble(upperBound.getText());
+		}
+	    } catch (NumberFormatException e) {
+		JOptionPane.showMessageDialog(userInterface.getFrame(),
+			"The lower bound or upper bound given was not a valid number");
+		return askUserConstraints();
+	    }
+	    if (lower < upper)
+		return new String[] { type, lowerBound.getText(), upperBound.getText() };
+	    else {
+		JOptionPane.showMessageDialog(userInterface.getFrame(),
+			"The lower bound must be lower then the upper bound");
+		return askUserConstraints();
+	    }
+	}
+	return null;
+    }
+
+    private void readImportedFile(File selectedFile, String[] values) {
+	try {
+	    Scanner scn = new Scanner(selectedFile);
+	    while (scn.hasNextLine()) {
+		String line = scn.nextLine();
+		if (!line.equals("")) {
+		    DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this);
+		    decisionVariable.setVariableName(line);
+		    decisionVariable.setVariableDataType(values[0]);
+		    decisionVariable.setLowerBound(values[1]);
+		    decisionVariable.setUpperBound(values[2]);
+		    decisionVariableList.add(decisionVariable);
+		    subSubMainPanel.add(decisionVariable.transformIntoAPanel());
+		}
+	    }
+	    scn.close();
+
+	    isAllVariablesWellFilled();
+	} catch (FileNotFoundException e) {
+	    JOptionPane.showMessageDialog(userInterface.getFrame(),
+		    "The file " + selectedFile.getAbsolutePath() + " doesn't exists");
+	}
     }
 
     @Override
@@ -203,12 +309,7 @@ public class DecisionVariablesPage extends SuperPage {
 	decisionVariableList.remove(dvo);
 	subSubMainPanel.remove(dvo.transformIntoAPanel());
 
-	// verifies that all remaining DecisionVariableObjects are well filled
-	for (DecisionVariablesObject dvo2 : decisionVariableList)
-	    if (!dvo2.isWellFilled()) {
-		nextButton.setEnabled(false);
-		return;
-	    }
+	isAllVariablesWellFilled();
 
 	refreshPage();
     }
@@ -278,6 +379,15 @@ public class DecisionVariablesPage extends SuperPage {
 		refreshPage();
 	    }
 	});
+    }
+
+    private void isAllVariablesWellFilled() {
+	// verifies that all remaining DecisionVariableObjects are well filled
+	for (DecisionVariablesObject dvo2 : decisionVariableList)
+	    if (!dvo2.isWellFilled()) {
+		nextButton.setEnabled(false);
+		return;
+	    }
     }
 
 }
