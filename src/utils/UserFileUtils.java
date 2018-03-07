@@ -18,7 +18,19 @@ import org.xml.sax.SAXException;
 
 public class UserFileUtils {
 
-    public static void writeToXML(Problem problem) {
+    public final static String tagRoot = "Problem";
+
+    public final static String tagName = "Name", tagDataType = "DataType", tagLowerBound = "LowerBound",
+	    tagUpperBound = "UpperBound", tagDomain = "Domain", tagProblemDescription = "Description",
+	    tagDecisionVariables = "DecisionVariables", tagDecisionVariable = "DecisionVariable",
+	    tagKnownSolutions = "KnownSolutions", tagKnownSolution = "KnownSolution",
+	    tagFitnessFunctions = "FitnessFunctions", tagFitnessFunction = "FitnessFunction",
+	    tagJarFilePath = "JarFilePath", tagOptimizationCriteriaList = "OptimizationCriteria",
+	    tagOptimizationCriteria = "Criteria", tagOptimizationAlgorithms = "OptimizationAlgorithms",
+	    tagOptimizationAlgorithm = "OptimizationAlgorithm", tagIdealTimeFrame = "IdealTimeFrame",
+	    tagMaximumTimeFrame = "MaxTimeFrame";
+
+    public static void writeToXML(Problem problem, String path) {
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
 	try {
@@ -33,11 +45,10 @@ public class UserFileUtils {
 	    DOMSource source = new DOMSource(doc);
 
 	    // Write to File
-	    StreamResult file = new StreamResult(new File("./configFiles/userConfig.xml"));
+	    StreamResult file = new StreamResult(new File(path));
 
 	    // Write data
 	    transformer.transform(source, file);
-	    System.out.println("DONE");
 
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -45,60 +56,52 @@ public class UserFileUtils {
     }
 
     private static Node getProblem(Document doc, Problem problem) {
-	Element problemNode = doc.createElement("Problem");
+	Element problemNode = doc.createElement(tagRoot);
 
-	// create name element
-	problemNode.appendChild(getProblemElements(doc, problemNode, "Name", problem.getProblemName()));
+	// Create Name and Description Nodes
+	createTextNode(doc, problemNode, tagName, problem.getProblemName());
+	createTextNode(doc, problemNode, tagProblemDescription, problem.getProblemDescription());
 
-	// create description element
-	problemNode.appendChild(getProblemElements(doc, problemNode, "Description", problem.getProblemDescription()));
+	// Create Decision Variables Node and Sub-nodes
+	Element decisionVariblesNode = createEmptyNode(doc, problemNode, tagDecisionVariables);
 
-	// create list decision variables element
-	Element decisionVariblesNode = doc.createElement("DecisionVariablesList");
-	problemNode.appendChild(decisionVariblesNode);
 	for (DecisionVariable d : problem.getDecisionVariables()) {
-	    Element decisionVaribleNode = doc.createElement("DecisionVariable");
-	    decisionVariblesNode.appendChild(decisionVaribleNode);
+	    Element decisionVaribleNode = createEmptyNode(doc, decisionVariblesNode, tagDecisionVariable);
 
-	    decisionVaribleNode.appendChild(getProblemElements(doc, decisionVaribleNode, "Name", d.getName()));
-	    decisionVaribleNode
-		    .appendChild(getProblemElements(doc, decisionVaribleNode, "DataType", "" + d.getDataType()));
-	    decisionVaribleNode
-		    .appendChild(getProblemElements(doc, decisionVaribleNode, "LowerBound", d.getLowerBound()));
-	    decisionVaribleNode
-		    .appendChild(getProblemElements(doc, decisionVaribleNode, "UpperBound", d.getUpperBound()));
-	    decisionVaribleNode.appendChild(getProblemElements(doc, decisionVaribleNode, "Domain", d.getDomain()));
+	    createTextNode(doc, decisionVaribleNode, tagName, d.getName());
+	    createTextNode(doc, decisionVaribleNode, tagDataType, d.getDataType().name());
+	    createTextNode(doc, decisionVaribleNode, tagLowerBound, d.getLowerBound());
+	    createTextNode(doc, decisionVaribleNode, tagUpperBound, d.getUpperBound());
+	    createTextNode(doc, decisionVaribleNode, tagDomain, d.getDomain());
+
 	    if (d.getKnownSolutions() != null) {
-		Element knownSolutionsNode = doc.createElement("KnownSolutionsList");
-		decisionVaribleNode.appendChild(knownSolutionsNode);
-		for (String solution : d.getKnownSolutions()) {
-		    knownSolutionsNode
-			    .appendChild(getProblemElements(doc, knownSolutionsNode, "KnownSolution", solution));
-		}
+		Element knownSolutionsNode = createEmptyNode(doc, decisionVaribleNode, tagKnownSolutions);
+
+		for (String solution : d.getKnownSolutions())
+		    createTextNode(doc, knownSolutionsNode, tagKnownSolution, solution);
+
 	    }
 
 	}
 
-	// create list fitness function element
-	Element fitnessFunctionsNode = doc.createElement("FitnessFunctionsList");
-	problemNode.appendChild(fitnessFunctionsNode);
+	// Create Fitness Functions Node and Sub-nodes
+	Element fitnessFunctionsNode = createEmptyNode(doc, problemNode, tagFitnessFunctions);
+
 	for (FitnessFunction f : problem.getFitnessFunctions()) {
-	    Element fitnessFunctionNode = doc.createElement("FitnessFunction");
-	    fitnessFunctionsNode.appendChild(fitnessFunctionNode);
+	    Element fitnessFunctionNode = createEmptyNode(doc, fitnessFunctionsNode, tagFitnessFunction);
 
-	    fitnessFunctionNode
-		    .appendChild(getProblemElements(doc, fitnessFunctionNode, "JarFilePath", f.getJarFilePath()));
+	    createTextNode(doc, fitnessFunctionNode, tagJarFilePath, f.getJarFilePath());
+
 	    if (f.getOptimizationCriteria() != null) {
-		Element optimizationCriteriaListNode = doc.createElement("OptimizationCriteriaList");
-		fitnessFunctionNode.appendChild(optimizationCriteriaListNode);
-		for (OptimizationCriteria criteria : f.getOptimizationCriteria()) {
-		    Element optimizationCriteriaNode = doc.createElement("OptimizationCriteria");
-		    optimizationCriteriaListNode.appendChild(optimizationCriteriaNode);
+		Element optimizationCriteriaListNode = createEmptyNode(doc, fitnessFunctionNode,
+			tagOptimizationCriteriaList);
 
-		    optimizationCriteriaNode
-			    .appendChild(getProblemElements(doc, optimizationCriteriaNode, "Name", criteria.getName()));
-		    optimizationCriteriaNode.appendChild(
-			    getProblemElements(doc, optimizationCriteriaNode, "DataType", "" + criteria.getDataType()));
+		for (OptimizationCriteria criteria : f.getOptimizationCriteria()) {
+		    Element optimizationCriteriaNode = createEmptyNode(doc, optimizationCriteriaListNode,
+			    tagOptimizationCriteria);
+
+		    createTextNode(doc, optimizationCriteriaNode, tagName, criteria.getName());
+		    createTextNode(doc, optimizationCriteriaNode, tagDataType, criteria.getDataType().name());
 
 		}
 	    }
@@ -106,27 +109,31 @@ public class UserFileUtils {
 	}
 
 	// create list optimization algorithms element
-	Element optimizationAlgorithmsListNode = doc.createElement("OptimizationAlgorithmsList");
-	problemNode.appendChild(optimizationAlgorithmsListNode);
-	for (String a : problem.getOptimizationAlgorithms())
-	    optimizationAlgorithmsListNode
-		    .appendChild(getProblemElements(doc, optimizationAlgorithmsListNode, "OptimizationAlgorithm", a));
+	Element optimizationAlgorithmsListNode = createEmptyNode(doc, problemNode, tagOptimizationAlgorithms);
+
+	for (String algorithm : problem.getOptimizationAlgorithms())
+	    createTextNode(doc, optimizationAlgorithmsListNode, tagOptimizationAlgorithm, algorithm);
 
 	// create ideal time frame element
-	problemNode
-		.appendChild(getProblemElements(doc, problemNode, "IdealTimeFrame", "" + problem.getIdealTimeFrame()));
+	createTextNode(doc, problemNode, tagIdealTimeFrame, "" + problem.getIdealTimeFrame());
 
 	// create maximum time frame element
-	problemNode
-		.appendChild(getProblemElements(doc, problemNode, "MaximumTimeFrame", "" + problem.getMaxTimeFrame()));
+	createTextNode(doc, problemNode, tagMaximumTimeFrame, "" + problem.getMaxTimeFrame());
 
 	return problemNode;
     }
 
-    // utility method to create text node
-    private static Node getProblemElements(Document doc, Element element, String name, String value) {
-	Element node = doc.createElement(name);
+    // Utility method to create a text node
+    private static void createTextNode(Document doc, Element rootNode, String tag, String value) {
+	Element node = doc.createElement(tag);
 	node.appendChild(doc.createTextNode(value));
+	rootNode.appendChild(node);
+    }
+
+    // Utility method to create an empty node
+    private static Element createEmptyNode(Document doc, Element rootNode, String tag) {
+	Element node = doc.createElement(tag);
+	rootNode.appendChild(node);
 	return node;
     }
 
@@ -140,7 +147,7 @@ public class UserFileUtils {
 	    dBuilder = dbFactory.newDocumentBuilder();
 	    Document doc = dBuilder.parse(xmlFile);
 	    doc.getDocumentElement().normalize();
-	    NodeList problemList = doc.getElementsByTagName("Problem");
+	    NodeList problemList = doc.getElementsByTagName(tagRoot);
 
 	    problem = getProblem(doc, problemList.item(0));
 
@@ -156,10 +163,10 @@ public class UserFileUtils {
 	Problem problem = new Problem();
 	if (problemNode.getNodeType() == Node.ELEMENT_NODE) {
 	    Element element = (Element) problemNode;
-	    problem.setProblemName((getTagValue("Name", element)));
-	    problem.setProblemDescription((getTagValue("Description", element)));
-	    problem.setIdealTimeFrame((Double.parseDouble(getTagValue("IdealTimeFrame", element))));
-	    problem.setMaxTimeFrame((Double.parseDouble(getTagValue("MaximumTimeFrame", element))));
+	    problem.setProblemName((getTagValue(tagName, element)));
+	    problem.setProblemDescription((getTagValue(tagProblemDescription, element)));
+	    problem.setIdealTimeFrame((Double.parseDouble(getTagValue(tagIdealTimeFrame, element))));
+	    problem.setMaxTimeFrame((Double.parseDouble(getTagValue(tagMaximumTimeFrame, element))));
 	}
 
 	problem.setDecisionVariables(getDecisionVariables(doc));
@@ -178,7 +185,7 @@ public class UserFileUtils {
     private static ArrayList<DecisionVariable> getDecisionVariables(Document doc) {
 	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
 
-	NodeList decisionVariablesList = doc.getElementsByTagName("DecisionVariable");
+	NodeList decisionVariablesList = doc.getElementsByTagName(tagDecisionVariable);
 
 	for (int index = 0; index < decisionVariablesList.getLength(); index++) {
 
@@ -190,11 +197,11 @@ public class UserFileUtils {
 
 		Element element = (Element) decisionVariableNode;
 
-		String name = element.getElementsByTagName("Name").item(0).getTextContent();
-		String dataType = element.getElementsByTagName("DataType").item(0).getTextContent();
-		String lowerBound = element.getElementsByTagName("LowerBound").item(0).getTextContent();
-		String upperBound = element.getElementsByTagName("UpperBound").item(0).getTextContent();
-		String domain = element.getElementsByTagName("Domain").item(0).getTextContent();
+		String name = element.getElementsByTagName(tagName).item(0).getTextContent();
+		String dataType = element.getElementsByTagName(tagDataType).item(0).getTextContent();
+		String lowerBound = element.getElementsByTagName(tagLowerBound).item(0).getTextContent();
+		String upperBound = element.getElementsByTagName(tagUpperBound).item(0).getTextContent();
+		String domain = element.getElementsByTagName(tagDomain).item(0).getTextContent();
 
 		if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
 		    decisionVariable = new DecisionVariable(name, DataType.INTEGER, lowerBound, upperBound, domain,
@@ -204,7 +211,7 @@ public class UserFileUtils {
 			    null);
 
 		Node knownSolutionsNode = decisionVariableNode.getLastChild();
-		if (knownSolutionsNode.getNodeName().equals("KnownSolutionsList")) {
+		if (knownSolutionsNode.getNodeName().equals(tagKnownSolutions)) {
 
 		    ArrayList<String> knownSolutions = new ArrayList<>();
 
@@ -233,7 +240,7 @@ public class UserFileUtils {
     private static ArrayList<FitnessFunction> getFitnessFunctions(Document doc) {
 	ArrayList<FitnessFunction> fitnessFunctions = new ArrayList<>();
 
-	NodeList fitnessFunctionsList = doc.getElementsByTagName("FitnessFunction");
+	NodeList fitnessFunctionsList = doc.getElementsByTagName(tagFitnessFunction);
 
 	for (int index = 0; index < fitnessFunctionsList.getLength(); index++) {
 
@@ -246,7 +253,7 @@ public class UserFileUtils {
 
 		Element element = (Element) fitnessFunctionNode;
 
-		String jarFilePath = element.getElementsByTagName("JarFilePath").item(0).getTextContent();
+		String jarFilePath = element.getElementsByTagName(tagJarFilePath).item(0).getTextContent();
 
 		fitnessFunction = new FitnessFunction(jarFilePath, null);
 
@@ -260,8 +267,9 @@ public class UserFileUtils {
 
 		    if (optimizationCriteriaNode.getNodeType() == Node.ELEMENT_NODE) {
 			Element optimizationCriteriaElement = (Element) optimizationCriteriaNode;
-			String name = optimizationCriteriaElement.getElementsByTagName("Name").item(0).getTextContent();
-			String dataType = optimizationCriteriaElement.getElementsByTagName("DataType").item(0)
+			String name = optimizationCriteriaElement.getElementsByTagName(tagName).item(0)
+				.getTextContent();
+			String dataType = optimizationCriteriaElement.getElementsByTagName(tagDataType).item(0)
 				.getTextContent();
 
 			if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
@@ -286,7 +294,7 @@ public class UserFileUtils {
     private static ArrayList<String> getOptimizationAlgorithms(Document doc) {
 	ArrayList<String> optimizationAlgorithms = new ArrayList<>();
 
-	NodeList optimizationAlgorithmsList = doc.getElementsByTagName("OptimizationAlgorithm");
+	NodeList optimizationAlgorithmsList = doc.getElementsByTagName(tagOptimizationAlgorithm);
 
 	for (int index = 0; index < optimizationAlgorithmsList.getLength(); index++) {
 
@@ -329,7 +337,7 @@ public class UserFileUtils {
 
 	Problem p1 = new Problem("ProblemaTeste", "Descrição do problema de teste", decisionVariables, fitnessFunctions,
 		optimizationAlgorithms, 2.0, 4.0);
-	writeToXML(p1);
+	writeToXML(p1, "./configFiles/userConfig.xml");
 
 	Problem p2 = readFromXML("./configFiles/userConfig.xml");
 	System.out.println(p2.toString());
