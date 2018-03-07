@@ -59,7 +59,6 @@ public class UserInterface {
 	});
 
 	pages = new ArrayList<>();
-	pages.add(new SendEmailPage(this));
 	pages.add(new HomePage(this));
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
@@ -68,7 +67,8 @@ public class UserInterface {
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
-	pages.add(new AlgorithmsPage(this));
+	//pages.add(new AlgorithmsPage(this));
+	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
     }
 
@@ -87,6 +87,15 @@ public class UserInterface {
     public void goToPreviousPage() {
 	frame.remove(pages.get(actualPageIndex));
 	SuperPage page = pages.get(--actualPageIndex);
+	page.onTop();
+	frame.add(page);
+	frame.pack(); // XXX remove when width and height is set
+    }
+    
+    public void goToEmailPage() {
+	// TODO Auto-generated method stub
+	frame.remove(pages.get(actualPageIndex));
+	SuperPage page = new SendEmailPage(this);
 	page.onTop();
 	frame.add(page);
 	frame.pack(); // XXX remove when width and height is set
