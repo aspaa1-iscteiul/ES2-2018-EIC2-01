@@ -66,7 +66,7 @@ public class DecisionVariablesObject {
 	    }
 	};
 	lowerBound.setEnabled(false);
-	
+
 	this.upperBound = new JTextField(5) {
 	    private static final long serialVersionUID = 1L;
 
@@ -84,7 +84,7 @@ public class DecisionVariablesObject {
     private void continueConstructor(DecisionVariablesObject tmp) {
 	this.deleteIcon = new JLabel();
 	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
-	
+
 	this.deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
@@ -94,23 +94,23 @@ public class DecisionVariablesObject {
 		    }
 		});
 	    }
-	    
+
 	    @Override
 	    public void mouseEntered(MouseEvent arg0) {
 	    }
-	    
+
 	    @Override
 	    public void mouseExited(MouseEvent arg0) {
 	    }
-	    
+
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
 	    }
-	    
+
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
-	    
+
 	});
     }
 
@@ -132,64 +132,30 @@ public class DecisionVariablesObject {
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
     }
-    
+
     public void setVariableName(String name) {
 	this.name.setText(name);
     }
-    
+
+    public String getVariableName() {
+	return name.getText();
+    }
+
     public void setVariableDataType(String type) {
 	dataType.setEnabled(true);
+	lowerBound.setEnabled(true);
+	upperBound.setEnabled(true);
 	dataType.setSelectedItem(type);
     }
-    
+
     public void setLowerBound(String lower) {
-	lowerBound.setEnabled(true);
-	lowerBound.setText(lower);
+	if (dataType.getSelectedIndex() > 0)
+	    lowerBound.setText(lower);
     }
-    
+
     public void setUpperBound(String upper) {
-	upperBound.setEnabled(true);
-	upperBound.setText(upper);
-    }
-
-    public JTextField getName() {
-	return name;
-    }
-
-    public void setName(JTextField name) {
-	this.name = name;
-    }
-
-    public JComboBox<String> getDataType() {
-	return dataType;
-    }
-
-    public void setDataType(JComboBox<String> dataType) {
-	this.dataType = dataType;
-    }
-
-    public JTextField getLowerBound() {
-	return lowerBound;
-    }
-
-    public void setLowerBound(JTextField lowerBound) {
-	this.lowerBound = lowerBound;
-    }
-
-    public JTextField getUpperBound() {
-	return upperBound;
-    }
-
-    public void setUpperBound(JTextField upperBound) {
-	this.upperBound = upperBound;
-    }
-
-    public DecisionVariablesPage getPage() {
-	return page;
-    }
-
-    public void setPage(DecisionVariablesPage page) {
-	this.page = page;
+	if (dataType.getSelectedIndex() > 0)
+	    upperBound.setText(upper);
     }
 
     /**
@@ -220,6 +186,7 @@ public class DecisionVariablesObject {
      */
     private boolean isValidName() {
 	String text = name.getText().trim();
+	name.setText(text);
 	if (text.equals("") || page.isNameRepeated(text)) {
 	    dataType.setEnabled(false);
 	    lowerBound.setEnabled(false);
