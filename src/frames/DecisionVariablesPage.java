@@ -386,7 +386,7 @@ public class DecisionVariablesPage extends SuperPage {
      * @see #warningPanel2
      * @see #warningPanel3
      */
-    public void showWarning(boolean show, int number) {
+    public void showWarning(final boolean show, final int number) {
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {
 		JPanel panel = number == 1 ? warningPanel1 : (number == 2 ? warningPanel2 : warningPanel3);
