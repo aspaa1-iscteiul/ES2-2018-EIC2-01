@@ -3,6 +3,8 @@ package frames;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -22,10 +24,16 @@ public class KnownSolutionsObject {
     private JTextField solution2;
     private ArrayList<JTextField> textfieldList;
     private JLabel addIcon;
+    private String type;
+    private String lowerBound;
+    private String upperBound;
 
-    public KnownSolutionsObject(KnownSolutionsPage page, String string) {
+    public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound, String upperBound) {
 	this.page = page;
-	this.name = new JTextField(string);
+	this.name = new JTextField(name);
+	this.type = type;
+	this.lowerBound = lowerBound;
+	this.upperBound = upperBound;
 	this.solution1 = new JTextField(3);
 	this.solution2 = new JTextField(3);
 	this.textfieldList = new ArrayList<JTextField>();
@@ -50,6 +58,79 @@ public class KnownSolutionsObject {
 	for (JTextField textField : textfieldList) {
 	    textField.setBorder(
 		    BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+
+	    textField.addKeyListener(new KeyListener() {
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+		    if(type.equals("Integer") && !textField.getText().isEmpty()) {
+			try {
+			    Integer.parseInt(textField.getText());
+			    page.setWarningAboutDataType(false);
+			    if(!lowerBound.isEmpty()) {
+				if(Integer.parseInt(textField.getText()) < Integer.parseInt(lowerBound)) {
+				    page.setWarningAboutBounds(true);
+				} else {
+				    page.setWarningAboutBounds(false);
+				}
+			    }
+			    if(!upperBound.isEmpty()) {
+				if(Integer.parseInt(textField.getText()) > Integer.parseInt(upperBound)) {
+				    page.setWarningAboutBounds(true);
+				} else {
+				    page.setWarningAboutBounds(false);
+				}
+			    }
+			    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
+				if( Integer.parseInt(textField.getText()) >  Integer.parseInt(upperBound) || Integer.parseInt(textField.getText()) <  Integer.parseInt(lowerBound) ) {
+				    page.setWarningAboutBounds(true);
+				} else {
+				    page.setWarningAboutBounds(false);
+				}
+			    }
+			} catch(NumberFormatException e1) {
+			    page.setWarningAboutDataType(true);
+			}
+		    }
+		    if(type.equals("Double") && !textField.getText().isEmpty()) {
+			try {
+			    Double.parseDouble(textField.getText());
+			    page.setWarningAboutDataType(false);
+			    if(!lowerBound.isEmpty()) {
+				if( Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound)) {
+				    page.setWarningAboutBounds(true);
+				} else {
+				    page.setWarningAboutBounds(false);
+				}
+			    }
+			    if(!upperBound.isEmpty()) {
+				if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound)) {
+				    page.setWarningAboutBounds(true);
+				} else {
+				    page.setWarningAboutBounds(false);
+				}
+			    }
+			    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
+				if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound) || Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound) ) {
+				    page.setWarningAboutBounds(true);
+				} else {
+				    page.setWarningAboutBounds(false);
+				}
+			    }
+			} catch(NumberFormatException e1) {
+			    page.setWarningAboutDataType(true);
+			}
+		    }
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+		}
+	    });
+
 	    firstPanel.add(textField);
 	}
 

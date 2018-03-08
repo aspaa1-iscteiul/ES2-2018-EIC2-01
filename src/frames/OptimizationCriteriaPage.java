@@ -178,6 +178,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		userInterface.isSingleobjective(optimizationCriteriaList.size() == 1);
+		userInterface.setOptimizationCriteriaFromPage(optimizationCriteriaList);
 		userInterface.goToNextPage();
 	    }
 	});

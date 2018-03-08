@@ -336,7 +336,8 @@ public class DecisionVariablesPage extends SuperPage {
 	ArrayList<KnownSolutionsObject> knownSolutions = new ArrayList<KnownSolutionsObject>();
 	for (DecisionVariablesObject dvo : decisionVariableList) {
 	    if (!dvo.getVariableName().trim().isEmpty()) {
-		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName()));
+		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound()));
+		System.out.println(dvo.getDataType());
 	    }
 	}
 	return knownSolutions;
@@ -406,6 +407,9 @@ public class DecisionVariablesPage extends SuperPage {
      * @see DecisionVariablesObject#isWellFilled()
      */
     public void isAllVariablesWellFilled() {
+	if(decisionVariableList.size() == 0) {
+	    nextButton.setEnabled(false);
+	}
 	for (DecisionVariablesObject dvo2 : decisionVariableList)
 	    if (!dvo2.isWellFilled())
 		return;

@@ -140,6 +140,18 @@ public class DecisionVariablesObject {
     public String getVariableName() {
 	return name.getText();
     }
+    
+    public String getDataType() {
+	return dataType.getSelectedItem().toString();
+    }
+    
+    public String getLowerBound() {
+	return lowerBound.getText();
+    }
+    
+    public String getUpperBound() {
+	return upperBound.getText();
+    }
 
     public void setVariableDataType(String type) {
 	dataType.setEnabled(true);
