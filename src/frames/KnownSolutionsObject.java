@@ -55,7 +55,7 @@ public class KnownSolutionsObject {
 	name.setEditable(false);
 	firstPanel.add(name);
 
-	for (JTextField textField : textfieldList) {
+	for (final JTextField textField : textfieldList) {
 	    textField.setBorder(
 		    BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 
@@ -90,7 +90,7 @@ public class KnownSolutionsObject {
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
 		    public void run() {
-			JTextField newSolution = new JTextField(3);
+			final JTextField newSolution = new JTextField(3);
 			newSolution.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 			

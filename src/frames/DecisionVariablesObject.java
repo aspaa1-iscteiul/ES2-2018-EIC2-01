@@ -30,7 +30,7 @@ public class DecisionVariablesObject {
 	    String upperBound) {
 	this.page = page;
 	variablesPanel = new JPanel();
-	DecisionVariablesObject tmp = this;
+	final DecisionVariablesObject tmp = this;
 	this.name = new JTextField(name, 5);
 	this.dataType = FrameUtils.cuteComboBox(dataTypes);
 	this.dataType.setSelectedItem(dataType);
