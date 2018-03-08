@@ -43,7 +43,7 @@ public class DecisionVariablesObject {
 	    }
 	};
 
-	this.dataType = FrameUtils.cuteComboBox(dataTypes);
+	dataType = FrameUtils.cuteComboBox(dataTypes);
 	dataType.setSelectedItem(null);
 	dataType.setEnabled(false);
 	dataType.addActionListener(new ActionListener() {
@@ -52,7 +52,7 @@ public class DecisionVariablesObject {
 		lowerBound.setEnabled(true);
 		upperBound.setEnabled(true);
 		if (isValidBound())
-		    page.blockNextButton(false);
+		    page.isAllVariablesWellFilled();
 	    }
 	});
 
@@ -78,10 +78,10 @@ public class DecisionVariablesObject {
 	};
 	upperBound.setEnabled(false);
 
-	continueConstructor(tmp);
+	constructorContinuation(tmp);
     }
 
-    private void continueConstructor(final DecisionVariablesObject tmp) {
+    private void constructorContinuation(final DecisionVariablesObject tmp) {
 	this.deleteIcon = new JLabel();
 	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 

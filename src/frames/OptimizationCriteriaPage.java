@@ -24,23 +24,22 @@ import javax.swing.border.EmptyBorder;
 public class OptimizationCriteriaPage extends SuperPage {
 
     /**
-     * 
+     * Default
      */
     private static final long serialVersionUID = 1L;
-    private static final int standardNumberOfVariables = 3;
+
     private ArrayList<OptimizationCriteriaObject> optimizationCriteriaList;
-    private JPanel warningPanel;
+    private JPanel warningPanel, subSubMainPanel;
+    private JButton nextButton;
 
     public OptimizationCriteriaPage(UserInterface userInterface) {
 	super(userInterface);
-	// TODO Auto-generated constructor stub
     }
-
-    private JButton nextButton;
 
     @Override
     public void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
+	blockNextButton(true);
 	optimizationCriteriaList = new ArrayList<OptimizationCriteriaObject>();
 
 	warningPanel = new JPanel();
@@ -78,38 +77,42 @@ public class OptimizationCriteriaPage extends SuperPage {
 	infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	infoPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Name");
-	name.setBorder(new EmptyBorder(0, 0, 0, 100)); // to add space between
-						       // the labels
+	// to add space between the labels
+	name.setBorder(new EmptyBorder(0, 0, 0, 100));
+
 	infoPanel.add(name);
 	infoPanel.add(new JLabel("Data Type"));
 
 	subMainPanel.add(infoPanel);
 
-	final JPanel subSubMainPanel = new JPanel();
+	subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
 	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-	for (int i = 0; i != standardNumberOfVariables; i++) {
-	    OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject();
-	    optimizationCriteriaList.add(optimizationCriteria);
-	    subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
-	}
+	OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject(this);
+	optimizationCriteriaList.add(optimizationCriteria);
+	subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
 
 	subMainPanel.add(subSubMainPanel);
 
+	continuateConstructor(subMainPanel);
+    }
+
+    private void continuateConstructor(JPanel subMainPanel) {
 	JPanel addOptionPanel = new JPanel();
 	addOptionPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
 
+	final OptimizationCriteriaPage tmp = this;
 	addIcon.addMouseListener(new MouseListener() {
-
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
 		    public void run() {
-			OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject();
+			blockNextButton(true);
+			OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject(tmp);
 			optimizationCriteriaList.add(optimizationCriteria);
 			subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
 			validate(); // to update window
@@ -133,7 +136,6 @@ public class OptimizationCriteriaPage extends SuperPage {
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
-
 	});
 	addOptionPanel.add(addIcon, BorderLayout.WEST);
 	addOptionPanel.add(new JLabel("Add new criteria"));
@@ -146,7 +148,6 @@ public class OptimizationCriteriaPage extends SuperPage {
 	mainPanel.add(scrollPane);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-
     }
 
     @Override
@@ -176,17 +177,8 @@ public class OptimizationCriteriaPage extends SuperPage {
 	nextButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
-		for (OptimizationCriteriaObject oco : optimizationCriteriaList) {
-		    if (!oco.getName().getText().isEmpty()) {
-			tmp.add(oco);
-		    }
-		}
-		userInterface.setOptimizationCriteriaFromPage(tmp);
-		if (verifyIfNamesAreUnique() == true) {
-		    userInterface.isSingleobjective(optimizationCriteriaList.size() == 1);
-		    userInterface.goToNextPage();
-		}
+		userInterface.isSingleobjective(optimizationCriteriaList.size() == 1);
+		userInterface.goToNextPage();
 	    }
 	});
 	buttonsPanel.add(nextButton);
@@ -197,37 +189,49 @@ public class OptimizationCriteriaPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
     }
 
-    private boolean verifyIfNamesAreUnique() {
-	boolean var = true;
-	for (OptimizationCriteriaObject oco : optimizationCriteriaList) {
-	    String tmp = oco.getName().getText();
-	    int count = 0;
-	    for (final OptimizationCriteriaObject oco2 : optimizationCriteriaList) {
-		if (tmp.equals(oco2.getName().getText()) && !oco2.getName().getText().trim().isEmpty()) {
-		    count++;
-		    if (count > 1) {
-			SwingUtilities.invokeLater(new Runnable() {
-			    public void run() {
-				oco2.getName().setBackground(new Color(219, 151, 149).brighter());
-				mainPanel.add(warningPanel);
-				refreshPage();
-			    }
-			});
-			var = false;
-		    } else {
-			oco2.getName().setBackground(Color.white);
-			mainPanel.remove(warningPanel);
-		    }
-		}
-	    }
-	}
-	return var;
-    }
-
     private void refreshPage() {
 	userInterface.getFrame().validate();
 	userInterface.getFrame().repaint();
 	userInterface.getFrame().pack();
+    }
+
+    public void blockNextButton(boolean b) {
+	nextButton.setEnabled(!b);
+    }
+
+    public boolean isNameRepeated(String varName) {
+	int count = 0;
+	for (OptimizationCriteriaObject oco : optimizationCriteriaList)
+	    if (!oco.getVariableName().equals("") && oco.getVariableName().equals(varName))
+		count++;
+	return count >= 2;
+    }
+
+    public void showWarning(final boolean show) {
+	SwingUtilities.invokeLater(new Runnable() {
+	    public void run() {
+		if (show)
+		    mainPanel.add(warningPanel);
+		else
+		    mainPanel.remove(warningPanel);
+		refreshPage();
+	    }
+	});
+    }
+
+    public void removeOptimizationCriteriaFromList(OptimizationCriteriaObject oco) {
+	optimizationCriteriaList.remove(oco);
+	subSubMainPanel.remove(oco.transformIntoAPanel());
+
+	isAllOptimizationCriteriaWellFilled();
+
+	refreshPage();
+    }
+
+    public void isAllOptimizationCriteriaWellFilled() {
+	for (OptimizationCriteriaObject oco : optimizationCriteriaList)
+	    if (!oco.isWellFilled())
+		return;
     }
 
 }

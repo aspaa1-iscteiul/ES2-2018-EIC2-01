@@ -362,7 +362,7 @@ public class DecisionVariablesPage extends SuperPage {
     public boolean isNameRepeated(String varName) {
 	int count = 0;
 	for (DecisionVariablesObject dvo : decisionVariableList)
-	    if (dvo.getVariableName().equals(varName))
+	    if (!dvo.getVariableName().equals("") && dvo.getVariableName().equals(varName))
 		count++;
 	return count >= 2;
     }
@@ -405,7 +405,7 @@ public class DecisionVariablesPage extends SuperPage {
      * 
      * @see DecisionVariablesObject#isWellFilled()
      */
-    private void isAllVariablesWellFilled() {
+    public void isAllVariablesWellFilled() {
 	for (DecisionVariablesObject dvo2 : decisionVariableList)
 	    if (!dvo2.isWellFilled())
 		return;

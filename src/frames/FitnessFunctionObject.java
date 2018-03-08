@@ -72,7 +72,7 @@ public class FitnessFunctionObject {
 	    fieldsPanel.removeAll();
 	    fieldsPanel.add(uploadButton);
 	    for (OptimizationCriteriaObject oco : page.userInterface.getOptimizationCriteriaFromPage()) {
-		final OptimizationCriteriaCheckbox checkbox = new OptimizationCriteriaCheckbox(oco.getName().getText());
+		final OptimizationCriteriaCheckbox checkbox = new OptimizationCriteriaCheckbox(oco.getVariableName());
 		checkbox.getCheckBox().addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent arg0) {
