@@ -21,6 +21,10 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Fitness Function Page
+ */
+
 public class FitnessFunctionPage extends SuperPage {
 
     /**

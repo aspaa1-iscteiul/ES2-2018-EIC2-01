@@ -18,7 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+/**
+ * This object was created to aid the construction of the Decision Variables Page and later to convert to the object Decision Variable
+ */
+
 public class DecisionVariablesObject {
+
 
     private DecisionVariablesPage page;
     private JPanel variablesPanel;
@@ -29,6 +34,10 @@ public class DecisionVariablesObject {
     private JTextField upperBound;
     private JLabel deleteIcon;
 
+    /**
+     * This object receives a page that contains the frame and has a name, a dataType, a lower and upper bound.
+     * @param page
+     */
     public DecisionVariablesObject(final DecisionVariablesPage page) {
 	this.page = page;
 	this.variablesPanel = new JPanel();
@@ -114,6 +123,10 @@ public class DecisionVariablesObject {
 	});
     }
 
+    /**
+     * Transforms the object in a JPanel that will be added to the frame later.
+     * @return
+     */
     public JPanel transformIntoAPanel() {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	variablesPanel.setBackground(Color.WHITE);

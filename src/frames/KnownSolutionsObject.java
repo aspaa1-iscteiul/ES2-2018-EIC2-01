@@ -16,6 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+/**
+ * This object was created to aid the construction of the Known Solutions Page
+ */
+
 public class KnownSolutionsObject {
 
     private KnownSolutionsPage page;
@@ -28,6 +32,14 @@ public class KnownSolutionsObject {
     private String lowerBound;
     private String upperBound;
 
+    /**
+     * This object will have the solutions to a given variable that must agree with the lower and upper bounds presented by the variable
+     * @param page
+     * @param name
+     * @param type
+     * @param lowerBound
+     * @param upperBound
+     */
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound, String upperBound) {
 	this.page = page;
 	this.name = new JTextField(name);
@@ -140,6 +152,10 @@ public class KnownSolutionsObject {
 	return overallPanel;
     }
 
+    /**
+     * Validates if all solutions meet the variable's data type and if so removes the warning panel 
+     * @return
+     */
     private boolean validateIfItsOkToRemoveDataTypeWarning() {
 	boolean tmp = true;
 	for (JTextField textField : textfieldList) {
@@ -166,6 +182,10 @@ public class KnownSolutionsObject {
 	return tmp;
     }
 
+    /**
+     * Validates if all solutions agree with the variable's lower and upper bound and if so removes the warning panel 
+     * @return
+     */
     private boolean validateIfItsOkToRemoveBoundsWarning() {
 	boolean tmp = true;
 	for (JTextField textField : textfieldList) {
@@ -188,12 +208,19 @@ public class KnownSolutionsObject {
 	return tmp;
     }
 
+    /**
+     * Validates if all solutions meet the data type and the bounds and if so enables the button that allows to move to the next page
+     */
     private void validateIfItsOkToEnableButton() {
 	if(validateIfItsOkToRemoveBoundsWarning()==true && validateIfItsOkToRemoveDataTypeWarning()==true){
 	    page.enableNextButton();
 	}
     }
 
+    /**
+     * Creates the key listeners of the variables that validates the input
+     * @param textField
+     */
     private void keyListenerContent(JTextField textField) {
 	if(type.equals("Integer") && !textField.getText().isEmpty()) {
 	    try {

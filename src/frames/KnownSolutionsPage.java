@@ -146,6 +146,10 @@ public class KnownSolutionsPage extends SuperPage {
 	repaint();
     }
 
+    /**
+     * Creates a warning Panel annoucing that no variables were created
+     * @return
+     */
     private JPanel warningPanel() {
 	JPanel panel = new JPanel();
 	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -161,6 +165,11 @@ public class KnownSolutionsPage extends SuperPage {
 	userInterface.getFrame().repaint();
     }
 
+    /**
+     * Shows the warning selected: 1 - warning about the data type, 2 - warning about the lower and upper bounds
+     * @param show
+     * @param number
+     */
     private void showWarning(final boolean show, final int number) {
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {

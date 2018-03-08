@@ -18,6 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+/**
+ * This object was created to aid the construction of the Optimization Criteria Page and later to convert to the object Decision Variable
+ */
+
 public class OptimizationCriteriaObject {
 
     private JTextField name;

@@ -29,11 +29,12 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Decision Variables Page
+ */
+
 public class DecisionVariablesPage extends SuperPage {
 
-    /**
-     * Default
-     */
     private static final long serialVersionUID = 1L;
 
     private ArrayList<DecisionVariablesObject> decisionVariableList;
@@ -54,6 +55,11 @@ public class DecisionVariablesPage extends SuperPage {
 	warningPanel3 = createWarningPanel("Lower bound must be lower then upper bound");
     }
 
+    /**
+     * Creates a warning panel and displays info 
+     * @param message
+     * @return
+     */
     private JPanel createWarningPanel(String message) {
 	JPanel warningPanel = new JPanel();
 	warningPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -171,6 +177,9 @@ public class DecisionVariablesPage extends SuperPage {
 	return addOptionPanel;
     }
 
+    /**
+     * Imports the data of the file selected to the panel
+     */
     private void importFromFilePanel() {
 	JPanel panel = new JPanel();
 	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -332,6 +341,10 @@ public class DecisionVariablesPage extends SuperPage {
 	refreshPage();
     }
 
+    /**
+     * Creates a list of Known Solutions with the data displayed on the Decision Variables
+     * @return ArrayList<KnownSolutionsObject>
+     */
     private ArrayList<KnownSolutionsObject> getKnownSolutionsFromDecisionVariables() {
 	ArrayList<KnownSolutionsObject> knownSolutions = new ArrayList<KnownSolutionsObject>();
 	for (DecisionVariablesObject dvo : decisionVariableList) {

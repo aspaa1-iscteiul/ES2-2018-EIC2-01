@@ -11,6 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Home Center page that contains FAQ and an option to send an email
+ * @author Rodrigo
+ */
+
 public class HomeCenterPage extends SuperPage {
 
     /**
@@ -19,7 +24,7 @@ public class HomeCenterPage extends SuperPage {
     private static final long serialVersionUID = 1L;
     private JButton nextButton;
     private JButton emailButton;
-    
+
     public HomeCenterPage(UserInterface userInterface) {
 	super(userInterface);
 	// TODO Auto-generated constructor stub
@@ -36,15 +41,15 @@ public class HomeCenterPage extends SuperPage {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-	
+
 	JPanel infoPanel = new JPanel();
 	infoPanel.setLayout(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
 	infoPanel.add(new JLabel("Frequently Asked Questions"), BorderLayout.WEST);
 	mainPanel.add(infoPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-	
+
 	JPanel messagePanel = new JPanel();
 	messagePanel.setLayout(new BorderLayout());
 	messagePanel.setBackground(Color.WHITE);
@@ -62,23 +67,23 @@ public class HomeCenterPage extends SuperPage {
 		+ "</html>");
 	messagePanel.add(messageLabel, BorderLayout.WEST);
 	mainPanel.add(messagePanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-	
+
 	JPanel buttonPanel = new JPanel();
 	buttonPanel.setLayout(new BorderLayout());
 	buttonPanel.setBackground(Color.WHITE);
 	buttonPanel.add(emailButton, BorderLayout.WEST);
-	
+
 	emailButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		userInterface.goToEmailPage();
 	    }
 	});
-	
+
 	mainPanel.add(buttonPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
     }
 

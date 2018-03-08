@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+/**
+ * This object was created to aid the construction of the Fitness Function Page and later to convert to the object Fitness Function
+ */
+
 public class FitnessFunctionObject {
 
     private FitnessFunctionPage page;
@@ -118,6 +122,10 @@ public class FitnessFunctionObject {
 	});
     }
 
+    /**
+     * Verify if the checkbox shoud be disabled because the value was already selected on another checkbox
+     * @param checkbox
+     */
     public void verifyIfTheCheckboxShouldBeDisabled(OptimizationCriteriaCheckbox checkbox) {
 	for (FitnessFunctionObject ffo : page.getFitnessFunctionList()) {
 	    for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
@@ -132,6 +140,9 @@ public class FitnessFunctionObject {
 	}
     }
 
+    /**
+     * Cleans the selection of all the checkboxes
+     */
     public void cleanData() {
 	for (FitnessFunctionObject ffo : page.getFitnessFunctionList()) {
 	    for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
