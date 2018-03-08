@@ -81,7 +81,7 @@ public class DecisionVariablesObject {
 	continueConstructor(tmp);
     }
 
-    private void continueConstructor(DecisionVariablesObject tmp) {
+    private void continueConstructor(final DecisionVariablesObject tmp) {
 	this.deleteIcon = new JLabel();
 	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	

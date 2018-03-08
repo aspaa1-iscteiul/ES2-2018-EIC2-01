@@ -16,6 +16,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import objects.DataType;
+import objects.DecisionVariable;
+import objects.FitnessFunction;
+import objects.OptimizationCriteria;
+import objects.Problem;
+
 public class UserFileUtils {
 
     public final static String tagRoot = "Problem";
@@ -26,9 +32,9 @@ public class UserFileUtils {
 	    tagKnownSolutions = "KnownSolutions", tagKnownSolution = "KnownSolution",
 	    tagFitnessFunctions = "FitnessFunctions", tagFitnessFunction = "FitnessFunction",
 	    tagJarFilePath = "JarFilePath", tagOptimizationCriteriaList = "OptimizationCriteria",
-	    tagOptimizationCriteria = "Criteria", tagOptimizationAlgorithms = "OptimizationAlgorithms",
+	    tagSingleOptimizationCriteria = "Criteria", tagOptimizationAlgorithms = "OptimizationAlgorithms",
 	    tagOptimizationAlgorithm = "OptimizationAlgorithm", tagIdealTimeFrame = "IdealTimeFrame",
-	    tagMaximumTimeFrame = "MaxTimeFrame";
+	    tagMaximumTimeFrame = "MaximumTimeFrame";
 
     public static void writeToXML(Problem problem, String path) {
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -37,7 +43,7 @@ public class UserFileUtils {
 	    dBuilder = dbFactory.newDocumentBuilder();
 	    Document doc = dBuilder.newDocument();
 
-	    doc.appendChild(getProblem(doc, problem));
+	    doc.appendChild(createProblemNode(doc, problem));
 
 	    // Output to file
 	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -55,7 +61,7 @@ public class UserFileUtils {
 	}
     }
 
-    private static Node getProblem(Document doc, Problem problem) {
+    private static Node createProblemNode(Document doc, Problem problem) {
 	Element problemNode = doc.createElement(tagRoot);
 
 	// Create Name and Description Nodes
@@ -76,12 +82,9 @@ public class UserFileUtils {
 
 	    if (d.getKnownSolutions() != null) {
 		Element knownSolutionsNode = createEmptyNode(doc, decisionVaribleNode, tagKnownSolutions);
-
 		for (String solution : d.getKnownSolutions())
 		    createTextNode(doc, knownSolutionsNode, tagKnownSolution, solution);
-
 	    }
-
 	}
 
 	// Create Fitness Functions Node and Sub-nodes
@@ -89,7 +92,6 @@ public class UserFileUtils {
 
 	for (FitnessFunction f : problem.getFitnessFunctions()) {
 	    Element fitnessFunctionNode = createEmptyNode(doc, fitnessFunctionsNode, tagFitnessFunction);
-
 	    createTextNode(doc, fitnessFunctionNode, tagJarFilePath, f.getJarFilePath());
 
 	    if (f.getOptimizationCriteria() != null) {
@@ -98,26 +100,23 @@ public class UserFileUtils {
 
 		for (OptimizationCriteria criteria : f.getOptimizationCriteria()) {
 		    Element optimizationCriteriaNode = createEmptyNode(doc, optimizationCriteriaListNode,
-			    tagOptimizationCriteria);
+			    tagSingleOptimizationCriteria);
 
 		    createTextNode(doc, optimizationCriteriaNode, tagName, criteria.getName());
 		    createTextNode(doc, optimizationCriteriaNode, tagDataType, criteria.getDataType().name());
-
 		}
 	    }
-
 	}
 
-	// create list optimization algorithms element
+	// Create Optimization Algorithms Node and Sub-nodes
 	Element optimizationAlgorithmsListNode = createEmptyNode(doc, problemNode, tagOptimizationAlgorithms);
 
 	for (String algorithm : problem.getOptimizationAlgorithms())
 	    createTextNode(doc, optimizationAlgorithmsListNode, tagOptimizationAlgorithm, algorithm);
 
-	// create ideal time frame element
+	// Create Ideal Time Frame Node
 	createTextNode(doc, problemNode, tagIdealTimeFrame, "" + problem.getIdealTimeFrame());
-
-	// create maximum time frame element
+	// Create Maximum Time Frame Node
 	createTextNode(doc, problemNode, tagMaximumTimeFrame, "" + problem.getMaxTimeFrame());
 
 	return problemNode;
@@ -149,7 +148,7 @@ public class UserFileUtils {
 	    doc.getDocumentElement().normalize();
 	    NodeList problemList = doc.getElementsByTagName(tagRoot);
 
-	    problem = getProblem(doc, problemList.item(0));
+	    problem = getProblemFromXMLNode(doc, problemList.item(0));
 
 	} catch (SAXException | ParserConfigurationException | IOException e1) {
 	    e1.printStackTrace();
@@ -159,30 +158,28 @@ public class UserFileUtils {
 
     }
 
-    private static Problem getProblem(Document doc, Node problemNode) {
+    private static Problem getProblemFromXMLNode(Document doc, Node problemNode) {
 	Problem problem = new Problem();
 	if (problemNode.getNodeType() == Node.ELEMENT_NODE) {
-	    Element element = (Element) problemNode;
-	    problem.setProblemName((getTagValue(tagName, element)));
-	    problem.setProblemDescription((getTagValue(tagProblemDescription, element)));
-	    problem.setIdealTimeFrame((Double.parseDouble(getTagValue(tagIdealTimeFrame, element))));
-	    problem.setMaxTimeFrame((Double.parseDouble(getTagValue(tagMaximumTimeFrame, element))));
-	}
 
-	problem.setDecisionVariables(getDecisionVariables(doc));
-	problem.setFitnessFunctions(getFitnessFunctions(doc));
-	problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));
+	    Element problemElement = (Element) problemNode;
+
+	    problem.setProblemName((getTagValue(tagName, problemElement)));
+	    problem.setProblemDescription((getTagValue(tagProblemDescription, problemElement)));
+
+	    problem.setDecisionVariables(getDecisionVariables(doc));
+	    problem.setFitnessFunctions(getFitnessFunctions(doc));
+	    problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));
+
+	    problem.setIdealTimeFrame((Double.parseDouble(getTagValue(tagIdealTimeFrame, problemElement))));
+	    problem.setMaxTimeFrame((Double.parseDouble(getTagValue(tagMaximumTimeFrame, problemElement))));
+	}
 
 	return problem;
     }
 
-    private static String getTagValue(String tag, Element element) {
-	NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-	Node node = (Node) nodeList.item(0);
-	return node.getNodeValue();
-    }
-
     private static ArrayList<DecisionVariable> getDecisionVariables(Document doc) {
+
 	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
 
 	NodeList decisionVariablesList = doc.getElementsByTagName(tagDecisionVariable);
@@ -197,11 +194,11 @@ public class UserFileUtils {
 
 		Element element = (Element) decisionVariableNode;
 
-		String name = element.getElementsByTagName(tagName).item(0).getTextContent();
-		String dataType = element.getElementsByTagName(tagDataType).item(0).getTextContent();
-		String lowerBound = element.getElementsByTagName(tagLowerBound).item(0).getTextContent();
-		String upperBound = element.getElementsByTagName(tagUpperBound).item(0).getTextContent();
-		String domain = element.getElementsByTagName(tagDomain).item(0).getTextContent();
+		String name = getTagValue(tagName, element);
+		String dataType = getTagValue(tagDataType, element);
+		String lowerBound = getTagValue(tagLowerBound, element);
+		String upperBound = getTagValue(tagUpperBound, element);
+		String domain = getTagValue(tagDomain, element);
 
 		if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
 		    decisionVariable = new DecisionVariable(name, DataType.INTEGER, lowerBound, upperBound, domain,
@@ -211,6 +208,7 @@ public class UserFileUtils {
 			    null);
 
 		Node knownSolutionsNode = decisionVariableNode.getLastChild();
+
 		if (knownSolutionsNode.getNodeName().equals(tagKnownSolutions)) {
 
 		    ArrayList<String> knownSolutions = new ArrayList<>();
@@ -238,6 +236,7 @@ public class UserFileUtils {
     }
 
     private static ArrayList<FitnessFunction> getFitnessFunctions(Document doc) {
+
 	ArrayList<FitnessFunction> fitnessFunctions = new ArrayList<>();
 
 	NodeList fitnessFunctionsList = doc.getElementsByTagName(tagFitnessFunction);
@@ -253,7 +252,7 @@ public class UserFileUtils {
 
 		Element element = (Element) fitnessFunctionNode;
 
-		String jarFilePath = element.getElementsByTagName(tagJarFilePath).item(0).getTextContent();
+		String jarFilePath = getTagValue(tagJarFilePath, element);
 
 		fitnessFunction = new FitnessFunction(jarFilePath, null);
 
@@ -267,10 +266,8 @@ public class UserFileUtils {
 
 		    if (optimizationCriteriaNode.getNodeType() == Node.ELEMENT_NODE) {
 			Element optimizationCriteriaElement = (Element) optimizationCriteriaNode;
-			String name = optimizationCriteriaElement.getElementsByTagName(tagName).item(0)
-				.getTextContent();
-			String dataType = optimizationCriteriaElement.getElementsByTagName(tagDataType).item(0)
-				.getTextContent();
+			String name = getTagValue(tagName, optimizationCriteriaElement);
+			String dataType = getTagValue(tagDataType, optimizationCriteriaElement);
 
 			if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
 			    optCriteria = new OptimizationCriteria(name, DataType.INTEGER);
@@ -284,7 +281,6 @@ public class UserFileUtils {
 		fitnessFunction.setOptimizationCriteria(optimizationCriteria);
 
 	    }
-
 	    fitnessFunctions.add(fitnessFunction);
 
 	}
@@ -305,11 +301,14 @@ public class UserFileUtils {
 		String algorithm = optimizationAlgorithmNode.getTextContent();
 
 		optimizationAlgorithms.add(algorithm);
-
 	    }
-
+	    
 	}
 	return optimizationAlgorithms;
+    }
+
+    private static String getTagValue(String tag, Element element) {
+	return element.getElementsByTagName(tag).item(0).getTextContent();
     }
 
     public static void main(String[] args) {
@@ -317,13 +316,13 @@ public class UserFileUtils {
 	knownSolutions.add("3");
 	knownSolutions.add("4");
 	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "Z except 0", knownSolutions);
-	DecisionVariable dv2 = new DecisionVariable("var2", DataType.INTEGER, "-5", "+5", "Z except 0", null);
+	DecisionVariable dv2 = new DecisionVariable("var2", DataType.DOUBLE, "-4.9", "+4.8", "Z except 0.0", null);
 	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
 	decisionVariables.add(dv1);
 	decisionVariables.add(dv2);
 
 	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", DataType.INTEGER);
-	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", DataType.INTEGER);
+	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", DataType.DOUBLE);
 	ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
 	optimizationCriteria.add(oc1);
 	optimizationCriteria.add(oc2);

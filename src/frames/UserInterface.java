@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import utils.Problem;
+import objects.Problem;
 
 public class UserInterface {
 
