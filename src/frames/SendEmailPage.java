@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,7 +17,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 public class SendEmailPage extends SuperPage {
-    
+
     /**
      * 
      */
@@ -56,7 +55,7 @@ public class SendEmailPage extends SuperPage {
 	infoPanel.add(infoIcon, BorderLayout.WEST);
 	infoPanel.add(new JLabel("   We will answer your email within 2 working days."), BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel namePanel = new JPanel();
@@ -66,7 +65,7 @@ public class SendEmailPage extends SuperPage {
 	name.setBorder(FrameUtils.cuteBorder());
 	namePanel.add(name, BorderLayout.CENTER);
 	mainPanel.add(namePanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel subjectPanel = new JPanel();
@@ -76,9 +75,9 @@ public class SendEmailPage extends SuperPage {
 	subject.setBorder(FrameUtils.cuteBorder());
 	subjectPanel.add(subject, BorderLayout.CENTER);
 	mainPanel.add(subjectPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-	
+
 	JPanel messagePanel = new JPanel();
 	messagePanel.setLayout(new BorderLayout());
 	messagePanel.setBackground(Color.WHITE);
@@ -87,13 +86,13 @@ public class SendEmailPage extends SuperPage {
 	message.setLineWrap(true);
 	message.setWrapStyleWord(true);
 	message.setBorder(FrameUtils.cuteBorder());
-	
+
 	JScrollPane scrollPane = new JScrollPane(message);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	// A dimensão tem que ser posta no scrollPane e não no results
 	scrollPane.setPreferredSize(new Dimension(60, 100));
 	messagePanel.add(scrollPane, BorderLayout.CENTER);
-	
+
 	mainPanel.add(messagePanel);
 
     }
@@ -113,7 +112,7 @@ public class SendEmailPage extends SuperPage {
 	submitButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		
+		//TODO: fazer funcao que envia email
 	    }
 	});
 	buttonsPanel.add(submitButton);

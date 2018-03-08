@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,7 +26,9 @@ public class SaveProblemPage extends SuperPage {
     private JTextField filePath;
     private JButton saveButton;
     private JButton finishButton;
-
+    private boolean nameOk = false;
+    private boolean pathOk = false;
+    
     public SaveProblemPage(UserInterface userInterface) {
 	super(userInterface);
     }
@@ -32,6 +38,7 @@ public class SaveProblemPage extends SuperPage {
 	this.fileName = new JTextField(30);
 	this.filePath = new JTextField(30);
 	this.saveButton = FrameUtils.cuteButton("Save");
+	this.saveButton.setEnabled(false);
 	this.finishButton = FrameUtils.cuteButton("Finish");
     }
 
@@ -55,6 +62,28 @@ public class SaveProblemPage extends SuperPage {
 	namePanel.setBackground(Color.WHITE);
 	namePanel.add(new JLabel("File name:   "), BorderLayout.WEST);
 	fileName.setBorder(FrameUtils.cuteBorder());
+	
+	fileName.addKeyListener(new KeyListener() {
+	    @Override
+	    public void keyPressed(KeyEvent arg0) {
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent arg0) {
+		if(!fileName.getText().trim().isEmpty()) {
+		    nameOk = true;
+		    if(nameOk==true && pathOk==true) {
+			saveButton.setEnabled(true);
+		    }
+		}
+		
+	    }
+
+	    @Override
+	    public void keyTyped(KeyEvent arg0) {
+	    }
+	});
+	
 	namePanel.add(fileName, BorderLayout.CENTER);
 	mainPanel.add(namePanel);
 	
@@ -65,6 +94,34 @@ public class SaveProblemPage extends SuperPage {
 	pathPanel.setBackground(Color.WHITE);
 	pathPanel.add(new JLabel("Path:            "), BorderLayout.WEST);
 	filePath.setBorder(FrameUtils.cuteBorder());
+	
+	filePath.addKeyListener(new KeyListener() {
+	    @Override
+	    public void keyPressed(KeyEvent arg0) {
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent arg0) {
+		if(!filePath.getText().trim().isEmpty()) {
+		    //TODO: Rever se isto funciona, acho que não
+	            try {
+	                Paths.get(filePath.getText());
+	                pathOk = true;
+	            } catch (InvalidPathException | NullPointerException ex1) {
+	                pathOk = false;
+	            }
+		    if(nameOk==true && pathOk==true) {
+			saveButton.setEnabled(true);
+		    }
+		}
+		
+	    }
+
+	    @Override
+	    public void keyTyped(KeyEvent arg0) {
+	    }
+	});
+	
 	pathPanel.add(filePath, BorderLayout.CENTER);
 	mainPanel.add(pathPanel);
 	

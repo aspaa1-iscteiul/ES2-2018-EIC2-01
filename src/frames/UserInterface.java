@@ -67,7 +67,7 @@ public class UserInterface {
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
-	//pages.add(new AlgorithmsPage(this));
+	pages.add(new AlgorithmsPage(this));
 	pages.add(new TimeConstraintsPage(this));
 	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
@@ -101,8 +101,8 @@ public class UserInterface {
 	frame.add(page);
 	frame.pack(); // XXX remove when width and height is set
     }
-
-    private void launch() {
+   
+     private void launch() {
 	frame.add(pages.get(actualPageIndex));
 	frame.pack(); // XXX change to frame.setSize(width, height);
 	frame.setLocation(new Point((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2,
