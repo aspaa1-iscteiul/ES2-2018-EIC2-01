@@ -337,7 +337,6 @@ public class DecisionVariablesPage extends SuperPage {
 	for (DecisionVariablesObject dvo : decisionVariableList) {
 	    if (!dvo.getVariableName().trim().isEmpty()) {
 		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound()));
-		System.out.println(dvo.getDataType());
 	    }
 	}
 	return knownSolutions;
