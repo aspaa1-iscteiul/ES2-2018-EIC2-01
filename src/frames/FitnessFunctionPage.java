@@ -194,6 +194,7 @@ public class FitnessFunctionPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		userInterface.goToNextPage();
+		userInterface.setFitnessFunctionFromPage(fitnessFunctionList);
 	    }
 	});
 	buttonsPanel.add(nextButton);

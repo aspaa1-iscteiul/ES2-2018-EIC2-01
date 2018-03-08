@@ -126,6 +126,14 @@ public class UserInterface {
 	this.decisionVariablesFromPage = decisionVariablesFromPage;
     }
 
+    public ArrayList<FitnessFunctionObject> getFitnessFunctionFromPage() {
+	return fitnessFunctionFromPage;
+    }
+
+    public void setFitnessFunctionFromPage(ArrayList<FitnessFunctionObject> fitnessFunctionFromPage) {
+	this.fitnessFunctionFromPage = fitnessFunctionFromPage;
+    }
+
     public ArrayList<KnownSolutionsObject> getKnownSolutionsList() {
 	return this.knownSolutionsFromDecisionVariables;
     }
