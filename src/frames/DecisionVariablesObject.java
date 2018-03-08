@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import objects.DataType;
+
 /**
  * This object was created to aid the construction of the Decision Variables Page and later to convert to the object Decision Variable
  */
@@ -156,6 +158,14 @@ public class DecisionVariablesObject {
 
     public String getDataType() {
 	return dataType.getSelectedItem().toString();
+    }
+
+    public DataType getDataTypeToProblem() {
+	if(dataType.getSelectedItem().toString().equals("Integer")){
+	    return DataType.INTEGER;
+	} else {
+	    return DataType.DOUBLE;
+	}
     }
 
     public String getLowerBound() {

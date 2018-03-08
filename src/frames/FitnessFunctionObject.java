@@ -122,6 +122,10 @@ public class FitnessFunctionObject {
 	});
     }
 
+    public String getPath() {
+	return uploadButton.getText();
+    }
+    
     /**
      * Verify if the checkbox shoud be disabled because the value was already selected on another checkbox
      * @param checkbox

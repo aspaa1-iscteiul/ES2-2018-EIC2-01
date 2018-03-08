@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import objects.DataType;
+
 /**
  * This object was created to aid the construction of the Optimization Criteria Page and later to convert to the object Decision Variable
  */
@@ -142,5 +144,14 @@ public class OptimizationCriteriaObject {
     public String getVariableName() {
 	return name.getText();
     }
+
+    public DataType getDataTypeToProblem() {
+	if(dataType.getSelectedItem().toString().equals("Integer")){
+	    return DataType.INTEGER;
+	} else {
+	    return DataType.DOUBLE;
+	}
+    }
+
 
 }

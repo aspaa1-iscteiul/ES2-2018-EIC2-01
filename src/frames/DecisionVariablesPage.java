@@ -321,6 +321,7 @@ public class DecisionVariablesPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		userInterface.goToNextPage();
+		userInterface.setDecisionVariablesFromPage(decisionVariableList);
 		userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
 	    }
 	});
@@ -349,7 +350,7 @@ public class DecisionVariablesPage extends SuperPage {
 	ArrayList<KnownSolutionsObject> knownSolutions = new ArrayList<KnownSolutionsObject>();
 	for (DecisionVariablesObject dvo : decisionVariableList) {
 	    if (!dvo.getVariableName().trim().isEmpty()) {
-		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound()));
+		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName(), dvo.getDataType().toString(), dvo.getLowerBound(), dvo.getUpperBound()));
 	    }
 	}
 	return knownSolutions;
