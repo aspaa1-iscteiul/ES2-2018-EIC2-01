@@ -189,16 +189,43 @@ public class OptimizationCriteriaPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
     }
 
+    /**
+     * Refreshes the frame
+     * 
+     * @see #validate()
+     * @see #repaint()
+     */
     private void refreshPage() {
 	userInterface.getFrame().validate();
 	userInterface.getFrame().repaint();
 	userInterface.getFrame().pack();
     }
 
+    /**
+     * Blocks the {@linkplain #nextButton} if <b>b</b> is {@code true},
+     * otherwise unblocks
+     * 
+     * @param b
+     *            {@code true} if it is to block {@linkplain #nextButton},
+     *            otherwise if it is to unblock
+     * 
+     * @see #setEnabled(boolean)
+     */
     public void blockNextButton(boolean b) {
 	nextButton.setEnabled(!b);
     }
 
+    /**
+     * Returns {@code true} if there is at least other optimization criteria
+     * with the same name, otherwise {@code false}
+     * 
+     * @param varName
+     *            the {@code String} to compare to the other optimization
+     *            criteria names in the {@linkplain #decisionVariableList}
+     * 
+     * @return {@code true} if there is at least other optimization criteria
+     *         with the same name, otherwise {@code false}
+     */
     public boolean isNameRepeated(String varName) {
 	int count = 0;
 	for (OptimizationCriteriaObject oco : optimizationCriteriaList)
@@ -207,6 +234,14 @@ public class OptimizationCriteriaPage extends SuperPage {
 	return count >= 2;
     }
 
+    /**
+     * If <b>show</b> is {@code true} it adds the warning panel, otherwise
+     * remove it
+     * 
+     * @param show
+     *            {@code true} if it is to add the warning panel, {@code false}
+     *            if it is to remove
+     */
     public void showWarning(final boolean show) {
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {
@@ -228,6 +263,12 @@ public class OptimizationCriteriaPage extends SuperPage {
 	refreshPage();
     }
 
+    /**
+     * Verifies if that all {@linkplain OptimizationCriteriaObject} in the
+     * {@linkplain #optimizationCriteriaList} are well field
+     * 
+     * @see OptimizationCriteriaObject#isWellFilled()
+     */
     public void isAllOptimizationCriteriaWellFilled() {
 	for (OptimizationCriteriaObject oco : optimizationCriteriaList)
 	    if (!oco.isWellFilled())

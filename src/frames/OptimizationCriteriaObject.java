@@ -30,7 +30,7 @@ public class OptimizationCriteriaObject {
     public OptimizationCriteriaObject(OptimizationCriteriaPage ocp) {
 	page = ocp;
 	variablesPanel = new JPanel();
-	
+
 	name = new JTextField(10) {
 	    private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public class OptimizationCriteriaObject {
 		isValidName();
 	    }
 	};
-	
+
 	dataType = FrameUtils.cuteComboBox(dataTypes);
 	dataType.setSelectedItem(null);
 	dataType.setEnabled(false);
@@ -50,7 +50,7 @@ public class OptimizationCriteriaObject {
 		page.isAllOptimizationCriteriaWellFilled();
 	    }
 	});
-	
+
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	final OptimizationCriteriaObject tmp = this;
@@ -94,26 +94,31 @@ public class OptimizationCriteriaObject {
 	return variablesPanel;
     }
 
+    /**
+     * Returns {@code true} if {@linkplain OptimizationCriteriaObject} have a
+     * valid name and the {@linkplain #dataType} is selected, otherwise
+     * {@code false}
+     * 
+     * @return {@code true} if {@linkplain OptimizationCriteriaObject} have a
+     *         valid name and the {@linkplain #dataType} is selected,
+     *         otherwise {@code false}
+     * 
+     * @see #isValidName()
+     */
     public boolean isWellFilled() {
-	String text = getVariableName();
-	name.setText(text);
-	boolean nameRepeated = page.isNameRepeated(text);
-	if (text.equals("") || nameRepeated) {
-	    page.blockNextButton(true);
-	    page.showWarning(nameRepeated);
-	    return false;
-	} else {
-	    page.showWarning(false);
-	    if (dataType.getSelectedIndex() >= 0) {
-		page.blockNextButton(false);
-		return true;
-	    } else {
-		page.blockNextButton(true);
-		return false;
-	    }
-	}
+	return isValidName() && dataType.getSelectedIndex() >= 0;
     }
 
+    /**
+     * Returns {@code true} if the name is not empty and is not repeated, also
+     * unlocks the {@linkplain #dataType}, otherwise places warnings and locks
+     * the next button in the {@linkplain OptimizationCriteriaPage}
+     * 
+     * @return {@code true} if the name is not empty and is not repeated,
+     *         otherwise {@code false}
+     * 
+     * @see OptimizationCriteriaPage#isNameRepeated(String)
+     */
     private boolean isValidName() {
 	String text = name.getText().trim();
 	name.setText(text);
@@ -125,7 +130,7 @@ public class OptimizationCriteriaObject {
 	}
 	page.showWarning(false);
 	dataType.setEnabled(true);
-	if(dataType.getSelectedIndex() >= 0)
+	if (dataType.getSelectedIndex() >= 0)
 	    page.blockNextButton(false);
 	return true;
     }
