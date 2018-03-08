@@ -2,7 +2,9 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -10,10 +12,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import org.xml.sax.SAXException;
 
 import objects.DataType;
@@ -22,20 +26,38 @@ import objects.FitnessFunction;
 import objects.OptimizationCriteria;
 import objects.Problem;
 
+/**
+ * This class defines methods for writing a Problem object to a XML file
+ * (writeToXML) and constructing a Problem object from a XML file (readFromXML).
+ * The XML file must obey a determined structure for these methods to apply.
+ * 
+ * @author Ana Pestana
+ *
+ */
 public class UserFileUtils {
 
-    public final static String tagRoot = "Problem";
+    /**
+     * Tags for the XML File nodes
+     */
+    public final static String tagRoot = "Problem", tagName = "Name", tagDataType = "DataType",
+	    tagLowerBound = "LowerBound", tagUpperBound = "UpperBound", tagDomain = "Domain",
+	    tagProblemDescription = "Description", tagDecisionVariables = "DecisionVariables",
+	    tagDecisionVariable = "DecisionVariable", tagKnownSolutions = "KnownSolutions",
+	    tagKnownSolution = "KnownSolution", tagFitnessFunctions = "FitnessFunctions",
+	    tagFitnessFunction = "FitnessFunction", tagJarFilePath = "JarFilePath",
+	    tagOptimizationCriteriaList = "OptimizationCriteria", tagSingleOptimizationCriteria = "Criteria",
+	    tagOptimizationAlgorithms = "OptimizationAlgorithms", tagOptimizationAlgorithm = "OptimizationAlgorithm",
+	    tagIdealTimeFrame = "IdealTimeFrame", tagMaximumTimeFrame = "MaximumTimeFrame";
 
-    public final static String tagName = "Name", tagDataType = "DataType", tagLowerBound = "LowerBound",
-	    tagUpperBound = "UpperBound", tagDomain = "Domain", tagProblemDescription = "Description",
-	    tagDecisionVariables = "DecisionVariables", tagDecisionVariable = "DecisionVariable",
-	    tagKnownSolutions = "KnownSolutions", tagKnownSolution = "KnownSolution",
-	    tagFitnessFunctions = "FitnessFunctions", tagFitnessFunction = "FitnessFunction",
-	    tagJarFilePath = "JarFilePath", tagOptimizationCriteriaList = "OptimizationCriteria",
-	    tagSingleOptimizationCriteria = "Criteria", tagOptimizationAlgorithms = "OptimizationAlgorithms",
-	    tagOptimizationAlgorithm = "OptimizationAlgorithm", tagIdealTimeFrame = "IdealTimeFrame",
-	    tagMaximumTimeFrame = "MaximumTimeFrame";
-
+    /**
+     * Method to write a given Problem object to a XML file according to a
+     * determined hierarchical structure
+     * 
+     * @param problem
+     *            object you want to write on the XML file
+     * @param path
+     *            for the directory in which to store the XML File
+     */
     public static void writeToXML(Problem problem, String path) {
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
@@ -45,15 +67,12 @@ public class UserFileUtils {
 
 	    doc.appendChild(createProblemNode(doc, problem));
 
-	    // Output to file
 	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	    Transformer transformer = transformerFactory.newTransformer();
 	    DOMSource source = new DOMSource(doc);
 
-	    // Write to File
 	    StreamResult file = new StreamResult(new File(path));
 
-	    // Write data
 	    transformer.transform(source, file);
 
 	} catch (Exception e) {
@@ -61,6 +80,18 @@ public class UserFileUtils {
 	}
     }
 
+    /**
+     * Method that creates the root and child nodes for storing the problem's
+     * attributes
+     * 
+     * @param doc
+     *            XML document
+     * @param problem
+     *            object you want to write on the XML file
+     * @return problemNode element containing the root node and its child nodes
+     *         necessary for storing a Problem Object according to a determined XML
+     *         hierarchical structure
+     */
     private static Node createProblemNode(Document doc, Problem problem) {
 	Element problemNode = doc.createElement(tagRoot);
 
@@ -122,20 +153,52 @@ public class UserFileUtils {
 	return problemNode;
     }
 
-    // Utility method to create a text node
+    /**
+     * Utility method to create a text node
+     * 
+     * @param doc
+     *            XML document
+     * @param rootNode
+     *            parent of the new node
+     * @param tag
+     *            of the new node
+     * @param value
+     *            of the new node
+     */
     private static void createTextNode(Document doc, Element rootNode, String tag, String value) {
 	Element node = doc.createElement(tag);
 	node.appendChild(doc.createTextNode(value));
 	rootNode.appendChild(node);
     }
 
-    // Utility method to create an empty node
+    /**
+     * Utility method to create an empty node
+     * 
+     * @param doc
+     *            XML document
+     * @param rootNode
+     *            parent of the new node
+     * 
+     * @param tag
+     *            of the new node
+     * 
+     * @return empty new node
+     */
     private static Element createEmptyNode(Document doc, Element rootNode, String tag) {
 	Element node = doc.createElement(tag);
 	rootNode.appendChild(node);
 	return node;
     }
 
+    /**
+     * Method to read and construct a Problem object from a XML file document
+     * compliant with a determined hierarchical structure
+     * 
+     * @param filePath
+     *            for the directory containing the XML file
+     * 
+     * @return resulting Problem object
+     */
     public static Problem readFromXML(String filePath) {
 	File xmlFile = new File(filePath);
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -158,6 +221,17 @@ public class UserFileUtils {
 
     }
 
+    /**
+     * This method constructs a Problem object based on the information of a XML
+     * document compliant with a determined node structure
+     * 
+     * @param doc
+     *            XML document
+     * @param problemNode
+     *            element containing the root node and its child nodes
+     * 
+     * @return Problem object constructed from the XML document information
+     */
     private static Problem getProblemFromXMLNode(Document doc, Node problemNode) {
 	Problem problem = new Problem();
 	if (problemNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -178,6 +252,15 @@ public class UserFileUtils {
 	return problem;
     }
 
+    /**
+     * This method obtains the Problem's Decision Variables defined in the XML
+     * document
+     * 
+     * @param doc
+     *            XML document
+     * 
+     * @return ArrayList of the Problem's Decision Variables
+     */
     private static ArrayList<DecisionVariable> getDecisionVariables(Document doc) {
 
 	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
@@ -192,13 +275,13 @@ public class UserFileUtils {
 
 	    if (decisionVariableNode.getNodeType() == Node.ELEMENT_NODE) {
 
-		Element element = (Element) decisionVariableNode;
+		Element decisionVariableElement = (Element) decisionVariableNode;
 
-		String name = getTagValue(tagName, element);
-		String dataType = getTagValue(tagDataType, element);
-		String lowerBound = getTagValue(tagLowerBound, element);
-		String upperBound = getTagValue(tagUpperBound, element);
-		String domain = getTagValue(tagDomain, element);
+		String name = getTagValue(tagName, decisionVariableElement);
+		String dataType = getTagValue(tagDataType, decisionVariableElement);
+		String lowerBound = getTagValue(tagLowerBound, decisionVariableElement);
+		String upperBound = getTagValue(tagUpperBound, decisionVariableElement);
+		String domain = getTagValue(tagDomain, decisionVariableElement);
 
 		if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
 		    decisionVariable = new DecisionVariable(name, DataType.INTEGER, lowerBound, upperBound, domain,
@@ -235,6 +318,15 @@ public class UserFileUtils {
 	return decisionVariables;
     }
 
+    /**
+     * This method obtains the Problem's Fitness Functions defined in the XML
+     * document
+     * 
+     * @param doc
+     *            XML document
+     * 
+     * @return ArrayList of the Problem's Fitness Functions
+     */
     private static ArrayList<FitnessFunction> getFitnessFunctions(Document doc) {
 
 	ArrayList<FitnessFunction> fitnessFunctions = new ArrayList<>();
@@ -250,9 +342,9 @@ public class UserFileUtils {
 
 	    if (fitnessFunctionNode.getNodeType() == Node.ELEMENT_NODE) {
 
-		Element element = (Element) fitnessFunctionNode;
+		Element fitnessFunctionElement = (Element) fitnessFunctionNode;
 
-		String jarFilePath = getTagValue(tagJarFilePath, element);
+		String jarFilePath = getTagValue(tagJarFilePath, fitnessFunctionElement);
 
 		fitnessFunction = new FitnessFunction(jarFilePath, null);
 
@@ -287,6 +379,15 @@ public class UserFileUtils {
 	return fitnessFunctions;
     }
 
+    /**
+     * This method obtains the Problem's OptimizationAlgorithms defined in the XML
+     * document
+     * 
+     * @param doc
+     *            XML document
+     * 
+     * @return ArrayList of the Problem's OptimizationAlgorithms
+     */
     private static ArrayList<String> getOptimizationAlgorithms(Document doc) {
 	ArrayList<String> optimizationAlgorithms = new ArrayList<>();
 
@@ -302,15 +403,26 @@ public class UserFileUtils {
 
 		optimizationAlgorithms.add(algorithm);
 	    }
-	    
+
 	}
 	return optimizationAlgorithms;
     }
 
+    /**
+     * Utility method for returning a node content
+     * 
+     * @param tag
+     *            of the node
+     * @param element
+     *            parent element of the node
+     * 
+     * @return text content of the node
+     */
     private static String getTagValue(String tag, Element element) {
 	return element.getElementsByTagName(tag).item(0).getTextContent();
     }
 
+    // TODO Delete after testing
     public static void main(String[] args) {
 	ArrayList<String> knownSolutions = new ArrayList<String>();
 	knownSolutions.add("3");
