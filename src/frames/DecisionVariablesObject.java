@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -26,16 +28,30 @@ public class DecisionVariablesObject {
     private JTextField upperBound;
     private JLabel deleteIcon;
 
-    public DecisionVariablesObject(final DecisionVariablesPage page, String name, String dataType, String lowerBound,
-	    String upperBound) {
+    public DecisionVariablesObject(final DecisionVariablesPage page, String variableName, String variableDataType,
+	    String lowerLimit, String upperLimit) {
 	this.page = page;
 	variablesPanel = new JPanel();
 	final DecisionVariablesObject tmp = this;
-	this.name = new JTextField(name, 5);
-	this.dataType = FrameUtils.cuteComboBox(dataTypes);
-	this.dataType.setSelectedItem(dataType);
-	this.lowerBound = new JTextField(lowerBound, 5);
-	this.upperBound = new JTextField(upperBound, 5);
+	name = new JTextField(variableName, 5);
+	name.addKeyListener(new KeyListener() {
+	    @Override
+	    public void keyTyped(KeyEvent e) {
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent e) {
+		name.setText(name.getText().trim()); // remove spaces
+	    }
+
+	    @Override
+	    public void keyPressed(KeyEvent e) {
+	    }
+	});
+	dataType = FrameUtils.cuteComboBox(dataTypes);
+	dataType.setSelectedItem(variableDataType);
+	lowerBound = new JTextField(lowerLimit, 5);
+	upperBound = new JTextField(upperLimit, 5);
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	deleteIcon.addMouseListener(new MouseListener() {
@@ -130,60 +146,55 @@ public class DecisionVariablesObject {
      * @return {@code true} if {@linkplain DecisionVariablesObject} have a valid
      *         name and the {@linkplain #dataType} is selected and have a valid
      *         bound, otherwise {@code false}
-     * 
      * @see #isValidName()
+     * @see #isDataTypeSelected()
      * @see #isValidBound()
      */
     public boolean isWellFilled() {
-	// separated to run all methods
+	// methods separated to run all
 	boolean isValidName = isValidName(), isDataTypeSelected = isDataTypeSelected(), isValidBound = isValidBound();
 	return isValidName && isDataTypeSelected && isValidBound;
     }
 
     /**
-     * Returns {@code true} if the name is not empty and is not repeated, also
-     * unlocks the {@linkplain #dataType}, otherwise places warnings and locks
-     * the next button in the {@linkplain DecisionVariablesPage}
-     * 
-     * @return {@code true} if the name is not empty and is not repeated,
-     *         otherwise {@code false}
-     * 
+     * @return {@code true} if the {@link #name} is not empty and is not
+     *         repeated, otherwise {@code false} and evidence the error
      * @see DecisionVariablesPage#isNameRepeated(String)
+     * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidName() {
-	String text = name.getText().trim();
-	name.setText(text);
+	String text = name.getText();
 	String info = (text.equals("") ? "The variable name must be filled in. " : "")
 		+ (page.isNameRepeated(text) ? "The variable name must be unique." : "");
-	return !info.equals("") ? FrameUtils.errorFormat(name, info, false) : FrameUtils.normalFormat(name, false);
+	return !info.equals("") ? FrameUtils.errorFormat(name, info) : FrameUtils.normalFormat(name);
     }
 
+    /**
+     * @return {@code true} if the {@link #dataType} has an item selected,
+     *         otherwise {@code false} and evidence the error
+     * @see FrameUtils#errorFormat(JComponent, String)
+     */
     private boolean isDataTypeSelected() {
-	return dataType.getSelectedItem() == null
-		? FrameUtils.errorFormat(dataType, "The data type must be filled in.", true)
-		: FrameUtils.normalFormat(dataType, true);
+	return dataType.getSelectedItem() == null ? FrameUtils.errorFormat(dataType, "The data type must be filled in.")
+		: FrameUtils.normalFormat(dataType);
 
     }
 
     /**
-     * Returns {@code true} if the {@code JTextField}, indicated by
-     * <b>lower</b>, contains a valid number or is empty, otherwise places
-     * warnings and locks the next button in the
-     * {@linkplain DecisionVariablesPage}
-     * 
      * @param lower
      *            {@code true} if it is to validate the number in
      *            {@linkplain #lowerBound}, otherwise it is to validate the
      *            number in {@linkplain #upperBound}
-     * 
-     * @return {@code true} if the JTextField contains a valid number or is
-     *         empty, otherwise {@code false}
+     * @return {@code true} if the {@code JTextField}, indicated by
+     *         <b>lower</b>, contains a valid number, otherwise {@code false}
+     *         and evidence the error
+     * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidNumber(boolean lower) {
 	JTextField bound = lower ? lowerBound : upperBound;
+	String boundStr = lower ? "lower" : "upper";
 	if (bound.getText().equals(""))
-	    return FrameUtils.errorFormat(bound, "The " + (lower ? "lower" : "upper") + " limit must be filled in.",
-		    false);
+	    return FrameUtils.errorFormat(bound, "The " + boundStr + " limit must be filled in.");
 
 	try {
 	    if (dataType.getSelectedItem().toString().equals("Integer"))
@@ -191,23 +202,18 @@ public class DecisionVariablesObject {
 	    else
 		Double.parseDouble(bound.getText());
 	} catch (NumberFormatException e) {
-	    return FrameUtils.errorFormat(bound, "The " + (lower ? "lower" : "upper") + " limit is not a valid number.",
-		    false);
+	    return FrameUtils.errorFormat(bound, "The " + boundStr + " limit is not a valid number.");
 	}
-	return FrameUtils.normalFormat(bound, false);
+	return FrameUtils.normalFormat(bound);
     }
 
     /**
-     * Returns {@code true} if {@linkplain #lowerBound} and
-     * {@linkplain #upperBound} have valid numbers and if the lower limit is
-     * less than the upper limit, otherwise places warnings and locks the next
-     * button in the {@linkplain DecisionVariablesPage}
-     * 
-     * @return {@code true} if the {@linkplain #lowerBound} and
+     * @return {@code true} if {@linkplain #lowerBound} and
      *         {@linkplain #upperBound} have valid numbers and if the lower
-     *         limit is less than the upper limit, otherwise {@code false}
-     * 
+     *         limit is less than the upper limit, otherwise {@code false} and
+     *         evidence the error
      * @see #isValidNumber(boolean)
+     * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidBound() {
 	// separated to run all methods
@@ -219,9 +225,8 @@ public class DecisionVariablesObject {
 	    double upper = isInteger ? Integer.parseInt(upperBound.getText())
 		    : Double.parseDouble(upperBound.getText());
 	    return upper <= lower
-		    ? FrameUtils.errorFormat(upperBound, "The upper bound must be bigger than the lower bound", false)
-		    : FrameUtils.normalFormat(upperBound, false);
-
+		    ? FrameUtils.errorFormat(upperBound, "The upper bound must be bigger than the lower bound")
+		    : FrameUtils.normalFormat(upperBound);
 	}
 	return false;
     }

@@ -18,7 +18,8 @@ public class FrameUtils {
 	JButton button = new JButton(textOnButton);
 	button.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
 	button.setBackground(Color.WHITE);
-	button.setBorder(cuteBorder());
+	button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	button.setFocusPainted(false); // disables highlight
 	return button;
     }
@@ -39,19 +40,47 @@ public class FrameUtils {
 
     public static Border cuteBorder() {
 	return BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		BorderFactory.createEmptyBorder(4, 4, 4, 4));
     }
 
-    public static boolean errorFormat(JComponent jComponent, String errorMessage, boolean comboBox) {
+    /**
+     * Adds a red border and an <b>errorMessage</b> to the <b>jComponent</b>
+     * 
+     * @param jComponent
+     *            The component where a red border and the <b>errorMessage</b>
+     *            will be added
+     * @param errorMessage
+     *            The error message to display
+     * @return {@code false} because the method is called when something is
+     *         wrong
+     * @see JComponent#setBorder(Border)
+     * @see JComponent#setToolTipText(String)
+     */
+    // XXX change @return
+    public static boolean errorFormat(JComponent jComponent, String errorMessage) {
+	int var = jComponent instanceof JComboBox ? 0 : 4;
 	jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
-		BorderFactory.createEmptyBorder(0, comboBox ? 0 : 10, 0, comboBox ? 0 : 10)));
+		BorderFactory.createEmptyBorder(var, var, var, var)));
 	jComponent.setToolTipText(errorMessage);
 	return false;
     }
 
-    public static boolean normalFormat(JComponent jComponent, boolean comboBox) {
+    /**
+     * Adds a black border to the <b>jComponent</b>, and removes an error
+     * message if it has one
+     * 
+     * @param jComponent
+     *            The component where a red border and the <b>errorMessage</b>
+     *            will be added
+     * @return {@code true} because the method is called when something is right
+     * @see JComponent#setBorder(Border)
+     * @see JComponent#setToolTipText(String)
+     */
+    // XXX change @return
+    public static boolean normalFormat(JComponent jComponent) {
+	int var = jComponent instanceof JComboBox ? 0 : 4;
 	jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(0, comboBox ? 0 : 10, 0, comboBox ? 0 : 10)));
+		BorderFactory.createEmptyBorder(var, var, var, var)));
 	jComponent.setToolTipText(null);
 	return true;
     }

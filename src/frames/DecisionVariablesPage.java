@@ -288,6 +288,7 @@ public class DecisionVariablesPage extends SuperPage {
 
     private boolean areAllVariablesWellFilled() {
 	if (decisionVariableList.isEmpty()) {
+	    // XXX change message
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
 		    "Can only continue if it has at least one decision variable");
 	    return false;
@@ -336,13 +337,9 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     /**
-     * Returns {@code true} if there is at least other variable with the same
-     * name, otherwise {@code false}
-     * 
      * @param varName
      *            the {@code String} to compare to the other variable names in
      *            the {@linkplain #decisionVariableList}
-     * 
      * @return {@code true} if there is at least other variable with the same
      *         name, otherwise {@code false}
      */
