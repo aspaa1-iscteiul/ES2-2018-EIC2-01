@@ -227,11 +227,8 @@ public class DecisionVariablesPage extends SuperPage {
 	    while (scn.hasNextLine()) {
 		String line = scn.nextLine().replaceAll(" ", "");
 		if (!line.equals("")) {
-		    DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this);
-		    decisionVariable.setVariableName(line);
-		    decisionVariable.setVariableDataType(values[0]);
-		    decisionVariable.setLowerBound(values[1]);
-		    decisionVariable.setUpperBound(values[2]);
+		    DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this, line, values[0],
+			    values[1], values[2]);
 		    decisionVariableList.add(decisionVariable);
 		    subSubMainPanel.add(decisionVariable.transformIntoAPanel());
 		}
@@ -290,6 +287,11 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     private boolean areAllVariablesWellFilled() {
+	if (decisionVariableList.isEmpty()) {
+	    JOptionPane.showMessageDialog(userInterface.getFrame(),
+		    "Can only continue if it has at least one decision variable");
+	    return false;
+	}
 	boolean answer = true;
 	for (DecisionVariablesObject dvo : decisionVariableList) {
 	    // separated to run the method
