@@ -140,15 +140,15 @@ public class DecisionVariablesObject {
     public String getVariableName() {
 	return name.getText();
     }
-    
+
     public String getDataType() {
 	return dataType.getSelectedItem().toString();
     }
-    
+
     public String getLowerBound() {
 	return lowerBound.getText();
     }
-    
+
     public String getUpperBound() {
 	return upperBound.getText();
     }
@@ -204,9 +204,7 @@ public class DecisionVariablesObject {
 	    lowerBound.setEnabled(false);
 	    upperBound.setEnabled(false);
 	    page.blockNextButton(true);
-
 	    page.showWarning(page.isNameRepeated(text), 1);
-
 	    return false;
 	}
 	page.showWarning(false, 1);
@@ -235,25 +233,19 @@ public class DecisionVariablesObject {
      */
     private boolean isValidNumber(boolean lower) {
 	JTextField bound = lower ? lowerBound : upperBound;
-	String type = (String) dataType.getSelectedItem();
-	if (type == null)
+	if (bound.getText().equals("")) {
+	    page.blockNextButton(true);
 	    return false;
-	else {
-	    if (bound.getText().equals("")) {
-		page.showWarning(false, 2);
-		page.blockNextButton(false);
-		return true;
-	    }
-	    try {
-		if (type.equals("Integer"))
-		    Integer.parseInt(bound.getText());
-		else
-		    Double.parseDouble(bound.getText());
-	    } catch (NumberFormatException e) {
-		page.showWarning(true, 2);
-		page.blockNextButton(true);
-		return false;
-	    }
+	}
+	try {
+	    if (dataType.getSelectedItem().toString().equals("Integer"))
+		Integer.parseInt(bound.getText());
+	    else
+		Double.parseDouble(bound.getText());
+	} catch (NumberFormatException e) {
+	    page.showWarning(true, 2);
+	    page.blockNextButton(true);
+	    return false;
 	}
 	page.showWarning(false, 2);
 	page.blockNextButton(false);
@@ -274,29 +266,17 @@ public class DecisionVariablesObject {
      */
     private boolean isValidBound() {
 	if (isValidNumber(true) && isValidNumber(false)) {
-	    if (!lowerBound.getText().equals("") && !upperBound.getText().equals("")) {
-		double lower, upper;
-		if (((String) dataType.getSelectedItem()).equals("Integer")) {
-		    lower = Integer.parseInt(lowerBound.getText());
-		    upper = Integer.parseInt(upperBound.getText());
-		} else {
-		    lower = Double.parseDouble(lowerBound.getText());
-		    upper = Double.parseDouble(upperBound.getText());
-		}
-		boolean awnser = lower < upper;
-		page.showWarning(!awnser, 3);
-		page.blockNextButton(!awnser);
-		return awnser;
-	    } else {
-		page.showWarning(false, 3);
-		page.blockNextButton(false);
-		if (!lowerBound.getText().equals("")) {
-		    return isValidNumber(true);
-		} else {
-		    return isValidNumber(false);
-		}
-	    }
+	    boolean isInteger = dataType.getSelectedItem().toString().equals("Integer");
+	    double lower = isInteger ? Integer.parseInt(lowerBound.getText())
+		    : Double.parseDouble(lowerBound.getText());
+	    double upper = isInteger ? Integer.parseInt(upperBound.getText())
+		    : Double.parseDouble(upperBound.getText());
+	    boolean awnser = lower < upper;
+	    page.showWarning(!awnser, 3);
+	    page.blockNextButton(!awnser);
+	    return awnser;
 	}
+	page.blockNextButton(true);
 	return false;
     }
 
