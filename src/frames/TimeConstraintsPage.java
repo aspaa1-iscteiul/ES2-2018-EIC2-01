@@ -6,13 +6,15 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -22,14 +24,15 @@ public class TimeConstraintsPage extends SuperPage {
      * 
      */
     private static final long serialVersionUID = 1L;
+    private JTextField idealTime;
+    private JTextField maxTime;
+    private JButton nextButton;
+    private boolean idealOk = false;
+    private boolean maxOk = false;
 
     public TimeConstraintsPage(UserInterface userInterface) {
 	super(userInterface);
     }
-
-    private JTextField idealTime;
-    private JTextField maxTime;
-    private JButton nextButton;
 
     @Override
     public void initialize() {
@@ -37,6 +40,7 @@ public class TimeConstraintsPage extends SuperPage {
 	this.idealTime = new JTextField(5);	
 	this.maxTime = new JTextField(5);
 	this.nextButton = FrameUtils.cuteButton("Next");
+	this.nextButton.setEnabled(false);
     }
 
     @Override
@@ -44,13 +48,13 @@ public class TimeConstraintsPage extends SuperPage {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-	
+
 	JPanel titlePanel = new JPanel();
 	titlePanel.setLayout(new BorderLayout());
 	titlePanel.setBackground(Color.WHITE);
 	titlePanel.add(new JLabel("Time constraints"), BorderLayout.WEST);
 	mainPanel.add(titlePanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel infoPanel = new JPanel();
@@ -66,29 +70,99 @@ public class TimeConstraintsPage extends SuperPage {
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-	
+
 	JPanel idealPanel = new JPanel();
 	idealPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	idealPanel.setBackground(Color.white);
 	idealPanel.add(new JLabel("Ideal time frame:           "));
 	idealTime.setBorder(FrameUtils.cuteBorder());
 	idealPanel.add(idealTime);
+
+	idealTime.addKeyListener(new KeyListener() {
+	    @Override
+	    public void keyTyped(KeyEvent e) {
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent e) {
+		try {
+		    Integer.parseInt(idealTime.getText());
+		    idealOk = true;
+		    if(idealOk==true && maxOk==true) {
+			nextButton.setEnabled(true);
+		    }
+		} catch(NumberFormatException e1) {
+		    nextButton.setEnabled(false);
+		}
+
+		try {
+		    Double.parseDouble(idealTime.getText());
+		    idealOk = true;
+		    if(idealOk==true && maxOk==true) {
+			nextButton.setEnabled(true);
+		    }
+		} catch (NumberFormatException e2) {
+		    nextButton.setEnabled(false);
+		}
+	    }
+
+
+	    @Override
+	    public void keyPressed(KeyEvent e) {
+	    }
+	});
+
 	idealPanel.add(new JLabel("min"));
 	mainPanel.add(idealPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-	
+
 	JPanel maxPanel = new JPanel();
 	maxPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	maxPanel.setBackground(Color.white);
 	maxPanel.add(new JLabel("Maximum time frame: "));
 	maxTime.setBorder(FrameUtils.cuteBorder());
 	maxPanel.add(maxTime);
+
+	maxTime.addKeyListener(new KeyListener() {
+	    @Override
+	    public void keyTyped(KeyEvent e) {
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent e) {
+		try {
+		    Integer.parseInt(maxTime.getText());
+		    maxOk = true;
+		    if(idealOk==true && maxOk==true) {
+			nextButton.setEnabled(true);
+		    }
+		} catch(NumberFormatException e1) {
+		    nextButton.setEnabled(false);
+		}
+
+		try {
+		    Double.parseDouble(maxTime.getText());
+		    maxOk = true;
+		    if(idealOk==true && maxOk==true) {
+			nextButton.setEnabled(true);
+		    }
+		} catch (NumberFormatException e2) {
+		    nextButton.setEnabled(false);
+		}
+	    }
+
+
+	    @Override
+	    public void keyPressed(KeyEvent e) {
+	    }
+	});
+
 	maxPanel.add(new JLabel("min"));
 	mainPanel.add(maxPanel);
-		
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
     }
