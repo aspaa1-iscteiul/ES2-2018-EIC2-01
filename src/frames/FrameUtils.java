@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -58,9 +59,14 @@ public class FrameUtils {
      */
     // XXX change @return
     public static boolean errorFormat(JComponent jComponent, String errorMessage) {
-	int var = jComponent instanceof JComboBox ? 0 : 4;
-	jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
-		BorderFactory.createEmptyBorder(var, var, var, var)));
+	if (jComponent instanceof JCheckBox) {
+	    // because JCheckBox does not have a border ?
+	    jComponent.setForeground(Color.RED);
+	} else {
+	    int var = jComponent instanceof JComboBox ? 0 : 4;
+	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
+		    BorderFactory.createEmptyBorder(var, var, var, var)));
+	}
 	jComponent.setToolTipText(errorMessage);
 	return false;
     }
@@ -78,9 +84,14 @@ public class FrameUtils {
      */
     // XXX change @return
     public static boolean normalFormat(JComponent jComponent) {
-	int var = jComponent instanceof JComboBox ? 0 : 4;
-	jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(var, var, var, var)));
+	if (jComponent instanceof JCheckBox) {
+	    // because JCheckBox does not have a border ?
+	    jComponent.setForeground(Color.BLACK);
+	} else {
+	    int var = jComponent instanceof JComboBox ? 0 : 4;
+	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		    BorderFactory.createEmptyBorder(var, var, var, var)));
+	}
 	jComponent.setToolTipText(null);
 	return true;
     }

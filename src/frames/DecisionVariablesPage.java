@@ -243,7 +243,7 @@ public class DecisionVariablesPage extends SuperPage {
 		    index--;
 		}
 
-	    areAllVariablesWellFilled();
+	    areAllDataWellFilled();
 	} catch (FileNotFoundException e) {
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
 		    "The file " + selectedFile.getAbsolutePath() + " doesn't exists");
@@ -277,7 +277,7 @@ public class DecisionVariablesPage extends SuperPage {
 	nextButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		if (areAllVariablesWellFilled()) {
+		if (areAllDataWellFilled()) {
 		    userInterface.goToNextPage();
 		    userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
 		}
@@ -286,7 +286,7 @@ public class DecisionVariablesPage extends SuperPage {
 	buttonsPanel.add(nextButton);
     }
 
-    private boolean areAllVariablesWellFilled() {
+    private boolean areAllDataWellFilled() {
 	if (decisionVariableList.isEmpty()) {
 	    // XXX change message
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
