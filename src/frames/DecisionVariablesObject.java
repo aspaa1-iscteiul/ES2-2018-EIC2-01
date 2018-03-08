@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -29,63 +26,19 @@ public class DecisionVariablesObject {
     private JTextField upperBound;
     private JLabel deleteIcon;
 
-    public DecisionVariablesObject(final DecisionVariablesPage page) {
+    public DecisionVariablesObject(final DecisionVariablesPage page, String name, String dataType, String lowerBound,
+	    String upperBound) {
 	this.page = page;
-	this.variablesPanel = new JPanel();
+	variablesPanel = new JPanel();
 	DecisionVariablesObject tmp = this;
-	this.name = new JTextField(5) {
-	    private static final long serialVersionUID = 1L;
-
-	    @Override
-	    public void processKeyEvent(KeyEvent key) {
-		super.processKeyEvent(key);
-		isValidName();
-	    }
-	};
-
-	dataType = FrameUtils.cuteComboBox(dataTypes);
-	dataType.setSelectedItem(null);
-	dataType.setEnabled(false);
-	dataType.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		lowerBound.setEnabled(true);
-		upperBound.setEnabled(true);
-		if (isValidBound())
-		    page.isAllVariablesWellFilled();
-	    }
-	});
-
-	this.lowerBound = new JTextField(5) {
-	    private static final long serialVersionUID = 1L;
-
-	    @Override
-	    public void processKeyEvent(KeyEvent key) {
-		super.processKeyEvent(key);
-		isValidBound();
-	    }
-	};
-	lowerBound.setEnabled(false);
-
-	this.upperBound = new JTextField(5) {
-	    private static final long serialVersionUID = 1L;
-
-	    @Override
-	    public void processKeyEvent(KeyEvent key) {
-		super.processKeyEvent(key);
-		isValidBound();
-	    }
-	};
-	upperBound.setEnabled(false);
-
-	constructorContinuation(tmp);
-    }
-
-    private void constructorContinuation(final DecisionVariablesObject tmp) {
-	this.deleteIcon = new JLabel();
-	this.deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
-
-	this.deleteIcon.addMouseListener(new MouseListener() {
+	this.name = new JTextField(name, 5);
+	this.dataType = FrameUtils.cuteComboBox(dataTypes);
+	this.dataType.setSelectedItem(dataType);
+	this.lowerBound = new JTextField(lowerBound, 5);
+	this.upperBound = new JTextField(upperBound, 5);
+	deleteIcon = new JLabel();
+	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
+	deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
@@ -112,6 +65,10 @@ public class DecisionVariablesObject {
 	    }
 
 	});
+    }
+
+    public DecisionVariablesObject(final DecisionVariablesPage page) {
+	this(page, null, null, null, null);
     }
 
     public JPanel transformIntoAPanel() {
@@ -154,20 +111,15 @@ public class DecisionVariablesObject {
     }
 
     public void setVariableDataType(String type) {
-	dataType.setEnabled(true);
-	lowerBound.setEnabled(true);
-	upperBound.setEnabled(true);
 	dataType.setSelectedItem(type);
     }
 
     public void setLowerBound(String lower) {
-	if (dataType.getSelectedItem() != null)
-	    lowerBound.setText(lower);
+	lowerBound.setText(lower);
     }
 
     public void setUpperBound(String upper) {
-	if (dataType.getSelectedItem() != null)
-	    upperBound.setText(upper);
+	upperBound.setText(upper);
     }
 
     /**
@@ -183,7 +135,9 @@ public class DecisionVariablesObject {
      * @see #isValidBound()
      */
     public boolean isWellFilled() {
-	return isValidName() && dataType.getSelectedItem() != null && isValidBound();
+	// separated to run all methods
+	boolean isValidName = isValidName(), isDataTypeSelected = isDataTypeSelected(), isValidBound = isValidBound();
+	return isValidName && isDataTypeSelected && isValidBound;
     }
 
     /**
@@ -199,22 +153,16 @@ public class DecisionVariablesObject {
     private boolean isValidName() {
 	String text = name.getText().trim();
 	name.setText(text);
-	if (text.equals("") || page.isNameRepeated(text)) {
-	    dataType.setEnabled(false);
-	    lowerBound.setEnabled(false);
-	    upperBound.setEnabled(false);
-	    page.blockNextButton(true);
-	    page.showWarning(page.isNameRepeated(text), 1);
-	    return false;
-	}
-	page.showWarning(false, 1);
-	dataType.setEnabled(true);
-	if (dataType.getSelectedItem() != null) {
-	    lowerBound.setEnabled(true);
-	    upperBound.setEnabled(true);
-	    isValidBound();
-	}
-	return true;
+	String info = (text.equals("") ? "The variable name must be filled in. " : "")
+		+ (page.isNameRepeated(text) ? "The variable name must be unique." : "");
+	return !info.equals("") ? FrameUtils.errorFormat(name, info, false) : FrameUtils.normalFormat(name, false);
+    }
+
+    private boolean isDataTypeSelected() {
+	return dataType.getSelectedItem() == null
+		? FrameUtils.errorFormat(dataType, "The data type must be filled in.", true)
+		: FrameUtils.normalFormat(dataType, true);
+
     }
 
     /**
@@ -233,23 +181,20 @@ public class DecisionVariablesObject {
      */
     private boolean isValidNumber(boolean lower) {
 	JTextField bound = lower ? lowerBound : upperBound;
-	if (bound.getText().equals("")) {
-	    page.blockNextButton(true);
-	    return false;
-	}
+	if (bound.getText().equals(""))
+	    return FrameUtils.errorFormat(bound, "The " + (lower ? "lower" : "upper") + " limit must be filled in.",
+		    false);
+
 	try {
 	    if (dataType.getSelectedItem().toString().equals("Integer"))
 		Integer.parseInt(bound.getText());
 	    else
 		Double.parseDouble(bound.getText());
 	} catch (NumberFormatException e) {
-	    page.showWarning(true, 2);
-	    page.blockNextButton(true);
-	    return false;
+	    return FrameUtils.errorFormat(bound, "The " + (lower ? "lower" : "upper") + " limit is not a valid number.",
+		    false);
 	}
-	page.showWarning(false, 2);
-	page.blockNextButton(false);
-	return true;
+	return FrameUtils.normalFormat(bound, false);
     }
 
     /**
@@ -265,18 +210,19 @@ public class DecisionVariablesObject {
      * @see #isValidNumber(boolean)
      */
     private boolean isValidBound() {
-	if (isValidNumber(true) && isValidNumber(false)) {
+	// separated to run all methods
+	boolean lowerBoundValid = isValidNumber(true), upperBoundValid = isValidNumber(false);
+	if (lowerBoundValid && upperBoundValid) {
 	    boolean isInteger = dataType.getSelectedItem().toString().equals("Integer");
 	    double lower = isInteger ? Integer.parseInt(lowerBound.getText())
 		    : Double.parseDouble(lowerBound.getText());
 	    double upper = isInteger ? Integer.parseInt(upperBound.getText())
 		    : Double.parseDouble(upperBound.getText());
-	    boolean awnser = lower < upper;
-	    page.showWarning(!awnser, 3);
-	    page.blockNextButton(!awnser);
-	    return awnser;
+	    return upper <= lower
+		    ? FrameUtils.errorFormat(upperBound, "The upper bound must be bigger than the lower bound", false)
+		    : FrameUtils.normalFormat(upperBound, false);
+
 	}
-	page.blockNextButton(true);
 	return false;
     }
 

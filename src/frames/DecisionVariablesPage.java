@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 public class DecisionVariablesPage extends SuperPage {
@@ -37,7 +36,7 @@ public class DecisionVariablesPage extends SuperPage {
     private static final long serialVersionUID = 1L;
 
     private ArrayList<DecisionVariablesObject> decisionVariableList;
-    private JPanel subSubMainPanel, warningPanel1, warningPanel2, warningPanel3;
+    private JPanel subSubMainPanel;
     private JButton nextButton;
 
     public DecisionVariablesPage(UserInterface userInterface) {
@@ -48,23 +47,6 @@ public class DecisionVariablesPage extends SuperPage {
     public void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
 	decisionVariableList = new ArrayList<DecisionVariablesObject>();
-
-	warningPanel1 = createWarningPanel("Optimization criterias must have unique names");
-	warningPanel2 = createWarningPanel("Lower bound and upper bound must agree with the data type selected");
-	warningPanel3 = createWarningPanel("Lower bound must be lower then upper bound");
-    }
-
-    private JPanel createWarningPanel(String message) {
-	JPanel warningPanel = new JPanel();
-	warningPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-	warningPanel.setBackground(Color.WHITE);
-	JLabel warningIcon = new JLabel();
-	warningIcon.setIcon(new ImageIcon("./src/frames/images/warning_icon.png"));
-	warningPanel.add(warningIcon);
-	JLabel warning = new JLabel(message);
-	warning.setForeground(Color.red);
-	warningPanel.add(warning);
-	return warningPanel;
     }
 
     @Override
@@ -130,21 +112,16 @@ public class DecisionVariablesPage extends SuperPage {
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
-
 	final DecisionVariablesPage tmp = this;
-
 	addIcon.addMouseListener(new MouseListener() {
-
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
 		    public void run() {
-			nextButton.setEnabled(false);
 			DecisionVariablesObject decisionVariable = new DecisionVariablesObject(tmp);
 			decisionVariableList.add(decisionVariable);
 			subSubMainPanel.add(decisionVariable.transformIntoAPanel());
-			validate(); // to update window
-			repaint(); // to update window
+			refreshPage();
 		    }
 		});
 	    }
@@ -164,7 +141,6 @@ public class DecisionVariablesPage extends SuperPage {
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
-
 	});
 	addOptionPanel.add(addIcon, BorderLayout.WEST);
 	addOptionPanel.add(new JLabel("Add new variable"));
@@ -220,29 +196,23 @@ public class DecisionVariablesPage extends SuperPage {
 		lower = type.equals("Integer") ? Integer.parseInt(lowerBound.getText())
 			: Double.parseDouble(lowerBound.getText());
 	    } catch (NumberFormatException e) {
-		if (!lowerBound.getText().equals("")) {
-		    JOptionPane.showMessageDialog(userInterface.getFrame(),
-			    "The lower bound given was not a valid number");
-		    return askUserForVariableAttributes();
-		}
-		lower = Double.MIN_VALUE;
+		JOptionPane.showMessageDialog(userInterface.getFrame(), !lowerBound.getText().equals("")
+			? "The lower bound given was not a valid number." : "The lower bound must be filled in.");
+		return askUserForVariableAttributes();
 	    }
 	    try {
 		upper = type.equals("Integer") ? Integer.parseInt(upperBound.getText())
 			: Double.parseDouble(upperBound.getText());
 	    } catch (NumberFormatException e) {
-		if (!upperBound.getText().equals("")) {
-		    JOptionPane.showMessageDialog(userInterface.getFrame(),
-			    "The upper bound given was not a valid number");
-		    return askUserForVariableAttributes();
-		}
-		upper = Double.MAX_VALUE;
+		JOptionPane.showMessageDialog(userInterface.getFrame(), !upperBound.getText().equals("")
+			? "The upper bound given was not a valid number." : "The upper bound must be filled in.");
+		return askUserForVariableAttributes();
 	    }
-	    if (lower < upper)
+	    if (upper <= lower)
 		return new String[] { type, lowerBound.getText(), upperBound.getText() };
 	    else {
 		JOptionPane.showMessageDialog(userInterface.getFrame(),
-			"The lower bound must be lower then the upper bound");
+			"The upper bound must be bigger then the lower bound");
 		return askUserForVariableAttributes();
 	    }
 	}
@@ -276,7 +246,7 @@ public class DecisionVariablesPage extends SuperPage {
 		    index--;
 		}
 
-	    isAllVariablesWellFilled();
+	    areAllVariablesWellFilled();
 	} catch (FileNotFoundException e) {
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
 		    "The file " + selectedFile.getAbsolutePath() + " doesn't exists");
@@ -307,15 +277,26 @@ public class DecisionVariablesPage extends SuperPage {
 
 	buttonsPanel.add(new JLabel()); // to add space between the two buttons
 
-	nextButton.setEnabled(false);
 	nextButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToNextPage();
-		userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
+		if (areAllVariablesWellFilled()) {
+		    userInterface.goToNextPage();
+		    userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
+		}
 	    }
 	});
 	buttonsPanel.add(nextButton);
+    }
+
+    private boolean areAllVariablesWellFilled() {
+	boolean answer = true;
+	for (DecisionVariablesObject dvo : decisionVariableList) {
+	    // separated to run the method
+	    boolean var = dvo.isWellFilled();
+	    answer &= var;
+	}
+	return answer;
     }
 
     @Override
@@ -326,9 +307,6 @@ public class DecisionVariablesPage extends SuperPage {
     public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
 	decisionVariableList.remove(dvo);
 	subSubMainPanel.remove(dvo.transformIntoAPanel());
-
-	isAllVariablesWellFilled();
-
 	refreshPage();
     }
 
@@ -336,7 +314,8 @@ public class DecisionVariablesPage extends SuperPage {
 	ArrayList<KnownSolutionsObject> knownSolutions = new ArrayList<KnownSolutionsObject>();
 	for (DecisionVariablesObject dvo : decisionVariableList) {
 	    if (!dvo.getVariableName().trim().isEmpty()) {
-		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound()));
+		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName(), dvo.getDataType(),
+			dvo.getLowerBound(), dvo.getUpperBound()));
 	    }
 	}
 	return knownSolutions;
@@ -371,63 +350,6 @@ public class DecisionVariablesPage extends SuperPage {
 	    if (!dvo.getVariableName().equals("") && dvo.getVariableName().equals(varName))
 		count++;
 	return count >= 2;
-    }
-
-    /**
-     * Blocks the {@linkplain #nextButton} if <b>b</b> is {@code true},
-     * otherwise unblocks
-     * 
-     * @param b
-     *            {@code true} if it is to block {@linkplain #nextButton},
-     *            otherwise if it is to unblock
-     * 
-     * @see #setEnabled(boolean)
-     */
-    public void blockNextButton(boolean b) {
-	nextButton.setEnabled(!b);
-    }
-
-    /**
-     * If <b>show</b> is {@code true} it adds the warning panel's <b>number</b>,
-     * otherwise it removes the warning panel's <b>number</b>
-     * 
-     * @param show
-     *            {@code true} if it is to add the warning panel, {@code false}
-     *            if it is to remove
-     * 
-     * @param number
-     *            points to the respective warning panel
-     * 
-     * @see #warningPanel1
-     * @see #warningPanel2
-     * @see #warningPanel3
-     */
-    public void showWarning(final boolean show, final int number) {
-	SwingUtilities.invokeLater(new Runnable() {
-	    public void run() {
-		JPanel panel = number == 1 ? warningPanel1 : (number == 2 ? warningPanel2 : warningPanel3);
-		if (show)
-		    mainPanel.add(panel);
-		else
-		    mainPanel.remove(panel);
-		refreshPage();
-	    }
-	});
-    }
-
-    /**
-     * Verifies if that all {@linkplain DecisionVariablesObject} in the
-     * {@linkplain #decisionVariableList} are well field
-     * 
-     * @see DecisionVariablesObject#isWellFilled()
-     */
-    public void isAllVariablesWellFilled() {
-	if(decisionVariableList.size() == 0) {
-	    nextButton.setEnabled(false);
-	}
-	for (DecisionVariablesObject dvo2 : decisionVariableList)
-	    if (!dvo2.isWellFilled())
-		return;
     }
 
 }

@@ -6,6 +6,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -17,8 +18,7 @@ public class FrameUtils {
 	JButton button = new JButton(textOnButton);
 	button.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
 	button.setBackground(Color.WHITE);
-	button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	button.setBorder(cuteBorder());
 	button.setFocusPainted(false); // disables highlight
 	return button;
     }
@@ -40,6 +40,20 @@ public class FrameUtils {
     public static Border cuteBorder() {
 	return BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(0, 10, 0, 10));
+    }
+
+    public static boolean errorFormat(JComponent jComponent, String errorMessage, boolean comboBox) {
+	jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
+		BorderFactory.createEmptyBorder(0, comboBox ? 0 : 10, 0, comboBox ? 0 : 10)));
+	jComponent.setToolTipText(errorMessage);
+	return false;
+    }
+
+    public static boolean normalFormat(JComponent jComponent, boolean comboBox) {
+	jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		BorderFactory.createEmptyBorder(0, comboBox ? 0 : 10, 0, comboBox ? 0 : 10)));
+	jComponent.setToolTipText(null);
+	return true;
     }
 
 }
