@@ -149,23 +149,23 @@ public class DecisionVariablesObject {
     }
 
     public void setLowerBound(String lower) {
-	if (dataType.getSelectedIndex() > 0)
+	if (dataType.getSelectedItem() != null)
 	    lowerBound.setText(lower);
     }
 
     public void setUpperBound(String upper) {
-	if (dataType.getSelectedIndex() > 0)
+	if (dataType.getSelectedItem() != null)
 	    upperBound.setText(upper);
     }
 
     /**
      * Returns {@code true} if {@linkplain DecisionVariablesObject} have a valid
-     * name and the {@linkplain #dataType} is not {@code null} and have a valid
-     * bound, otherwise {@code false}
+     * name and the {@linkplain #dataType} is selected and have a valid bound,
+     * otherwise {@code false}
      * 
      * @return {@code true} if {@linkplain DecisionVariablesObject} have a valid
-     *         name and the {@linkplain #dataType} is not {@code null} and have
-     *         a valid bound, otherwise {@code false}
+     *         name and the {@linkplain #dataType} is selected and have a valid
+     *         bound, otherwise {@code false}
      * 
      * @see #isValidName()
      * @see #isValidBound()

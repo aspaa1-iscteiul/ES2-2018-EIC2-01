@@ -342,6 +342,12 @@ public class DecisionVariablesPage extends SuperPage {
 	return knownSolutions;
     }
 
+    /**
+     * Refreshes the frame
+     * 
+     * @see #validate()
+     * @see #repaint()
+     */
     public void refreshPage() {
 	userInterface.getFrame().validate();
 	userInterface.getFrame().repaint();
@@ -367,6 +373,16 @@ public class DecisionVariablesPage extends SuperPage {
 	return count >= 2;
     }
 
+    /**
+     * Blocks the {@linkplain #nextButton} if <b>b</b> is {@code true},
+     * otherwise unblocks
+     * 
+     * @param b
+     *            {@code true} if it is to block {@linkplain #nextButton},
+     *            otherwise if it is to unblock
+     * 
+     * @see #setEnabled(boolean)
+     */
     public void blockNextButton(boolean b) {
 	nextButton.setEnabled(!b);
     }
