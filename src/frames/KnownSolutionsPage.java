@@ -172,6 +172,7 @@ public class KnownSolutionsPage extends SuperPage {
 		    mainPanel.remove(panel);
 		}
 		refreshPage();
+		userInterface.getFrame().pack();
 	    }
 	});
     }

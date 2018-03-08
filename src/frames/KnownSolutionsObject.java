@@ -69,28 +69,15 @@ public class KnownSolutionsObject {
 		    if(type.equals("Integer") && !textField.getText().isEmpty()) {
 			try {
 			    Integer.parseInt(textField.getText());
-			    page.setWarningAboutDataType(false);
-			    if(!lowerBound.isEmpty()) {
-				if(Integer.parseInt(textField.getText()) < Integer.parseInt(lowerBound)) {
-				    page.setWarningAboutBounds(true);
-				} else {
-				    page.setWarningAboutBounds(false);
-				}
-			    }
-			    if(!upperBound.isEmpty()) {
-				if(Integer.parseInt(textField.getText()) > Integer.parseInt(upperBound)) {
-				    page.setWarningAboutBounds(true);
-				} else {
-				    page.setWarningAboutBounds(false);
-				}
-			    }
+			    validateIfItsOkToRemoveDataTypeWarning();
 			    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
 				if( Integer.parseInt(textField.getText()) >  Integer.parseInt(upperBound) || Integer.parseInt(textField.getText()) <  Integer.parseInt(lowerBound) ) {
 				    page.setWarningAboutBounds(true);
 				} else {
-				    page.setWarningAboutBounds(false);
+				    validateIfItsOkToRemoveBoundsWarning();
 				}
 			    }
+			    validateIfItsOkToEnableButton();
 			} catch(NumberFormatException e1) {
 			    page.setWarningAboutDataType(true);
 			}
@@ -98,31 +85,21 @@ public class KnownSolutionsObject {
 		    if(type.equals("Double") && !textField.getText().isEmpty()) {
 			try {
 			    Double.parseDouble(textField.getText());
-			    page.setWarningAboutDataType(false);
-			    if(!lowerBound.isEmpty()) {
-				if( Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound)) {
-				    page.setWarningAboutBounds(true);
-				} else {
-				    page.setWarningAboutBounds(false);
-				}
-			    }
-			    if(!upperBound.isEmpty()) {
-				if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound)) {
-				    page.setWarningAboutBounds(true);
-				} else {
-				    page.setWarningAboutBounds(false);
-				}
-			    }
+			    validateIfItsOkToRemoveDataTypeWarning();
 			    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
 				if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound) || Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound) ) {
 				    page.setWarningAboutBounds(true);
 				} else {
-				    page.setWarningAboutBounds(false);
+				    validateIfItsOkToRemoveBoundsWarning();
 				}
 			    }
+			    validateIfItsOkToEnableButton();
 			} catch(NumberFormatException e1) {
 			    page.setWarningAboutDataType(true);
 			}
+		    }
+		    if(textField.getText().isEmpty()) {
+			validateIfItsOkToEnableButton();
 		    }
 		}
 
@@ -179,6 +156,60 @@ public class KnownSolutionsObject {
 	overallPanel.add(addPanel);
 
 	return overallPanel;
+    }
+
+    private boolean validateIfItsOkToRemoveDataTypeWarning() {
+	boolean tmp = true;
+	for (JTextField textField : textfieldList) {
+	    if(type.equals("Integer") && !textField.getText().isEmpty()) {
+		try {
+		    Integer.parseInt(textField.getText());
+		} catch(NumberFormatException e1) {
+		    tmp = false;
+		    break;
+		}
+	    }
+	    if(type.equals("Double") && !textField.getText().isEmpty()) {
+		try {
+		    Double.parseDouble(textField.getText());
+		} catch(NumberFormatException e1) {
+		    tmp = false;
+		    break;
+		}
+	    }
+	}
+	if(tmp == true){
+	    page.setWarningAboutDataType(false);
+	}
+	return tmp;
+    }
+
+    private boolean validateIfItsOkToRemoveBoundsWarning() {
+	boolean tmp = true;
+	for (JTextField textField : textfieldList) {
+	    if(type.equals("Integer") && !textField.getText().isEmpty()) {
+		if( Integer.parseInt(textField.getText()) >  Integer.parseInt(upperBound) || Integer.parseInt(textField.getText()) <  Integer.parseInt(lowerBound) ) {
+		    tmp = false;
+		    break;
+		}
+	    }
+	    if(type.equals("Double") && !textField.getText().isEmpty()) {
+		if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound) || Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound) ) {
+		    tmp = false;
+		    break;
+		}
+	    }
+	}
+	if(tmp == true){
+	    page.setWarningAboutBounds(false);
+	}
+	return tmp;
+    }
+    
+    private void validateIfItsOkToEnableButton() {
+	if(validateIfItsOkToRemoveBoundsWarning()==true && validateIfItsOkToRemoveDataTypeWarning()==true){
+	    page.enableNextButton();
+	}
     }
 
     public JTextField getName() {

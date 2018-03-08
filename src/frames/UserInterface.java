@@ -67,7 +67,7 @@ public class UserInterface {
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
-	pages.add(new AlgorithmsPage(this));
+//	pages.add(new AlgorithmsPage(this));
 	pages.add(new TimeConstraintsPage(this));
 	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
