@@ -2,6 +2,12 @@ package objects;
 
 import java.util.ArrayList;
 
+/**
+ * The Problem class represents an optimization problem's characterization.
+ * 
+ * @author Ana Pestana
+ *
+ */
 public class Problem {
 
     protected String problemName;
@@ -13,14 +19,40 @@ public class Problem {
     protected double maxTimeFrame;
     public static String newLine = System.getProperty("line.separator");
 
+    /**
+     * Empty constructor for the Problem class
+     */
     public Problem() {
 
     }
 
+    /**
+     * Constructor for the Problem class.
+     * 
+     * The list of known solutions is not initialized and, if necessary, it must be
+     * set using the setOptimizationAlgorithms(ArrayList<String>
+     * optimizationAlgorithms) method
+     * 
+     * @param problemName
+     *            String containing the name of the problem. This name must follow
+     *            the Java convention for class names
+     * @param problemDescription
+     *            String containing the optimization problem's description in
+     *            natural language
+     * @param decisionVariables
+     *            List of all the problem's decision variables
+     * @param fitnessFunctions
+     *            List of all the problem's fitness functions
+     * @param optimizationAlgorithms
+     *            List of the optimization algorithms selected
+     * @param idealTimeFrame
+     *            Ideal time frame for the algorithm's runtime
+     * @param maxTimeFrame
+     *            Maximum time frame accepted for the algorithm's runtime
+     */
     public Problem(String problemName, String problemDescription, ArrayList<DecisionVariable> decisionVariables,
 	    ArrayList<FitnessFunction> fitnessFunctions, ArrayList<String> optimizationAlgorithms,
 	    double idealTimeFrame, double maxTimeFrame) {
-	super();
 	this.problemName = problemName;
 	this.problemDescription = problemDescription;
 	this.decisionVariables = decisionVariables;

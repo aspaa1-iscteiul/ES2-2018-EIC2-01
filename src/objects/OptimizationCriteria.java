@@ -1,12 +1,26 @@
 package objects;
 
+/**
+ * The OptimizationCriteria class represents an evaluation criteria for the
+ * optimization algorithms selected
+ * 
+ * @author Ana Pestana
+ *
+ */
 public class OptimizationCriteria {
 
-    // Podes alterar os tipos dos dados entre String, enumerados e tipos
-    // numéricos conforme der mais jeito
     public String name;
     public DataType dataType;
 
+    /**
+     * Constructor for OptimizationCriteria
+     * 
+     * @param name
+     *            of the optimizationCriteria
+     * @param dataType
+     *            of the optimizationCriteria: {@code DataType.INTEGER} or
+     *            {@code DataType.DOUBLE}
+     */
     public OptimizationCriteria(String name, DataType dataType) {
 	this.name = name;
 	this.dataType = dataType;
