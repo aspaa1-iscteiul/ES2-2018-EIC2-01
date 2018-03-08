@@ -123,9 +123,11 @@ public class RegisterUserPage extends SuperPage {
 	    new InternetAddress(email.getText()).validate();
 	    goOn = FrameUtils.normalFormat(email);
 	} catch (AddressException ee) {
-	    goOn = FrameUtils.errorFormat(email, "The email does not have a valid format");
+	    goOn = FrameUtils.errorFormat(email, email.getText().equals("") ? "The email must be filled in"
+		    : "The email does not have a valid format");
 	}
-	goOn &= checkBox.isSelected() ? FrameUtils.normalFormat(checkBox) : FrameUtils.errorFormat(checkBox, "Have to agree on the terms and conditions for moving forward");
+	goOn &= checkBox.isSelected() ? FrameUtils.normalFormat(checkBox)
+		: FrameUtils.errorFormat(checkBox, "Have to agree on the terms and conditions for moving forward");
 	return goOn;
     }
 

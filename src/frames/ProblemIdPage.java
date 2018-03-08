@@ -7,8 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
@@ -28,7 +26,6 @@ public class ProblemIdPage extends SuperPage {
 
     private JTextField problemName;
     private JTextArea problemDescription;
-    private JButton nextButton;
 
     public ProblemIdPage(UserInterface userInterface) {
 	super(userInterface);
@@ -38,7 +35,6 @@ public class ProblemIdPage extends SuperPage {
     public void initialize() {
 	problemName = new JTextField(30); // XXX see if 30 is a good width
 	problemDescription = new JTextArea();
-	nextButton = FrameUtils.cuteButton("Next");
     }
 
     @Override
@@ -52,22 +48,6 @@ public class ProblemIdPage extends SuperPage {
 	problemPanel.setBackground(Color.WHITE);
 	problemPanel.add(new JLabel("Problem name:"));
 	problemName.setBorder(FrameUtils.cuteBorder());
-	problemName.addKeyListener(new KeyListener() {
-	    @Override
-	    public void keyTyped(KeyEvent e) {
-	    }
-
-	    @Override
-	    public void keyReleased(KeyEvent e) {
-		nextButton.setEnabled(Pattern.matches("[a-zA-Z0-9]+", problemName.getText())
-			&& Character.isUpperCase(problemName.getText().charAt(0)));
-	    }
-
-	    @Override
-	    public void keyPressed(KeyEvent e) {
-	    }
-	});
-
 	problemPanel.add(problemName);
 	mainPanel.add(problemPanel);
 
@@ -135,15 +115,24 @@ public class ProblemIdPage extends SuperPage {
 
 	buttonsPanel.add(new JLabel()); // to add space between the two buttons
 
-	nextButton.setEnabled(false);
+	JButton nextButton = FrameUtils.cuteButton("Next");
 	nextButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		saveToProblem();
-		userInterface.goToNextPage();
+		if (areAllDataWellFilled()) {
+		    saveToProblem();
+		    userInterface.goToNextPage();
+		}
 	    }
 	});
 	buttonsPanel.add(nextButton);
+    }
+
+    protected boolean areAllDataWellFilled() {
+	return Pattern.matches("[a-zA-Z0-9]+", problemName.getText())
+		&& Character.isUpperCase(problemName.getText().charAt(0)) ? FrameUtils.normalFormat(problemName)
+			: FrameUtils.errorFormat(problemName,
+				"The problem name must agree with the conditions in the info section");
     }
 
     public void saveToProblem() {
@@ -160,18 +149,6 @@ public class ProblemIdPage extends SuperPage {
     @Override
     public void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-
-	try {
-	    problemName.setText(userInterface.getProblem().getProblemName());
-	    nextButton.setEnabled(true);
-	} catch (NullPointerException e) {
-	}
-
-	try {
-	    problemDescription.setText(userInterface.getProblem().getProblemDescription());
-	} catch (NullPointerException e) {
-	}
-
     }
 
 }
