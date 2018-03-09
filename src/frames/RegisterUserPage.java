@@ -80,35 +80,45 @@ public class RegisterUserPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
-	boolean goOn = true;
+	boolean isEmailWellFilled = isEmailWellFilled(), isCheckBoxSeleceted = isCheckBoxSeleceted();
+	return isEmailWellFilled && isCheckBoxSeleceted;
+    }
+
+    private boolean isEmailWellFilled() {
 	try {
 	    // validates the email
 	    new InternetAddress(email.getText()).validate();
-	    goOn = FrameUtils.normalFormat(email);
+	    return FrameUtils.normalFormat(email);
 	} catch (AddressException ee) {
-	    goOn = FrameUtils.errorFormat(email, email.getText().equals("") ? "The email must be filled in"
+	    return FrameUtils.errorFormat(email, email.getText().equals("") ? "The email must be filled in"
 		    : "The email does not have a valid format");
 	}
-	goOn &= checkBox.isSelected() ? FrameUtils.normalFormat(checkBox)
+    }
+
+    private boolean isCheckBoxSeleceted() {
+	return checkBox.isSelected() ? FrameUtils.normalFormat(checkBox)
 		: FrameUtils.errorFormat(checkBox, "Have to agree on the terms and conditions for moving forward");
-	return goOn;
     }
 
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+
+	String emailStr = userInterface.getProblem().getEmail();
+	email.setText(emailStr);
+	checkBox.setSelected(emailStr != null);
     }
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-	
+	if (isEmailWellFilled())
+	    userInterface.getProblem().setEmail(email.getText());
     }
 
     @Override
     protected void getFromProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

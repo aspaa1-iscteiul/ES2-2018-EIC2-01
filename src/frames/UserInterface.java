@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import objects.DecisionVariable;
@@ -35,6 +36,8 @@ public class UserInterface {
 	fitnessFunctionFromPage = new ArrayList<FitnessFunctionObject>();
 	knownSolutionsFromDecisionVariables = new ArrayList<KnownSolutionsObject>();
 	optimizationCriteriaFromPage = new ArrayList<OptimizationCriteriaObject>();
+	
+	problem = new Problem();
 
 	frame.addWindowListener(new WindowListener() {
 
@@ -77,7 +80,7 @@ public class UserInterface {
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
-//	pages.add(new AlgorithmsPage(this));
+	// pages.add(new AlgorithmsPage(this));
 	pages.add(new TimeConstraintsPage(this));
 	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
@@ -89,21 +92,27 @@ public class UserInterface {
 
     public void goToNextPage() {
 	SuperPage actualPage = pages.get(actualPageIndex);
-	if(!actualPage.areAllDataWellFilled())
+	if (!actualPage.areAllDataWellFilled())
 	    return;
 	actualPage.saveToProblem();
 	frame.remove(actualPage);
-	SuperPage page = pages.get(++actualPageIndex);
-	page.onTop();
-	frame.add(page);
+	SuperPage nextPage = pages.get(++actualPageIndex);
+	nextPage.onTop();
+	frame.add(nextPage);
 	frame.pack(); // XXX remove when width and height is set
     }
 
     public void goToPreviousPage() {
-	frame.remove(pages.get(actualPageIndex));
-	SuperPage page = pages.get(--actualPageIndex);
-	page.onTop();
-	frame.add(page);
+	SuperPage actualPage = pages.get(actualPageIndex);
+	if (!actualPage.areAllDataWellFilled() && JOptionPane.showConfirmDialog(frame, "You have poorly "
+		+ "filled data, if you go back you will lose them. Do you wish to continue?") != JOptionPane.YES_OPTION) {
+	    return;
+	}
+	actualPage.saveToProblem();
+	frame.remove(actualPage);
+	SuperPage backPage = pages.get(--actualPageIndex);
+	backPage.onTop();
+	frame.add(backPage);
 	frame.pack(); // XXX remove when width and height is set
     }
 
@@ -185,35 +194,36 @@ public class UserInterface {
 	user.launch();
     }
 
-    public ArrayList<DecisionVariable> createDecisionVariableFinalList(){
+    public ArrayList<DecisionVariable> createDecisionVariableFinalList() {
 	ArrayList<DecisionVariable> dvList = new ArrayList<DecisionVariable>();
-	for(DecisionVariablesObject dvo : decisionVariablesFromPage) {
-	    dvList.add(new DecisionVariable(dvo.getVariableName(), dvo.getDataTypeToProblem(), dvo.getLowerBound(), dvo.getUpperBound(), "Dominio", getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
+	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
+	    dvList.add(new DecisionVariable(dvo.getVariableName(), dvo.getDataTypeToProblem(), dvo.getLowerBound(),
+		    dvo.getUpperBound(), "Dominio", getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
 	}
 	return dvList;
     }
 
-    public ArrayList<FitnessFunction> createFitnessFunctionFinalList(){
+    public ArrayList<FitnessFunction> createFitnessFunctionFinalList() {
 	ArrayList<FitnessFunction> ffList = new ArrayList<FitnessFunction>();
-	for(FitnessFunctionObject ffo : fitnessFunctionFromPage) {
+	for (FitnessFunctionObject ffo : fitnessFunctionFromPage) {
 	    ffList.add(new FitnessFunction(ffo.getPath(), null));
 	}
 	return ffList;
     }
 
-    public ArrayList<OptimizationCriteria> createOptimizationCriteriaFinalList(){
+    public ArrayList<OptimizationCriteria> createOptimizationCriteriaFinalList() {
 	ArrayList<OptimizationCriteria> ocList = new ArrayList<OptimizationCriteria>();
-	for(OptimizationCriteriaObject oco : optimizationCriteriaFromPage) {
+	for (OptimizationCriteriaObject oco : optimizationCriteriaFromPage) {
 	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem()));
 	}
 	return ocList;
     }
 
-    public ArrayList<String> getKnownSolutionsOfGivenVariable(String varName){
+    public ArrayList<String> getKnownSolutionsOfGivenVariable(String varName) {
 	ArrayList<String> solutions = new ArrayList<String>();
-	for(KnownSolutionsObject kso : knownSolutionsFromDecisionVariables) {
-	    if(kso.getName().getText().equals(varName)){
-		for(JTextField text : kso.getTextfieldList()) {
+	for (KnownSolutionsObject kso : knownSolutionsFromDecisionVariables) {
+	    if (kso.getName().getText().equals(varName)) {
+		for (JTextField text : kso.getTextfieldList()) {
 		    solutions.add(text.getText());
 		}
 	    }

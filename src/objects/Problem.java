@@ -18,6 +18,11 @@ public class Problem {
     protected double idealTimeFrame;
     protected double maxTimeFrame;
     public static String newLine = System.getProperty("line.separator");
+    
+    /**
+     * not to save 
+     */
+    protected String email;
 
     /**
      * Empty constructor for the Problem class
@@ -135,6 +140,14 @@ public class Problem {
     public boolean equals(Object obj) {
 	Problem other = (Problem) obj;
 	return this.toString().equals(other.toString());
+    }
+
+    public void setEmail(String email) {
+	this.email = email;
+    }
+    
+    public String getEmail() {
+	return email;
     }
 
 }
