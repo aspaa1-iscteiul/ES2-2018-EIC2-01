@@ -78,6 +78,8 @@ public class TestUserFileUtils {
     @Test
     public final void unsuccessfullyTestWriteToAndReadFromXML() {
 	Problem problemWrite = contructProblem();
+	// For testing purposes, the file path passed as an argument has a typographical
+	// error
 	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFikes/userConfigTest.xml");
 	utils.UserFileUtils.readFromXML("./src/jUnitTests/testFilis/userConfigTest.xml");
     }

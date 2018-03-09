@@ -217,7 +217,8 @@ public class UserFileUtils {
 
 	} catch (SAXException | ParserConfigurationException | IOException e1) {
 	    JOptionPane.showMessageDialog(new JFrame(), "A problem occurred while reading the problem's configurations",
-		    "Error message", JOptionPane.ERROR_MESSAGE);	}
+		    "Error message", JOptionPane.ERROR_MESSAGE);
+	}
 
 	return problem;
 
@@ -236,7 +237,6 @@ public class UserFileUtils {
      */
     private static Problem getProblemFromXMLNode(Document doc, Node problemNode) {
 	Problem problem = new Problem();
-	// if (problemNode.getNodeType() == Node.ELEMENT_NODE) {
 
 	Element problemElement = (Element) problemNode;
 
@@ -249,7 +249,6 @@ public class UserFileUtils {
 
 	problem.setIdealTimeFrame((Double.parseDouble(getTagValue(tagIdealTimeFrame, problemElement))));
 	problem.setMaxTimeFrame((Double.parseDouble(getTagValue(tagMaximumTimeFrame, problemElement))));
-	// }
 
 	return problem;
     }
@@ -275,8 +274,6 @@ public class UserFileUtils {
 
 	    Node decisionVariableNode = decisionVariablesList.item(index);
 
-	    // if (decisionVariableNode.getNodeType() == Node.ELEMENT_NODE) {
-
 	    Element decisionVariableElement = (Element) decisionVariableNode;
 
 	    String name = getTagValue(tagName, decisionVariableElement);
@@ -300,17 +297,13 @@ public class UserFileUtils {
 
 		for (int index2 = 0; index2 < knownSolutionsList.getLength(); index2++) {
 		    Node knownSolutionNode = knownSolutionsList.item(index2);
-		    // if (knownSolutionNode.getNodeType() == Node.ELEMENT_NODE) {
 		    String knownSolution = knownSolutionNode.getTextContent();
 
 		    knownSolutions.add(knownSolution);
-		    // }
 
 		}
 		decisionVariable.setKnownSolutions(knownSolutions);
 	    }
-
-	    // }
 
 	    decisionVariables.add(decisionVariable);
 
@@ -340,8 +333,6 @@ public class UserFileUtils {
 
 	    Node fitnessFunctionNode = fitnessFunctionsList.item(index);
 
-	    // if (fitnessFunctionNode.getNodeType() == Node.ELEMENT_NODE) {
-
 	    Element fitnessFunctionElement = (Element) fitnessFunctionNode;
 
 	    String jarFilePath = getTagValue(tagJarFilePath, fitnessFunctionElement);
@@ -356,7 +347,6 @@ public class UserFileUtils {
 
 		Node optimizationCriteriaNode = optimizationCriteriaNodeList.item(index2);
 
-		// if (optimizationCriteriaNode.getNodeType() == Node.ELEMENT_NODE) {
 		Element optimizationCriteriaElement = (Element) optimizationCriteriaNode;
 		String name = getTagValue(tagName, optimizationCriteriaElement);
 		String dataType = getTagValue(tagDataType, optimizationCriteriaElement);
@@ -366,13 +356,11 @@ public class UserFileUtils {
 		else
 		    optCriteria = new OptimizationCriteria(name, DataType.DOUBLE);
 
-		// }
 		optimizationCriteria.add(optCriteria);
 
 	    }
 	    fitnessFunction.setOptimizationCriteria(optimizationCriteria);
 
-	    // }
 	    fitnessFunctions.add(fitnessFunction);
 
 	}
@@ -397,12 +385,9 @@ public class UserFileUtils {
 
 	    Node optimizationAlgorithmNode = optimizationAlgorithmsList.item(index);
 
-	    // if (optimizationAlgorithmNode.getNodeType() == Node.ELEMENT_NODE) {
-
 	    String algorithm = optimizationAlgorithmNode.getTextContent();
 
 	    optimizationAlgorithms.add(algorithm);
-	    // }
 
 	}
 	return optimizationAlgorithms;
