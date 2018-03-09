@@ -126,4 +126,14 @@ public class Problem {
 		+ idealTimeFrame + newLine + "Maximum Time Frame: " + maxTimeFrame + newLine;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj) {
+	Problem other = (Problem) obj;
+	return this.toString().equals(other.toString());
+    }
+
 }
