@@ -23,6 +23,7 @@ public class Problem {
      * not to save 
      */
     protected String email;
+    protected boolean emailCheckBox;
 
     /**
      * Empty constructor for the Problem class
@@ -148,6 +149,14 @@ public class Problem {
     
     public String getEmail() {
 	return email;
+    }
+    
+    public void setEmailCheckBox(boolean emailCheckBox) {
+	this.emailCheckBox = emailCheckBox;
+    }
+    
+    public boolean getEmailCheckBox() {
+	return emailCheckBox;
     }
 
 }

@@ -90,6 +90,7 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+	getFromProblem();
     }
 
     @Override
@@ -102,20 +103,14 @@ public class ProblemIdPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	try {
-	    userInterface.getProblem().setProblemName(problemName.getText());
-	} catch (NullPointerException e) {
-	}
-	try {
-	    userInterface.getProblem().setProblemDescription(problemDescription.getText());
-	} catch (NullPointerException e) {
-	}
+	userInterface.getProblem().setProblemName(problemName.getText());
+	userInterface.getProblem().setProblemDescription(problemDescription.getText());
     }
 
     @Override
     protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
+	problemName.setText(userInterface.getProblem().getProblemName());
+	problemDescription.setText(userInterface.getProblem().getProblemDescription());
     }
 
 }
