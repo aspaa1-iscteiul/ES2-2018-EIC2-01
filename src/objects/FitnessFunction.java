@@ -32,10 +32,6 @@ public class FitnessFunction {
 	return jarFilePath;
     }
 
-    public void setJarFilePath(String jarFilePath) {
-	this.jarFilePath = jarFilePath;
-    }
-
     public ArrayList<OptimizationCriteria> getOptimizationCriteria() {
 	return optimizationCriteria;
     }

@@ -126,4 +126,15 @@ public class Problem {
 		+ idealTimeFrame + newLine + "Maximum Time Frame: " + maxTimeFrame + newLine;
     }
 
+    /**
+     * Indicates whether some other object is "equal to" this one. Although this
+     * method can receive any object as an argument, it does not validate whether it
+     * is really an instantiated objected of the class Problem. Instead, this
+     * function assumes the object passed as an argument is a Problem Object.
+     */
+    public boolean equals(Object obj) {
+	Problem other = (Problem) obj;
+	return this.toString().equals(other.toString());
+    }
+
 }

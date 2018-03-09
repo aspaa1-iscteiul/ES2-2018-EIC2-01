@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -76,7 +78,8 @@ public class UserFileUtils {
 	    transformer.transform(source, file);
 
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    JOptionPane.showMessageDialog(new JFrame(), "A problem occurred while saving the problem's configurations",
+		    "Error message", JOptionPane.ERROR_MESSAGE);
 	}
     }
 
@@ -125,18 +128,17 @@ public class UserFileUtils {
 	    Element fitnessFunctionNode = createEmptyNode(doc, fitnessFunctionsNode, tagFitnessFunction);
 	    createTextNode(doc, fitnessFunctionNode, tagJarFilePath, f.getJarFilePath());
 
-	    if (f.getOptimizationCriteria() != null) {
-		Element optimizationCriteriaListNode = createEmptyNode(doc, fitnessFunctionNode,
-			tagOptimizationCriteriaList);
+	    Element optimizationCriteriaListNode = createEmptyNode(doc, fitnessFunctionNode,
+		    tagOptimizationCriteriaList);
 
-		for (OptimizationCriteria criteria : f.getOptimizationCriteria()) {
-		    Element optimizationCriteriaNode = createEmptyNode(doc, optimizationCriteriaListNode,
-			    tagSingleOptimizationCriteria);
+	    for (OptimizationCriteria criteria : f.getOptimizationCriteria()) {
+		Element optimizationCriteriaNode = createEmptyNode(doc, optimizationCriteriaListNode,
+			tagSingleOptimizationCriteria);
 
-		    createTextNode(doc, optimizationCriteriaNode, tagName, criteria.getName());
-		    createTextNode(doc, optimizationCriteriaNode, tagDataType, criteria.getDataType().name());
-		}
+		createTextNode(doc, optimizationCriteriaNode, tagName, criteria.getName());
+		createTextNode(doc, optimizationCriteriaNode, tagDataType, criteria.getDataType().name());
 	    }
+
 	}
 
 	// Create Optimization Algorithms Node and Sub-nodes
@@ -214,7 +216,8 @@ public class UserFileUtils {
 	    problem = getProblemFromXMLNode(doc, problemList.item(0));
 
 	} catch (SAXException | ParserConfigurationException | IOException e1) {
-	    e1.printStackTrace();
+	    JOptionPane.showMessageDialog(new JFrame(), "A problem occurred while reading the problem's configurations",
+		    "Error message", JOptionPane.ERROR_MESSAGE);
 	}
 
 	return problem;
@@ -234,20 +237,18 @@ public class UserFileUtils {
      */
     private static Problem getProblemFromXMLNode(Document doc, Node problemNode) {
 	Problem problem = new Problem();
-	if (problemNode.getNodeType() == Node.ELEMENT_NODE) {
 
-	    Element problemElement = (Element) problemNode;
+	Element problemElement = (Element) problemNode;
 
-	    problem.setProblemName((getTagValue(tagName, problemElement)));
-	    problem.setProblemDescription((getTagValue(tagProblemDescription, problemElement)));
+	problem.setProblemName((getTagValue(tagName, problemElement)));
+	problem.setProblemDescription((getTagValue(tagProblemDescription, problemElement)));
 
-	    problem.setDecisionVariables(getDecisionVariables(doc));
-	    problem.setFitnessFunctions(getFitnessFunctions(doc));
-	    problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));
+	problem.setDecisionVariables(getDecisionVariables(doc));
+	problem.setFitnessFunctions(getFitnessFunctions(doc));
+	problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));
 
-	    problem.setIdealTimeFrame((Double.parseDouble(getTagValue(tagIdealTimeFrame, problemElement))));
-	    problem.setMaxTimeFrame((Double.parseDouble(getTagValue(tagMaximumTimeFrame, problemElement))));
-	}
+	problem.setIdealTimeFrame((Double.parseDouble(getTagValue(tagIdealTimeFrame, problemElement))));
+	problem.setMaxTimeFrame((Double.parseDouble(getTagValue(tagMaximumTimeFrame, problemElement))));
 
 	return problem;
     }
@@ -273,43 +274,35 @@ public class UserFileUtils {
 
 	    Node decisionVariableNode = decisionVariablesList.item(index);
 
-	    if (decisionVariableNode.getNodeType() == Node.ELEMENT_NODE) {
+	    Element decisionVariableElement = (Element) decisionVariableNode;
 
-		Element decisionVariableElement = (Element) decisionVariableNode;
+	    String name = getTagValue(tagName, decisionVariableElement);
+	    String dataType = getTagValue(tagDataType, decisionVariableElement);
+	    String lowerBound = getTagValue(tagLowerBound, decisionVariableElement);
+	    String upperBound = getTagValue(tagUpperBound, decisionVariableElement);
+	    String domain = getTagValue(tagDomain, decisionVariableElement);
 
-		String name = getTagValue(tagName, decisionVariableElement);
-		String dataType = getTagValue(tagDataType, decisionVariableElement);
-		String lowerBound = getTagValue(tagLowerBound, decisionVariableElement);
-		String upperBound = getTagValue(tagUpperBound, decisionVariableElement);
-		String domain = getTagValue(tagDomain, decisionVariableElement);
+	    if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
+		decisionVariable = new DecisionVariable(name, DataType.INTEGER, lowerBound, upperBound, domain, null);
+	    else
+		decisionVariable = new DecisionVariable(name, DataType.DOUBLE, lowerBound, upperBound, domain, null);
 
-		if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
-		    decisionVariable = new DecisionVariable(name, DataType.INTEGER, lowerBound, upperBound, domain,
-			    null);
-		else
-		    decisionVariable = new DecisionVariable(name, DataType.DOUBLE, lowerBound, upperBound, domain,
-			    null);
+	    Node knownSolutionsNode = decisionVariableNode.getLastChild();
 
-		Node knownSolutionsNode = decisionVariableNode.getLastChild();
+	    if (knownSolutionsNode.getNodeName().equals(tagKnownSolutions)) {
 
-		if (knownSolutionsNode.getNodeName().equals(tagKnownSolutions)) {
+		ArrayList<String> knownSolutions = new ArrayList<>();
 
-		    ArrayList<String> knownSolutions = new ArrayList<>();
+		NodeList knownSolutionsList = knownSolutionsNode.getChildNodes();
 
-		    NodeList knownSolutionsList = knownSolutionsNode.getChildNodes();
+		for (int index2 = 0; index2 < knownSolutionsList.getLength(); index2++) {
+		    Node knownSolutionNode = knownSolutionsList.item(index2);
+		    String knownSolution = knownSolutionNode.getTextContent();
 
-		    for (int index2 = 0; index2 < knownSolutionsList.getLength(); index2++) {
-			Node knownSolutionNode = knownSolutionsList.item(index2);
-			if (knownSolutionNode.getNodeType() == Node.ELEMENT_NODE) {
-			    String knownSolution = knownSolutionNode.getTextContent();
+		    knownSolutions.add(knownSolution);
 
-			    knownSolutions.add(knownSolution);
-			}
-
-		    }
-		    decisionVariable.setKnownSolutions(knownSolutions);
 		}
-
+		decisionVariable.setKnownSolutions(knownSolutions);
 	    }
 
 	    decisionVariables.add(decisionVariable);
@@ -340,39 +333,34 @@ public class UserFileUtils {
 
 	    Node fitnessFunctionNode = fitnessFunctionsList.item(index);
 
-	    if (fitnessFunctionNode.getNodeType() == Node.ELEMENT_NODE) {
+	    Element fitnessFunctionElement = (Element) fitnessFunctionNode;
 
-		Element fitnessFunctionElement = (Element) fitnessFunctionNode;
+	    String jarFilePath = getTagValue(tagJarFilePath, fitnessFunctionElement);
 
-		String jarFilePath = getTagValue(tagJarFilePath, fitnessFunctionElement);
+	    fitnessFunction = new FitnessFunction(jarFilePath, null);
 
-		fitnessFunction = new FitnessFunction(jarFilePath, null);
+	    Node optimizationCriteriaListNode = fitnessFunctionNode.getLastChild();
+	    NodeList optimizationCriteriaNodeList = optimizationCriteriaListNode.getChildNodes();
 
-		Node optimizationCriteriaListNode = fitnessFunctionNode.getLastChild();
-		NodeList optimizationCriteriaNodeList = optimizationCriteriaListNode.getChildNodes();
+	    for (int index2 = 0; index2 < optimizationCriteriaNodeList.getLength(); index2++) {
+		OptimizationCriteria optCriteria = null;
 
-		for (int index2 = 0; index2 < optimizationCriteriaNodeList.getLength(); index2++) {
-		    OptimizationCriteria optCriteria = null;
+		Node optimizationCriteriaNode = optimizationCriteriaNodeList.item(index2);
 
-		    Node optimizationCriteriaNode = optimizationCriteriaNodeList.item(index2);
+		Element optimizationCriteriaElement = (Element) optimizationCriteriaNode;
+		String name = getTagValue(tagName, optimizationCriteriaElement);
+		String dataType = getTagValue(tagDataType, optimizationCriteriaElement);
 
-		    if (optimizationCriteriaNode.getNodeType() == Node.ELEMENT_NODE) {
-			Element optimizationCriteriaElement = (Element) optimizationCriteriaNode;
-			String name = getTagValue(tagName, optimizationCriteriaElement);
-			String dataType = getTagValue(tagDataType, optimizationCriteriaElement);
+		if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
+		    optCriteria = new OptimizationCriteria(name, DataType.INTEGER);
+		else
+		    optCriteria = new OptimizationCriteria(name, DataType.DOUBLE);
 
-			if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
-			    optCriteria = new OptimizationCriteria(name, DataType.INTEGER);
-			else
-			    optCriteria = new OptimizationCriteria(name, DataType.DOUBLE);
-
-		    }
-		    optimizationCriteria.add(optCriteria);
-
-		}
-		fitnessFunction.setOptimizationCriteria(optimizationCriteria);
+		optimizationCriteria.add(optCriteria);
 
 	    }
+	    fitnessFunction.setOptimizationCriteria(optimizationCriteria);
+
 	    fitnessFunctions.add(fitnessFunction);
 
 	}
@@ -397,12 +385,9 @@ public class UserFileUtils {
 
 	    Node optimizationAlgorithmNode = optimizationAlgorithmsList.item(index);
 
-	    if (optimizationAlgorithmNode.getNodeType() == Node.ELEMENT_NODE) {
+	    String algorithm = optimizationAlgorithmNode.getTextContent();
 
-		String algorithm = optimizationAlgorithmNode.getTextContent();
-
-		optimizationAlgorithms.add(algorithm);
-	    }
+	    optimizationAlgorithms.add(algorithm);
 
 	}
 	return optimizationAlgorithms;
@@ -420,39 +405,6 @@ public class UserFileUtils {
      */
     private static String getTagValue(String tag, Element element) {
 	return element.getElementsByTagName(tag).item(0).getTextContent();
-    }
-
-    // TODO Delete after testing
-    public static void main(String[] args) {
-	ArrayList<String> knownSolutions = new ArrayList<String>();
-	knownSolutions.add("3");
-	knownSolutions.add("4");
-	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "Z except 0", knownSolutions);
-	DecisionVariable dv2 = new DecisionVariable("var2", DataType.DOUBLE, "-4.9", "+4.8", "Z except 0.0", null);
-	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
-	decisionVariables.add(dv1);
-	decisionVariables.add(dv2);
-
-	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", DataType.INTEGER);
-	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", DataType.DOUBLE);
-	ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
-	optimizationCriteria.add(oc1);
-	optimizationCriteria.add(oc2);
-	FitnessFunction ff = new FitnessFunction("path", optimizationCriteria);
-	ArrayList<FitnessFunction> fitnessFunctions = new ArrayList<>();
-	fitnessFunctions.add(ff);
-
-	ArrayList<String> optimizationAlgorithms = new ArrayList<>();
-	optimizationAlgorithms.add("NSGA");
-	optimizationAlgorithms.add("NSGA-2");
-
-	Problem p1 = new Problem("ProblemaTeste", "Descrição do problema de teste", decisionVariables, fitnessFunctions,
-		optimizationAlgorithms, 2.0, 4.0);
-	writeToXML(p1, "./configFiles/userConfig.xml");
-
-	Problem p2 = readFromXML("./configFiles/userConfig.xml");
-	System.out.println(p2.toString());
-
     }
 
 }

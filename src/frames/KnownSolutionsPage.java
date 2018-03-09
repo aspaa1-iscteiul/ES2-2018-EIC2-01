@@ -31,7 +31,7 @@ public class KnownSolutionsPage extends SuperPage {
     private JButton nextButton;
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
 	warningPanel1 = createWarningPanel("Solutions must have the same data type has the variable");
 	warningPanel2 = createWarningPanel("Solutions must agree with the variable's lower and upper bound");
@@ -51,7 +51,7 @@ public class KnownSolutionsPage extends SuperPage {
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -97,7 +97,7 @@ public class KnownSolutionsPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -130,7 +130,7 @@ public class KnownSolutionsPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
 	subSubMainPanel.removeAll();
@@ -196,6 +196,24 @@ public class KnownSolutionsPage extends SuperPage {
     
     public void enableNextButton() {
 	nextButton.setEnabled(true);
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

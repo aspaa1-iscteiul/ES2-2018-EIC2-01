@@ -50,40 +50,20 @@ public class DecisionVariable {
 	return name;
     }
 
-    public void setName(String name) {
-	this.name = name;
-    }
-
     public DataType getDataType() {
 	return dataType;
-    }
-
-    public void setDataType(DataType dataType) {
-	this.dataType = dataType;
     }
 
     public String getLowerBound() {
 	return lowerBound;
     }
 
-    public void setLowerBound(String lowerBound) {
-	this.lowerBound = lowerBound;
-    }
-
     public String getUpperBound() {
 	return upperBound;
     }
 
-    public void setUpperBound(String upperBound) {
-	this.upperBound = upperBound;
-    }
-
     public String getDomain() {
 	return domain;
-    }
-
-    public void setDomain(String domain) {
-	this.domain = domain;
     }
 
     public ArrayList<String> getKnownSolutions() {

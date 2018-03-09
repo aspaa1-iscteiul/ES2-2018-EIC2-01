@@ -33,7 +33,7 @@ public class SendEmailPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	this.name = new JTextField(30);
 	this.subject = new JTextField(30);
 	this.message = new JTextArea();
@@ -41,7 +41,7 @@ public class SendEmailPage extends SuperPage {
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -96,8 +96,9 @@ public class SendEmailPage extends SuperPage {
 	mainPanel.add(messagePanel);
 
     }
+
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton cancelButton = FrameUtils.cuteButton("Cancel");
 	cancelButton.addActionListener(new ActionListener() {
 	    @Override
@@ -112,15 +113,33 @@ public class SendEmailPage extends SuperPage {
 	submitButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		//TODO: fazer funcao que envia email
+		// TODO: fazer funcao que envia email
 	    }
 	});
 	buttonsPanel.add(submitButton);
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+
     }
 
 }

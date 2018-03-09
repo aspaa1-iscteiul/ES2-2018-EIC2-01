@@ -5,7 +5,9 @@ import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -39,7 +41,59 @@ public class FrameUtils {
 
     public static Border cuteBorder() {
 	return BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		BorderFactory.createEmptyBorder(4, 4, 4, 4));
+    }
+
+    /**
+     * Adds a red border and an <b>errorMessage</b> to the <b>jComponent</b>
+     * 
+     * @param jComponent
+     *            The component where a red border and the <b>errorMessage</b>
+     *            will be added
+     * @param errorMessage
+     *            The error message to display
+     * @return {@code false} because the method is called when something is
+     *         wrong
+     * @see JComponent#setBorder(Border)
+     * @see JComponent#setToolTipText(String)
+     */
+    // XXX change @return
+    public static boolean errorFormat(JComponent jComponent, String errorMessage) {
+	if (jComponent instanceof JCheckBox) {
+	    // because JCheckBox does not have a border ?
+	    jComponent.setForeground(Color.RED);
+	} else {
+	    int var = jComponent instanceof JComboBox ? 0 : 4;
+	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
+		    BorderFactory.createEmptyBorder(var, var, var, var)));
+	}
+	jComponent.setToolTipText(errorMessage);
+	return false;
+    }
+
+    /**
+     * Adds a black border to the <b>jComponent</b>, and removes an error
+     * message if it has one
+     * 
+     * @param jComponent
+     *            The component where a red border and the <b>errorMessage</b>
+     *            will be added
+     * @return {@code true} because the method is called when something is right
+     * @see JComponent#setBorder(Border)
+     * @see JComponent#setToolTipText(String)
+     */
+    // XXX change @return
+    public static boolean normalFormat(JComponent jComponent) {
+	if (jComponent instanceof JCheckBox) {
+	    // because JCheckBox does not have a border ?
+	    jComponent.setForeground(Color.BLACK);
+	} else {
+	    int var = jComponent instanceof JComboBox ? 0 : 4;
+	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		    BorderFactory.createEmptyBorder(var, var, var, var)));
+	}
+	jComponent.setToolTipText(null);
+	return true;
     }
 
 }
