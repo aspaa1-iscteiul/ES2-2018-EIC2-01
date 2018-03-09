@@ -10,6 +10,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,13 +20,14 @@ import javax.swing.border.EmptyBorder;
 public class SaveProblemPage extends SuperPage {
 
     private static final long serialVersionUID = 1L;
+    private JPanel savePanel;
     private JTextField fileName;
     private JTextField filePath;
     private JButton saveButton;
     private JButton finishButton;
     private boolean nameOk = false;
     private boolean pathOk = false;
-    
+
     public SaveProblemPage(UserInterface userInterface) {
 	super(userInterface);
     }
@@ -51,7 +53,7 @@ public class SaveProblemPage extends SuperPage {
 	infoPanel.setBackground(Color.WHITE);
 	infoPanel.add(new JLabel("Save this problem's configuration before submitting it to evaluation"), BorderLayout.WEST);
 	mainPanel.add(infoPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel namePanel = new JPanel();
@@ -59,7 +61,7 @@ public class SaveProblemPage extends SuperPage {
 	namePanel.setBackground(Color.WHITE);
 	namePanel.add(new JLabel("File name:   "), BorderLayout.WEST);
 	fileName.setBorder(FrameUtils.cuteBorder());
-	
+
 	fileName.addKeyListener(new KeyListener() {
 	    @Override
 	    public void keyPressed(KeyEvent arg0) {
@@ -73,17 +75,17 @@ public class SaveProblemPage extends SuperPage {
 			saveButton.setEnabled(true);
 		    }
 		}
-		
+
 	    }
 
 	    @Override
 	    public void keyTyped(KeyEvent arg0) {
 	    }
 	});
-	
+
 	namePanel.add(fileName, BorderLayout.CENTER);
 	mainPanel.add(namePanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel pathPanel = new JPanel();
@@ -91,7 +93,7 @@ public class SaveProblemPage extends SuperPage {
 	pathPanel.setBackground(Color.WHITE);
 	pathPanel.add(new JLabel("Path:            "), BorderLayout.WEST);
 	filePath.setBorder(FrameUtils.cuteBorder());
-	
+
 	filePath.addKeyListener(new KeyListener() {
 	    @Override
 	    public void keyPressed(KeyEvent arg0) {
@@ -101,30 +103,30 @@ public class SaveProblemPage extends SuperPage {
 	    public void keyReleased(KeyEvent arg0) {
 		if(!filePath.getText().trim().isEmpty()) {
 		    //TODO: Rever se isto funciona, acho que não
-	            try {
-	                Paths.get(filePath.getText());
-	                pathOk = true;
-	            } catch (InvalidPathException | NullPointerException ex1) {
-	                pathOk = false;
-	            }
+		    try {
+			Paths.get(filePath.getText());
+			pathOk = true;
+		    } catch (InvalidPathException | NullPointerException ex1) {
+			pathOk = false;
+		    }
 		    if(nameOk==true && pathOk==true) {
 			saveButton.setEnabled(true);
 		    }
 		}
-		
+
 	    }
 
 	    @Override
 	    public void keyTyped(KeyEvent arg0) {
 	    }
 	});
-	
+
 	pathPanel.add(filePath, BorderLayout.CENTER);
 	mainPanel.add(pathPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 2);
-	
-	JPanel savePanel = new JPanel();
+
+	savePanel = new JPanel();
 	savePanel.setLayout(new BorderLayout());
 	savePanel.setBackground(Color.WHITE);
 	savePanel.add(saveButton, BorderLayout.WEST);
@@ -134,6 +136,20 @@ public class SaveProblemPage extends SuperPage {
 
     @Override
     protected void createButtonsPanel() {
+
+	saveButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		userInterface.setFinalProblem();
+
+		JLabel infoIcon = new JLabel();
+		infoIcon.setIcon(new ImageIcon("./src/frames/images/saved_icon.png"));
+		savePanel.add(infoIcon, BorderLayout.CENTER);
+		savePanel.validate();
+		savePanel.repaint();
+	    }
+	});
+
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -179,13 +195,13 @@ public class SaveProblemPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     protected void getFromProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

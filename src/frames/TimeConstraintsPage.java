@@ -179,8 +179,8 @@ public class TimeConstraintsPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-
+	userInterface.getProblem().setIdealTimeFrame(Double.parseDouble(idealTime.getText()));
+	userInterface.getProblem().setMaxTimeFrame(Double.parseDouble(maxTime.getText()));
     }
 
     @Override
