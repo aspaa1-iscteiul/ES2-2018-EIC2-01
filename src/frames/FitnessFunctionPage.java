@@ -192,7 +192,6 @@ public class FitnessFunctionPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		userInterface.goToNextPage();
-		userInterface.setFitnessFunctionFromPage(fitnessFunctionList);
 	    }
 	});
 	buttonsPanel.add(nextButton);
@@ -215,8 +214,7 @@ public class FitnessFunctionPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-
+	userInterface.setFitnessFunctionFromPage(fitnessFunctionList);
     }
 
     @Override

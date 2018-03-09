@@ -41,7 +41,7 @@ public class FrameUtils {
 
     public static Border cuteBorder() {
 	return BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(4, 4, 4, 4));
+		BorderFactory.createEmptyBorder(2, 2, 2, 2));
     }
 
     /**

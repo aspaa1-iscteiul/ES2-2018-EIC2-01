@@ -201,7 +201,7 @@ public class KnownSolutionsPage extends SuperPage {
     @Override
     protected boolean areAllDataWellFilled() {
 	// TODO Auto-generated method stub
-	return false;
+	return true;
     }
 
     @Override

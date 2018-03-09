@@ -6,8 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,7 +36,6 @@ public class TimeConstraintsPage extends SuperPage {
 	this.idealTime = new JTextField(5);	
 	this.maxTime = new JTextField(5);
 	this.nextButton = FrameUtils.cuteButton("Next");
-	this.nextButton.setEnabled(false);
     }
 
     @Override
@@ -77,41 +74,6 @@ public class TimeConstraintsPage extends SuperPage {
 	idealPanel.add(new JLabel("Ideal time frame:           "));
 	idealTime.setBorder(FrameUtils.cuteBorder());
 	idealPanel.add(idealTime);
-
-	idealTime.addKeyListener(new KeyListener() {
-	    @Override
-	    public void keyTyped(KeyEvent e) {
-	    }
-
-	    @Override
-	    public void keyReleased(KeyEvent e) {
-		try {
-		    Integer.parseInt(idealTime.getText());
-		    idealOk = true;
-		    if(idealOk==true && maxOk==true) {
-			nextButton.setEnabled(true);
-		    }
-		} catch(NumberFormatException e1) {
-		    nextButton.setEnabled(false);
-		}
-
-		try {
-		    Double.parseDouble(idealTime.getText());
-		    idealOk = true;
-		    if(idealOk==true && maxOk==true) {
-			nextButton.setEnabled(true);
-		    }
-		} catch (NumberFormatException e2) {
-		    nextButton.setEnabled(false);
-		}
-	    }
-
-
-	    @Override
-	    public void keyPressed(KeyEvent e) {
-	    }
-	});
-
 	idealPanel.add(new JLabel("min"));
 	mainPanel.add(idealPanel);
 
@@ -123,41 +85,6 @@ public class TimeConstraintsPage extends SuperPage {
 	maxPanel.add(new JLabel("Maximum time frame: "));
 	maxTime.setBorder(FrameUtils.cuteBorder());
 	maxPanel.add(maxTime);
-
-	maxTime.addKeyListener(new KeyListener() {
-	    @Override
-	    public void keyTyped(KeyEvent e) {
-	    }
-
-	    @Override
-	    public void keyReleased(KeyEvent e) {
-		try {
-		    Integer.parseInt(maxTime.getText());
-		    maxOk = true;
-		    if(idealOk==true && maxOk==true) {
-			nextButton.setEnabled(true);
-		    }
-		} catch(NumberFormatException e1) {
-		    nextButton.setEnabled(false);
-		}
-
-		try {
-		    Double.parseDouble(maxTime.getText());
-		    maxOk = true;
-		    if(idealOk==true && maxOk==true) {
-			nextButton.setEnabled(true);
-		    }
-		} catch (NumberFormatException e2) {
-		    nextButton.setEnabled(false);
-		}
-	    }
-
-
-	    @Override
-	    public void keyPressed(KeyEvent e) {
-	    }
-	});
-
 	maxPanel.add(new JLabel("min"));
 	mainPanel.add(maxPanel);
 
@@ -205,20 +132,59 @@ public class TimeConstraintsPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
-	// TODO Auto-generated method stub
-	return false;
+	Boolean tmp = false;
+	if(idealTime.getText().trim().isEmpty()) {
+	    FrameUtils.errorFormat(idealTime, "The ideal time must be filled in.");
+	}
+	try {
+	    Integer.parseInt(idealTime.getText());
+	    idealOk = true;
+	    if(!maxTime.getText().trim().isEmpty()){
+		Integer.parseInt(maxTime.getText());
+		maxOk = true;
+		if(idealOk==true && maxOk==true &&  (Integer.parseInt(idealTime.getText()) <= Integer.parseInt(maxTime.getText()))){
+		    tmp = true;
+		    FrameUtils.normalFormat(idealTime);
+		} else {
+		    FrameUtils.errorFormat(idealTime, "The ideal time must be smaller than the max time.");
+		}
+	    } else {
+		tmp = true;
+	    }
+	} catch(NumberFormatException e1) {
+	    tmp = false;
+	    try {
+		Double.parseDouble(idealTime.getText());
+		idealOk = true;
+		if(!maxTime.getText().trim().isEmpty()){
+		    Double.parseDouble(maxTime.getText());
+		    maxOk = true;
+		    if(idealOk==true && maxOk==true &&  ( Double.parseDouble(idealTime.getText()) <=  Double.parseDouble(maxTime.getText()))){
+			tmp = true;
+			FrameUtils.normalFormat(idealTime);
+		    } else {
+			FrameUtils.errorFormat(idealTime, "The ideal time must be smaller than the max time.");
+		    }
+		} else {
+		    tmp = true;
+		}
+	    } catch (NumberFormatException e2) {
+		tmp = false;
+	    }
+	}
+	return tmp;
     }
 
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     protected void getFromProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }
