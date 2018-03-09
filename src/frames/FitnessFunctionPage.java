@@ -30,6 +30,7 @@ public class FitnessFunctionPage extends SuperPage {
     private static final long serialVersionUID = 1L;
 
     private ArrayList<FitnessFunctionObject> fitnessFunctionList;
+    private ArrayList<ArrayList<OptimizationCriteriaCheckbox>> checkboxList;
 
     public FitnessFunctionPage(UserInterface userInterface) {
 	super(userInterface);
@@ -42,6 +43,7 @@ public class FitnessFunctionPage extends SuperPage {
     protected void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
 	fitnessFunctionList = new ArrayList<FitnessFunctionObject>();
+	checkboxList = new ArrayList<ArrayList<OptimizationCriteriaCheckbox>>();
     }
 
     @Override
@@ -189,6 +191,9 @@ public class FitnessFunctionPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		userInterface.goToNextPage();
+		for(FitnessFunctionObject ffo : fitnessFunctionList) {
+		    checkboxList.add(ffo.getCheckboxList());
+		}
 	    }
 	});
 	buttonsPanel.add(nextButton);
@@ -197,9 +202,18 @@ public class FitnessFunctionPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	for (FitnessFunctionObject ffo : fitnessFunctionList) {
-	    ffo.createComponents();
-	    ffo.cleanData();
+	if(checkboxList.size()>0) {
+	    int i = 0;
+	    for(ArrayList<OptimizationCriteriaCheckbox> checkBoxes : checkboxList) {
+		fitnessFunctionList.get(i).setCheckboxList(checkBoxes);
+		i++;
+	    }
+	    checkboxList.clear();
+	} else {
+	    for (FitnessFunctionObject ffo : fitnessFunctionList) {
+		ffo.cleanData();
+		ffo.createComponents();
+	    }
 	}
     }
 
