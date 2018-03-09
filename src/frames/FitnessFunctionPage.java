@@ -24,10 +24,10 @@ import javax.swing.border.EmptyBorder;
 public class FitnessFunctionPage extends SuperPage {
 
     /**
-     * 
+     * Default
      */
     private static final long serialVersionUID = 1L;
-    private static final int standardNumberOfVariables = 1;
+
     private ArrayList<FitnessFunctionObject> fitnessFunctionList;
 
     public FitnessFunctionPage(UserInterface userInterface) {
@@ -96,15 +96,19 @@ public class FitnessFunctionPage extends SuperPage {
 
 	subMainPanel.add(infoFieldPanel);
 
+	continueCreateMainPanel(subMainPanel);
+
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+    }
+
+    private void continueCreateMainPanel(JPanel subMainPanel) {
 	final JPanel subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
 	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-	for (int i = 0; i != standardNumberOfVariables; i++) {
-	    FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(this);
-	    fitnessFunctionList.add(fitnessFunctionObject);
-	    subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
-	}
+	FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(this);
+	fitnessFunctionList.add(fitnessFunctionObject);
+	subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
 
 	subMainPanel.add(subSubMainPanel);
 
@@ -113,11 +117,8 @@ public class FitnessFunctionPage extends SuperPage {
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
-
 	final FitnessFunctionPage tmp = this;
-
 	addIcon.addMouseListener(new MouseListener() {
-
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
@@ -146,7 +147,6 @@ public class FitnessFunctionPage extends SuperPage {
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
-
 	});
 	addOptionPanel.add(addIcon, BorderLayout.WEST);
 	addOptionPanel.add(new JLabel("Add new fitness function"));
@@ -158,9 +158,6 @@ public class FitnessFunctionPage extends SuperPage {
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 	mainPanel.add(scrollPane);
-
-	FrameUtils.addEmptyLabels(mainPanel, 1);
-
     }
 
     @Override
@@ -208,7 +205,7 @@ public class FitnessFunctionPage extends SuperPage {
     @Override
     protected boolean areAllDataWellFilled() {
 	// TODO Auto-generated method stub
-	return false;
+	return true;
     }
 
     @Override
