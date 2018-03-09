@@ -3,7 +3,11 @@ package frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -47,7 +51,38 @@ public abstract class SuperPage extends JPanel {
 
     protected abstract void createMainPanel();
 
-    protected abstract void createButtonsPanel();
+    protected void createButtonsPanel() {
+	JButton backButton = FrameUtils.cuteButton("Back");
+	backButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToPreviousPage();
+	    }
+	});
+	buttonsPanel.add(backButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton cancelButton = FrameUtils.cuteButton("Cancel");
+	cancelButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	    }
+	});
+	buttonsPanel.add(cancelButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton nextButton = FrameUtils.cuteButton("Next");
+	nextButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToNextPage();
+	    }
+	});
+	buttonsPanel.add(nextButton);
+    }
 
     protected abstract void onTop();
 

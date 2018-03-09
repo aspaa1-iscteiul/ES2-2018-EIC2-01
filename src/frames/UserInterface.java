@@ -78,7 +78,11 @@ public class UserInterface {
     }
 
     public void goToNextPage() {
-	frame.remove(pages.get(actualPageIndex));
+	SuperPage actualPage = pages.get(actualPageIndex);
+	if(!actualPage.areAllDataWellFilled())
+	    return;
+	actualPage.saveToProblem();
+	frame.remove(actualPage);
 	SuperPage page = pages.get(++actualPageIndex);
 	page.onTop();
 	frame.add(page);

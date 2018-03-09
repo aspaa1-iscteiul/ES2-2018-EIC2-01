@@ -4,14 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -79,41 +76,6 @@ public class RegisterUserPage extends SuperPage {
 
 	checkBox.setBackground(Color.WHITE);
 	mainPanel.add(checkBox);
-    }
-
-    @Override
-    protected void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton nextButton = FrameUtils.cuteButton("Next");
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		if (areAllDataWellFilled())
-		    userInterface.goToNextPage();
-	    }
-	});
-	buttonsPanel.add(nextButton);
     }
 
     @Override

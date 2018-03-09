@@ -5,13 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -91,44 +88,6 @@ public class ProblemIdPage extends SuperPage {
     }
 
     @Override
-    protected void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		saveToProblem();
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton nextButton = FrameUtils.cuteButton("Next");
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		if (areAllDataWellFilled()) {
-		    saveToProblem();
-		    userInterface.goToNextPage();
-		}
-	    }
-	});
-	buttonsPanel.add(nextButton);
-    }
-    
-    @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
     }
@@ -156,7 +115,7 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void getFromProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

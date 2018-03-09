@@ -4,19 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 public class OptimizationCriteriaObject {
 
@@ -30,27 +25,9 @@ public class OptimizationCriteriaObject {
     public OptimizationCriteriaObject(OptimizationCriteriaPage ocp) {
 	page = ocp;
 	variablesPanel = new JPanel();
-
-	name = new JTextField(10) {
-	    private static final long serialVersionUID = 1L;
-
-	    @Override
-	    public void processKeyEvent(KeyEvent key) {
-		super.processKeyEvent(key);
-		isValidName();
-	    }
-	};
-
+	name = new JTextField(10);
 	dataType = FrameUtils.cuteComboBox(dataTypes);
 	dataType.setSelectedItem(null);
-	dataType.setEnabled(false);
-	dataType.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		page.isAllOptimizationCriteriaWellFilled();
-	    }
-	});
-
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	final OptimizationCriteriaObject tmp = this;
@@ -85,8 +62,7 @@ public class OptimizationCriteriaObject {
     public JPanel transformIntoAPanel() {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	variablesPanel.setBackground(Color.WHITE);
-	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-	name.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	name.setBorder(FrameUtils.cuteBorder());
 	name.setPreferredSize(new Dimension(10, 22));
 	variablesPanel.add(name);
 	variablesPanel.add(dataType);
@@ -95,44 +71,40 @@ public class OptimizationCriteriaObject {
     }
 
     /**
-     * Returns {@code true} if {@linkplain OptimizationCriteriaObject} have a
-     * valid name and the {@linkplain #dataType} is selected, otherwise
-     * {@code false}
-     * 
      * @return {@code true} if {@linkplain OptimizationCriteriaObject} have a
-     *         valid name and the {@linkplain #dataType} is selected,
-     *         otherwise {@code false}
+     *         valid name and the data type is selected, otherwise {@code false}
      * 
      * @see #isValidName()
+     * @see #isDataTypeSelected()
      */
     public boolean isWellFilled() {
-	return isValidName() && dataType.getSelectedIndex() >= 0;
+	// methods separated to run all
+	boolean isValidName = isValidName(), isDataTypeSelected = isDataTypeSelected();
+	return isValidName && isDataTypeSelected;
     }
 
     /**
-     * Returns {@code true} if the name is not empty and is not repeated, also
-     * unlocks the {@linkplain #dataType}, otherwise places warnings and locks
-     * the next button in the {@linkplain OptimizationCriteriaPage}
-     * 
      * @return {@code true} if the name is not empty and is not repeated,
-     *         otherwise {@code false}
+     *         otherwise {@code false} and evidence the error
      * 
      * @see OptimizationCriteriaPage#isNameRepeated(String)
      */
     private boolean isValidName() {
-	String text = name.getText().trim();
-	name.setText(text);
-	if (text.equals("") || page.isNameRepeated(text)) {
-	    dataType.setEnabled(false);
-	    page.blockNextButton(true);
-	    page.showWarning(page.isNameRepeated(text));
-	    return false;
-	}
-	page.showWarning(false);
-	dataType.setEnabled(true);
-	if (dataType.getSelectedIndex() >= 0)
-	    page.blockNextButton(false);
-	return true;
+	String text = name.getText();
+	String info = (text.equals("") ? "The optimization criteria name must be filled in. " : "")
+		+ (page.isNameRepeated(text) ? "The optimization criteria name must be unique." : "");
+	return !info.equals("") ? FrameUtils.errorFormat(name, info) : FrameUtils.normalFormat(name);
+    }
+
+    /**
+     * @return {@code true} if the {@link #dataType} has an item selected,
+     *         otherwise {@code false} and evidence the error
+     * @see FrameUtils#errorFormat(JComponent, String)
+     */
+    private boolean isDataTypeSelected() {
+	return dataType.getSelectedItem() == null ? FrameUtils.errorFormat(dataType, "The data type must be filled in.")
+		: FrameUtils.normalFormat(dataType);
+
     }
 
     public String getVariableName() {

@@ -37,7 +37,6 @@ public class DecisionVariablesPage extends SuperPage {
 
     private ArrayList<DecisionVariablesObject> decisionVariableList;
     private JPanel subSubMainPanel;
-    private JButton nextButton;
 
     public DecisionVariablesPage(UserInterface userInterface) {
 	super(userInterface);
@@ -45,7 +44,6 @@ public class DecisionVariablesPage extends SuperPage {
 
     @Override
     protected void initialize() {
-	nextButton = FrameUtils.cuteButton("Next");
 	decisionVariableList = new ArrayList<DecisionVariablesObject>();
     }
 
@@ -107,42 +105,6 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     @Override
-    protected void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		if (areAllDataWellFilled()) {
-		    userInterface.goToNextPage();
-		    userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
-		}
-	    }
-	});
-	buttonsPanel.add(nextButton);
-    }
-
-    @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
     }
@@ -166,8 +128,7 @@ public class DecisionVariablesPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-
+	userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
     }
 
     @Override
