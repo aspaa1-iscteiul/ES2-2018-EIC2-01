@@ -33,13 +33,13 @@ public class RegisterUserPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	email = new JTextField(30); // XXX see if 30 is a good width
 	checkBox = new JCheckBox("I understand and accept the terms and conditions");
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -82,7 +82,7 @@ public class RegisterUserPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -116,7 +116,8 @@ public class RegisterUserPage extends SuperPage {
 	buttonsPanel.add(nextButton);
     }
 
-    private boolean areAllDataWellFilled() {
+    @Override
+    protected boolean areAllDataWellFilled() {
 	boolean goOn = true;
 	try {
 	    // validates the email
@@ -132,8 +133,20 @@ public class RegisterUserPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

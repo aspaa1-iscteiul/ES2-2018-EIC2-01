@@ -32,13 +32,13 @@ public class ProblemIdPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	problemName = new JTextField(30); // XXX see if 30 is a good width
 	problemDescription = new JTextArea();
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -91,7 +91,7 @@ public class ProblemIdPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -127,7 +127,13 @@ public class ProblemIdPage extends SuperPage {
 	});
 	buttonsPanel.add(nextButton);
     }
+    
+    @Override
+    protected void onTop() {
+	userInterface.getFrame().setTitle("Problem Solving App");
+    }
 
+    @Override
     protected boolean areAllDataWellFilled() {
 	return Pattern.matches("[a-zA-Z0-9]+", problemName.getText())
 		&& Character.isUpperCase(problemName.getText().charAt(0)) ? FrameUtils.normalFormat(problemName)
@@ -135,7 +141,8 @@ public class ProblemIdPage extends SuperPage {
 				"The problem name must agree with the conditions in the info section");
     }
 
-    public void saveToProblem() {
+    @Override
+    protected void saveToProblem() {
 	try {
 	    userInterface.getProblem().setProblemName(problemName.getText());
 	} catch (NullPointerException e) {
@@ -147,8 +154,9 @@ public class ProblemIdPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
-	userInterface.getFrame().setTitle("Problem Solving App");
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

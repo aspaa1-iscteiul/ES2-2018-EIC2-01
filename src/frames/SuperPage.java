@@ -9,46 +9,52 @@ import javax.swing.border.EmptyBorder;
 
 public abstract class SuperPage extends JPanel {
 
-	/**
-	 * Default
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Default
+     */
+    private static final long serialVersionUID = 1L;
 
-	protected JPanel mainPanel, buttonsPanel;
-	protected UserInterface userInterface;
+    protected JPanel mainPanel, buttonsPanel;
+    protected UserInterface userInterface;
 
-	public SuperPage(UserInterface userInterface) {
-		super();
-		this.setBackground(Color.WHITE);
-		this.setLayout(new BorderLayout());
+    public SuperPage(UserInterface userInterface) {
+	super();
+	this.setBackground(Color.WHITE);
+	this.setLayout(new BorderLayout());
 
-		this.userInterface = userInterface;
+	this.userInterface = userInterface;
 
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		panel.setBackground(Color.WHITE);
-		mainPanel = new JPanel();
-		mainPanel.setBackground(Color.WHITE);
-		panel.add(mainPanel);
-		this.add(panel, BorderLayout.CENTER);
+	JPanel panel = new JPanel();
+	panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+	panel.setBackground(Color.WHITE);
+	mainPanel = new JPanel();
+	mainPanel.setBackground(Color.WHITE);
+	panel.add(mainPanel);
+	this.add(panel, BorderLayout.CENTER);
 
-		buttonsPanel = new JPanel();
-		buttonsPanel.setBackground(Color.WHITE);
-		buttonsPanel.setBorder(new EmptyBorder(0, 0, 5, 5));
-		buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		this.add(buttonsPanel, BorderLayout.SOUTH);
+	buttonsPanel = new JPanel();
+	buttonsPanel.setBackground(Color.WHITE);
+	buttonsPanel.setBorder(new EmptyBorder(0, 0, 5, 5));
+	buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+	this.add(buttonsPanel, BorderLayout.SOUTH);
 
-		initialize();
-		createMainPanel();
-		createButtonsPanel();
-	}
+	initialize();
+	createMainPanel();
+	createButtonsPanel();
+    }
 
-	public abstract void initialize();
+    protected abstract void initialize();
 
-	public abstract void createMainPanel();
+    protected abstract void createMainPanel();
 
-	public abstract void createButtonsPanel();
+    protected abstract void createButtonsPanel();
 
-	public abstract void onTop();
+    protected abstract void onTop();
+
+    protected abstract boolean areAllDataWellFilled();
+
+    protected abstract void saveToProblem();
+
+    protected abstract void getFromProblem();
 
 }

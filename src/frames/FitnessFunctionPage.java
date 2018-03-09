@@ -38,13 +38,13 @@ public class FitnessFunctionPage extends SuperPage {
     private JButton nextButton;
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
 	fitnessFunctionList = new ArrayList<FitnessFunctionObject>();
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -89,7 +89,8 @@ public class FitnessFunctionPage extends SuperPage {
 	infoFieldPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	infoFieldPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Fitness Function");
-	name.setBorder(new EmptyBorder(0, 0, 0, 43)); // to add space between the labels
+	name.setBorder(new EmptyBorder(0, 0, 0, 43)); // to add space between
+						      // the labels
 	infoFieldPanel.add(name);
 	infoFieldPanel.add(new JLabel("Optimization Criteria"));
 
@@ -163,7 +164,7 @@ public class FitnessFunctionPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -196,12 +197,30 @@ public class FitnessFunctionPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	for (FitnessFunctionObject ffo : fitnessFunctionList) {
 	    ffo.createComponents();
 	    ffo.cleanData();
 	}
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+
     }
 
     public void refreshPage() {

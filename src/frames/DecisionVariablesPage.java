@@ -44,13 +44,13 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
 	decisionVariableList = new ArrayList<DecisionVariablesObject>();
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -106,6 +106,76 @@ public class DecisionVariablesPage extends SuperPage {
 	importFromFilePanel();
     }
 
+    @Override
+    protected void createButtonsPanel() {
+	JButton backButton = FrameUtils.cuteButton("Back");
+	backButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToPreviousPage();
+	    }
+	});
+	buttonsPanel.add(backButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton cancelButton = FrameUtils.cuteButton("Cancel");
+	cancelButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	    }
+	});
+	buttonsPanel.add(cancelButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	nextButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		if (areAllDataWellFilled()) {
+		    userInterface.goToNextPage();
+		    userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
+		}
+	    }
+	});
+	buttonsPanel.add(nextButton);
+    }
+
+    @Override
+    protected void onTop() {
+	userInterface.getFrame().setTitle("Problem Solving App");
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	if (decisionVariableList.isEmpty()) {
+	    // XXX change message
+	    JOptionPane.showMessageDialog(userInterface.getFrame(),
+		    "Can only continue if it has at least one decision variable");
+	    return false;
+	}
+	boolean answer = true;
+	for (DecisionVariablesObject dvo : decisionVariableList) {
+	    // separated to run the method
+	    boolean var = dvo.isWellFilled();
+	    answer &= var;
+	}
+	return answer;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+
+    }
+
     private JPanel addOptionPanel() {
 	JPanel addOptionPanel = new JPanel();
 	addOptionPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -117,6 +187,7 @@ public class DecisionVariablesPage extends SuperPage {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
+		    @Override
 		    public void run() {
 			DecisionVariablesObject decisionVariable = new DecisionVariablesObject(tmp);
 			decisionVariableList.add(decisionVariable);
@@ -248,63 +319,6 @@ public class DecisionVariablesPage extends SuperPage {
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
 		    "The file " + selectedFile.getAbsolutePath() + " doesn't exists");
 	}
-    }
-
-    @Override
-    public void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		if (areAllDataWellFilled()) {
-		    userInterface.goToNextPage();
-		    userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
-		}
-	    }
-	});
-	buttonsPanel.add(nextButton);
-    }
-
-    private boolean areAllDataWellFilled() {
-	if (decisionVariableList.isEmpty()) {
-	    // XXX change message
-	    JOptionPane.showMessageDialog(userInterface.getFrame(),
-		    "Can only continue if it has at least one decision variable");
-	    return false;
-	}
-	boolean answer = true;
-	for (DecisionVariablesObject dvo : decisionVariableList) {
-	    // separated to run the method
-	    boolean var = dvo.isWellFilled();
-	    answer &= var;
-	}
-	return answer;
-    }
-
-    @Override
-    public void onTop() {
-	userInterface.getFrame().setTitle("Problem Solving App");
     }
 
     public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {

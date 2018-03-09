@@ -33,7 +33,7 @@ public class TimeConstraintsPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	// TODO Auto-generated method stub
 	this.idealTime = new JTextField(5);	
 	this.maxTime = new JTextField(5);
@@ -42,7 +42,7 @@ public class TimeConstraintsPage extends SuperPage {
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -166,7 +166,7 @@ public class TimeConstraintsPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -199,8 +199,26 @@ public class TimeConstraintsPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+	
     }
 
 }
