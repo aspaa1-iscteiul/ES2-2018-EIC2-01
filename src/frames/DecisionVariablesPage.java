@@ -46,7 +46,6 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void initialize() {
 	decisionVariableList = new ArrayList<DecisionVariablesObject>();
-
     }
 
     @Override
@@ -131,12 +130,6 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
-    }
-
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
     }
 
     private JPanel addOptionPanel() {
@@ -273,14 +266,6 @@ public class DecisionVariablesPage extends SuperPage {
 		}
 	    }
 	    scn.close();
-
-	    // removes variables with empty names
-	    for (int index = 0; index < decisionVariableList.size(); index++)
-		if (decisionVariableList.get(index).getVariableName().equals("")) {
-		    subSubMainPanel.remove(decisionVariableList.get(index).transformIntoAPanel());
-		    decisionVariableList.remove(index);
-		    index--;
-		}
 
 	    areAllDataWellFilled();
 	} catch (FileNotFoundException e) {

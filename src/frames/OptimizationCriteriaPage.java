@@ -188,10 +188,4 @@ public class OptimizationCriteriaPage extends SuperPage {
 	userInterface.setOptimizationCriteriaFromPage(optimizationCriteriaList);
     }
 
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
-    }
-
 }

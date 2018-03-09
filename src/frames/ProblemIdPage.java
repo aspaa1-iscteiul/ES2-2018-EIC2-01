@@ -102,20 +102,8 @@ public class ProblemIdPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	try {
-	    userInterface.getProblem().setProblemName(problemName.getText());
-	} catch (NullPointerException e) {
-	}
-	try {
-	    userInterface.getProblem().setProblemDescription(problemDescription.getText());
-	} catch (NullPointerException e) {
-	}
-    }
-
-    @Override
-    protected void getFromProblem() {
 	// TODO Auto-generated method stub
-
+	
     }
 
 }

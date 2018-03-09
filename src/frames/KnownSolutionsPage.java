@@ -2,11 +2,8 @@ package frames;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,20 +14,18 @@ import javax.swing.border.EmptyBorder;
 public class KnownSolutionsPage extends SuperPage {
 
     /**
-     * 
+     * Default
      */
     private static final long serialVersionUID = 1L;
+    
     private JPanel subSubMainPanel;
-    private JButton nextButton;
 
     public KnownSolutionsPage(UserInterface userInterface) {
 	super(userInterface);
-	// TODO Auto-generated constructor stub
     }
 
     @Override
     protected void initialize() {
-	nextButton = FrameUtils.cuteButton("Next");
     }
 
     @Override
@@ -76,40 +71,6 @@ public class KnownSolutionsPage extends SuperPage {
 	mainPanel.add(scrollPane);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-
-    }
-
-    @Override
-    protected void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToNextPage();
-	    }
-	});
-	buttonsPanel.add(nextButton);
     }
 
     @Override
@@ -164,13 +125,7 @@ public class KnownSolutionsPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
+	
     }
 
 }

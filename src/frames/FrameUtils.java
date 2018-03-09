@@ -41,7 +41,7 @@ public class FrameUtils {
 
     public static Border cuteBorder() {
 	return BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(2, 2, 2, 2));
+		BorderFactory.createEmptyBorder(0, 10, 0, 10));
     }
 
     /**
@@ -63,9 +63,9 @@ public class FrameUtils {
 	    // because JCheckBox does not have a border ?
 	    jComponent.setForeground(Color.RED);
 	} else {
-	    int var = jComponent instanceof JComboBox ? 0 : 2;
+	    int var = jComponent instanceof JComboBox ? 0 : 10;
 	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
-		    BorderFactory.createEmptyBorder(var, var, var, var)));
+		    BorderFactory.createEmptyBorder(0, var, 0, var)));
 	}
 	jComponent.setToolTipText(errorMessage);
 	return false;
@@ -88,9 +88,9 @@ public class FrameUtils {
 	    // because JCheckBox does not have a border ?
 	    jComponent.setForeground(Color.BLACK);
 	} else {
-	    int var = jComponent instanceof JComboBox ? 0 : 2;
+	    int var = jComponent instanceof JComboBox ? 0 : 10;
 	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		    BorderFactory.createEmptyBorder(var, var, var, var)));
+		    BorderFactory.createEmptyBorder(0, var, 0, var)));
 	}
 	jComponent.setToolTipText(null);
 	return true;

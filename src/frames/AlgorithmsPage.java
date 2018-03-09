@@ -140,10 +140,4 @@ public class AlgorithmsPage extends SuperPage {
 	
     }
 
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-	
-    }
-
 }
