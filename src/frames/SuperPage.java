@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import objects.Problem;
+
 public abstract class SuperPage extends JPanel {
 
     /**
@@ -47,10 +49,21 @@ public abstract class SuperPage extends JPanel {
 	createButtonsPanel();
     }
 
+    /**
+     * Method to initialize the attributes of the classes that extend this one
+     */
     protected abstract void initialize();
 
+    /**
+     * Method to create the main part of the page to be viewed
+     */
     protected abstract void createMainPanel();
 
+    /**
+     * Constructs the {@linkplain #buttonsPanel} with the back, cancel and next
+     * buttons, if the class that extends this one wants different buttons
+     * implements this method
+     */
     protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
@@ -84,12 +97,30 @@ public abstract class SuperPage extends JPanel {
 	buttonsPanel.add(nextButton);
     }
 
+    /**
+     * This method is called before the page is viewed which allows it to update
+     * itself, for example if you need something that comes from a previous page
+     */
     protected abstract void onTop();
 
+    /**
+     * This method is called before the
+     * {@linkplain UserInterface#goToNextPage()} to prevent to go to the next
+     * page without all the data are correct
+     * 
+     * @return {@code true} if all the data in the extended class are well
+     *         filled, otherwise {@code false} and evidence the errors
+     */
     protected abstract boolean areAllDataWellFilled();
 
+    /**
+     * Saves what needs to be saved in class {@link Problem}
+     */
     protected abstract void saveToProblem();
 
+    /**
+     * 
+     */
     protected abstract void getFromProblem();
 
 }
