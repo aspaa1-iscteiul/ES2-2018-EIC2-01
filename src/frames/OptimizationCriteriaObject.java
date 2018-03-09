@@ -21,15 +21,15 @@ import objects.DataType;
 
 public class OptimizationCriteriaObject {
 
+    private OptimizationCriteriaPage pageAssociated;
     private JTextField name;
     private String[] dataTypes = { "Integer", "Double" };
     private JComboBox<String> dataType;
-    private OptimizationCriteriaPage page;
     private JLabel deleteIcon;
     private JPanel variablesPanel;
 
     public OptimizationCriteriaObject(OptimizationCriteriaPage ocp) {
-	page = ocp;
+	pageAssociated = ocp;
 	variablesPanel = new JPanel();
 	name = new JTextField(10);
 	dataType = FrameUtils.cuteComboBox(dataTypes);
@@ -42,7 +42,7 @@ public class OptimizationCriteriaObject {
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
 		    public void run() {
-			page.removeOptimizationCriteriaFromList(tmp);
+			pageAssociated.removeOptimizationCriteriaFromList(tmp);
 		    }
 		});
 	    }
@@ -98,7 +98,7 @@ public class OptimizationCriteriaObject {
     private boolean isValidName() {
 	String text = name.getText();
 	String info = (text.equals("") ? "The optimization criteria name must be filled in. " : "")
-		+ (page.isNameRepeated(text) ? "The optimization criteria name must be unique." : "");
+		+ (pageAssociated.isNameRepeated(text) ? "The optimization criteria name must be unique." : "");
 	return !info.equals("") ? FrameUtils.errorFormat(name, info) : FrameUtils.normalFormat(name);
     }
 

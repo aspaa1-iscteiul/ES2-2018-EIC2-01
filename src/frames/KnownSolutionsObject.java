@@ -3,8 +3,6 @@ package frames;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -22,13 +20,13 @@ import javax.swing.border.Border;
 
 public class KnownSolutionsObject {
 
-    private KnownSolutionsPage page;
+    private KnownSolutionsPage pageAssociated;
     private JTextField name;
     private JTextField solution1;
     private JTextField solution2;
-    private ArrayList<JTextField> textfieldList;
+    private ArrayList<JTextField> solutionsList;
     private JLabel addIcon;
-    private String type;
+    private String dataType;
     private String lowerBound;
     private String upperBound;
 
@@ -41,16 +39,16 @@ public class KnownSolutionsObject {
      * @param upperBound
      */
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound, String upperBound) {
-	this.page = page;
+	this.pageAssociated = page;
 	this.name = new JTextField(name);
-	this.type = type;
+	this.dataType = type;
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
 	this.solution1 = new JTextField(3);
 	this.solution2 = new JTextField(3);
-	this.textfieldList = new ArrayList<JTextField>();
-	this.textfieldList.add(solution1);
-	this.textfieldList.add(solution2);
+	this.solutionsList = new ArrayList<JTextField>();
+	this.solutionsList.add(solution1);
+	this.solutionsList.add(solution2);
     }
 
     public JPanel transformIntoAPanel() {
@@ -67,25 +65,9 @@ public class KnownSolutionsObject {
 	name.setEditable(false);
 	firstPanel.add(name);
 
-	for (final JTextField textField : textfieldList) {
+	for (final JTextField textField : solutionsList) {
 	    textField.setBorder(
 		    BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
-
-	    textField.addKeyListener(new KeyListener() {
-		@Override
-		public void keyPressed(KeyEvent arg0) {
-		}
-
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-		    keyListenerContent(textField);
-		}
-
-		@Override
-		public void keyTyped(KeyEvent arg0) {
-		}
-	    });
-
 	    firstPanel.add(textField);
 	}
 
@@ -105,25 +87,9 @@ public class KnownSolutionsObject {
 			final JTextField newSolution = new JTextField(3);
 			newSolution.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 10, 0, 10)));
-			
-			newSolution.addKeyListener(new KeyListener() {
-				@Override
-				public void keyPressed(KeyEvent arg0) {
-				}
-
-				@Override
-				public void keyReleased(KeyEvent arg0) {
-				    keyListenerContent(newSolution);
-				}
-
-				@Override
-				public void keyTyped(KeyEvent arg0) {
-				}
-			    });
-
 			firstPanel.add(newSolution);
-			textfieldList.add(newSolution);
-			page.refreshPage();
+			solutionsList.add(newSolution);
+			pageAssociated.refreshPage();
 		    }
 		});
 	    }
@@ -153,109 +119,49 @@ public class KnownSolutionsObject {
     }
 
     /**
-     * Validates if all solutions meet the variable's data type and if so removes the warning panel 
-     * @return
-     */
-    private boolean validateIfItsOkToRemoveDataTypeWarning() {
-	boolean tmp = true;
-	for (JTextField textField : textfieldList) {
-	    if(type.equals("Integer") && !textField.getText().isEmpty()) {
-		try {
-		    Integer.parseInt(textField.getText());
-		} catch(NumberFormatException e1) {
-		    tmp = false;
-		    break;
-		}
-	    }
-	    if(type.equals("Double") && !textField.getText().isEmpty()) {
-		try {
-		    Double.parseDouble(textField.getText());
-		} catch(NumberFormatException e1) {
-		    tmp = false;
-		    break;
-		}
-	    }
-	}
-	if(tmp == true){
-	    page.setWarningAboutDataType(false);
-	}
-	return tmp;
-    }
-
-    /**
-     * Validates if all solutions agree with the variable's lower and upper bound and if so removes the warning panel 
-     * @return
-     */
-    private boolean validateIfItsOkToRemoveBoundsWarning() {
-	boolean tmp = true;
-	for (JTextField textField : textfieldList) {
-	    if(type.equals("Integer") && !textField.getText().isEmpty()) {
-		if( Integer.parseInt(textField.getText()) >  Integer.parseInt(upperBound) || Integer.parseInt(textField.getText()) <  Integer.parseInt(lowerBound) ) {
-		    tmp = false;
-		    break;
-		}
-	    }
-	    if(type.equals("Double") && !textField.getText().isEmpty()) {
-		if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound) || Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound) ) {
-		    tmp = false;
-		    break;
-		}
-	    }
-	}
-	if(tmp == true){
-	    page.setWarningAboutBounds(false);
-	}
-	return tmp;
-    }
-
-    /**
-     * Validates if all solutions meet the data type and the bounds and if so enables the button that allows to move to the next page
-     */
-    private void validateIfItsOkToEnableButton() {
-	if(validateIfItsOkToRemoveBoundsWarning()==true && validateIfItsOkToRemoveDataTypeWarning()==true){
-	    page.enableNextButton();
-	}
-    }
-
-    /**
-     * Creates the key listeners of the variables that validates the input
+     * Validates the input of a given solution, validating if it agrees with the bounds and data type
+     * previously chosen on the variable associated to the solution
      * @param textField
      */
-    private void keyListenerContent(JTextField textField) {
-	if(type.equals("Integer") && !textField.getText().isEmpty()) {
-	    try {
-		Integer.parseInt(textField.getText());
-		validateIfItsOkToRemoveDataTypeWarning();
-		if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
-		    if( Integer.parseInt(textField.getText()) >  Integer.parseInt(upperBound) || Integer.parseInt(textField.getText()) <  Integer.parseInt(lowerBound) ) {
-			page.setWarningAboutBounds(true);
-		    } else {
-			validateIfItsOkToRemoveBoundsWarning();
-		    }
-		}
-		validateIfItsOkToEnableButton();
-	    } catch(NumberFormatException e1) {
-		page.setWarningAboutDataType(true);
-	    }
-	}
-	if(type.equals("Double") && !textField.getText().isEmpty()) {
-	    try {
-		Double.parseDouble(textField.getText());
-		validateIfItsOkToRemoveDataTypeWarning();
-		if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
-		    if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound) || Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound) ) {
-			page.setWarningAboutBounds(true);
-		    } else {
-			validateIfItsOkToRemoveBoundsWarning();
-		    }
-		}
-		validateIfItsOkToEnableButton();
-	    } catch(NumberFormatException e1) {
-		page.setWarningAboutDataType(true);
-	    }
-	}
+    public boolean validateInputs(JTextField textField) {
+	boolean tmp = false;
 	if(textField.getText().isEmpty()) {
-	    validateIfItsOkToEnableButton();
+	    FrameUtils.normalFormat(textField);
+	    return true;
+	} else {
+	    if(dataType.equals("Integer")) {
+		try {
+		    Integer.parseInt(textField.getText());
+		    FrameUtils.normalFormat(textField);
+		    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
+			if( Integer.parseInt(textField.getText()) >  Integer.parseInt(upperBound) || Integer.parseInt(textField.getText()) <  Integer.parseInt(lowerBound) ) {
+			    FrameUtils.errorFormat(textField, "Solutions must agree with the variable's lower and upper bound");
+			} else {
+			    FrameUtils.normalFormat(textField);
+			    tmp = true;
+			}
+		    }
+		} catch(NumberFormatException e1) {
+		    FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		}
+	    } 
+	    if(dataType.equals("Double")) {
+		try {
+		    Double.parseDouble(textField.getText());
+		    FrameUtils.normalFormat(textField);
+		    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
+			if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound) || Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound) ) {
+			    FrameUtils.errorFormat(textField, "Solutions must agree with the variable's lower and upper bound");
+			} else {
+			    FrameUtils.normalFormat(textField);
+			    tmp = true;
+			}
+		    }
+		} catch(NumberFormatException e1) {
+		    FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		}
+	    }
+	    return tmp;
 	}
     }
 
@@ -284,19 +190,19 @@ public class KnownSolutionsObject {
     }
 
     public KnownSolutionsPage getPage() {
-	return page;
+	return pageAssociated;
     }
 
     public void setPage(KnownSolutionsPage page) {
-	this.page = page;
+	this.pageAssociated = page;
     }
 
     public ArrayList<JTextField> getTextfieldList() {
-	return textfieldList;
+	return solutionsList;
     }
 
     public void setTextfieldList(ArrayList<JTextField> textfieldList) {
-	this.textfieldList = textfieldList;
+	this.solutionsList = textfieldList;
     }
 
 }

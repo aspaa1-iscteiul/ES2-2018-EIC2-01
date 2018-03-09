@@ -6,13 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 public class KnownSolutionsPage extends SuperPage {
@@ -21,33 +20,17 @@ public class KnownSolutionsPage extends SuperPage {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private JPanel subSubMainPanel, warningPanel1, warningPanel2;
+    private JPanel subSubMainPanel;
+    private JButton nextButton;
 
     public KnownSolutionsPage(UserInterface userInterface) {
 	super(userInterface);
 	// TODO Auto-generated constructor stub
     }
 
-    private JButton nextButton;
-
     @Override
     protected void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
-	warningPanel1 = createWarningPanel("Solutions must have the same data type has the variable");
-	warningPanel2 = createWarningPanel("Solutions must agree with the variable's lower and upper bound");
-    }
-
-    private JPanel createWarningPanel(String message) {
-	JPanel warningPanel = new JPanel();
-	warningPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-	warningPanel.setBackground(Color.WHITE);
-	JLabel warningIcon = new JLabel();
-	warningIcon.setIcon(new ImageIcon("./src/frames/images/warning_icon.png"));
-	warningPanel.add(warningIcon);
-	JLabel warning = new JLabel(message);
-	warning.setForeground(Color.red);
-	warningPanel.add(warning);
-	return warningPanel;
     }
 
     @Override
@@ -165,55 +148,29 @@ public class KnownSolutionsPage extends SuperPage {
 	userInterface.getFrame().repaint();
     }
 
-    /**
-     * Shows the warning selected: 1 - warning about the data type, 2 - warning about the lower and upper bounds
-     * @param show
-     * @param number
-     */
-    private void showWarning(final boolean show, final int number) {
-	SwingUtilities.invokeLater(new Runnable() {
-	    public void run() {
-		JPanel panel = number == 1 ? warningPanel1 : warningPanel2;
-		if (show) {
-		    nextButton.setEnabled(false);
-		    mainPanel.add(panel);
-		}else {
-		    mainPanel.remove(panel);
-		}
-		refreshPage();
-		userInterface.getFrame().pack();
-	    }
-	});
-    }
-
-    public void setWarningAboutBounds(boolean show) {
-	showWarning(show, 2);
-    }
-
-    public void setWarningAboutDataType(boolean show) {
-	showWarning(show, 1);
-    }
-    
-    public void enableNextButton() {
-	nextButton.setEnabled(true);
-    }
-
     @Override
     protected boolean areAllDataWellFilled() {
-	// TODO Auto-generated method stub
-	return true;
+	boolean tmp = true;
+	for (KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
+	    for(JTextField textField : kso.getTextfieldList()) {
+		if(kso.validateInputs(textField) == false) {
+		    tmp = false;
+		}
+	    }
+	}
+	return tmp;
     }
 
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     protected void getFromProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

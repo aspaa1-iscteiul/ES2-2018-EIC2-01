@@ -21,7 +21,7 @@ import javax.swing.border.Border;
 
 public class FitnessFunctionObject {
 
-    private FitnessFunctionPage page;
+    private FitnessFunctionPage pageAssociated;
     private JPanel fieldsPanel;
     private JButton uploadButton;
     private ArrayList<OptimizationCriteriaCheckbox> checkboxList;
@@ -29,7 +29,7 @@ public class FitnessFunctionObject {
 
     public FitnessFunctionObject(FitnessFunctionPage page) {
 
-	this.page = page;
+	this.pageAssociated = page;
 	this.checkboxList = new ArrayList<OptimizationCriteriaCheckbox>();
 	uploadButton = FrameUtils.cuteButton("Upload JAR file");
 	uploadButton.addActionListener(new ActionListener() {
@@ -72,16 +72,16 @@ public class FitnessFunctionObject {
     }
 
     public void createComponents() {
-	if (page.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
+	if (pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
 	    fieldsPanel.removeAll();
 	    fieldsPanel.add(uploadButton);
-	    for (OptimizationCriteriaObject oco : page.userInterface.getOptimizationCriteriaFromPage()) {
+	    for (OptimizationCriteriaObject oco : pageAssociated.userInterface.getOptimizationCriteriaFromPage()) {
 		final OptimizationCriteriaCheckbox checkbox = new OptimizationCriteriaCheckbox(oco.getVariableName());
 		checkbox.getCheckBox().addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent arg0) {
 			if (checkbox.getCheckBox().isSelected() == true) {
-			    for (FitnessFunctionObject ffo : page.getFitnessFunctionList()) {
+			    for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
 				for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
 				    if (occ.getOptimizationCriteriaName().getText()
 					    .equals(checkbox.getOptimizationCriteriaName().getText())
@@ -91,7 +91,7 @@ public class FitnessFunctionObject {
 				}
 			    }
 			} else {
-			    for (FitnessFunctionObject ffo : page.getFitnessFunctionList()) {
+			    for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
 				for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
 				    if (occ.getOptimizationCriteriaName().getText()
 					    .equals(checkbox.getOptimizationCriteriaName().getText())
@@ -117,7 +117,7 @@ public class FitnessFunctionObject {
 	SwingUtilities.invokeLater(new Runnable() {
 	    @Override
 	    public void run() {
-		page.refreshPage();
+		pageAssociated.refreshPage();
 	    }
 	});
     }
@@ -131,7 +131,7 @@ public class FitnessFunctionObject {
      * @param checkbox
      */
     public void verifyIfTheCheckboxShouldBeDisabled(OptimizationCriteriaCheckbox checkbox) {
-	for (FitnessFunctionObject ffo : page.getFitnessFunctionList()) {
+	for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
 	    for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
 		if (occ.getOptimizationCriteriaName().getText().equals(checkbox.getOptimizationCriteriaName().getText())
 			&& !occ.equals(checkbox)) {
@@ -148,7 +148,7 @@ public class FitnessFunctionObject {
      * Cleans the selection of all the checkboxes
      */
     public void cleanData() {
-	for (FitnessFunctionObject ffo : page.getFitnessFunctionList()) {
+	for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
 	    for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
 		occ.getCheckBox().setEnabled(true);
 	    }

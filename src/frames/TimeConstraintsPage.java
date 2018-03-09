@@ -135,6 +135,8 @@ public class TimeConstraintsPage extends SuperPage {
 	Boolean tmp = false;
 	if(idealTime.getText().trim().isEmpty()) {
 	    FrameUtils.errorFormat(idealTime, "The ideal time must be filled in.");
+	} else {
+	    FrameUtils.normalFormat(idealTime);
 	}
 	try {
 	    Integer.parseInt(idealTime.getText());

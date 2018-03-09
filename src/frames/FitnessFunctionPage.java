@@ -27,9 +27,6 @@ import javax.swing.border.EmptyBorder;
 
 public class FitnessFunctionPage extends SuperPage {
 
-    /**
-     * Default
-     */
     private static final long serialVersionUID = 1L;
 
     private ArrayList<FitnessFunctionObject> fitnessFunctionList;
@@ -94,7 +91,7 @@ public class FitnessFunctionPage extends SuperPage {
 	infoFieldPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Fitness Function");
 	name.setBorder(new EmptyBorder(0, 0, 0, 43)); // to add space between
-						      // the labels
+	// the labels
 	infoFieldPanel.add(name);
 	infoFieldPanel.add(new JLabel("Optimization Criteria"));
 

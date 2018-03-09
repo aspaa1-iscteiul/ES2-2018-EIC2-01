@@ -24,9 +24,9 @@ import objects.DataType;
 
 public class DecisionVariablesObject {
 
-    private DecisionVariablesPage page;
+    private DecisionVariablesPage pageAssociated;
     private JPanel variablesPanel;
-    private JTextField name;
+    private JTextField varName;
     private final static String[] dataTypes = { "Integer", "Double" };
     private JComboBox<String> dataType;
     private JTextField lowerBound;
@@ -42,18 +42,18 @@ public class DecisionVariablesObject {
 
     public DecisionVariablesObject(final DecisionVariablesPage page, String variableName, String variableDataType,
 	    String lowerLimit, String upperLimit) {
-	this.page = page;
+	this.pageAssociated = page;
 	variablesPanel = new JPanel();
 	final DecisionVariablesObject tmp = this;
-	name = new JTextField(variableName, 5);
-	name.addKeyListener(new KeyListener() {
+	varName = new JTextField(variableName, 6);
+	varName.addKeyListener(new KeyListener() {
 	    @Override
 	    public void keyTyped(KeyEvent e) {
 	    }
 
 	    @Override
 	    public void keyReleased(KeyEvent e) {
-		name.setText(name.getText().trim()); // remove spaces
+		varName.setText(varName.getText().trim()); // remove spaces
 	    }
 
 	    @Override
@@ -62,8 +62,8 @@ public class DecisionVariablesObject {
 	});
 	dataType = FrameUtils.cuteComboBox(dataTypes);
 	dataType.setSelectedItem(variableDataType);
-	lowerBound = new JTextField(lowerLimit, 5);
-	upperBound = new JTextField(upperLimit, 5);
+	lowerBound = new JTextField(lowerLimit, 6);
+	upperBound = new JTextField(upperLimit, 6);
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	deleteIcon.addMouseListener(new MouseListener() {
@@ -107,13 +107,13 @@ public class DecisionVariablesObject {
     public JPanel transformIntoAPanel() {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	variablesPanel.setBackground(Color.WHITE);
-	name.setBorder(FrameUtils.cuteBorder());
-	name.setPreferredSize(new Dimension(10, 22));
+	varName.setBorder(FrameUtils.cuteBorder());
+	varName.setPreferredSize(new Dimension(10, 22));
 	lowerBound.setBorder(FrameUtils.cuteBorder());
 	lowerBound.setPreferredSize(new Dimension(10, 22));
 	upperBound.setBorder(FrameUtils.cuteBorder());
 	upperBound.setPreferredSize(new Dimension(10, 22));
-	variablesPanel.add(name);
+	variablesPanel.add(varName);
 	variablesPanel.add(dataType);
 	variablesPanel.add(lowerBound);
 	variablesPanel.add(upperBound);
@@ -122,11 +122,11 @@ public class DecisionVariablesObject {
     }
 
     public void setVariableName(String name) {
-	this.name.setText(name);
+	this.varName.setText(name);
     }
 
     public String getVariableName() {
-	return name.getText();
+	return varName.getText();
     }
 
     public String getDataType() {
@@ -180,16 +180,16 @@ public class DecisionVariablesObject {
     }
 
     /**
-     * @return {@code true} if the {@link #name} is not empty and is not repeated,
+     * @return {@code true} if the {@link #varName} is not empty and is not repeated,
      *         otherwise {@code false} and evidence the error
      * @see DecisionVariablesPage#isNameRepeated(String)
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidName() {
-	String text = name.getText();
+	String text = varName.getText();
 	String info = (text.equals("") ? "The variable name must be filled in. " : "")
-		+ (page.isNameRepeated(text) ? "The variable name must be unique." : "");
-	return !info.equals("") ? FrameUtils.errorFormat(name, info) : FrameUtils.normalFormat(name);
+		+ (pageAssociated.isNameRepeated(text) ? "The variable name must be unique." : "");
+	return !info.equals("") ? FrameUtils.errorFormat(varName, info) : FrameUtils.normalFormat(varName);
     }
 
     /**

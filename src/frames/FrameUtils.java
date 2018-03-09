@@ -63,7 +63,7 @@ public class FrameUtils {
 	    // because JCheckBox does not have a border ?
 	    jComponent.setForeground(Color.RED);
 	} else {
-	    int var = jComponent instanceof JComboBox ? 0 : 4;
+	    int var = jComponent instanceof JComboBox ? 0 : 2;
 	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
 		    BorderFactory.createEmptyBorder(var, var, var, var)));
 	}
@@ -88,7 +88,7 @@ public class FrameUtils {
 	    // because JCheckBox does not have a border ?
 	    jComponent.setForeground(Color.BLACK);
 	} else {
-	    int var = jComponent instanceof JComboBox ? 0 : 4;
+	    int var = jComponent instanceof JComboBox ? 0 : 2;
 	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		    BorderFactory.createEmptyBorder(var, var, var, var)));
 	}

@@ -18,9 +18,6 @@ import javax.swing.border.EmptyBorder;
 
 public class SaveProblemPage extends SuperPage {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     private JTextField fileName;
     private JTextField filePath;
