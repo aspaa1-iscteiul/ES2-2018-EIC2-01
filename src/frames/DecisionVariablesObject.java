@@ -9,13 +9,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 public class DecisionVariablesObject {
 
@@ -90,13 +88,11 @@ public class DecisionVariablesObject {
     public JPanel transformIntoAPanel() {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	variablesPanel.setBackground(Color.WHITE);
-	Border border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(0, 10, 0, 10));
-	name.setBorder(border);
+	name.setBorder(FrameUtils.cuteBorder());
 	name.setPreferredSize(new Dimension(10, 22));
-	lowerBound.setBorder(border);
+	lowerBound.setBorder(FrameUtils.cuteBorder());
 	lowerBound.setPreferredSize(new Dimension(10, 22));
-	upperBound.setBorder(border);
+	upperBound.setBorder(FrameUtils.cuteBorder());
 	upperBound.setPreferredSize(new Dimension(10, 22));
 	variablesPanel.add(name);
 	variablesPanel.add(dataType);
@@ -203,6 +199,8 @@ public class DecisionVariablesObject {
 		Double.parseDouble(bound.getText());
 	} catch (NumberFormatException e) {
 	    return FrameUtils.errorFormat(bound, "The " + boundStr + " limit is not a valid number.");
+	} catch(NullPointerException e) {
+	    return FrameUtils.errorFormat(bound, "The data type must be filled in, to validate this field.");
 	}
 	return FrameUtils.normalFormat(bound);
     }

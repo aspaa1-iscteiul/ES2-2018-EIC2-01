@@ -24,10 +24,10 @@ import javax.swing.border.EmptyBorder;
 public class FitnessFunctionPage extends SuperPage {
 
     /**
-     * 
+     * Default
      */
     private static final long serialVersionUID = 1L;
-    private static final int standardNumberOfVariables = 1;
+
     private ArrayList<FitnessFunctionObject> fitnessFunctionList;
 
     public FitnessFunctionPage(UserInterface userInterface) {
@@ -38,13 +38,13 @@ public class FitnessFunctionPage extends SuperPage {
     private JButton nextButton;
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	nextButton = FrameUtils.cuteButton("Next");
 	fitnessFunctionList = new ArrayList<FitnessFunctionObject>();
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -89,21 +89,26 @@ public class FitnessFunctionPage extends SuperPage {
 	infoFieldPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	infoFieldPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Fitness Function");
-	name.setBorder(new EmptyBorder(0, 0, 0, 43)); // to add space between the labels
+	name.setBorder(new EmptyBorder(0, 0, 0, 43)); // to add space between
+						      // the labels
 	infoFieldPanel.add(name);
 	infoFieldPanel.add(new JLabel("Optimization Criteria"));
 
 	subMainPanel.add(infoFieldPanel);
 
+	continueCreateMainPanel(subMainPanel);
+
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+    }
+
+    private void continueCreateMainPanel(JPanel subMainPanel) {
 	final JPanel subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
 	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-	for (int i = 0; i != standardNumberOfVariables; i++) {
-	    FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(this);
-	    fitnessFunctionList.add(fitnessFunctionObject);
-	    subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
-	}
+	FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(this);
+	fitnessFunctionList.add(fitnessFunctionObject);
+	subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
 
 	subMainPanel.add(subSubMainPanel);
 
@@ -112,11 +117,8 @@ public class FitnessFunctionPage extends SuperPage {
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
-
 	final FitnessFunctionPage tmp = this;
-
 	addIcon.addMouseListener(new MouseListener() {
-
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
@@ -145,7 +147,6 @@ public class FitnessFunctionPage extends SuperPage {
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
-
 	});
 	addOptionPanel.add(addIcon, BorderLayout.WEST);
 	addOptionPanel.add(new JLabel("Add new fitness function"));
@@ -157,13 +158,10 @@ public class FitnessFunctionPage extends SuperPage {
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 	mainPanel.add(scrollPane);
-
-	FrameUtils.addEmptyLabels(mainPanel, 1);
-
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -196,12 +194,30 @@ public class FitnessFunctionPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	for (FitnessFunctionObject ffo : fitnessFunctionList) {
 	    ffo.createComponents();
 	    ffo.cleanData();
 	}
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	// TODO Auto-generated method stub
+	return true;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+
     }
 
     public void refreshPage() {

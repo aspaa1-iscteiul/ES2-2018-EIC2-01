@@ -19,18 +19,18 @@ public class HomePage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	JLabel cover = new JLabel();
 	cover.setIcon(new ImageIcon("./src/frames/images/cover.jpg"));
 	mainPanel.add(cover);
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton startButton = FrameUtils.cuteButton("Start");
 	startButton.addActionListener(new ActionListener() {
 	    @Override
@@ -54,8 +54,21 @@ public class HomePage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("ES2-2018-EIC2-01");
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	return true;
+    }
+
+    @Override
+    protected void saveToProblem() {
+    }
+
+    @Override
+    protected void getFromProblem() {
     }
 
 }

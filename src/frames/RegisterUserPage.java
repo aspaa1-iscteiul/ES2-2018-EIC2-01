@@ -4,14 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,13 +30,13 @@ public class RegisterUserPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	email = new JTextField(30); // XXX see if 30 is a good width
 	checkBox = new JCheckBox("I understand and accept the terms and conditions");
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -82,41 +79,7 @@ public class RegisterUserPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton nextButton = FrameUtils.cuteButton("Next");
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		if (areAllDataWellFilled())
-		    userInterface.goToNextPage();
-	    }
-	});
-	buttonsPanel.add(nextButton);
-    }
-
-    private boolean areAllDataWellFilled() {
+    protected boolean areAllDataWellFilled() {
 	boolean goOn = true;
 	try {
 	    // validates the email
@@ -132,8 +95,20 @@ public class RegisterUserPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

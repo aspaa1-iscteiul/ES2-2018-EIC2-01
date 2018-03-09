@@ -5,13 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,13 +29,13 @@ public class ProblemIdPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	problemName = new JTextField(30); // XXX see if 30 is a good width
 	problemDescription = new JTextArea();
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -91,43 +88,11 @@ public class ProblemIdPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		saveToProblem();
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton nextButton = FrameUtils.cuteButton("Next");
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		if (areAllDataWellFilled()) {
-		    saveToProblem();
-		    userInterface.goToNextPage();
-		}
-	    }
-	});
-	buttonsPanel.add(nextButton);
+    protected void onTop() {
+	userInterface.getFrame().setTitle("Problem Solving App");
     }
 
+    @Override
     protected boolean areAllDataWellFilled() {
 	return Pattern.matches("[a-zA-Z0-9]+", problemName.getText())
 		&& Character.isUpperCase(problemName.getText().charAt(0)) ? FrameUtils.normalFormat(problemName)
@@ -135,7 +100,8 @@ public class ProblemIdPage extends SuperPage {
 				"The problem name must agree with the conditions in the info section");
     }
 
-    public void saveToProblem() {
+    @Override
+    protected void saveToProblem() {
 	try {
 	    userInterface.getProblem().setProblemName(problemName.getText());
 	} catch (NullPointerException e) {
@@ -147,8 +113,9 @@ public class ProblemIdPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
-	userInterface.getFrame().setTitle("Problem Solving App");
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+
     }
 
 }

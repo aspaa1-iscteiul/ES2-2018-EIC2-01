@@ -38,7 +38,7 @@ public class AlgorithmsPage extends SuperPage {
     }
 
     @Override
-    public void initialize() {
+    protected void initialize() {
 	title = new JLabel();
 	algorithmsListPanel = new JPanel();
 	nextButton = FrameUtils.cuteButton("Next");
@@ -46,7 +46,7 @@ public class AlgorithmsPage extends SuperPage {
     }
 
     @Override
-    public void createMainPanel() {
+    protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
 	title.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
@@ -77,7 +77,7 @@ public class AlgorithmsPage extends SuperPage {
     }
 
     @Override
-    public void createButtonsPanel() {
+    protected void createButtonsPanel() {
 	JButton backButton = FrameUtils.cuteButton("Back");
 	backButton.addActionListener(new ActionListener() {
 	    @Override
@@ -111,7 +111,7 @@ public class AlgorithmsPage extends SuperPage {
     }
 
     @Override
-    public void onTop() {
+    protected void onTop() {
 	title.setText((userInterface.getIsSingleobjective() ? "Single objective" : "Multi objective")
 		+ " optimization algorithms available");
 	File dir = userInterface.getIsSingleobjective() ? jMetalSingleobjectiveAlgorithmsDir
@@ -126,6 +126,24 @@ public class AlgorithmsPage extends SuperPage {
 	}
 	algorithmsListPanel.repaint();
 	algorithmsListPanel.revalidate();
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+	
     }
 
 }
