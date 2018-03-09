@@ -19,6 +19,7 @@ public class UserInterface {
 
     private JFrame frame;
     private List<SuperPage> pages;
+    private SendEmailPage emailPage;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
     private ArrayList<FitnessFunctionObject> fitnessFunctionFromPage;
     private ArrayList<KnownSolutionsObject> knownSolutionsFromDecisionVariables;
@@ -29,6 +30,7 @@ public class UserInterface {
 
     public UserInterface() {
 	frame = new JFrame("ES2-2018-EIC2-01");
+	emailPage = new SendEmailPage(this);
 	decisionVariablesFromPage = new ArrayList<DecisionVariablesObject>();
 	fitnessFunctionFromPage = new ArrayList<FitnessFunctionObject>();
 	knownSolutionsFromDecisionVariables = new ArrayList<KnownSolutionsObject>();
@@ -75,7 +77,7 @@ public class UserInterface {
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
-	pages.add(new AlgorithmsPage(this));
+//	pages.add(new AlgorithmsPage(this));
 	pages.add(new TimeConstraintsPage(this));
 	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
@@ -108,7 +110,15 @@ public class UserInterface {
     public void goToEmailPage() {
 	// TODO Auto-generated method stub
 	frame.remove(pages.get(actualPageIndex));
-	SuperPage page = new SendEmailPage(this);
+	SuperPage page = emailPage;
+	page.onTop();
+	frame.add(page);
+	frame.pack(); // XXX remove when width and height is set
+    }
+
+    public void returnFromEmailPage() {
+	frame.remove(emailPage);
+	SuperPage page = pages.get(actualPageIndex);
 	page.onTop();
 	frame.add(page);
 	frame.pack(); // XXX remove when width and height is set

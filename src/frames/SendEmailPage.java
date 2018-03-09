@@ -103,7 +103,7 @@ public class SendEmailPage extends SuperPage {
 	cancelButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
+		userInterface.returnFromEmailPage();
 	    }
 	});
 	buttonsPanel.add(cancelButton);
