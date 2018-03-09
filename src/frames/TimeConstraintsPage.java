@@ -183,10 +183,4 @@ public class TimeConstraintsPage extends SuperPage {
 	userInterface.getProblem().setMaxTimeFrame(Double.parseDouble(maxTime.getText()));
     }
 
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
-    }
-
 }

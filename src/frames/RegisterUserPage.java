@@ -103,19 +103,12 @@ public class RegisterUserPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	getFromProblem();
     }
 
     @Override
     protected void saveToProblem() {
-	userInterface.getProblem().setEmail(email.getText());
-	userInterface.getProblem().setEmailCheckBox(checkBox.isSelected());
-    }
-
-    @Override
-    protected void getFromProblem() {
-	email.setText(userInterface.getProblem().getEmail());
-	checkBox.setSelected(userInterface.getProblem().getEmailCheckBox());
+	// TODO Auto-generated method stub
+	
     }
 
 }

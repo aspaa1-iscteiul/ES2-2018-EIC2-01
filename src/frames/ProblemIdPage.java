@@ -90,7 +90,6 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	getFromProblem();
     }
 
     @Override
@@ -103,14 +102,8 @@ public class ProblemIdPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	userInterface.getProblem().setProblemName(problemName.getText());
-	userInterface.getProblem().setProblemDescription(problemDescription.getText());
-    }
-
-    @Override
-    protected void getFromProblem() {
-	problemName.setText(userInterface.getProblem().getProblemName());
-	problemDescription.setText(userInterface.getProblem().getProblemDescription());
+	// TODO Auto-generated method stub
+	
     }
 
 }

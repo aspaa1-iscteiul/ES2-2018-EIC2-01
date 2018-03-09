@@ -18,12 +18,6 @@ public class Problem {
     protected double idealTimeFrame;
     protected double maxTimeFrame;
     public static String newLine = System.getProperty("line.separator");
-    
-    /**
-     * not to save 
-     */
-    protected String email;
-    protected boolean emailCheckBox;
 
     /**
      * Empty constructor for the Problem class
@@ -35,13 +29,13 @@ public class Problem {
     /**
      * Constructor for the Problem class.
      * 
-     * The list of known solutions is not initialized and, if necessary, it must be
-     * set using the setOptimizationAlgorithms(ArrayList<String>
+     * The list of known solutions is not initialized and, if necessary, it must
+     * be set using the setOptimizationAlgorithms(ArrayList<String>
      * optimizationAlgorithms) method
      * 
      * @param problemName
-     *            String containing the name of the problem. This name must follow
-     *            the Java convention for class names
+     *            String containing the name of the problem. This name must
+     *            follow the Java convention for class names
      * @param problemDescription
      *            String containing the optimization problem's description in
      *            natural language
@@ -134,29 +128,14 @@ public class Problem {
 
     /**
      * Indicates whether some other object is "equal to" this one. Although this
-     * method can receive any object as an argument, it does not validate whether it
-     * is really an instantiated objected of the class Problem. Instead, this
-     * function assumes the object passed as an argument is a Problem Object.
+     * method can receive any object as an argument, it does not validate
+     * whether it is really an instantiated objected of the class Problem.
+     * Instead, this function assumes the object passed as an argument is a
+     * Problem Object.
      */
     public boolean equals(Object obj) {
 	Problem other = (Problem) obj;
 	return this.toString().equals(other.toString());
-    }
-
-    public void setEmail(String email) {
-	this.email = email;
-    }
-    
-    public String getEmail() {
-	return email;
-    }
-    
-    public void setEmailCheckBox(boolean emailCheckBox) {
-	this.emailCheckBox = emailCheckBox;
-    }
-    
-    public boolean getEmailCheckBox() {
-	return emailCheckBox;
     }
 
 }

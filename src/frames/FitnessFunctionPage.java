@@ -214,12 +214,6 @@ public class FitnessFunctionPage extends SuperPage {
 	userInterface.setFitnessFunctionFromPage(fitnessFunctionList);
     }
 
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
-    }
-
     public void refreshPage() {
 	userInterface.getFrame().validate();
 	userInterface.getFrame().repaint();

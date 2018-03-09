@@ -118,9 +118,4 @@ public abstract class SuperPage extends JPanel {
      */
     protected abstract void saveToProblem();
 
-    /**
-     * 
-     */
-    protected abstract void getFromProblem();
-
 }

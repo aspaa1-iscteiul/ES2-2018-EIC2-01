@@ -133,13 +133,7 @@ public class SendEmailPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
+	
     }
 
 }

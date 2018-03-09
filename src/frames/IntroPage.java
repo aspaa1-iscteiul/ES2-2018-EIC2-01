@@ -156,10 +156,8 @@ public class IntroPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-    }
-
-    @Override
-    protected void getFromProblem() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import objects.DecisionVariable;
@@ -103,13 +102,7 @@ public class UserInterface {
     }
 
     public void goToPreviousPage() {
-	SuperPage actualPage = pages.get(actualPageIndex);
-	if (!actualPage.areAllDataWellFilled() && JOptionPane.showConfirmDialog(frame, "You have poorly "
-		+ "filled data, if you go back you will lose them. Do you wish to continue?") != JOptionPane.YES_OPTION) {
-	    return;
-	}
-	actualPage.saveToProblem();
-	frame.remove(actualPage);
+	frame.remove(pages.get(actualPageIndex));
 	SuperPage backPage = pages.get(--actualPageIndex);
 	backPage.onTop();
 	frame.add(backPage);

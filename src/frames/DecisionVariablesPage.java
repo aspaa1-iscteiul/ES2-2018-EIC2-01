@@ -132,12 +132,6 @@ public class DecisionVariablesPage extends SuperPage {
 	userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
     }
 
-    @Override
-    protected void getFromProblem() {
-	// TODO Auto-generated method stub
-
-    }
-
     private JPanel addOptionPanel() {
 	JPanel addOptionPanel = new JPanel();
 	addOptionPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
