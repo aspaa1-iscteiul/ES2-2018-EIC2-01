@@ -15,6 +15,11 @@ import utils.UserFileUtils;
 
 public class TestUserFileUtils {
 
+    /**
+     * Utility method that initiates a Problem object to be used for testing
+     * 
+     * @return Object Problem for testing
+     */
     public Problem contructProblem() {
 	ArrayList<String> knownSolutions = new ArrayList<String>();
 	knownSolutions.add("3");
@@ -42,11 +47,19 @@ public class TestUserFileUtils {
 		optimizationAlgorithms, 2.0, 4.0);
     }
 
+    /**
+     * Testing class initiation
+     */
     @Test
     public final void testClassUserFileUtils() {
 	new UserFileUtils();
     }
 
+    /**
+     * Testing a successful scenario of writing a Problem object to a XML document,
+     * reading a Problem of that same file and confirming we are obtaining
+     * equivalent objects
+     */
     @Test
     public final void successfullyTestWriteToAndReadFromXML() {
 	Problem problemWrite = contructProblem();
@@ -58,6 +71,10 @@ public class TestUserFileUtils {
 
     }
 
+    /**
+     * Testing a scenario in which the writeToXML and readFromXML functions fail
+     * and, therefore, it is necessary to handle exceptions
+     */
     @Test
     public final void unsuccessfullyTestWriteToAndReadFromXML() {
 	Problem problemWrite = contructProblem();
