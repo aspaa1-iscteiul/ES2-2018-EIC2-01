@@ -73,12 +73,12 @@ public class DecisionVariablesPage extends SuperPage {
 	infoPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Name");
 	// to add space between the labels
-	name.setBorder(new EmptyBorder(0, 0, 0, 40));
+	name.setBorder(new EmptyBorder(0, 0, 0, 55));
 	infoPanel.add(name);
 	JLabel dataType = new JLabel("Data Type");
-	dataType.setBorder(new EmptyBorder(0, 0, 0, 8));
+	dataType.setBorder(new EmptyBorder(0, 0, 0, 10));
 	infoPanel.add(dataType);
-	infoPanel.add(new JLabel("Lower Bound"));
+	infoPanel.add(new JLabel("Lower Bound     "));
 	infoPanel.add(new JLabel("Upper Bound "));
 
 	subMainPanel.add(infoPanel);
@@ -129,7 +129,7 @@ public class DecisionVariablesPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	userInterface.setKnownSolutionsList(getKnownSolutionsFromDecisionVariables());
+	userInterface.setDecisionVariablesFromPage(decisionVariableList);
     }
 
     private JPanel addOptionPanel() {
@@ -278,21 +278,6 @@ public class DecisionVariablesPage extends SuperPage {
 	decisionVariableList.remove(dvo);
 	subSubMainPanel.remove(dvo.transformIntoAPanel());
 	refreshPage();
-    }
-
-    /**
-     * Creates a list of Known Solutions with the data displayed on the Decision Variables
-     * @return ArrayList<KnownSolutionsObject>
-     */
-    private ArrayList<KnownSolutionsObject> getKnownSolutionsFromDecisionVariables() {
-	ArrayList<KnownSolutionsObject> knownSolutions = new ArrayList<KnownSolutionsObject>();
-	for (DecisionVariablesObject dvo : decisionVariableList) {
-	    if (!dvo.getVariableName().trim().isEmpty()) {
-		knownSolutions.add(new KnownSolutionsObject(null, dvo.getVariableName(), dvo.getDataType(),
-			dvo.getLowerBound(), dvo.getUpperBound()));
-	    }
-	}
-	return knownSolutions;
     }
 
     /**

@@ -62,7 +62,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 	infoPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Name");
 	// to add space between the labels
-	name.setBorder(new EmptyBorder(0, 0, 0, 85));
+	name.setBorder(new EmptyBorder(0, 0, 0, 100));
 
 	infoPanel.add(name);
 	infoPanel.add(new JLabel("Data Type"));

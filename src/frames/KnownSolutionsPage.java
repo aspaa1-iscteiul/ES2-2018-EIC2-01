@@ -2,6 +2,8 @@ package frames;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -17,7 +19,7 @@ public class KnownSolutionsPage extends SuperPage {
      * Default
      */
     private static final long serialVersionUID = 1L;
-    
+    private ArrayList<KnownSolutionsObject> knownSolutionsList;
     private JPanel subSubMainPanel;
 
     public KnownSolutionsPage(UserInterface userInterface) {
@@ -26,6 +28,7 @@ public class KnownSolutionsPage extends SuperPage {
 
     @Override
     protected void initialize() {
+	knownSolutionsList = new ArrayList<KnownSolutionsObject>();
     }
 
     @Override
@@ -78,9 +81,10 @@ public class KnownSolutionsPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
 	subSubMainPanel.removeAll();
-	if (userInterface.getKnownSolutionsList().size() > 0) {
-	    for (KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
-		kso.setPage(this);
+	if (userInterface.getDecisionVariablesFromPage().size() > 0) {
+	    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+		KnownSolutionsObject kso = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
+		knownSolutionsList.add(kso);
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
 	} else {
@@ -124,8 +128,7 @@ public class KnownSolutionsPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-	
+	userInterface.setKnownSolutionsList(knownSolutionsList);
     }
 
 }
