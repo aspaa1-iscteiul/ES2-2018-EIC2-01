@@ -91,7 +91,6 @@ public class DecisionVariablesObject {
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
-
 	});
     }
 
@@ -134,11 +133,7 @@ public class DecisionVariablesObject {
     }
 
     public DataType getDataTypeToProblem() {
-	if (dataType.getSelectedItem().toString().equals("Integer")) {
-	    return DataType.INTEGER;
-	} else {
-	    return DataType.DOUBLE;
-	}
+	return dataType.getSelectedItem().toString().equals("Integer") ? DataType.INTEGER : DataType.DOUBLE;
     }
 
     public String getLowerBound() {
@@ -193,8 +188,8 @@ public class DecisionVariablesObject {
     }
 
     /**
-     * @return {@code true} if the {@link #dataType} has an item selected, otherwise
-     *         {@code false} and evidence the error
+     * @return {@code true} if the {@link #dataType} has an item selected,
+     *         otherwise {@code false} and evidence the error
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isDataTypeSelected() {
@@ -208,11 +203,11 @@ public class DecisionVariablesObject {
     /**
      * @param lower
      *            {@code true} if it is to validate the number in
-     *            {@linkplain #lowerBound}, otherwise it is to validate the number
-     *            in {@linkplain #upperBound}
-     * @return {@code true} if the {@code JTextField}, indicated by <b>lower</b>,
-     *         contains a valid number, otherwise {@code false} and evidence the
-     *         error
+     *            {@linkplain #lowerBound}, otherwise it is to validate the
+     *            number in {@linkplain #upperBound}
+     * @return {@code true} if the {@code JTextField}, indicated by
+     *         <b>lower</b>, contains a valid number, otherwise {@code false}
+     *         and evidence the error
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidNumber(boolean lower) {
@@ -237,9 +232,10 @@ public class DecisionVariablesObject {
     }
 
     /**
-     * @return {@code true} if {@linkplain #lowerBound} and {@linkplain #upperBound}
-     *         have valid numbers and if the lower limit is less than the upper
-     *         limit, otherwise {@code false} and evidence the error
+     * @return {@code true} if {@linkplain #lowerBound} and
+     *         {@linkplain #upperBound} have valid numbers and if the lower
+     *         limit is less than the upper limit, otherwise {@code false} and
+     *         evidence the error
      * @see #isValidNumber(boolean)
      * @see FrameUtils#errorFormat(JComponent, String)
      */
