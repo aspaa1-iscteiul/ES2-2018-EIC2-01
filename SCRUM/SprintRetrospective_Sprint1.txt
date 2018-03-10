@@ -1,0 +1,21 @@
+1st Sprint - From February 26 to March 10 (2 weeks)
+
+What went well?
+1)	The group presented a great work dynamic
+2)	Although the tasks we defined for this Sprint required a high number of hours for their implementation, we were able to finish them within the established deadlines.
+3)	All constituents of the team followed the SCRUM methodology working collaboratively and making significant contributions to improve the features developed in Sprint. 
+4)	During the daily Sprint meetings the different members communicated to the team their progress and impediments to the continuation of the work in a clear way. 
+5)	The workload was distributed equally among team members.
+
+What did not go as well?
+1)	The tasks proposed in the Sprint Backlog were more demanding than initially foreseen, which forced the constant redefinition of the estimated execution times for its implementation.
+2)	During the implementation of the GUI we encountered some technical impediments that delayed the development of the feature.
+
+What should we start doing?
+1)	In the Sprint planning meeting, we should try to make a more accurate estimate of the expected duration of each task. These estimates help us plan and distribute our resources for the different tasks planned for Sprint. When the effort estimates are very different from the effective effort required to accomplish the task, as it was verified in this iteration, a constant redefinition of the work plan is necessary, which greatly impairs the team’s productivity.
+
+What should we keep doing?
+1)	At the beginning of Sprint, we set out in a very detailed way the Sprint Backlog tasks on the Trello collaborative work platform. We must continue to do so because this practice has allowed us to have a clear and structured view of the work to be developed during the iteration.
+
+What should we stop doing?
+1)	For the next iterations, we must confirm our implementation decisions with the client (teacher) instead of just discussing them as a team. Involving the customer in decision making will allow us to minimize the risk of developing an application that does not conform to customer requirements.
