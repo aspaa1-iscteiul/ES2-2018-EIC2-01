@@ -26,6 +26,7 @@ public class KnownSolutionsObject {
     private JTextField solution2;
     private ArrayList<JTextField> solutionsList;
     private JLabel addIcon;
+    private JLabel newSolutionInfo;
     private String dataType;
     private String lowerBound;
     private String upperBound;
@@ -49,6 +50,8 @@ public class KnownSolutionsObject {
 	this.solutionsList = new ArrayList<JTextField>();
 	this.solutionsList.add(solution1);
 	this.solutionsList.add(solution2);
+	this.addIcon = new JLabel();
+	this.newSolutionInfo = new JLabel("Add new solutions");
     }
 
     public JPanel transformIntoAPanel() {
@@ -77,7 +80,6 @@ public class KnownSolutionsObject {
 	addPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	addPanel.setBackground(Color.WHITE);
 
-	this.addIcon = new JLabel();
 	this.addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
 	this.addIcon.addMouseListener(new MouseListener() {
 	    @Override
@@ -112,7 +114,7 @@ public class KnownSolutionsObject {
 	});
 
 	addPanel.add(addIcon);
-	addPanel.add(new JLabel("Add new solutions"));
+	addPanel.add(newSolutionInfo);
 	overallPanel.add(addPanel);
 
 	return overallPanel;

@@ -81,17 +81,52 @@ public class KnownSolutionsPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
 	subSubMainPanel.removeAll();
-	if (userInterface.getDecisionVariablesFromPage().size() > 0) {
-	    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-		KnownSolutionsObject kso = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
-		knownSolutionsList.add(kso);
+	if(knownSolutionsList.size()>0) {
+	    for(KnownSolutionsObject kso : knownSolutionsList) {
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
+	    if(userInterface.getDecisionVariablesFromPage().size() > 0) {
+		for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+		    boolean nova = true;
+		    for(KnownSolutionsObject kso : knownSolutionsList) {
+			if(dvo.getVariableName().equals(kso.getName().getText())){
+			    nova = false;
+			    break;
+			}
+		    } 
+		    if(nova == true) {
+			KnownSolutionsObject ksoAux = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
+			knownSolutionsList.add(ksoAux);
+			subSubMainPanel.add(ksoAux.transformIntoAPanel());
+		    }
+		}
+	    }
+	    if(knownSolutionsList.size() != userInterface.getDecisionVariablesFromPage().size()) {
+		for(KnownSolutionsObject kso : knownSolutionsList) {
+		    boolean toDelete = false;
+		    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+			if(kso.getName().getText().equals(dvo.getVariableName())) {
+			    toDelete = true;
+			    break;
+			}
+		    } 
+		    if(toDelete == false) {
+			subSubMainPanel.remove(kso.transformIntoAPanel());
+		    }
+		}
+	    }
 	} else {
-	    subSubMainPanel.add(warning);
+	    if (userInterface.getDecisionVariablesFromPage().size() > 0) {
+		for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+		    KnownSolutionsObject kso = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
+		    knownSolutionsList.add(kso);
+		    subSubMainPanel.add(kso.transformIntoAPanel());
+		}
+	    } else {
+		subSubMainPanel.add(warning);
+	    }
 	}
-	validate();
-	repaint();
+	refreshPage();
     }
 
     /**
@@ -111,6 +146,7 @@ public class KnownSolutionsPage extends SuperPage {
     public void refreshPage() {
 	userInterface.getFrame().validate();
 	userInterface.getFrame().repaint();
+	userInterface.getFrame().pack();
     }
 
     @Override
