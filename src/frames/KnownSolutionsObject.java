@@ -7,12 +7,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 /**
  * This object was created to aid the construction of the Known Solutions Page
@@ -32,14 +30,17 @@ public class KnownSolutionsObject {
     private String upperBound;
 
     /**
-     * This object will have the solutions to a given variable that must agree with the lower and upper bounds presented by the variable
+     * This object will have the solutions to a given variable that must agree
+     * with the lower and upper bounds presented by the variable
+     * 
      * @param page
      * @param name
      * @param type
      * @param lowerBound
      * @param upperBound
      */
-    public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound, String upperBound) {
+    public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
+	    String upperBound) {
 	this.pageAssociated = page;
 	this.name = new JTextField(name);
 	this.dataType = type;
@@ -55,40 +56,33 @@ public class KnownSolutionsObject {
     }
 
     public JPanel transformIntoAPanel() {
-	JPanel overallPanel = new JPanel();
-	overallPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel overallPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	overallPanel.setBackground(Color.WHITE);
 
-	final JPanel firstPanel = new JPanel();
-	firstPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	final JPanel firstPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	firstPanel.setBackground(Color.WHITE);
-	final Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-	name.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	name.setBorder(FrameUtils.cuteBorder());
 	name.setPreferredSize(null);
 	name.setEditable(false);
 	firstPanel.add(name);
 
 	for (final JTextField textField : solutionsList) {
-	    textField.setBorder(
-		    BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	    textField.setBorder(FrameUtils.cuteBorder());
 	    firstPanel.add(textField);
 	}
 
 	overallPanel.add(firstPanel);
 
-	JPanel addPanel = new JPanel();
-	addPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addPanel.setBackground(Color.WHITE);
-
-	this.addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
-	this.addIcon.addMouseListener(new MouseListener() {
+	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
+	addIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
 		    public void run() {
 			final JTextField newSolution = new JTextField(3);
-			newSolution.setBorder(BorderFactory.createCompoundBorder(border,
-				BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+			newSolution.setBorder(FrameUtils.cuteBorder());
 			firstPanel.add(newSolution);
 			solutionsList.add(newSolution);
 			pageAssociated.getUserInterface().refreshPage();
@@ -112,54 +106,58 @@ public class KnownSolutionsObject {
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
 	});
-
 	addPanel.add(addIcon);
 	addPanel.add(newSolutionInfo);
 	overallPanel.add(addPanel);
-
 	return overallPanel;
     }
 
     /**
-     * Validates the input of a given solution, validating if it agrees with the bounds and data type
-     * previously chosen on the variable associated to the solution
+     * Validates the input of a given solution, validating if it agrees with the
+     * bounds and data type previously chosen on the variable associated to the
+     * solution
+     * 
      * @param textField
      */
     public boolean validateInputs(JTextField textField) {
 	boolean tmp = false;
-	if(textField.getText().isEmpty()) {
+	if (textField.getText().isEmpty()) {
 	    FrameUtils.normalFormat(textField);
 	    return true;
 	} else {
-	    if(dataType.equals("Integer")) {
+	    if (dataType.equals("Integer")) {
 		try {
 		    Integer.parseInt(textField.getText());
 		    FrameUtils.normalFormat(textField);
-		    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
-			if( Integer.parseInt(textField.getText()) >  Integer.parseInt(upperBound) || Integer.parseInt(textField.getText()) <  Integer.parseInt(lowerBound) ) {
-			    FrameUtils.errorFormat(textField, "Solutions must agree with the variable's lower and upper bound");
+		    if (!lowerBound.isEmpty() && !upperBound.isEmpty()) {
+			if (Integer.parseInt(textField.getText()) > Integer.parseInt(upperBound)
+				|| Integer.parseInt(textField.getText()) < Integer.parseInt(lowerBound)) {
+			    FrameUtils.errorFormat(textField,
+				    "Solutions must agree with the variable's lower and upper bound");
 			} else {
 			    FrameUtils.normalFormat(textField);
 			    tmp = true;
 			}
 		    }
-		} catch(NumberFormatException e1) {
+		} catch (NumberFormatException e1) {
 		    FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
 		}
-	    } 
-	    if(dataType.equals("Double")) {
+	    }
+	    if (dataType.equals("Double")) {
 		try {
 		    Double.parseDouble(textField.getText());
 		    FrameUtils.normalFormat(textField);
-		    if(!lowerBound.isEmpty() && !upperBound.isEmpty()) {
-			if( Double.parseDouble(textField.getText()) >  Double.parseDouble(upperBound) || Double.parseDouble(textField.getText()) <  Double.parseDouble(lowerBound) ) {
-			    FrameUtils.errorFormat(textField, "Solutions must agree with the variable's lower and upper bound");
+		    if (!lowerBound.isEmpty() && !upperBound.isEmpty()) {
+			if (Double.parseDouble(textField.getText()) > Double.parseDouble(upperBound)
+				|| Double.parseDouble(textField.getText()) < Double.parseDouble(lowerBound)) {
+			    FrameUtils.errorFormat(textField,
+				    "Solutions must agree with the variable's lower and upper bound");
 			} else {
 			    FrameUtils.normalFormat(textField);
 			    tmp = true;
 			}
 		    }
-		} catch(NumberFormatException e1) {
+		} catch (NumberFormatException e1) {
 		    FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
 		}
 	    }

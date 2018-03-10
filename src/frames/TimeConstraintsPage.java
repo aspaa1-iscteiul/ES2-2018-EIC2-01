@@ -70,6 +70,12 @@ public class TimeConstraintsPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 2);
 
+	createTimesPanels();
+	
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+    }
+    
+    private void createTimesPanels() {	
 	JPanel auxPanel1 = new JPanel();
 	auxPanel1.setBackground(Color.WHITE);
 	JPanel idealPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -84,7 +90,7 @@ public class TimeConstraintsPage extends SuperPage {
 	idealPanel.add(minLabel1);
 	auxPanel1.add(idealPanel);
 	mainPanel.add(auxPanel1);
-
+	
 	JPanel auxPanel2 = new JPanel();
 	auxPanel2.setBackground(Color.WHITE);
 	JPanel maxPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -99,9 +105,6 @@ public class TimeConstraintsPage extends SuperPage {
 	maxPanel.add(minLabel2);
 	auxPanel2.add(maxPanel);
 	mainPanel.add(auxPanel2);
-
-	FrameUtils.addEmptyLabels(mainPanel, 1);
-
     }
 
     @Override

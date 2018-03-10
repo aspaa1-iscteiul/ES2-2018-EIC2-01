@@ -94,7 +94,6 @@ public class SendEmailPage extends SuperPage {
 	messagePanel.add(scrollPane, BorderLayout.CENTER);
 
 	mainPanel.add(messagePanel);
-
     }
 
     @Override

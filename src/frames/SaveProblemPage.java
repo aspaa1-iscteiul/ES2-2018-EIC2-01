@@ -59,7 +59,7 @@ public class SaveProblemPage extends SuperPage {
 
 	JPanel namePanel = new JPanel(new BorderLayout());
 	namePanel.setBackground(Color.WHITE);
-	JLabel nameLabel= new JLabel("File name:   ");
+	JLabel nameLabel = new JLabel("File name:   ");
 	nameLabel.setFont(FrameUtils.cuteFont(12));
 	namePanel.add(nameLabel, BorderLayout.WEST);
 	fileName.setBorder(FrameUtils.cuteBorder());
@@ -90,6 +90,10 @@ public class SaveProblemPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
+	continueCreateMainPanel();
+    }
+
+    private void continueCreateMainPanel() {
 	JPanel pathPanel = new JPanel(new BorderLayout());
 	pathPanel.setBackground(Color.WHITE);
 	JLabel pathLabel = new JLabel("Path:            ");
