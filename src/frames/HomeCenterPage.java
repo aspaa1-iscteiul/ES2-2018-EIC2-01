@@ -56,7 +56,7 @@ public class HomeCenterPage extends SuperPage {
 	messagePanel.setBackground(Color.WHITE);
 	JLabel messageLabel = new JLabel("<html>In this section you can get fast answers to most of your questions!"
 		+ "<br></br><br></br>" + "<font color=red><b>Question_1</b></font> " + "<br></br>"
-		+ "Answer block to question 1" + "<br></br>" + "<br><font color=blue><b>Question_2</font> " + "<br></br>"
+		+ "Answer block to question 1" + "<br></br>" + "<br><font color=blue><b>Question_2</b></font> " + "<br></br>"
 		+ "Answer block to question 2" + "<br></br><br></br><br></br>"
 		+ "If you have any questions remaining please contact us!" + "</html>");
 	messageLabel.setFont(FrameUtils.cuteFont(12));
