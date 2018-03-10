@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -14,9 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * This object was created to aid the construction of the Fitness Function Page and later to convert to the object Fitness Function
+ * This object was created to aid the construction of the Fitness Function Page
+ * and later to convert to the object Fitness Function
  */
 
 public class FitnessFunctionObject {
@@ -39,10 +42,17 @@ public class FitnessFunctionObject {
 	uploadButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
-		JFileChooser chooser = new JFileChooser();
-		chooser.setDialogTitle("Upload fitness function");
-		if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(null)) {
-		    uploadButton.setText(chooser.getSelectedFile().getAbsolutePath());
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Upload fitness function");
+		// Launches the JFileChooser on the Desktop directory
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+		// Prevents selection of multiple options
+		fileChooser.setMultiSelectionEnabled(false);
+		// Only files with the JAR extension are visible
+		fileChooser.setFileFilter(new FileNameExtensionFilter("JAR File", "jar"));
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(null)) {
+		    uploadButton.setText(fileChooser.getSelectedFile().getAbsolutePath());
 		}
 	    }
 	});
@@ -76,7 +86,8 @@ public class FitnessFunctionObject {
     }
 
     /**
-     * Creates the checkboxes and adds them to the frame, analyzing if they should be enabled or not
+     * Creates the checkboxes and adds them to the frame, analyzing if they should
+     * be enabled or not
      */
     public void createComponents() {
 	if (pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
@@ -132,9 +143,11 @@ public class FitnessFunctionObject {
     public String getPath() {
 	return uploadButton.getText();
     }
-    
+
     /**
-     * Verify if the checkbox shoud be disabled because the value was already selected on another checkbox
+     * Verify if the checkbox shoud be disabled because the value was already
+     * selected on another checkbox
+     * 
      * @param checkbox
      */
     public void verifyIfTheCheckboxShouldBeDisabled(OptimizationCriteriaCheckbox checkbox) {
