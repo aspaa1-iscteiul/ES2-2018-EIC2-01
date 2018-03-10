@@ -146,7 +146,7 @@ public class TimeConstraintsPage extends SuperPage {
     protected boolean areAllDataWellFilled() {
 	Boolean tmp = false;
 	if (idealTime.getText().trim().isEmpty()) {
-	    FrameUtils.errorFormat(idealTime, "The ideal time must be filled in.");
+	    FrameUtils.errorFormat(idealTime, "The ideal time field is mandatory and must be filled in.");
 	} else {
 	    FrameUtils.normalFormat(idealTime);
 	}
@@ -161,7 +161,8 @@ public class TimeConstraintsPage extends SuperPage {
 		    tmp = true;
 		    FrameUtils.normalFormat(idealTime);
 		} else {
-		    FrameUtils.errorFormat(idealTime, "The ideal time must be smaller than the max time.");
+		    FrameUtils.errorFormat(idealTime,
+			    "The ideal time frame must be smaller than the maximum time frame.");
 		}
 	    } else {
 		tmp = true;

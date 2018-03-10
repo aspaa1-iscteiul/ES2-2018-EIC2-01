@@ -86,6 +86,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 
     /**
      * Method to create the main part of the page to be viewed
+     * 
      * @param subMainPanel
      */
     private void continuateConstructor(JPanel subMainPanel) {
@@ -144,15 +145,15 @@ public class OptimizationCriteriaPage extends SuperPage {
     }
 
     /**
-     * Returns {@code true} if there is at least other optimization criteria
-     * with the same name, otherwise {@code false}
+     * Returns {@code true} if there is at least other optimization criteria with
+     * the same name, otherwise {@code false}
      * 
      * @param varName
-     *            the {@code String} to compare to the other optimization
-     *            criteria names in the {@linkplain #decisionVariableList}
+     *            the {@code String} to compare to the other optimization criteria
+     *            names in the {@linkplain #decisionVariableList}
      * 
-     * @return {@code true} if there is at least other optimization criteria
-     *         with the same name, otherwise {@code false}
+     * @return {@code true} if there is at least other optimization criteria with
+     *         the same name, otherwise {@code false}
      */
     public boolean isNameRepeated(String varName) {
 	int count = 0;
@@ -163,7 +164,9 @@ public class OptimizationCriteriaPage extends SuperPage {
     }
 
     /**
-     * Removes an optimization criteria from the optimization criteria list and updates the frame
+     * Removes an optimization criteria from the optimization criteria list and
+     * updates the frame
+     * 
      * @param oco
      */
     public void removeOptimizationCriteriaFromList(OptimizationCriteriaObject oco) {
@@ -177,7 +180,8 @@ public class OptimizationCriteriaPage extends SuperPage {
 	if (optimizationCriteriaList.isEmpty()) {
 	    // XXX change message
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
-		    "Can only continue if it has at least one optimization criteria");
+		    "In order to proceed, you need to declare at least one optimization criteria.",
+		    "Optimization criteria", JOptionPane.ERROR_MESSAGE);
 	    return false;
 	}
 	boolean answer = true;

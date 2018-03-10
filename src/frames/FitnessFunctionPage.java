@@ -70,7 +70,7 @@ public class FitnessFunctionPage extends SuperPage {
 	infoPanel.add(iconPanel, BorderLayout.WEST);
 	JLabel infoLabel = new JLabel("<html>Be advised that the plataform assumes that in the optimization process, "
 		+ "<br> optimization means minimizing the optimization criteria. Therefore, the <br>"
-		+ "implementation(s) of the objective function(s) provided should be consistent<br>"
+		+ "implementation(s) of the fitness function(s) provided should be consistent<br>"
 		+ "with this assumption.</html>");
 	infoLabel.setFont(FrameUtils.cuteFont(12));
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));

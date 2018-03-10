@@ -214,8 +214,8 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data inputs of the interface to the object
-     * DecisionVariable that will be used in the object Problem
+     * Transforms the data inputs of the interface to the object DecisionVariable
+     * that will be used in the object Problem
      * 
      * @return
      */
@@ -257,9 +257,9 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data inputs of the interface to the object
-     * DecisionVariable attribute ArrayList<String> knownSolutions that will be
-     * used in the object Problem
+     * Transforms the data inputs of the interface to the object DecisionVariable
+     * attribute ArrayList<String> knownSolutions that will be used in the object
+     * Problem
      * 
      * @return
      */

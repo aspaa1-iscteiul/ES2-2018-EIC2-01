@@ -123,7 +123,8 @@ public class DecisionVariablesPage extends SuperPage {
 	if (decisionVariableList.isEmpty()) {
 	    // XXX change message
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
-		    "Can only continue if it has at least one decision variable");
+		    "In order to proceed, you need to declare at least one decision variable.", "Decision variables",
+		    JOptionPane.ERROR_MESSAGE);
 	    return false;
 	}
 	boolean answer = true;
@@ -192,8 +193,12 @@ public class DecisionVariablesPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		JOptionPane.showMessageDialog(userInterface.getFrame(),
-			"The file to import must have only one variable name per line, the variable name could "
-				+ "not have spaces, if it has spaces the spaces will be removed");
+			"The imported file must only have one decision variable name per line. "
+				+ System.lineSeparator()
+				+ "The decision variables name field does not support spaces between characters."
+				+ System.lineSeparator()
+				+ "Therefore, if spaces are found while reading the document they will be automatically removed.",
+			"Import decision variables", JOptionPane.WARNING_MESSAGE);
 
 		JFileChooser fileChooser = new JFileChooser();
 		// Launches the JFileChooser on the Desktop directory
@@ -213,6 +218,7 @@ public class DecisionVariablesPage extends SuperPage {
 
     /**
      * Ask user to input values on variables created
+     * 
      * @return
      */
     private String[] askUserForVariableAttributes() {
@@ -235,16 +241,18 @@ public class DecisionVariablesPage extends SuperPage {
 		lower = type.equals("Integer") ? Integer.parseInt(lowerBound.getText())
 			: Double.parseDouble(lowerBound.getText());
 	    } catch (NumberFormatException e) {
-		JOptionPane.showMessageDialog(userInterface.getFrame(), !lowerBound.getText().equals("")
-			? "The lower bound given was not a valid number." : "The lower bound must be filled in.");
+		JOptionPane.showMessageDialog(userInterface.getFrame(),
+			!lowerBound.getText().equals("") ? "The lower bound provided was not a valid number."
+				: "The lower bound field must be filled in.");
 		return askUserForVariableAttributes();
 	    }
 	    try {
 		upper = type.equals("Integer") ? Integer.parseInt(upperBound.getText())
 			: Double.parseDouble(upperBound.getText());
 	    } catch (NumberFormatException e) {
-		JOptionPane.showMessageDialog(userInterface.getFrame(), !upperBound.getText().equals("")
-			? "The upper bound given was not a valid number." : "The upper bound must be filled in.");
+		JOptionPane.showMessageDialog(userInterface.getFrame(),
+			!upperBound.getText().equals("") ? "The upper bound provided was not a valid number."
+				: "The upper bound field must be filled in.");
 		return askUserForVariableAttributes();
 	    }
 	    if (upper > lower)
@@ -259,7 +267,9 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     /**
-     * Reads an imported variable and creates variables with the read values and places them on the frame
+     * Reads an imported variable and creates variables with the read values and
+     * places them on the frame
+     * 
      * @param selectedFile
      * @param values
      */
@@ -293,10 +303,10 @@ public class DecisionVariablesPage extends SuperPage {
 
     /**
      * @param varName
-     *            the {@code String} to compare to the other variable names in
-     *            the {@linkplain #decisionVariableList}
-     * @return {@code true} if there is at least other variable with the same
-     *         name, otherwise {@code false}
+     *            the {@code String} to compare to the other variable names in the
+     *            {@linkplain #decisionVariableList}
+     * @return {@code true} if there is at least other variable with the same name,
+     *         otherwise {@code false}
      */
     public boolean isNameRepeated(String varName) {
 	int count = 0;

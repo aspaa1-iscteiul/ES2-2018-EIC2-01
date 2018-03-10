@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 /**
- * This class represents the Home Center page that contains FAQ and an option to send an email
+ * This class represents the Home Center page that contains FAQ and an option to
+ * send an email
+ * 
  * @author Rodrigo
  */
 
@@ -52,9 +54,9 @@ public class HomeCenterPage extends SuperPage {
 
 	JPanel messagePanel = new JPanel(new BorderLayout());
 	messagePanel.setBackground(Color.WHITE);
-	JLabel messageLabel = new JLabel("<html>In this section you can get fast answers to most of your questions"
+	JLabel messageLabel = new JLabel("<html>In this section you can get fast answers to most of your questions!"
 		+ "<br></br><br></br>" + "<font color=red><b>Question_1</b></font> " + "<br></br>"
-		+ "Answer block to question 1" + "<br></br>" + "<br><font color=blue>Question_2</font> " + "<br></br>"
+		+ "Answer block to question 1" + "<br></br>" + "<br><font color=blue><b>Question_2</font> " + "<br></br>"
 		+ "Answer block to question 2" + "<br></br><br></br><br></br>"
 		+ "If you have any questions remaining please contact us!" + "</html>");
 	messageLabel.setFont(FrameUtils.cuteFont(12));
@@ -125,7 +127,7 @@ public class HomeCenterPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

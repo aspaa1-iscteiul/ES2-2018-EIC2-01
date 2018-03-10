@@ -180,15 +180,15 @@ public class DecisionVariablesObject {
     }
 
     /**
-     * @return {@code true} if the {@link #varName} is not empty and is not repeated,
-     *         otherwise {@code false} and evidence the error
+     * @return {@code true} if the {@link #varName} is not empty and is not
+     *         repeated, otherwise {@code false} and evidence the error
      * @see DecisionVariablesPage#isNameRepeated(String)
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidName() {
 	String text = varName.getText();
-	String info = (text.equals("") ? "The variable name must be filled in. " : "")
-		+ (pageAssociated.isNameRepeated(text) ? "The variable name must be unique." : "");
+	String info = (text.equals("") ? "The variable's name field is mandatory and must be filled in. " : "")
+		+ (pageAssociated.isNameRepeated(text) ? "The variable's name must be unique." : "");
 	return !info.equals("") ? FrameUtils.errorFormat(varName, info) : FrameUtils.normalFormat(varName);
     }
 
@@ -198,7 +198,9 @@ public class DecisionVariablesObject {
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isDataTypeSelected() {
-	return dataType.getSelectedItem() == null ? FrameUtils.errorFormat(dataType, "The data type must be filled in.")
+	return dataType.getSelectedItem() == null
+		? FrameUtils.errorFormat(dataType,
+			"The decision variable's data type field is mandatory and must be filled in.")
 		: FrameUtils.normalFormat(dataType);
 
     }
@@ -217,7 +219,8 @@ public class DecisionVariablesObject {
 	JTextField bound = lower ? lowerBound : upperBound;
 	String boundStr = lower ? "lower" : "upper";
 	if (bound.getText().equals(""))
-	    return FrameUtils.errorFormat(bound, "The " + boundStr + " limit must be filled in.");
+	    return FrameUtils.errorFormat(bound,
+		    "The " + boundStr + " bound field is mandatory and must be filled in.");
 
 	try {
 	    if (dataType.getSelectedItem().toString().equals("Integer"))
@@ -225,9 +228,10 @@ public class DecisionVariablesObject {
 	    else
 		Double.parseDouble(bound.getText());
 	} catch (NumberFormatException e) {
-	    return FrameUtils.errorFormat(bound, "The " + boundStr + " limit is not a valid number.");
+	    return FrameUtils.errorFormat(bound, "The " + boundStr + " bound provided is not a valid number.");
 	} catch (NullPointerException e) {
-	    return FrameUtils.errorFormat(bound, "The data type must be filled in, to validate this field.");
+	    return FrameUtils.errorFormat(bound,
+		    "The decision variable's data type field is mandatory and must be filled in.");
 	}
 	return FrameUtils.normalFormat(bound);
     }

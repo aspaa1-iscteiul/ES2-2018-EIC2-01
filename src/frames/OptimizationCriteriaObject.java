@@ -16,7 +16,8 @@ import javax.swing.JTextField;
 import objects.DataType;
 
 /**
- * This object was created to aid the construction of the Optimization Criteria Page and later to convert to the object Decision Variable
+ * This object was created to aid the construction of the Optimization Criteria
+ * Page and later to convert to the object Decision Variable
  */
 
 public class OptimizationCriteriaObject {
@@ -83,8 +84,8 @@ public class OptimizationCriteriaObject {
     }
 
     /**
-     * @return {@code true} if {@linkplain OptimizationCriteriaObject} have a
-     *         valid name and the data type is selected, otherwise {@code false}
+     * @return {@code true} if {@linkplain OptimizationCriteriaObject} have a valid
+     *         name and the data type is selected, otherwise {@code false}
      * 
      * @see #isValidName()
      * @see #isDataTypeSelected()
@@ -96,25 +97,27 @@ public class OptimizationCriteriaObject {
     }
 
     /**
-     * @return {@code true} if the name is not empty and is not repeated,
-     *         otherwise {@code false} and evidence the error
+     * @return {@code true} if the name is not empty and is not repeated, otherwise
+     *         {@code false} and evidence the error
      * 
      * @see OptimizationCriteriaPage#isNameRepeated(String)
      */
     private boolean isValidName() {
 	String text = name.getText();
-	String info = (text.equals("") ? "The optimization criteria name must be filled in. " : "")
-		+ (pageAssociated.isNameRepeated(text) ? "The optimization criteria name must be unique." : "");
+	String info = (text.equals("") ? "The optimization criteria's name field is mandatory and must be filled in."
+		: "") + (pageAssociated.isNameRepeated(text) ? "The optimization criteria's name must be unique." : "");
 	return !info.equals("") ? FrameUtils.errorFormat(name, info) : FrameUtils.normalFormat(name);
     }
 
     /**
-     * @return {@code true} if the {@link #dataType} has an item selected,
-     *         otherwise {@code false} and evidence the error
+     * @return {@code true} if the {@link #dataType} has an item selected, otherwise
+     *         {@code false} and evidence the error
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isDataTypeSelected() {
-	return dataType.getSelectedItem() == null ? FrameUtils.errorFormat(dataType, "The data type must be filled in.")
+	return dataType.getSelectedItem() == null
+		? FrameUtils.errorFormat(dataType,
+			"The optimization criteria's data type field is mandatory must be filled in.")
 		: FrameUtils.normalFormat(dataType);
 
     }
@@ -125,15 +128,15 @@ public class OptimizationCriteriaObject {
 
     /**
      * Transforms the dataType selected to an enumerate
+     * 
      * @return
      */
     public DataType getDataTypeToProblem() {
-	if(dataType.getSelectedItem().toString().equals("Integer")){
+	if (dataType.getSelectedItem().toString().equals("Integer")) {
 	    return DataType.INTEGER;
 	} else {
 	    return DataType.DOUBLE;
 	}
     }
-
 
 }

@@ -62,7 +62,7 @@ public class RegisterUserPage extends SuperPage {
 	infoPanel.add(iconPanel, BorderLayout.WEST);
 	JLabel infoLabel = new JLabel("<html>The e-mail provided will only be used to send help information "
 		+ "and/or<br>indications about the progress of the optimization process requested<br>"
-		+ "through the plantform (e.g., occurrence of errors). This data will not be<br>disclosed"
+		+ "through the platform (e.g., occurrence of errors). This data will not be<br>disclosed"
 		+ "to third parties nor will it have any use other than as set forth<br>herein.</html>");
 	infoLabel.setFont(FrameUtils.cuteFont(13));
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
@@ -85,6 +85,7 @@ public class RegisterUserPage extends SuperPage {
 
     /**
      * Verifys if the input is a valid email
+     * 
      * @return
      */
     private boolean isEmailWellFilled() {
@@ -93,18 +94,21 @@ public class RegisterUserPage extends SuperPage {
 	    new InternetAddress(email.getText()).validate();
 	    return FrameUtils.normalFormat(email);
 	} catch (AddressException ee) {
-	    return FrameUtils.errorFormat(email, email.getText().equals("") ? "The email must be filled in"
-		    : "The email does not have a valid format");
+	    return FrameUtils.errorFormat(email,
+		    email.getText().equals("") ? "The e-mail address field is mandatory and must be filled in."
+			    : "The e-mail provided does not have a valid format.");
 	}
     }
 
     /**
      * Verify if the terms and conditions checkbox is filled
+     * 
      * @return
      */
     private boolean isCheckBoxSeleceted() {
 	return checkBox.isSelected() ? FrameUtils.normalFormat(checkBox)
-		: FrameUtils.errorFormat(checkBox, "Have to agree on the terms and conditions for moving forward");
+		: FrameUtils.errorFormat(checkBox,
+			"In order to proceed, you have to agree on the terms and conditions.");
     }
 
     @Override
