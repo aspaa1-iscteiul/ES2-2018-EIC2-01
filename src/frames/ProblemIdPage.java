@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
@@ -38,37 +37,42 @@ public class ProblemIdPage extends SuperPage {
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
-	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+	mainPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
 
-	JPanel problemPanel = new JPanel();
-	problemPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel problemPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	problemPanel.setBackground(Color.WHITE);
-	problemPanel.add(new JLabel("Problem name:"));
+	JLabel problemLabel = new JLabel("Problem name:");
+	problemLabel.setFont(FrameUtils.cuteFont(14));
+	problemPanel.add(problemLabel);
 	problemName.setBorder(FrameUtils.cuteBorder());
 	problemPanel.add(problemName);
 	mainPanel.add(problemPanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 2);
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new BorderLayout());
+	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
+	infoPanel.setBorder(new EmptyBorder(0, 30, 0, 0));
 	JLabel infoIcon = new JLabel();
 	infoIcon.setIcon(new ImageIcon("./src/frames/images/info_icon.png"));
 	infoPanel.add(infoIcon, BorderLayout.WEST);
 	JLabel infoLabel = new JLabel("<html>The name you choose must start with a capital letter and can "
 		+ "only <br> contain numbers and letters (from A to Z).<br></html>");
-	infoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+	infoLabel.setFont(FrameUtils.cuteFont(12));
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
 
-	FrameUtils.addEmptyLabels(mainPanel, 2);
+	FrameUtils.addEmptyLabels(mainPanel, 3);
 
-	JPanel descriptionPanel = new JPanel();
-	descriptionPanel.setLayout(new BorderLayout());
+	JPanel descriptionPanel = new JPanel(new BorderLayout());
 	descriptionPanel.setBackground(Color.WHITE);
-	descriptionPanel.add(new JLabel("Problem description:  "), BorderLayout.WEST);
+	JPanel auxPanel = new JPanel(new BorderLayout());
+	auxPanel.setBackground(Color.WHITE);
+	JLabel descriptionLabel = new JLabel("Problem's description:  ");
+	descriptionLabel.setFont(FrameUtils.cuteFont(14));
+	auxPanel.add(descriptionLabel, BorderLayout.NORTH);
+	descriptionPanel.add(auxPanel, BorderLayout.WEST);
 
 	problemDescription.setBackground(Color.WHITE);
 	problemDescription.setLineWrap(true);
@@ -77,14 +81,11 @@ public class ProblemIdPage extends SuperPage {
 
 	JScrollPane scrollPane = new JScrollPane(problemDescription);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	// A dimensão tem que ser posta no scrollPane e não no results
-	scrollPane.setPreferredSize(new Dimension(50, 70));
+	scrollPane.setPreferredSize(new Dimension(0, 100));
 
 	descriptionPanel.add(scrollPane, BorderLayout.CENTER);
 
 	mainPanel.add(descriptionPanel);
-
-	FrameUtils.addEmptyLabels(mainPanel, 1);
     }
 
     @Override
@@ -103,7 +104,7 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

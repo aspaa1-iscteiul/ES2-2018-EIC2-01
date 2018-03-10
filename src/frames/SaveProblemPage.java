@@ -45,21 +45,23 @@ public class SaveProblemPage extends SuperPage {
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
-	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+	mainPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
 	mainPanel.setBackground(Color.white);
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new BorderLayout());
+	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
-	infoPanel.add(new JLabel("Save this problem's configuration before submitting it to evaluation"), BorderLayout.WEST);
+	JLabel infoLabel = new JLabel("Save this problem's configuration before submitting it to evaluation");
+	infoLabel.setFont(FrameUtils.cuteFont(14));
+	infoPanel.add(infoLabel, BorderLayout.WEST);
 	mainPanel.add(infoPanel);
 
-	FrameUtils.addEmptyLabels(mainPanel, 1);
+	FrameUtils.addEmptyLabels(mainPanel, 2);
 
-	JPanel namePanel = new JPanel();
-	namePanel.setLayout(new BorderLayout());
+	JPanel namePanel = new JPanel(new BorderLayout());
 	namePanel.setBackground(Color.WHITE);
-	namePanel.add(new JLabel("File name:   "), BorderLayout.WEST);
+	JLabel nameLabel= new JLabel("File name:   ");
+	nameLabel.setFont(FrameUtils.cuteFont(12));
+	namePanel.add(nameLabel, BorderLayout.WEST);
 	fileName.setBorder(FrameUtils.cuteBorder());
 
 	fileName.addKeyListener(new KeyListener() {
@@ -69,9 +71,9 @@ public class SaveProblemPage extends SuperPage {
 
 	    @Override
 	    public void keyReleased(KeyEvent arg0) {
-		if(!fileName.getText().trim().isEmpty()) {
+		if (!fileName.getText().trim().isEmpty()) {
 		    nameOk = true;
-		    if(nameOk==true && pathOk==true) {
+		    if (nameOk == true && pathOk == true) {
 			saveButton.setEnabled(true);
 		    }
 		}
@@ -88,10 +90,11 @@ public class SaveProblemPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel pathPanel = new JPanel();
-	pathPanel.setLayout(new BorderLayout());
+	JPanel pathPanel = new JPanel(new BorderLayout());
 	pathPanel.setBackground(Color.WHITE);
-	pathPanel.add(new JLabel("Path:            "), BorderLayout.WEST);
+	JLabel pathLabel = new JLabel("Path:            ");
+	pathLabel.setFont(FrameUtils.cuteFont(12));
+	pathPanel.add(pathLabel, BorderLayout.WEST);
 	filePath.setBorder(FrameUtils.cuteBorder());
 
 	filePath.addKeyListener(new KeyListener() {
@@ -101,15 +104,15 @@ public class SaveProblemPage extends SuperPage {
 
 	    @Override
 	    public void keyReleased(KeyEvent arg0) {
-		if(!filePath.getText().trim().isEmpty()) {
-		    //TODO: Rever se isto funciona, acho que não
+		if (!filePath.getText().trim().isEmpty()) {
+		    // TODO: Rever se isto funciona, acho que não
 		    try {
 			Paths.get(filePath.getText());
 			pathOk = true;
 		    } catch (InvalidPathException | NullPointerException ex1) {
 			pathOk = false;
 		    }
-		    if(nameOk==true && pathOk==true) {
+		    if (nameOk == true && pathOk == true) {
 			saveButton.setEnabled(true);
 		    }
 		}
@@ -126,8 +129,7 @@ public class SaveProblemPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 2);
 
-	savePanel = new JPanel();
-	savePanel.setLayout(new BorderLayout());
+	savePanel = new JPanel(new BorderLayout());
 	savePanel.setBackground(Color.WHITE);
 	savePanel.add(saveButton, BorderLayout.WEST);
 	mainPanel.add(savePanel);
@@ -195,7 +197,7 @@ public class SaveProblemPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

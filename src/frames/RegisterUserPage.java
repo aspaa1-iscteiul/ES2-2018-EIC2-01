@@ -3,7 +3,6 @@ package frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -38,13 +37,13 @@ public class RegisterUserPage extends SuperPage {
     @Override
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-	// XXX change when frame size is set
-	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+	mainPanel.setBorder(new EmptyBorder(50, 55, 0, 0));
 
-	JPanel emailPanel = new JPanel();
-	emailPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	emailPanel.setBackground(Color.WHITE);
-	emailPanel.add(new JLabel("E-mail address:"));
+	JLabel emailLabel = new JLabel("Email address:");
+	emailLabel.setFont(FrameUtils.cuteFont(14));
+	emailPanel.add(emailLabel);
 	email.setBorder(FrameUtils.cuteBorder());
 	emailPanel.add(email);
 	mainPanel.add(emailPanel);
@@ -52,11 +51,10 @@ public class RegisterUserPage extends SuperPage {
 	// to add space between the email text and info
 	FrameUtils.addEmptyLabels(mainPanel, 2);
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new BorderLayout());
+	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
-	JPanel iconPanel = new JPanel();
-	iconPanel.setLayout(new BorderLayout());
+	infoPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
+	JPanel iconPanel = new JPanel(new BorderLayout());
 	iconPanel.setBackground(Color.WHITE);
 	JLabel infoIcon = new JLabel();
 	infoIcon.setIcon(new ImageIcon("./src/frames/images/info_icon.png"));
@@ -66,7 +64,7 @@ public class RegisterUserPage extends SuperPage {
 		+ "and/or<br>indications about the progress of the optimization process requested<br>"
 		+ "through the plantform (e.g., occurrence of errors). This data will not be<br>disclosed"
 		+ "to third parties nor will it have any use other than as set forth<br>herein.</html>");
-	infoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+	infoLabel.setFont(FrameUtils.cuteFont(13));
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
@@ -74,6 +72,7 @@ public class RegisterUserPage extends SuperPage {
 	// to add space between the info and check box
 	FrameUtils.addEmptyLabels(mainPanel, 4);
 
+	checkBox.setFont(FrameUtils.cuteFont(12));
 	checkBox.setBackground(Color.WHITE);
 	mainPanel.add(checkBox);
     }
@@ -108,7 +107,7 @@ public class RegisterUserPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

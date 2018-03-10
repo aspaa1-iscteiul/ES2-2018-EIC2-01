@@ -71,7 +71,9 @@ public class OptimizationCriteriaObject {
 	name.setBorder(FrameUtils.cuteBorder());
 	name.setPreferredSize(new Dimension(10, 22));
 	variablesPanel.add(name);
+	FrameUtils.addEmptyLabels(variablesPanel, 3);
 	variablesPanel.add(dataType);
+	FrameUtils.addEmptyLabels(variablesPanel, 2);
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
     }

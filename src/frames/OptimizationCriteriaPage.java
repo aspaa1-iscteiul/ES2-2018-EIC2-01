@@ -2,6 +2,7 @@ package frames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
@@ -43,31 +44,32 @@ public class OptimizationCriteriaPage extends SuperPage {
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-	JPanel titlePanel = new JPanel();
-	titlePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	titlePanel.setBackground(Color.WHITE);
-	titlePanel.add(new JLabel("Optimization Criteria"));
+	JLabel titleLabel = new JLabel("Optimization Criteria");
+	titleLabel.setFont(FrameUtils.cuteFont(16));
+	titlePanel.add(titleLabel);
 	mainPanel.add(titlePanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel subMainPanel = new JPanel();
+	JPanel subMainPanel = new JPanel(new BorderLayout());
 	subMainPanel.setBackground(Color.WHITE);
-	subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.Y_AXIS));
 	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	infoPanel.setBackground(Color.WHITE);
-	JLabel name = new JLabel("Name");
+	JLabel name = new JLabel(" Name");
 	// to add space between the labels
-	name.setBorder(new EmptyBorder(0, 0, 0, 100));
-
+	name.setBorder(new EmptyBorder(0, 0, 0, 122));
+	name.setFont(FrameUtils.cuteFont(12));
 	infoPanel.add(name);
-	infoPanel.add(new JLabel("Data Type"));
+	JLabel dataType = new JLabel("Data Type");
+	dataType.setFont(FrameUtils.cuteFont(12));
+	infoPanel.add(dataType);
 
-	subMainPanel.add(infoPanel);
+	subMainPanel.add(infoPanel, BorderLayout.NORTH);
 
 	subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
@@ -77,14 +79,13 @@ public class OptimizationCriteriaPage extends SuperPage {
 	optimizationCriteriaList.add(optimizationCriteria);
 	subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
 
-	subMainPanel.add(subSubMainPanel);
+	subMainPanel.add(subSubMainPanel, BorderLayout.CENTER);
 
 	continuateConstructor(subMainPanel);
     }
 
     private void continuateConstructor(JPanel subMainPanel) {
-	JPanel addOptionPanel = new JPanel();
-	addOptionPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
@@ -98,8 +99,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 			OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject(tmp);
 			optimizationCriteriaList.add(optimizationCriteria);
 			subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
-			validate(); // to update window
-			repaint(); // to update window
+			userInterface.refreshPage();
 		    }
 		});
 	    }
@@ -123,10 +123,11 @@ public class OptimizationCriteriaPage extends SuperPage {
 	addOptionPanel.add(addIcon, BorderLayout.WEST);
 	addOptionPanel.add(new JLabel("Add new criteria"));
 
-	subMainPanel.add(addOptionPanel);
+	subMainPanel.add(addOptionPanel, BorderLayout.SOUTH);
 
 	JScrollPane scrollPane = new JScrollPane(subMainPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	scrollPane.setPreferredSize(new Dimension(450, 250));
 
 	mainPanel.add(scrollPane);
 
@@ -160,9 +161,7 @@ public class OptimizationCriteriaPage extends SuperPage {
     public void removeOptimizationCriteriaFromList(OptimizationCriteriaObject oco) {
 	optimizationCriteriaList.remove(oco);
 	subSubMainPanel.remove(oco.transformIntoAPanel());
-	validate();
-	repaint();
-	userInterface.getFrame().pack(); // TODO remove when frame size is set
+	userInterface.refreshPage();
     }
 
     @Override

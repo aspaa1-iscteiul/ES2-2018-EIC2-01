@@ -27,7 +27,6 @@ public class HomeCenterPage extends SuperPage {
 
     public HomeCenterPage(UserInterface userInterface) {
 	super(userInterface);
-	// TODO Auto-generated constructor stub
     }
 
     @Override
@@ -42,29 +41,29 @@ public class HomeCenterPage extends SuperPage {
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new BorderLayout());
+	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
-	infoPanel.add(new JLabel("Frequently Asked Questions"), BorderLayout.WEST);
+	JLabel infoLabel = new JLabel("Frequently Asked Questions");
+	infoLabel.setFont(FrameUtils.cuteFont(16));
+	infoPanel.add(infoLabel, BorderLayout.WEST);
 	mainPanel.add(infoPanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel messagePanel = new JPanel();
-	messagePanel.setLayout(new BorderLayout());
+	JPanel messagePanel = new JPanel(new BorderLayout());
 	messagePanel.setBackground(Color.WHITE);
 	JLabel messageLabel = new JLabel("<html>In this section you can get fast answers to most of your questions"
 		+ "<br></br><br></br>" + "<font color=red><b>Question_1</b></font> " + "<br></br>"
 		+ "Answer block to question 1" + "<br></br>" + "<br><font color=blue>Question_2</font> " + "<br></br>"
 		+ "Answer block to question 2" + "<br></br><br></br><br></br>"
 		+ "If you have any questions remaining please contact us!" + "</html>");
+	messageLabel.setFont(FrameUtils.cuteFont(12));
 	messagePanel.add(messageLabel, BorderLayout.WEST);
 	mainPanel.add(messagePanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel buttonPanel = new JPanel();
-	buttonPanel.setLayout(new BorderLayout());
+	JPanel buttonPanel = new JPanel(new BorderLayout());
 	buttonPanel.setBackground(Color.WHITE);
 	buttonPanel.add(emailButton, BorderLayout.WEST);
 

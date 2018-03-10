@@ -2,6 +2,7 @@ package frames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -46,44 +47,30 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void initialize() {
 	decisionVariableList = new ArrayList<DecisionVariablesObject>();
+	subSubMainPanel = new JPanel();
     }
 
     @Override
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-	// XXX change when frame size is set
-	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+	mainPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
 
-	JPanel titlePanel = new JPanel();
-	titlePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	titlePanel.setBackground(Color.WHITE);
-	titlePanel.add(new JLabel("Decision Variables"));
+	JLabel titleLabel = new JLabel("Decision Variables");
+	titleLabel.setFont(FrameUtils.cuteFont(16));
+	titlePanel.add(titleLabel);
 	mainPanel.add(titlePanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel subMainPanel = new JPanel();
+	JPanel subMainPanel = new JPanel(new BorderLayout());
 	subMainPanel.setBackground(Color.WHITE);
-	subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.Y_AXIS));
 	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-	infoPanel.setBackground(Color.WHITE);
-	JLabel name = new JLabel("Name");
-	// to add space between the labels
-	name.setBorder(new EmptyBorder(0, 0, 0, 55));
-	infoPanel.add(name);
-	JLabel dataType = new JLabel("Data Type");
-	dataType.setBorder(new EmptyBorder(0, 0, 0, 10));
-	infoPanel.add(dataType);
-	infoPanel.add(new JLabel("Lower Bound     "));
-	infoPanel.add(new JLabel("Upper Bound "));
+	subMainPanel.add(labelsPanel(), BorderLayout.NORTH);
 
-	subMainPanel.add(infoPanel);
-
-	subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
 	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
@@ -91,18 +78,39 @@ public class DecisionVariablesPage extends SuperPage {
 	decisionVariableList.add(decisionVariable);
 	subSubMainPanel.add(decisionVariable.transformIntoAPanel());
 
-	subMainPanel.add(subSubMainPanel);
+	subMainPanel.add(subSubMainPanel, BorderLayout.CENTER);
 
-	subMainPanel.add(addOptionPanel());
+	subMainPanel.add(addOptionPanel(), BorderLayout.SOUTH);
 
 	JScrollPane scrollPane = new JScrollPane(subMainPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
+	scrollPane.setPreferredSize(new Dimension(450, 200));
 	mainPanel.add(scrollPane);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	importFromFilePanel();
+    }
+
+    private JPanel labelsPanel() {
+	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	panel.setBackground(Color.WHITE);
+	JLabel name = new JLabel(" Name");
+	// to add space between the labels
+	name.setBorder(new EmptyBorder(0, 0, 0, 57));
+	name.setFont(FrameUtils.cuteFont(12));
+	panel.add(name);
+	JLabel dataType = new JLabel("Data Type");
+	dataType.setBorder(new EmptyBorder(0, 0, 0, 10));
+	dataType.setFont(FrameUtils.cuteFont(12));
+	panel.add(dataType);
+	JLabel lowerLabel = new JLabel("Lower Bound     ");
+	lowerLabel.setFont(FrameUtils.cuteFont(12));
+	panel.add(lowerLabel);
+	JLabel upperLabel = new JLabel("Upper Bound");
+	upperLabel.setFont(FrameUtils.cuteFont(12));
+	panel.add(upperLabel);
+	return panel;
     }
 
     @Override
@@ -133,8 +141,7 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     private JPanel addOptionPanel() {
-	JPanel addOptionPanel = new JPanel();
-	addOptionPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
@@ -148,7 +155,7 @@ public class DecisionVariablesPage extends SuperPage {
 			DecisionVariablesObject decisionVariable = new DecisionVariablesObject(tmp);
 			decisionVariableList.add(decisionVariable);
 			subSubMainPanel.add(decisionVariable.transformIntoAPanel());
-			refreshPage();
+			userInterface.refreshPage();
 		    }
 		});
 	    }
@@ -169,7 +176,7 @@ public class DecisionVariablesPage extends SuperPage {
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
 	});
-	addOptionPanel.add(addIcon, BorderLayout.WEST);
+	addOptionPanel.add(addIcon, BorderLayout.SOUTH);
 	addOptionPanel.add(new JLabel("Add new variable"));
 	return addOptionPanel;
     }
@@ -178,8 +185,7 @@ public class DecisionVariablesPage extends SuperPage {
      * Imports the data of the file selected to the panel
      */
     private void importFromFilePanel() {
-	JPanel panel = new JPanel();
-	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
 	JButton importFromFile = FrameUtils.cuteButton("Import from file");
 	importFromFile.addActionListener(new ActionListener() {
@@ -206,8 +212,7 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     private String[] askUserForVariableAttributes() {
-	JPanel inputPanel = new JPanel();
-	inputPanel.setLayout(new GridLayout(3, 2));
+	JPanel inputPanel = new JPanel(new GridLayout(3, 2));
 	inputPanel.add(new JLabel("Data Type: "));
 	JComboBox<String> dataType = new JComboBox<String>(new String[] { "Integer", "Double" });
 	inputPanel.add(dataType);
@@ -226,21 +231,19 @@ public class DecisionVariablesPage extends SuperPage {
 		lower = type.equals("Integer") ? Integer.parseInt(lowerBound.getText())
 			: Double.parseDouble(lowerBound.getText());
 	    } catch (NumberFormatException e) {
-		JOptionPane.showMessageDialog(userInterface.getFrame(),
-			!lowerBound.getText().equals("") ? "The lower bound given was not a valid number."
-				: "The lower bound must be filled in.");
+		JOptionPane.showMessageDialog(userInterface.getFrame(), !lowerBound.getText().equals("")
+			? "The lower bound given was not a valid number." : "The lower bound must be filled in.");
 		return askUserForVariableAttributes();
 	    }
 	    try {
 		upper = type.equals("Integer") ? Integer.parseInt(upperBound.getText())
 			: Double.parseDouble(upperBound.getText());
 	    } catch (NumberFormatException e) {
-		JOptionPane.showMessageDialog(userInterface.getFrame(),
-			!upperBound.getText().equals("") ? "The upper bound given was not a valid number."
-				: "The upper bound must be filled in.");
+		JOptionPane.showMessageDialog(userInterface.getFrame(), !upperBound.getText().equals("")
+			? "The upper bound given was not a valid number." : "The upper bound must be filled in.");
 		return askUserForVariableAttributes();
 	    }
-	    if (upper <= lower)
+	    if (upper > lower)
 		return new String[] { type, lowerBound.getText(), upperBound.getText() };
 	    else {
 		JOptionPane.showMessageDialog(userInterface.getFrame(),
@@ -265,9 +268,8 @@ public class DecisionVariablesPage extends SuperPage {
 		    subSubMainPanel.add(decisionVariable.transformIntoAPanel());
 		}
 	    }
+	    userInterface.refreshPage();
 	    scn.close();
-
-	    areAllDataWellFilled();
 	} catch (FileNotFoundException e) {
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
 		    "The file " + selectedFile.getAbsolutePath() + " doesn't exists");
@@ -277,27 +279,15 @@ public class DecisionVariablesPage extends SuperPage {
     public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
 	decisionVariableList.remove(dvo);
 	subSubMainPanel.remove(dvo.transformIntoAPanel());
-	refreshPage();
-    }
-
-    /**
-     * Refreshes the frame
-     * 
-     * @see #validate()
-     * @see #repaint()
-     */
-    public void refreshPage() {
-	userInterface.getFrame().validate();
-	userInterface.getFrame().repaint();
-	userInterface.getFrame().pack();
+	userInterface.refreshPage();
     }
 
     /**
      * @param varName
-     *            the {@code String} to compare to the other variable names in the
-     *            {@linkplain #decisionVariableList}
-     * @return {@code true} if there is at least other variable with the same name,
-     *         otherwise {@code false}
+     *            the {@code String} to compare to the other variable names in
+     *            the {@linkplain #decisionVariableList}
+     * @return {@code true} if there is at least other variable with the same
+     *         name, otherwise {@code false}
      */
     public boolean isNameRepeated(String varName) {
 	int count = 0;

@@ -3,7 +3,6 @@ package frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -33,7 +32,7 @@ public class TimeConstraintsPage extends SuperPage {
     @Override
     protected void initialize() {
 	// TODO Auto-generated method stub
-	this.idealTime = new JTextField(5);	
+	this.idealTime = new JTextField(5);
 	this.maxTime = new JTextField(5);
 	this.nextButton = FrameUtils.cuteButton("Next");
     }
@@ -44,49 +43,62 @@ public class TimeConstraintsPage extends SuperPage {
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-	JPanel titlePanel = new JPanel();
-	titlePanel.setLayout(new BorderLayout());
+	JPanel titlePanel = new JPanel(new BorderLayout());
 	titlePanel.setBackground(Color.WHITE);
-	titlePanel.add(new JLabel("Time constraints"), BorderLayout.WEST);
+	JLabel titleLabel = new JLabel("Time constraints");
+	titleLabel.setFont(FrameUtils.cuteFont(16));
+	titlePanel.add(titleLabel, BorderLayout.WEST);
 	mainPanel.add(titlePanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new BorderLayout());
+	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
+	JPanel auxPanel = new JPanel(new BorderLayout());
+	auxPanel.setBackground(Color.WHITE);
 	JLabel infoIcon = new JLabel();
 	infoIcon.setIcon(new ImageIcon("./src/frames/images/info_icon.png"));
-	infoPanel.add(infoIcon, BorderLayout.WEST);
-	JLabel infoLabel = new JLabel("<html>In this section you can set constraints for the algorithm's runtime. To do so, fill in"
-		+ "<br> the fields below with optimal and maximum time frames (in minutes) for"
+	auxPanel.add(infoIcon, BorderLayout.NORTH);
+	infoPanel.add(auxPanel, BorderLayout.WEST);
+	JLabel infoLabel = new JLabel("<html>In this section you can set constraints for the algorithm's runtime."
+		+ " To do so,<br>fill in the fields below with optimal and maximum time frames (in minutes) for"
 		+ "<br> calculating an optimal solution.</html>");
-	infoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+	infoLabel.setFont(FrameUtils.cuteFont(12));
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
 
-	FrameUtils.addEmptyLabels(mainPanel, 1);
+	FrameUtils.addEmptyLabels(mainPanel, 2);
 
-	JPanel idealPanel = new JPanel();
-	idealPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel auxPanel1 = new JPanel();
+	auxPanel1.setBackground(Color.WHITE);
+	JPanel idealPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	idealPanel.setBackground(Color.white);
-	idealPanel.add(new JLabel("Ideal time frame:           "));
+	JLabel idealLabel = new JLabel("Ideal time frame:          ");
+	idealLabel.setFont(FrameUtils.cuteFont(12));
+	idealPanel.add(idealLabel);
 	idealTime.setBorder(FrameUtils.cuteBorder());
 	idealPanel.add(idealTime);
-	idealPanel.add(new JLabel("min"));
-	mainPanel.add(idealPanel);
+	JLabel minLabel1 = new JLabel("min");
+	minLabel1.setFont(FrameUtils.cuteFont(12));
+	idealPanel.add(minLabel1);
+	auxPanel1.add(idealPanel);
+	mainPanel.add(auxPanel1);
 
-	FrameUtils.addEmptyLabels(mainPanel, 1);
-
-	JPanel maxPanel = new JPanel();
-	maxPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel auxPanel2 = new JPanel();
+	auxPanel2.setBackground(Color.WHITE);
+	JPanel maxPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	maxPanel.setBackground(Color.white);
-	maxPanel.add(new JLabel("Maximum time frame: "));
+	JLabel maxLabel = new JLabel("Maximum time frame: ");
+	maxLabel.setFont(FrameUtils.cuteFont(12));
+	maxPanel.add(maxLabel);
 	maxTime.setBorder(FrameUtils.cuteBorder());
 	maxPanel.add(maxTime);
-	maxPanel.add(new JLabel("min"));
-	mainPanel.add(maxPanel);
+	JLabel minLabel2 = new JLabel("min");
+	minLabel2.setFont(FrameUtils.cuteFont(12));
+	maxPanel.add(minLabel2);
+	auxPanel2.add(maxPanel);
+	mainPanel.add(auxPanel2);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
@@ -133,7 +145,7 @@ public class TimeConstraintsPage extends SuperPage {
     @Override
     protected boolean areAllDataWellFilled() {
 	Boolean tmp = false;
-	if(idealTime.getText().trim().isEmpty()) {
+	if (idealTime.getText().trim().isEmpty()) {
 	    FrameUtils.errorFormat(idealTime, "The ideal time must be filled in.");
 	} else {
 	    FrameUtils.normalFormat(idealTime);
@@ -141,10 +153,11 @@ public class TimeConstraintsPage extends SuperPage {
 	try {
 	    Integer.parseInt(idealTime.getText());
 	    idealOk = true;
-	    if(!maxTime.getText().trim().isEmpty()){
+	    if (!maxTime.getText().trim().isEmpty()) {
 		Integer.parseInt(maxTime.getText());
 		maxOk = true;
-		if(idealOk==true && maxOk==true &&  (Integer.parseInt(idealTime.getText()) <= Integer.parseInt(maxTime.getText()))){
+		if (idealOk == true && maxOk == true
+			&& (Integer.parseInt(idealTime.getText()) <= Integer.parseInt(maxTime.getText()))) {
 		    tmp = true;
 		    FrameUtils.normalFormat(idealTime);
 		} else {
@@ -153,15 +166,16 @@ public class TimeConstraintsPage extends SuperPage {
 	    } else {
 		tmp = true;
 	    }
-	} catch(NumberFormatException e1) {
+	} catch (NumberFormatException e1) {
 	    tmp = false;
 	    try {
 		Double.parseDouble(idealTime.getText());
 		idealOk = true;
-		if(!maxTime.getText().trim().isEmpty()){
+		if (!maxTime.getText().trim().isEmpty()) {
 		    Double.parseDouble(maxTime.getText());
 		    maxOk = true;
-		    if(idealOk==true && maxOk==true &&  ( Double.parseDouble(idealTime.getText()) <=  Double.parseDouble(maxTime.getText()))){
+		    if (idealOk == true && maxOk == true
+			    && (Double.parseDouble(idealTime.getText()) <= Double.parseDouble(maxTime.getText()))) {
 			tmp = true;
 			FrameUtils.normalFormat(idealTime);
 		    } else {
@@ -180,7 +194,11 @@ public class TimeConstraintsPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.getProblem().setIdealTimeFrame(Double.parseDouble(idealTime.getText()));
-	userInterface.getProblem().setMaxTimeFrame(Double.parseDouble(maxTime.getText()));
+	try {
+	    userInterface.getProblem().setMaxTimeFrame(Double.parseDouble(maxTime.getText()));
+	} catch (NumberFormatException e) {
+	    userInterface.getProblem().setMaxTimeFrame(Double.MAX_VALUE);
+	}
     }
 
 }

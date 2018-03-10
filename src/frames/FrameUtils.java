@@ -96,4 +96,8 @@ public class FrameUtils {
 	return true;
     }
 
+    public static Font cuteFont(int size) {
+	return new Font("Solid Edge ASNI Unicode", Font.PLAIN, size);
+    }
+
 }

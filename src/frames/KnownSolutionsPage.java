@@ -1,6 +1,8 @@
 package frames;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
@@ -37,39 +39,43 @@ public class KnownSolutionsPage extends SuperPage {
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-	JPanel titlePanel = new JPanel();
-	titlePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	titlePanel.setBackground(Color.WHITE);
-	titlePanel.add(new JLabel("Known Solution(s)"));
+	JLabel titleLabel = new JLabel("Known Solution(s)");
+	titleLabel.setFont(FrameUtils.cuteFont(16));
+	titlePanel.add(titleLabel);
 	mainPanel.add(titlePanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel subMainPanel = new JPanel();
+	JPanel subMainPanel = new JPanel(new BorderLayout());
 	subMainPanel.setBackground(Color.WHITE);
-	subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.Y_AXIS));
 	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	infoPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Name");
-	name.setBorder(new EmptyBorder(0, 0, 0, 45)); // to add space between the labels
+	name.setBorder(new EmptyBorder(0, 0, 0, 45)); // to add space between
+						      // the labels
+	name.setFont(FrameUtils.cuteFont(12));
 	infoPanel.add(name);
-	infoPanel.add(new JLabel("Solution(s)"));
+	JLabel label = new JLabel("Solution(s)");
+	label.setFont(FrameUtils.cuteFont(12));
+	infoPanel.add(label);
 
-	subMainPanel.add(infoPanel);
+	subMainPanel.add(infoPanel, BorderLayout.NORTH);
 
 	subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
 	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-	subMainPanel.add(subSubMainPanel);
+	subMainPanel.add(subSubMainPanel, BorderLayout.CENTER);
 
 	JScrollPane scrollPane = new JScrollPane(subMainPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+	scrollPane.setPreferredSize(new Dimension(450, 250));
 
 	mainPanel.add(scrollPane);
 
@@ -81,36 +87,37 @@ public class KnownSolutionsPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
 	subSubMainPanel.removeAll();
-	if(knownSolutionsList.size()>0) {
-	    for(KnownSolutionsObject kso : knownSolutionsList) {
+	if (knownSolutionsList.size() > 0) {
+	    for (KnownSolutionsObject kso : knownSolutionsList) {
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
-	    if(userInterface.getDecisionVariablesFromPage().size() > 0) {
+	    if (userInterface.getDecisionVariablesFromPage().size() > 0) {
 		for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
 		    boolean nova = true;
-		    for(KnownSolutionsObject kso : knownSolutionsList) {
-			if(dvo.getVariableName().equals(kso.getName().getText())){
+		    for (KnownSolutionsObject kso : knownSolutionsList) {
+			if (dvo.getVariableName().equals(kso.getName().getText())) {
 			    nova = false;
 			    break;
 			}
-		    } 
-		    if(nova == true) {
-			KnownSolutionsObject ksoAux = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
+		    }
+		    if (nova == true) {
+			KnownSolutionsObject ksoAux = new KnownSolutionsObject(this, dvo.getVariableName(),
+				dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
 			knownSolutionsList.add(ksoAux);
 			subSubMainPanel.add(ksoAux.transformIntoAPanel());
 		    }
 		}
 	    }
-	    if(knownSolutionsList.size() != userInterface.getDecisionVariablesFromPage().size()) {
-		for(KnownSolutionsObject kso : knownSolutionsList) {
+	    if (knownSolutionsList.size() != userInterface.getDecisionVariablesFromPage().size()) {
+		for (KnownSolutionsObject kso : knownSolutionsList) {
 		    boolean toDelete = false;
 		    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-			if(kso.getName().getText().equals(dvo.getVariableName())) {
+			if (kso.getName().getText().equals(dvo.getVariableName())) {
 			    toDelete = true;
 			    break;
 			}
-		    } 
-		    if(toDelete == false) {
+		    }
+		    if (toDelete == false) {
 			subSubMainPanel.remove(kso.transformIntoAPanel());
 		    }
 		}
@@ -118,7 +125,8 @@ public class KnownSolutionsPage extends SuperPage {
 	} else {
 	    if (userInterface.getDecisionVariablesFromPage().size() > 0) {
 		for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-		    KnownSolutionsObject kso = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
+		    KnownSolutionsObject kso = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(),
+			    dvo.getLowerBound(), dvo.getUpperBound());
 		    knownSolutionsList.add(kso);
 		    subSubMainPanel.add(kso.transformIntoAPanel());
 		}
@@ -126,16 +134,16 @@ public class KnownSolutionsPage extends SuperPage {
 		subSubMainPanel.add(warning);
 	    }
 	}
-	refreshPage();
+	userInterface.refreshPage();
     }
 
     /**
      * Creates a warning Panel annoucing that no variables were created
+     * 
      * @return
      */
     private JPanel warningPanel() {
-	JPanel panel = new JPanel();
-	panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
 	JLabel warning = new JLabel("No variables created");
 	warning.setForeground(Color.red);
@@ -143,18 +151,12 @@ public class KnownSolutionsPage extends SuperPage {
 	return panel;
     }
 
-    public void refreshPage() {
-	userInterface.getFrame().validate();
-	userInterface.getFrame().repaint();
-	userInterface.getFrame().pack();
-    }
-
     @Override
     protected boolean areAllDataWellFilled() {
 	boolean tmp = true;
 	for (KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
-	    for(JTextField textField : kso.getTextfieldList()) {
-		if(kso.validateInputs(textField) == false) {
+	    for (JTextField textField : kso.getTextfieldList()) {
+		if (kso.validateInputs(textField) == false) {
 		    tmp = false;
 		}
 	    }
@@ -165,6 +167,10 @@ public class KnownSolutionsPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.setKnownSolutionsList(knownSolutionsList);
+    }
+
+    public UserInterface getUserInterface() {
+	return userInterface;
     }
 
 }

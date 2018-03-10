@@ -35,7 +35,7 @@ public class UserInterface {
 	fitnessFunctionFromPage = new ArrayList<FitnessFunctionObject>();
 	knownSolutionsFromDecisionVariables = new ArrayList<KnownSolutionsObject>();
 	optimizationCriteriaFromPage = new ArrayList<OptimizationCriteriaObject>();
-	
+
 	problem = new Problem();
 
 	frame.addWindowListener(new WindowListener() {
@@ -71,10 +71,10 @@ public class UserInterface {
 	});
 
 	pages = new ArrayList<>();
-//	pages.add(new HomePage(this));
-//	pages.add(new IntroPage(this));
-//	pages.add(new RegisterUserPage(this));
-//	pages.add(new ProblemIdPage(this));
+	pages.add(new HomePage(this));
+	pages.add(new IntroPage(this));
+	pages.add(new RegisterUserPage(this));
+	pages.add(new ProblemIdPage(this));
 	pages.add(new DecisionVariablesPage(this));
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
@@ -98,7 +98,7 @@ public class UserInterface {
 	SuperPage nextPage = pages.get(++actualPageIndex);
 	nextPage.onTop();
 	frame.add(nextPage);
-	frame.pack(); // XXX remove when width and height is set
+	refreshPage();
     }
 
     public void goToPreviousPage() {
@@ -106,16 +106,15 @@ public class UserInterface {
 	SuperPage backPage = pages.get(--actualPageIndex);
 	backPage.onTop();
 	frame.add(backPage);
-	frame.pack(); // XXX remove when width and height is set
+	refreshPage();
     }
 
     public void goToEmailPage() {
-	// TODO Auto-generated method stub
 	frame.remove(pages.get(actualPageIndex));
 	SuperPage page = emailPage;
 	page.onTop();
 	frame.add(page);
-	frame.pack(); // XXX remove when width and height is set
+	refreshPage();
     }
 
     public void returnFromEmailPage() {
@@ -123,15 +122,21 @@ public class UserInterface {
 	SuperPage page = pages.get(actualPageIndex);
 	page.onTop();
 	frame.add(page);
-	frame.pack(); // XXX remove when width and height is set
+	refreshPage();
     }
 
     private void launch() {
 	frame.add(pages.get(actualPageIndex));
-	frame.pack(); // XXX change to frame.setSize(width, height);
+	frame.setSize(600, 440);
+	frame.setResizable(false);
 	frame.setLocation(new Point((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2,
 		(Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2));
 	frame.setVisible(true);
+    }
+
+    public void refreshPage() {
+	frame.validate();
+	frame.repaint();
     }
 
     public ArrayList<DecisionVariablesObject> getDecisionVariablesFromPage() {

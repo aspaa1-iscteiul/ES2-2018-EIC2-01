@@ -2,9 +2,9 @@ package frames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -34,7 +34,6 @@ public class FitnessFunctionPage extends SuperPage {
 
     public FitnessFunctionPage(UserInterface userInterface) {
 	super(userInterface);
-	// TODO Auto-generated constructor stub
     }
 
     private JButton nextButton;
@@ -52,19 +51,18 @@ public class FitnessFunctionPage extends SuperPage {
 	// XXX change when frame size is set
 	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-	JPanel titlePanel = new JPanel();
-	titlePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	titlePanel.setBackground(Color.WHITE);
-	titlePanel.add(new JLabel("Fitness Function"));
+	JLabel titleLabel = new JLabel("Fitness Function");
+	titleLabel.setFont(FrameUtils.cuteFont(16));
+	titlePanel.add(titleLabel);
 	mainPanel.add(titlePanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new BorderLayout());
+	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
-	JPanel iconPanel = new JPanel();
-	iconPanel.setLayout(new BorderLayout());
+	JPanel iconPanel = new JPanel(new BorderLayout());
 	iconPanel.setBackground(Color.WHITE);
 	JLabel infoIcon = new JLabel();
 	infoIcon.setIcon(new ImageIcon("./src/frames/images/info_icon.png"));
@@ -74,7 +72,7 @@ public class FitnessFunctionPage extends SuperPage {
 		+ "<br> optimization means minimizing the optimization criteria. Therefore, the <br>"
 		+ "implementation(s) of the objective function(s) provided should be consistent<br>"
 		+ "with this assumption.</html>");
-	infoLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+	infoLabel.setFont(FrameUtils.cuteFont(12));
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 	infoPanel.add(infoLabel, BorderLayout.CENTER);
 
@@ -82,22 +80,23 @@ public class FitnessFunctionPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel subMainPanel = new JPanel();
+	JPanel subMainPanel = new JPanel(new BorderLayout());
 	subMainPanel.setBackground(Color.WHITE);
-	subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.Y_AXIS));
 	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-	JPanel infoFieldPanel = new JPanel();
-	infoFieldPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel infoFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	infoFieldPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Fitness Function");
 	name.setBorder(new EmptyBorder(0, 0, 0, 43)); // to add space between
+	name.setFont(FrameUtils.cuteFont(12));
 	// the labels
 	infoFieldPanel.add(name);
-	infoFieldPanel.add(new JLabel("Optimization Criteria"));
+	JLabel label = new JLabel("Optimization Criteria");
+	label.setFont(FrameUtils.cuteFont(12));
+	infoFieldPanel.add(label);
 
-	subMainPanel.add(infoFieldPanel);
+	subMainPanel.add(infoFieldPanel, BorderLayout.NORTH);
 
 	continueCreateMainPanel(subMainPanel);
 
@@ -113,10 +112,9 @@ public class FitnessFunctionPage extends SuperPage {
 	fitnessFunctionList.add(fitnessFunctionObject);
 	subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
 
-	subMainPanel.add(subSubMainPanel);
+	subMainPanel.add(subSubMainPanel, BorderLayout.CENTER);
 
-	JPanel addOptionPanel = new JPanel();
-	addOptionPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
 	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
@@ -154,11 +152,12 @@ public class FitnessFunctionPage extends SuperPage {
 	addOptionPanel.add(addIcon, BorderLayout.WEST);
 	addOptionPanel.add(new JLabel("Add new fitness function"));
 
-	subMainPanel.add(addOptionPanel);
+	subMainPanel.add(addOptionPanel, BorderLayout.SOUTH);
 
 	JScrollPane scrollPane = new JScrollPane(subMainPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+	scrollPane.setPreferredSize(new Dimension(0, 180));
 
 	mainPanel.add(scrollPane);
     }

@@ -2,7 +2,6 @@ package frames;
 
 import java.awt.Cursor;
 import java.awt.Desktop;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -39,17 +38,15 @@ public class IntroPage extends SuperPage {
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
-	mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+	mainPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
 
 	JLabel messageLabel = new JLabel("<html>With the <font color=red><b>Problem Solving App</b></font> "
 		+ "you can submit your optimization problems for<br><font color=green><u>AUTOMATIC</u></font> "
 		+ "evalution! According to the characteristics of your problem you will<br>be returned the "
 		+ "optimal solution found by our <font color=orange><b>Metaheuristics Algorithm</b></font>.</html>");
-
+	messageLabel.setFont(FrameUtils.cuteFont(14));
 	JLabel linkLabel = new JLabel("<html>Find out more about <a href=\"\">jMetal framework</a>.</html>");
-
-	messageLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-	linkLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+	linkLabel.setFont(FrameUtils.cuteFont(14));
 
 	if (isBrowsingSupported()) {
 	    linkLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -156,8 +153,6 @@ public class IntroPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-	
     }
 
 }

@@ -91,7 +91,7 @@ public class KnownSolutionsObject {
 				BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 			firstPanel.add(newSolution);
 			solutionsList.add(newSolution);
-			pageAssociated.refreshPage();
+			pageAssociated.getUserInterface().refreshPage();
 		    }
 		});
 	    }
