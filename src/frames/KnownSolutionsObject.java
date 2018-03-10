@@ -42,7 +42,7 @@ public class KnownSolutionsObject {
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
 	    String upperBound) {
 	this.pageAssociated = page;
-	this.name = new JTextField(name);
+	this.name = new JTextField(" " + name);
 	this.dataType = type;
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
@@ -62,7 +62,6 @@ public class KnownSolutionsObject {
 	final JPanel firstPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	firstPanel.setBackground(Color.WHITE);
 	name.setBorder(FrameUtils.cuteBorder());
-	name.setPreferredSize(null);
 	name.setEditable(false);
 	firstPanel.add(name);
 

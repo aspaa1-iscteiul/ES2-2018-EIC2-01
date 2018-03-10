@@ -113,6 +113,7 @@ public class SendEmailPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		// TODO: fazer funcao que envia email
+		userInterface.returnFromEmailPage();
 	    }
 	});
 	buttonsPanel.add(submitButton);

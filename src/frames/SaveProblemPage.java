@@ -25,8 +25,6 @@ public class SaveProblemPage extends SuperPage {
     private JTextField filePath;
     private JButton saveButton;
     private JButton finishButton;
-    private boolean nameOk = false;
-    private boolean pathOk = false;
 
     public SaveProblemPage(UserInterface userInterface) {
 	super(userInterface);
@@ -64,27 +62,6 @@ public class SaveProblemPage extends SuperPage {
 	namePanel.add(nameLabel, BorderLayout.WEST);
 	fileName.setBorder(FrameUtils.cuteBorder());
 
-	fileName.addKeyListener(new KeyListener() {
-	    @Override
-	    public void keyPressed(KeyEvent arg0) {
-	    }
-
-	    @Override
-	    public void keyReleased(KeyEvent arg0) {
-		if (!fileName.getText().trim().isEmpty()) {
-		    nameOk = true;
-		    if (nameOk == true && pathOk == true) {
-			saveButton.setEnabled(true);
-		    }
-		}
-
-	    }
-
-	    @Override
-	    public void keyTyped(KeyEvent arg0) {
-	    }
-	});
-
 	namePanel.add(fileName, BorderLayout.CENTER);
 	mainPanel.add(namePanel);
 
@@ -112,12 +89,9 @@ public class SaveProblemPage extends SuperPage {
 		    // TODO: Rever se isto funciona, acho que não
 		    try {
 			Paths.get(filePath.getText());
-			pathOk = true;
-		    } catch (InvalidPathException | NullPointerException ex1) {
-			pathOk = false;
-		    }
-		    if (nameOk == true && pathOk == true) {
 			saveButton.setEnabled(true);
+		    } catch (InvalidPathException | NullPointerException ex1) {
+			saveButton.setEnabled(false);
 		    }
 		}
 
