@@ -38,38 +38,6 @@ public class UserInterface {
 
 	problem = new Problem();
 
-	frame.addWindowListener(new WindowListener() {
-
-	    @Override
-	    public void windowOpened(WindowEvent e) {
-	    }
-
-	    @Override
-	    public void windowIconified(WindowEvent e) {
-	    }
-
-	    @Override
-	    public void windowDeiconified(WindowEvent e) {
-	    }
-
-	    @Override
-	    public void windowDeactivated(WindowEvent e) {
-	    }
-
-	    @Override
-	    public void windowClosing(WindowEvent e) {
-		System.exit(0);
-	    }
-
-	    @Override
-	    public void windowClosed(WindowEvent e) {
-	    }
-
-	    @Override
-	    public void windowActivated(WindowEvent e) {
-	    }
-	});
-
 	pages = new ArrayList<>();
 	pages.add(new HomePage(this));
 	pages.add(new IntroPage(this));
@@ -85,12 +53,15 @@ public class UserInterface {
 	pages.add(new SaveProblemPage(this));
     }
 
+    /**
+     * @return {@link #frame}
+     */
     public JFrame getFrame() {
 	return frame;
     }
 
     /**
-     * Allows to go back to the previous page
+     * Changes to the next page if {@linkplain SuperPage#areAllDataWellFilled()}
      */
     public void goToNextPage() {
 	SuperPage actualPage = pages.get(actualPageIndex);
@@ -105,7 +76,7 @@ public class UserInterface {
     }
 
     /**
-     * Allows to go to the next page
+     * Allows to go back to the previous page
      */
     public void goToPreviousPage() {
 	frame.remove(pages.get(actualPageIndex));
@@ -137,7 +108,42 @@ public class UserInterface {
 	refreshPage();
     }
 
+    /**
+     * Makes the adjustments to the {@linkplain #frame} and the displays it
+     * 
+     * @see JFrame#setVisible(boolean)
+     */
     private void launch() {
+	frame.addWindowListener(new WindowListener() {
+	    @Override
+	    public void windowOpened(WindowEvent e) {
+	    }
+
+	    @Override
+	    public void windowIconified(WindowEvent e) {
+	    }
+
+	    @Override
+	    public void windowDeiconified(WindowEvent e) {
+	    }
+
+	    @Override
+	    public void windowDeactivated(WindowEvent e) {
+	    }
+
+	    @Override
+	    public void windowClosing(WindowEvent e) {
+		System.exit(0);
+	    }
+
+	    @Override
+	    public void windowClosed(WindowEvent e) {
+	    }
+
+	    @Override
+	    public void windowActivated(WindowEvent e) {
+	    }
+	});
 	frame.add(pages.get(actualPageIndex));
 	frame.setSize(600, 440);
 	frame.setResizable(false);
@@ -146,6 +152,9 @@ public class UserInterface {
 	frame.setVisible(true);
     }
 
+    /**
+     * Refreshes the {@linkplain #frame}
+     */
     public void refreshPage() {
 	frame.validate();
 	frame.repaint();
@@ -205,7 +214,9 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data inputs of the interface to the object DecisionVariable that will be used in the object Problem
+     * Transforms the data inputs of the interface to the object
+     * DecisionVariable that will be used in the object Problem
+     * 
      * @return
      */
     public ArrayList<DecisionVariable> createDecisionVariableFinalList() {
@@ -218,7 +229,9 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data inputs of the interface to the object FitnessFunction that will be used in the object Problem
+     * Transforms the data inputs of the interface to the object FitnessFunction
+     * that will be used in the object Problem
+     * 
      * @return
      */
     public ArrayList<FitnessFunction> createFitnessFunctionFinalList() {
@@ -230,7 +243,9 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data inputs of the interface to the object OptimizationCriteria that will be used in the object Problem
+     * Transforms the data inputs of the interface to the object
+     * OptimizationCriteria that will be used in the object Problem
+     * 
      * @return
      */
     public ArrayList<OptimizationCriteria> createOptimizationCriteriaFinalList() {
@@ -242,7 +257,10 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data inputs of the interface to the object DecisionVariable attribute  ArrayList<String> knownSolutions that will be used in the object Problem
+     * Transforms the data inputs of the interface to the object
+     * DecisionVariable attribute ArrayList<String> knownSolutions that will be
+     * used in the object Problem
+     * 
      * @return
      */
     public ArrayList<String> getKnownSolutionsOfGivenVariable(String varName) {
@@ -258,7 +276,8 @@ public class UserInterface {
     }
 
     /**
-     * Sets the data from the interface on the optimization problem's characterization
+     * Sets the data from the interface on the optimization problem's
+     * characterization
      */
     public void setFinalProblem() {
 	this.problem.setDecisionVariables(createDecisionVariableFinalList());
