@@ -28,6 +28,10 @@ public class OptimizationCriteriaObject {
     private JLabel deleteIcon;
     private JPanel variablesPanel;
 
+    /**
+     * 
+     * @param ocp
+     */
     public OptimizationCriteriaObject(OptimizationCriteriaPage ocp) {
 	pageAssociated = ocp;
 	variablesPanel = new JPanel();
@@ -117,6 +121,10 @@ public class OptimizationCriteriaObject {
 	return name.getText();
     }
 
+    /**
+     * Transforms the dataType selected to an enumerate
+     * @return
+     */
     public DataType getDataTypeToProblem() {
 	if(dataType.getSelectedItem().toString().equals("Integer")){
 	    return DataType.INTEGER;

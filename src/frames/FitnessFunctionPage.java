@@ -104,6 +104,10 @@ public class FitnessFunctionPage extends SuperPage {
 	FrameUtils.addEmptyLabels(mainPanel, 1);
     }
 
+    /**
+     * Method to create the main part of the page to be viewed
+     * @param subMainPanel
+     */
     private void continueCreateMainPanel(JPanel subMainPanel) {
 	final JPanel subSubMainPanel = new JPanel();
 	subSubMainPanel.setBackground(Color.WHITE);
@@ -219,7 +223,6 @@ public class FitnessFunctionPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
-	// TODO Auto-generated method stub
 	return true;
     }
 
@@ -228,6 +231,12 @@ public class FitnessFunctionPage extends SuperPage {
 	userInterface.setFitnessFunctionFromPage(fitnessFunctionList);
     }
 
+    /**
+     * Refreshes the frame
+     * 
+     * @see #validate()
+     * @see #repaint()
+     */
     public void refreshPage() {
 	userInterface.getFrame().validate();
 	userInterface.getFrame().repaint();

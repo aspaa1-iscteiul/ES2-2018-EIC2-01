@@ -102,7 +102,7 @@ public class DecisionVariablesObject {
     /**
      * Transforms the object in a JPanel that will be added to the frame later.
      * 
-     * @return
+     * @return JPanel
      */
     public JPanel transformIntoAPanel() {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));

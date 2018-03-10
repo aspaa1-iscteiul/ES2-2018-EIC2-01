@@ -115,6 +115,10 @@ public class KnownSolutionsPage extends SuperPage {
 	buttonsPanel.add(nextButton);
     }
 
+    /**
+     * This method allows the saving of the inputs and updates the frame if a variable is added or deleted, keeping the inputs 
+     * of the remaining variables while refreshing the frame.
+     */
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
@@ -185,6 +189,12 @@ public class KnownSolutionsPage extends SuperPage {
 	return panel;
     }
 
+    /**
+     * Refreshes the frame
+     * 
+     * @see #validate()
+     * @see #repaint()
+     */
     public void refreshPage() {
 	userInterface.getFrame().validate();
 	userInterface.getFrame().repaint();
