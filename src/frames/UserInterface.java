@@ -89,6 +89,9 @@ public class UserInterface {
 	return frame;
     }
 
+    /**
+     * Allows to go back to the previous page
+     */
     public void goToNextPage() {
 	SuperPage actualPage = pages.get(actualPageIndex);
 	if (!actualPage.areAllDataWellFilled())
@@ -101,6 +104,9 @@ public class UserInterface {
 	refreshPage();
     }
 
+    /**
+     * Allows to go to the next page
+     */
     public void goToPreviousPage() {
 	frame.remove(pages.get(actualPageIndex));
 	SuperPage backPage = pages.get(--actualPageIndex);
@@ -109,6 +115,9 @@ public class UserInterface {
 	refreshPage();
     }
 
+    /**
+     * Allows to go the SendEmailPage
+     */
     public void goToEmailPage() {
 	frame.remove(pages.get(actualPageIndex));
 	SuperPage page = emailPage;
@@ -117,6 +126,9 @@ public class UserInterface {
 	refreshPage();
     }
 
+    /**
+     * Allows to go back from the SendEmailPage to the HomeCenterPage
+     */
     public void returnFromEmailPage() {
 	frame.remove(emailPage);
 	SuperPage page = pages.get(actualPageIndex);
@@ -192,6 +204,10 @@ public class UserInterface {
 	user.launch();
     }
 
+    /**
+     * Transforms the data inputs of the interface to the object DecisionVariable that will be used in the object Problem
+     * @return
+     */
     public ArrayList<DecisionVariable> createDecisionVariableFinalList() {
 	ArrayList<DecisionVariable> dvList = new ArrayList<DecisionVariable>();
 	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
@@ -201,6 +217,10 @@ public class UserInterface {
 	return dvList;
     }
 
+    /**
+     * Transforms the data inputs of the interface to the object FitnessFunction that will be used in the object Problem
+     * @return
+     */
     public ArrayList<FitnessFunction> createFitnessFunctionFinalList() {
 	ArrayList<FitnessFunction> ffList = new ArrayList<FitnessFunction>();
 	for (FitnessFunctionObject ffo : fitnessFunctionFromPage) {
@@ -209,6 +229,10 @@ public class UserInterface {
 	return ffList;
     }
 
+    /**
+     * Transforms the data inputs of the interface to the object OptimizationCriteria that will be used in the object Problem
+     * @return
+     */
     public ArrayList<OptimizationCriteria> createOptimizationCriteriaFinalList() {
 	ArrayList<OptimizationCriteria> ocList = new ArrayList<OptimizationCriteria>();
 	for (OptimizationCriteriaObject oco : optimizationCriteriaFromPage) {
@@ -217,6 +241,10 @@ public class UserInterface {
 	return ocList;
     }
 
+    /**
+     * Transforms the data inputs of the interface to the object DecisionVariable attribute  ArrayList<String> knownSolutions that will be used in the object Problem
+     * @return
+     */
     public ArrayList<String> getKnownSolutionsOfGivenVariable(String varName) {
 	ArrayList<String> solutions = new ArrayList<String>();
 	for (KnownSolutionsObject kso : knownSolutionsFromDecisionVariables) {
@@ -229,6 +257,9 @@ public class UserInterface {
 	return solutions;
     }
 
+    /**
+     * Sets the data from the interface on the optimization problem's characterization
+     */
     public void setFinalProblem() {
 	this.problem.setDecisionVariables(createDecisionVariableFinalList());
 	this.problem.setFitnessFunctions(createFitnessFunctionFinalList());

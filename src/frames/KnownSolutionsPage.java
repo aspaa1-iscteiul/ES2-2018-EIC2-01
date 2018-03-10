@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,6 +25,7 @@ public class KnownSolutionsPage extends SuperPage {
      */
     private static final long serialVersionUID = 1L;
     private ArrayList<KnownSolutionsObject> knownSolutionsList;
+    private JButton nextButton; 
     private JPanel subSubMainPanel;
 
     public KnownSolutionsPage(UserInterface userInterface) {
@@ -31,6 +35,7 @@ public class KnownSolutionsPage extends SuperPage {
     @Override
     protected void initialize() {
 	knownSolutionsList = new ArrayList<KnownSolutionsObject>();
+	nextButton = FrameUtils.cuteButton("Next");
     }
 
     @Override
@@ -83,6 +88,44 @@ public class KnownSolutionsPage extends SuperPage {
     }
 
     @Override
+    protected void createButtonsPanel() {
+	JButton backButton = FrameUtils.cuteButton("Back");
+	backButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToPreviousPage();
+		saveToProblem();
+	    }
+	});
+	buttonsPanel.add(backButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton cancelButton = FrameUtils.cuteButton("Cancel");
+	cancelButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	    }
+	});
+	buttonsPanel.add(cancelButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	nextButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToNextPage();
+	    }
+	});
+	buttonsPanel.add(nextButton);
+    }
+
+    /**
+     * This method allows the saving of the inputs and updates the frame if a variable is added or deleted, keeping the inputs 
+     * of the remaining variables while refreshing the frame.
+     */
+    @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
@@ -119,6 +162,8 @@ public class KnownSolutionsPage extends SuperPage {
 		    }
 		    if (toDelete == false) {
 			subSubMainPanel.remove(kso.transformIntoAPanel());
+			KnownSolutionsObject ksoAux = kso;
+			knownSolutionsList.remove(ksoAux);
 		    }
 		}
 	    }

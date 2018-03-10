@@ -83,6 +83,10 @@ public class RegisterUserPage extends SuperPage {
 	return isEmailWellFilled && isCheckBoxSeleceted;
     }
 
+    /**
+     * Verifys if the input is a valid email
+     * @return
+     */
     private boolean isEmailWellFilled() {
 	try {
 	    // validates the email
@@ -94,6 +98,10 @@ public class RegisterUserPage extends SuperPage {
 	}
     }
 
+    /**
+     * Verify if the terms and conditions checkbox is filled
+     * @return
+     */
     private boolean isCheckBoxSeleceted() {
 	return checkBox.isSelected() ? FrameUtils.normalFormat(checkBox)
 		: FrameUtils.errorFormat(checkBox, "Have to agree on the terms and conditions for moving forward");

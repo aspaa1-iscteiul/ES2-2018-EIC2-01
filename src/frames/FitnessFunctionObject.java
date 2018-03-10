@@ -27,6 +27,10 @@ public class FitnessFunctionObject {
     private ArrayList<OptimizationCriteriaCheckbox> checkboxList;
     private JLabel warning;
 
+    /**
+     * 
+     * @param page
+     */
     public FitnessFunctionObject(FitnessFunctionPage page) {
 
 	this.pageAssociated = page;
@@ -71,6 +75,9 @@ public class FitnessFunctionObject {
 	this.checkboxList = checkboxList;
     }
 
+    /**
+     * Creates the checkboxes and adds them to the frame, analyzing if they should be enabled or not
+     */
     public void createComponents() {
 	if (pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
 	    fieldsPanel.removeAll();

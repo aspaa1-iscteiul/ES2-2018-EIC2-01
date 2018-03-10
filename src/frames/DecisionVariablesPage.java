@@ -211,6 +211,10 @@ public class DecisionVariablesPage extends SuperPage {
 	mainPanel.add(panel);
     }
 
+    /**
+     * Ask user to input values on variables created
+     * @return
+     */
     private String[] askUserForVariableAttributes() {
 	JPanel inputPanel = new JPanel(new GridLayout(3, 2));
 	inputPanel.add(new JLabel("Data Type: "));
@@ -254,6 +258,11 @@ public class DecisionVariablesPage extends SuperPage {
 	return null;
     }
 
+    /**
+     * Reads an imported variable and creates variables with the read values and places them on the frame
+     * @param selectedFile
+     * @param values
+     */
     private void readImportedFile(File selectedFile, String[] values) {
 	if (values == null)
 	    return;

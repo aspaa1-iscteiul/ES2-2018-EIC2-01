@@ -84,6 +84,10 @@ public class OptimizationCriteriaPage extends SuperPage {
 	continuateConstructor(subMainPanel);
     }
 
+    /**
+     * Method to create the main part of the page to be viewed
+     * @param subMainPanel
+     */
     private void continuateConstructor(JPanel subMainPanel) {
 	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
@@ -158,6 +162,10 @@ public class OptimizationCriteriaPage extends SuperPage {
 	return count >= 2;
     }
 
+    /**
+     * Removes an optimization criteria from the optimization criteria list and updates the frame
+     * @param oco
+     */
     public void removeOptimizationCriteriaFromList(OptimizationCriteriaObject oco) {
 	optimizationCriteriaList.remove(oco);
 	subSubMainPanel.remove(oco.transformIntoAPanel());
