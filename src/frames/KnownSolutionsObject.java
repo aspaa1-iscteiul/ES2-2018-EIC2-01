@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,7 +43,8 @@ public class KnownSolutionsObject {
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
 	    String upperBound) {
 	this.pageAssociated = page;
-	this.name = new JTextField(" " + name);
+	this.name = new JTextField(name.length());
+	this.name.setText(name);
 	this.dataType = type;
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
@@ -61,7 +63,8 @@ public class KnownSolutionsObject {
 
 	final JPanel firstPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	firstPanel.setBackground(Color.WHITE);
-	name.setBorder(FrameUtils.cuteBorder());
+	name.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	name.setEditable(false);
 	firstPanel.add(name);
 
