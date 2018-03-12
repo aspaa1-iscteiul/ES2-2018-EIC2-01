@@ -208,7 +208,7 @@ public class FitnessFunctionPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(checkboxList.size()>0) {
+	if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==false) {
 	    for(FitnessFunctionObject ff : fitnessFunctionList) {
 		ff.setCheckboxList(checkboxList.get(fitnessFunctionList.indexOf(ff)));
 	    }
@@ -216,14 +216,44 @@ public class FitnessFunctionPage extends SuperPage {
 	} else {
 	    //Primeira vez onde nada foi seleccionado
 	    for (FitnessFunctionObject ffo : fitnessFunctionList) {
-		ffo.cleanData();
 		ffo.createComponents();
+		ffo.cleanData();
 	    }
+	    checkboxList.clear();
 	}
     }
 
     @Override
     protected boolean areAllDataWellFilled() {
+	boolean [] tmp = new boolean[userInterface.getOptimizationCriteriaFromPage().size()];
+	for(int i = 0; i != userInterface.getOptimizationCriteriaFromPage().size(); i++) {
+	    int count = 0;
+	    for(FitnessFunctionObject ffo : fitnessFunctionList) {
+		if(ffo.getCheckboxList().get(i).getCheckBox().isSelected()==true){
+		    count++;
+		    if(count >= 1) {
+			tmp[i] = true;
+			break;
+		    } else {
+			tmp[i] = false;
+		    }
+		}
+	    }
+	    if(tmp[i] == false) {
+		for(FitnessFunctionObject ffo : fitnessFunctionList) {	
+		    FrameUtils.errorFormat(ffo.getCheckboxList().get(i).getCheckBox(), " All optimization criteria must be associated with a single fitness function");	
+		    }
+	    } else {
+		for(FitnessFunctionObject ffo : fitnessFunctionList) {	
+		    FrameUtils.normalFormat(ffo.getCheckboxList().get(i).getCheckBox());	  
+		}
+	    }
+	}
+	for(int i = 0; i != tmp.length; i++) {
+	    if(tmp[i] == false) {
+		return false;
+	    }
+	}
 	return true;
     }
 
@@ -249,6 +279,26 @@ public class FitnessFunctionPage extends SuperPage {
 
     public void setFitnessFunctionList(ArrayList<FitnessFunctionObject> fitnessFunctionList) {
 	this.fitnessFunctionList = fitnessFunctionList;
+    }
+
+    /**
+     * Verifys if the optimization criteria from the previous page changed and if so return true
+     * and it will enable all the checkboxes and cleans the data selected
+     * @return
+     */
+    private boolean verifyIfOptimizationCriteriaChanged() {
+	ArrayList<String> ocoNames = new ArrayList<String>();
+	ArrayList<String> ffoCheckboxesNames = new ArrayList<String>();
+	for(OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
+	    ocoNames.add(oco.getVariableName());
+	} 
+	for(OptimizationCriteriaCheckbox occ : fitnessFunctionList.get(0).getCheckboxList()) {
+	    ffoCheckboxesNames.add(occ.getOptimizationCriteriaName().getText());
+	}
+	if(ffoCheckboxesNames.containsAll(ocoNames) && ffoCheckboxesNames.size()==ocoNames.size()) {
+	    return false;
+	}
+	return true;
     }
 
 }

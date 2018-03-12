@@ -58,7 +58,7 @@ public class FitnessFunctionObject {
 	});
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	uploadButton
-		.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
 	warning = new JLabel("No optimization criterias available");
     }
@@ -168,11 +168,10 @@ public class FitnessFunctionObject {
      * Cleans the selection of all the checkboxes
      */
     public void cleanData() {
-	for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
-	    for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
-		occ.getCheckBox().setEnabled(true);
-	    }
+	for (OptimizationCriteriaCheckbox occ : checkboxList) {
+	    occ.getCheckBox().setEnabled(true);
 	}
+
     }
 
 }
