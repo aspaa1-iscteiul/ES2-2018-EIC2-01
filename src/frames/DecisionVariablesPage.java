@@ -84,7 +84,7 @@ public class DecisionVariablesPage extends SuperPage {
 
 	JScrollPane scrollPane = new JScrollPane(subMainPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setPreferredSize(new Dimension(450, 200));
+	scrollPane.setPreferredSize(new Dimension(510, 200));
 	mainPanel.add(scrollPane);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
@@ -97,19 +97,23 @@ public class DecisionVariablesPage extends SuperPage {
 	panel.setBackground(Color.WHITE);
 	JLabel name = new JLabel(" Name");
 	// to add space between the labels
-	name.setBorder(new EmptyBorder(0, 0, 0, 57));
+	name.setBorder(new EmptyBorder(0, 0, 0, 52));
 	name.setFont(FrameUtils.cuteFont(12));
 	panel.add(name);
 	JLabel dataType = new JLabel("Data Type");
-	dataType.setBorder(new EmptyBorder(0, 0, 0, 10));
+	dataType.setBorder(new EmptyBorder(0, 0, 0, 15));
 	dataType.setFont(FrameUtils.cuteFont(12));
 	panel.add(dataType);
 	JLabel lowerLabel = new JLabel("Lower Bound     ");
 	lowerLabel.setFont(FrameUtils.cuteFont(12));
 	panel.add(lowerLabel);
 	JLabel upperLabel = new JLabel("Upper Bound");
+	upperLabel.setBorder(new EmptyBorder(0, 0, 0, 16));
 	upperLabel.setFont(FrameUtils.cuteFont(12));
 	panel.add(upperLabel);
+	JLabel invalidValuesLabel = new JLabel("Invalid values");
+	invalidValuesLabel.setFont(FrameUtils.cuteFont(12));
+	panel.add(invalidValuesLabel);
 	return panel;
     }
 

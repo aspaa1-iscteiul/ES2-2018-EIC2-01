@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -31,6 +32,7 @@ public class DecisionVariablesObject {
     private JComboBox<String> dataType;
     private JTextField lowerBound;
     private JTextField upperBound;
+    private JTextField invalidValues;
     private JLabel deleteIcon;
 
     /**
@@ -64,6 +66,7 @@ public class DecisionVariablesObject {
 	dataType.setSelectedItem(variableDataType);
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
+	invalidValues = new JTextField(6);
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	deleteIcon.addMouseListener(new MouseListener() {
@@ -112,10 +115,13 @@ public class DecisionVariablesObject {
 	lowerBound.setPreferredSize(new Dimension(10, 22));
 	upperBound.setBorder(FrameUtils.cuteBorder());
 	upperBound.setPreferredSize(new Dimension(10, 22));
+	invalidValues.setBorder(FrameUtils.cuteBorder());
+	invalidValues.setPreferredSize(new Dimension(10, 22));
 	variablesPanel.add(varName);
 	variablesPanel.add(dataType);
 	variablesPanel.add(lowerBound);
 	variablesPanel.add(upperBound);
+	variablesPanel.add(invalidValues);
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
     }
@@ -170,8 +176,8 @@ public class DecisionVariablesObject {
      */
     public boolean isWellFilled() {
 	// methods separated to run all
-	boolean isValidName = isValidName(), isDataTypeSelected = isDataTypeSelected(), isValidBound = isValidBound();
-	return isValidName && isDataTypeSelected && isValidBound;
+	boolean isValidName = isValidName(), isDataTypeSelected = isDataTypeSelected(), isValidBound = isValidBound(), isValidValues = isValidValues();
+	return isValidName && isDataTypeSelected && isValidBound && isValidValues;
     }
 
     /**
@@ -196,7 +202,7 @@ public class DecisionVariablesObject {
 	return dataType.getSelectedItem() == null
 		? FrameUtils.errorFormat(dataType,
 			"The decision variable's data type field is mandatory and must be filled in.")
-		: FrameUtils.normalFormat(dataType);
+			: FrameUtils.normalFormat(dataType);
 
     }
 
@@ -250,9 +256,26 @@ public class DecisionVariablesObject {
 		    : Double.parseDouble(upperBound.getText());
 	    return upper <= lower
 		    ? FrameUtils.errorFormat(upperBound, "The upper bound must be bigger than the lower bound")
-		    : FrameUtils.normalFormat(upperBound);
+			    : FrameUtils.normalFormat(upperBound);
 	}
 	return false;
+    }
+
+    /**
+     * @return {@code true} if {@linkplain #invalidValues}
+     *         have valid numbers separated by ',' or is empty,
+     *          otherwise {@code false} and evidence the error
+     * @see FrameUtils#errorFormat(JComponent, String)
+     */
+    private boolean isValidValues() {
+	boolean tmp = false;
+	if(Pattern.matches("[.,0-9]+", invalidValues.getText()) || invalidValues.getText().isEmpty()) {
+	    tmp = true;
+	    FrameUtils.normalFormat(invalidValues);
+	}else {
+	    FrameUtils.errorFormat(invalidValues, "The invalid values must contain only numbers or ','");
+	}
+	return tmp;
     }
 
 }
