@@ -268,12 +268,35 @@ public class DecisionVariablesObject {
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidValues() {
-	boolean tmp = false;
+	boolean tmp = true;
 	if(Pattern.matches("[.,0-9]+", invalidValues.getText()) || invalidValues.getText().isEmpty()) {
-	    tmp = true;
 	    FrameUtils.normalFormat(invalidValues);
+	    if(dataType.getSelectedItem().equals("Integer")) {
+		String[] v = invalidValues.getText().split(",");
+		try {
+		    for(int i = 0; i != v.length; i++) {
+			Integer.parseInt(v[i]);
+		    }
+		    FrameUtils.normalFormat(invalidValues);
+		}catch(NumberFormatException e) {
+		    FrameUtils.errorFormat(invalidValues, "The invalid values must in agreement with the data type selected");
+		    return false;
+		}
+	    }else if(dataType.getSelectedItem().equals("Double")) {
+		String[] v = invalidValues.getText().split(",");
+		try {
+		    for(int i = 0; i != v.length; i++) {
+			Double.parseDouble(v[i]);
+		    }
+		    FrameUtils.normalFormat(invalidValues);
+		}catch(NumberFormatException e) {
+		    FrameUtils.errorFormat(invalidValues, "The invalid values must in agreement with the data type selected");
+		    return false;
+		}
+	    }
 	}else {
 	    FrameUtils.errorFormat(invalidValues, "The invalid values must contain only numbers or ','");
+	    return false;
 	}
 	return tmp;
     }
