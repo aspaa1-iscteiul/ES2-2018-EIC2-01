@@ -173,6 +173,9 @@ public class FitnessFunctionPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		userInterface.goToPreviousPage();
+		for(FitnessFunctionObject ffo : fitnessFunctionList) {
+		    checkboxList.add(ffo.getCheckboxList());
+		}
 	    }
 	});
 	buttonsPanel.add(backButton);
@@ -206,13 +209,12 @@ public class FitnessFunctionPage extends SuperPage {
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	if(checkboxList.size()>0) {
-	    int i = 0;
-	    for(ArrayList<OptimizationCriteriaCheckbox> checkBoxes : checkboxList) {
-		fitnessFunctionList.get(i).setCheckboxList(checkBoxes);
-		i++;
+	    for(FitnessFunctionObject ff : fitnessFunctionList) {
+		ff.setCheckboxList(checkboxList.get(fitnessFunctionList.indexOf(ff)));
 	    }
 	    checkboxList.clear();
 	} else {
+	    //Primeira vez onde nada foi seleccionado
 	    for (FitnessFunctionObject ffo : fitnessFunctionList) {
 		ffo.cleanData();
 		ffo.createComponents();

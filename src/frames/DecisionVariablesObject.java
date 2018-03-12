@@ -269,7 +269,9 @@ public class DecisionVariablesObject {
      */
     private boolean isValidValues() {
 	boolean tmp = true;
-	if(Pattern.matches("[.,0-9]+", invalidValues.getText()) || invalidValues.getText().isEmpty()) {
+	if(invalidValues.getText().isEmpty()) {
+	    FrameUtils.normalFormat(invalidValues);
+	} else if(Pattern.matches("[.,0-9]+", invalidValues.getText())) {
 	    FrameUtils.normalFormat(invalidValues);
 	    if(dataType.getSelectedItem().equals("Integer")) {
 		String[] v = invalidValues.getText().split(",");
