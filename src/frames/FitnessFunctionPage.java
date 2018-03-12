@@ -213,6 +213,8 @@ public class FitnessFunctionPage extends SuperPage {
 		ff.setCheckboxList(checkboxList.get(fitnessFunctionList.indexOf(ff)));
 	    }
 	    checkboxList.clear();
+	} else if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==true) {
+	    reconstructPage();
 	} else {
 	    //Primeira vez onde nada foi seleccionado
 	    for (FitnessFunctionObject ffo : fitnessFunctionList) {
@@ -242,7 +244,7 @@ public class FitnessFunctionPage extends SuperPage {
 	    if(tmp[i] == false) {
 		for(FitnessFunctionObject ffo : fitnessFunctionList) {	
 		    FrameUtils.errorFormat(ffo.getCheckboxList().get(i).getCheckBox(), " All optimization criteria must be associated with a single fitness function");	
-		    }
+		}
 	    } else {
 		for(FitnessFunctionObject ffo : fitnessFunctionList) {	
 		    FrameUtils.normalFormat(ffo.getCheckboxList().get(i).getCheckBox());	  
@@ -299,6 +301,13 @@ public class FitnessFunctionPage extends SuperPage {
 	    return false;
 	}
 	return true;
+    }
+
+    private void reconstructPage(){
+	fitnessFunctionList.clear();
+	checkboxList.clear();
+	mainPanel.removeAll();
+	createMainPanel();
     }
 
 }
