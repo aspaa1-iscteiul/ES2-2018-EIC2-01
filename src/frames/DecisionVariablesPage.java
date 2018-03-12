@@ -196,13 +196,15 @@ public class DecisionVariablesPage extends SuperPage {
 	importFromFile.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(userInterface.getFrame(),
+		if (JOptionPane.showConfirmDialog(userInterface.getFrame(),
 			"The imported file must only have one decision variable name per line. "
 				+ System.lineSeparator()
 				+ "The decision variables name field does not support spaces between characters."
 				+ System.lineSeparator()
 				+ "Therefore, if spaces are found while reading the document they will be automatically removed.",
-			"Import decision variables", JOptionPane.WARNING_MESSAGE);
+			"Import decision variables", JOptionPane.OK_CANCEL_OPTION,
+			JOptionPane.WARNING_MESSAGE) != JOptionPane.OK_OPTION)
+		    return;
 
 		JFileChooser fileChooser = new JFileChooser();
 		// Launches the JFileChooser on the Desktop directory
@@ -211,9 +213,8 @@ public class DecisionVariablesPage extends SuperPage {
 		// Prevents selection of multiple options
 		fileChooser.setMultiSelectionEnabled(false);
 
-		if (fileChooser.showOpenDialog(userInterface.getFrame()) == JFileChooser.APPROVE_OPTION) {
+		if (fileChooser.showOpenDialog(userInterface.getFrame()) == JFileChooser.APPROVE_OPTION)
 		    readImportedFile(fileChooser.getSelectedFile(), askUserForVariableAttributes());
-		}
 	    }
 	});
 	panel.add(importFromFile);
@@ -307,10 +308,10 @@ public class DecisionVariablesPage extends SuperPage {
 
     /**
      * @param varName
-     *            the {@code String} to compare to the other variable names in the
-     *            {@linkplain #decisionVariableList}
-     * @return {@code true} if there is at least other variable with the same name,
-     *         otherwise {@code false}
+     *            the {@code String} to compare to the other variable names in
+     *            the {@linkplain #decisionVariableList}
+     * @return {@code true} if there is at least other variable with the same
+     *         name, otherwise {@code false}
      */
     public boolean isNameRepeated(String varName) {
 	int count = 0;
