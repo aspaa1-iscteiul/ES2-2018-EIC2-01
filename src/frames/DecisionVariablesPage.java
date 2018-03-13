@@ -60,8 +60,20 @@ public class DecisionVariablesPage extends SuperPage {
 	JLabel titleLabel = new JLabel("Decision Variables");
 	titleLabel.setFont(FrameUtils.cuteFont(16));
 	titlePanel.add(titleLabel);
+	
 	mainPanel.add(titlePanel);
-
+	
+	JPanel groupPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	groupPanel.setBackground(Color.WHITE);
+	JLabel groupLabel = new JLabel("Group name");
+	groupLabel.setFont(FrameUtils.cuteFont(12));
+	JTextField groupName = new JTextField(5);
+	groupName.setBorder(FrameUtils.cuteBorder());
+	groupPanel.add(groupLabel);
+	groupPanel.add(groupName);
+	
+	mainPanel.add(groupPanel);
+	
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel subMainPanel = new JPanel(new BorderLayout());
