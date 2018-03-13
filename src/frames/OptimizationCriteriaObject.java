@@ -70,6 +70,11 @@ public class OptimizationCriteriaObject {
 	});
     }
 
+    /**
+     * Transforms the object in a JPanel that will be added to the frame later.
+     * 
+     * @return JPanel
+     */
     public JPanel transformIntoAPanel() {
 	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	variablesPanel.setBackground(Color.WHITE);

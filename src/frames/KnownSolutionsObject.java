@@ -57,6 +57,11 @@ public class KnownSolutionsObject {
 	this.newSolutionInfo = new JLabel("Add new solutions");
     }
 
+    /**
+     * Transforms the object in a JPanel that will be added to the frame later.
+     * 
+     * @return JPanel
+     */
     public JPanel transformIntoAPanel() {
 	JPanel overallPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	overallPanel.setBackground(Color.WHITE);
