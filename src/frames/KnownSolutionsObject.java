@@ -29,6 +29,7 @@ public class KnownSolutionsObject {
     private String dataType;
     private String lowerBound;
     private String upperBound;
+    private String[] invalidValues;
 
     /**
      * This object will have the solutions to a given variable that must agree
@@ -41,13 +42,14 @@ public class KnownSolutionsObject {
      * @param upperBound
      */
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
-	    String upperBound) {
+	    String upperBound, String[] invalidValues) {
 	this.pageAssociated = page;
 	this.name = new JTextField(name.length());
 	this.name.setText(name);
 	this.dataType = type;
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
+	this.setInvalidValues(invalidValues);
 	this.solution1 = new JTextField(3);
 	this.solution2 = new JTextField(3);
 	this.solutionsList = new ArrayList<JTextField>();
@@ -143,7 +145,18 @@ public class KnownSolutionsObject {
 				    "Solutions must agree with the variable's lower and upper bound");
 			} else {
 			    FrameUtils.normalFormat(textField);
-			    tmp = true;
+			    if(!invalidValues.equals(null)) {
+				for(int i = 0; i!= invalidValues.length; i++) {
+				    if(invalidValues[i].equals(textField.getText().trim())) {
+					FrameUtils.errorFormat(textField,
+						"Solutions must agree with the invalid values selected");
+				    } else {
+					FrameUtils.normalFormat(textField);
+					tmp = true;
+				    }
+				}
+			    }
+
 			}
 		    }
 		} catch (NumberFormatException e1) {
@@ -161,7 +174,17 @@ public class KnownSolutionsObject {
 				    "Solutions must agree with the variable's lower and upper bound");
 			} else {
 			    FrameUtils.normalFormat(textField);
-			    tmp = true;
+			    if(!invalidValues.equals(null)) {
+				for(int i = 0; i!= invalidValues.length; i++) {
+				    if(invalidValues[i].equals(textField.getText().trim())) {
+					FrameUtils.errorFormat(textField,
+						"Solutions must agree with the invalid values selected");
+				    } else {
+					FrameUtils.normalFormat(textField);
+					tmp = true;
+				    }
+				}
+			    }
 			}
 		    }
 		} catch (NumberFormatException e1) {
@@ -210,6 +233,14 @@ public class KnownSolutionsObject {
 
     public void setTextfieldList(ArrayList<JTextField> textfieldList) {
 	this.solutionsList = textfieldList;
+    }
+
+    public String[] getInvalidValues() {
+	return invalidValues;
+    }
+
+    public void setInvalidValues(String[] invalidValues) {
+	this.invalidValues = invalidValues;
     }
 
 }

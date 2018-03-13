@@ -303,4 +303,16 @@ public class DecisionVariablesObject {
 	return tmp;
     }
 
+    /**
+     * Get invalid values of a given variable on a vector of strings
+     * @return
+     */
+    public String[] getInvalidValues(){
+	if(!invalidValues.getText().trim().isEmpty()) {
+	    String[] v = invalidValues.getText().split(",");
+	    return v;
+	}
+	return null;
+    }
+
 }

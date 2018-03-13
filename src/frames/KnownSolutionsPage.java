@@ -150,7 +150,7 @@ public class KnownSolutionsPage extends SuperPage {
 		    }
 		    if (nova == true) {
 			KnownSolutionsObject ksoAux = new KnownSolutionsObject(this, dvo.getVariableName(),
-				dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound());
+				dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound(), dvo.getInvalidValues());
 			knownSolutionsList.add(ksoAux);
 			subSubMainPanel.add(ksoAux.transformIntoAPanel());
 		    }
@@ -176,10 +176,11 @@ public class KnownSolutionsPage extends SuperPage {
 	    if (userInterface.getDecisionVariablesFromPage().size() > 0) {
 		for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
 		    KnownSolutionsObject kso = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(),
-			    dvo.getLowerBound(), dvo.getUpperBound());
+			    dvo.getLowerBound(), dvo.getUpperBound(), dvo.getInvalidValues());
 		    knownSolutionsList.add(kso);
 		    subSubMainPanel.add(kso.transformIntoAPanel());
 		}
+		userInterface.setKnownSolutionsList(knownSolutionsList);
 	    } else {
 		subSubMainPanel.add(warning);
 	    }
