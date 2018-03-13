@@ -77,6 +77,10 @@ public class FitnessFunctionObject {
 	return overallPanel;
     }
 
+    public String getPath() {
+	return uploadButton.getText();
+    }
+    
     public ArrayList<OptimizationCriteriaCheckbox> getCheckboxList() {
 	return checkboxList;
     }
@@ -138,10 +142,6 @@ public class FitnessFunctionObject {
 		pageAssociated.refreshPage();
 	    }
 	});
-    }
-
-    public String getPath() {
-	return uploadButton.getText();
     }
 
     /**

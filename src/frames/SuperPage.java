@@ -19,7 +19,6 @@ public abstract class SuperPage extends JPanel {
      * Default
      */
     private static final long serialVersionUID = 1L;
-
     protected JPanel mainPanel, buttonsPanel;
     protected UserInterface userInterface;
 

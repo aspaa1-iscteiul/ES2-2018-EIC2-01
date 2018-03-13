@@ -18,16 +18,21 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Known Solutions Page
+ */
+
 public class KnownSolutionsPage extends SuperPage {
 
-    /**
-     * Default
-     */
     private static final long serialVersionUID = 1L;
     private ArrayList<KnownSolutionsObject> knownSolutionsList;
     private JButton nextButton; 
     private JPanel subSubMainPanel;
 
+    /**
+     * 
+     * @param userInterface
+     */
     public KnownSolutionsPage(UserInterface userInterface) {
 	super(userInterface);
     }
@@ -62,7 +67,7 @@ public class KnownSolutionsPage extends SuperPage {
 	infoPanel.setBackground(Color.WHITE);
 	JLabel name = new JLabel("Name");
 	name.setBorder(new EmptyBorder(0, 0, 0, 45)); // to add space between
-						      // the labels
+	// the labels
 	name.setFont(FrameUtils.cuteFont(12));
 	infoPanel.add(name);
 	JLabel label = new JLabel("Solution(s)");
@@ -183,8 +188,7 @@ public class KnownSolutionsPage extends SuperPage {
     }
 
     /**
-     * Creates a warning Panel annoucing that no variables were created
-     * 
+     * Creates a warning Panel annoucing that no variables were yet created
      * @return
      */
     private JPanel warningPanel() {
@@ -212,10 +216,6 @@ public class KnownSolutionsPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.setKnownSolutionsList(knownSolutionsList);
-    }
-
-    public UserInterface getUserInterface() {
-	return userInterface;
     }
 
 }

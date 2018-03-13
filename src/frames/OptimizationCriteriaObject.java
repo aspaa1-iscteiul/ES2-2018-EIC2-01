@@ -118,7 +118,7 @@ public class OptimizationCriteriaObject {
 	return dataType.getSelectedItem() == null
 		? FrameUtils.errorFormat(dataType,
 			"The optimization criteria's data type field is mandatory must be filled in.")
-		: FrameUtils.normalFormat(dataType);
+			: FrameUtils.normalFormat(dataType);
 
     }
 

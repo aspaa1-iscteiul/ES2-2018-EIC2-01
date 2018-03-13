@@ -119,7 +119,6 @@ public class RegisterUserPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.setUserEmail(email.getText());
-
     }
 
 }

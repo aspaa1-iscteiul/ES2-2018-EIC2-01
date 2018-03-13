@@ -36,10 +36,13 @@ import javax.swing.border.EmptyBorder;
 public class DecisionVariablesPage extends SuperPage {
 
     private static final long serialVersionUID = 1L;
-
     private ArrayList<DecisionVariablesObject> decisionVariableList;
     private JPanel subSubMainPanel;
 
+    /**
+     * 
+     * @param userInterface
+     */
     public DecisionVariablesPage(UserInterface userInterface) {
 	super(userInterface);
     }
@@ -60,9 +63,9 @@ public class DecisionVariablesPage extends SuperPage {
 	JLabel titleLabel = new JLabel("Decision Variables");
 	titleLabel.setFont(FrameUtils.cuteFont(16));
 	titlePanel.add(titleLabel);
-	
+
 	mainPanel.add(titlePanel);
-	
+
 	JPanel groupPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	groupPanel.setBackground(Color.WHITE);
 	JLabel groupLabel = new JLabel("Group name");
@@ -71,9 +74,9 @@ public class DecisionVariablesPage extends SuperPage {
 	groupName.setBorder(FrameUtils.cuteBorder());
 	groupPanel.add(groupLabel);
 	groupPanel.add(groupName);
-	
+
 	mainPanel.add(groupPanel);
-	
+
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel subMainPanel = new JPanel(new BorderLayout());
@@ -104,6 +107,11 @@ public class DecisionVariablesPage extends SuperPage {
 	importFromFilePanel();
     }
 
+    /**
+     * Creates the panel with the labels that display information 
+     * about the decision variables attributes
+     * @return
+     */
     private JPanel labelsPanel() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
@@ -137,7 +145,6 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected boolean areAllDataWellFilled() {
 	if (decisionVariableList.isEmpty()) {
-	    // XXX change message
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
 		    "In order to proceed, you need to declare at least one decision variable.", "Decision variables",
 		    JOptionPane.ERROR_MESSAGE);
@@ -157,6 +164,10 @@ public class DecisionVariablesPage extends SuperPage {
 	userInterface.setDecisionVariablesFromPage(decisionVariableList);
     }
 
+    /**
+     * Creates the panel that allows to add new decision variables to the interface
+     * @return
+     */
     private JPanel addOptionPanel() {
 	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
@@ -214,8 +225,8 @@ public class DecisionVariablesPage extends SuperPage {
 				+ "The decision variables name field does not support spaces between characters."
 				+ System.lineSeparator()
 				+ "Therefore, if spaces are found while reading the document they will be automatically removed.",
-			"Import decision variables", JOptionPane.OK_CANCEL_OPTION,
-			JOptionPane.WARNING_MESSAGE) != JOptionPane.OK_OPTION)
+				"Import decision variables", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.WARNING_MESSAGE) != JOptionPane.OK_OPTION)
 		    return;
 
 		JFileChooser fileChooser = new JFileChooser();
@@ -312,6 +323,11 @@ public class DecisionVariablesPage extends SuperPage {
 	}
     }
 
+    /**
+     * Removes a variable from the list of decision variables and 
+     * updates the interface
+     * @param dvo
+     */
     public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
 	decisionVariableList.remove(dvo);
 	subSubMainPanel.remove(dvo.transformIntoAPanel());

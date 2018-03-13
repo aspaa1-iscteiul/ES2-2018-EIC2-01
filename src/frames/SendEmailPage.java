@@ -25,17 +25,22 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Send Email Page
+ */
+
 public class SendEmailPage extends SuperPage {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     private JTextField name;
     private JTextField subject;
     private JTextArea message;
     private JButton submitButton;
 
+    /**
+     * 
+     * @param userInterface
+     */
     public SendEmailPage(UserInterface userInterface) {
 	super(userInterface);
 	// TODO Auto-generated constructor stub
@@ -133,21 +138,10 @@ public class SendEmailPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
     }
 
-    @Override
-    protected boolean areAllDataWellFilled() {
-	// TODO Auto-generated method stub
-	return false;
-    }
-
-    @Override
-    protected void saveToProblem() {
-	// TODO Auto-generated method stub
-
-    }
-
     /**
      * Conta de email do grupo: Email: ES22018EIC201@gmail.com
      * Password: ES2-2018-EIC2-01AGRS
+     * Sends an email to the admin email with the information filled by the user
      */
     private void sendEmail() {
 	String to = "ES22018EIC201@gmail.com";
@@ -191,6 +185,17 @@ public class SendEmailPage extends SuperPage {
 	    throw new RuntimeException(e);
 	}
 
+    }
+
+    @Override
+    protected boolean areAllDataWellFilled() {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    protected void saveToProblem() {
+	// TODO Auto-generated method stub
     }
 
 }

@@ -28,15 +28,17 @@ import javax.swing.border.EmptyBorder;
 public class FitnessFunctionPage extends SuperPage {
 
     private static final long serialVersionUID = 1L;
-
     private ArrayList<FitnessFunctionObject> fitnessFunctionList;
     private ArrayList<ArrayList<OptimizationCriteriaCheckbox>> checkboxList;
+    private JButton nextButton;
 
+    /**
+     * 
+     * @param userInterface
+     */
     public FitnessFunctionPage(UserInterface userInterface) {
 	super(userInterface);
     }
-
-    private JButton nextButton;
 
     @Override
     protected void initialize() {
@@ -275,14 +277,6 @@ public class FitnessFunctionPage extends SuperPage {
 	userInterface.getFrame().repaint();
     }
 
-    public ArrayList<FitnessFunctionObject> getFitnessFunctionList() {
-	return fitnessFunctionList;
-    }
-
-    public void setFitnessFunctionList(ArrayList<FitnessFunctionObject> fitnessFunctionList) {
-	this.fitnessFunctionList = fitnessFunctionList;
-    }
-
     /**
      * Verifys if the optimization criteria from the previous page changed and if so return true
      * and it will enable all the checkboxes and cleans the data selected
@@ -303,11 +297,23 @@ public class FitnessFunctionPage extends SuperPage {
 	return true;
     }
 
+    /**
+     * Cleans the current panel and places the original panel instead
+     */
     private void reconstructPage(){
 	fitnessFunctionList.clear();
 	checkboxList.clear();
 	mainPanel.removeAll();
 	createMainPanel();
     }
+
+    public ArrayList<FitnessFunctionObject> getFitnessFunctionList() {
+	return fitnessFunctionList;
+    }
+
+    public void setFitnessFunctionList(ArrayList<FitnessFunctionObject> fitnessFunctionList) {
+	this.fitnessFunctionList = fitnessFunctionList;
+    }
+
 
 }

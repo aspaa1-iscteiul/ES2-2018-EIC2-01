@@ -19,16 +19,20 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Optimization Criteria Page
+ */
+
 public class OptimizationCriteriaPage extends SuperPage {
 
-    /**
-     * Default
-     */
     private static final long serialVersionUID = 1L;
-
     private ArrayList<OptimizationCriteriaObject> optimizationCriteriaList;
     private JPanel subSubMainPanel;
 
+    /**
+     * 
+     * @param userInterface
+     */
     public OptimizationCriteriaPage(UserInterface userInterface) {
 	super(userInterface);
     }

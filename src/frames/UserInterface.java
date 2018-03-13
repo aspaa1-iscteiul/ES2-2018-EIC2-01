@@ -201,6 +201,14 @@ public class UserInterface {
 	return problem;
     }
 
+    public String getUserEmail() {
+	return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+	this.userEmail = userEmail;
+    }
+
     public void isSingleobjective(boolean b) {// XXX horrible name
 	isSingleobjective = b;
     }
@@ -274,14 +282,6 @@ public class UserInterface {
 	    }
 	}
 	return solutions;
-    }
-
-    public String getUserEmail() {
-	return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-	this.userEmail = userEmail;
     }
 
     /**

@@ -87,7 +87,7 @@ public class KnownSolutionsObject {
 			newSolution.setBorder(FrameUtils.cuteBorder());
 			firstPanel.add(newSolution);
 			solutionsList.add(newSolution);
-			pageAssociated.getUserInterface().refreshPage();
+			pageAssociated.userInterface.refreshPage();
 		    }
 		});
 	    }

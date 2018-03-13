@@ -13,11 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Time Constraints Page
+ */
+
 public class TimeConstraintsPage extends SuperPage {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     private JTextField idealTime;
     private JTextField maxTime;
@@ -25,6 +26,10 @@ public class TimeConstraintsPage extends SuperPage {
     private boolean idealOk = false;
     private boolean maxOk = false;
 
+    /**
+     * 
+     * @param userInterface
+     */
     public TimeConstraintsPage(UserInterface userInterface) {
 	super(userInterface);
     }
@@ -75,6 +80,9 @@ public class TimeConstraintsPage extends SuperPage {
 	FrameUtils.addEmptyLabels(mainPanel, 1);
     }
     
+    /**
+     * Creates the panel with the fields to fill in the ideal time and max time 
+     */
     private void createTimesPanels() {	
 	JPanel auxPanel1 = new JPanel();
 	auxPanel1.setBackground(Color.WHITE);

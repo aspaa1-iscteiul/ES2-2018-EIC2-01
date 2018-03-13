@@ -17,6 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class represents the Save Problem Page
+ */
+
 public class SaveProblemPage extends SuperPage {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +30,10 @@ public class SaveProblemPage extends SuperPage {
     private JButton saveButton;
     private JButton finishButton;
 
+    /**
+     * 
+     * @param userInterface
+     */
     public SaveProblemPage(UserInterface userInterface) {
 	super(userInterface);
     }
@@ -70,6 +78,9 @@ public class SaveProblemPage extends SuperPage {
 	continueCreateMainPanel();
     }
 
+    /**
+     * Method to create the main part of the page to be viewed
+     */
     private void continueCreateMainPanel() {
 	JPanel pathPanel = new JPanel(new BorderLayout());
 	pathPanel.setBackground(Color.WHITE);
@@ -121,7 +132,6 @@ public class SaveProblemPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 		userInterface.setFinalProblem();
-
 		JLabel infoIcon = new JLabel();
 		infoIcon.setIcon(new ImageIcon("./src/frames/images/saved_icon.png"));
 		savePanel.add(infoIcon, BorderLayout.CENTER);
@@ -175,7 +185,6 @@ public class SaveProblemPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-
     }
 
 }
