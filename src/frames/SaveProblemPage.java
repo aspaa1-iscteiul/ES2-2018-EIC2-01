@@ -56,9 +56,12 @@ public class SaveProblemPage extends SuperPage {
 
 	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
-	JLabel infoLabel = new JLabel("Save this problem's configuration before submitting it to evaluation");
+	JLabel infoLabel = new JLabel(" Save this problem's configuration before submitting it to evaluation");
 	infoLabel.setFont(FrameUtils.cuteFont(14));
-	infoPanel.add(infoLabel, BorderLayout.WEST);
+	JLabel infoIcon = new JLabel();
+	infoIcon.setIcon(new ImageIcon("./src/frames/images/save_icon.png"));
+	infoPanel.add(infoIcon, BorderLayout.WEST);
+	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 2);
@@ -132,9 +135,7 @@ public class SaveProblemPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 		userInterface.setFinalProblem();
-		JLabel infoIcon = new JLabel();
-		infoIcon.setIcon(new ImageIcon("./src/frames/images/saved_icon.png"));
-		savePanel.add(infoIcon, BorderLayout.CENTER);
+		saveButton.setBackground(new Color(155, 226, 155).brighter());
 		savePanel.validate();
 		savePanel.repaint();
 	    }

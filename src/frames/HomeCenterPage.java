@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,9 +46,12 @@ public class HomeCenterPage extends SuperPage {
 
 	JPanel infoPanel = new JPanel(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
-	JLabel infoLabel = new JLabel("Frequently Asked Questions");
+	JLabel infoLabel = new JLabel("  Frequently Asked Questions");
 	infoLabel.setFont(FrameUtils.cuteFont(16));
-	infoPanel.add(infoLabel, BorderLayout.WEST);
+	JLabel infoIcon = new JLabel();
+	infoIcon.setIcon(new ImageIcon("./src/frames/images/question_icon.png"));
+	infoPanel.add(infoIcon, BorderLayout.WEST);
+	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
