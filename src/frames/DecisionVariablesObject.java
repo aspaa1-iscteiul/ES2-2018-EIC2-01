@@ -304,7 +304,7 @@ public class DecisionVariablesObject {
     }
 
     /**
-     * Get invalid values of a given variable on a vector of strings
+     * Get invalid values of the variable on a vector of strings
      * @return
      */
     public String[] getInvalidValues(){

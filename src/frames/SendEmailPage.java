@@ -5,15 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -126,7 +117,8 @@ public class SendEmailPage extends SuperPage {
 	submitButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		sendEmail();
+		new Email("ES22018EIC201@gmail.com").sendEmail("Email to answer:" + userInterface.getUserEmail() + " Name:" + name.getText() + 
+			" Subject:" + subject.getText(), "Email to answer:" + userInterface.getUserEmail() + "\n" + message.getText());
 		userInterface.returnFromEmailPage();
 	    }
 	});
@@ -136,55 +128,6 @@ public class SendEmailPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-    }
-
-    /**
-     * Conta de email do grupo: Email: ES22018EIC201@gmail.com
-     * Password: ES2-2018-EIC2-01AGRS
-     * Sends an email to the admin email with the information filled by the user
-     */
-    private void sendEmail() {
-	String to = "ES22018EIC201@gmail.com";
-
-	// Sender's email ID needs to be mentioned
-	String from = "ES22018EIC201@gmail.com";
-	String password = "ES2-2018-EIC2-01AGRS";
-
-	// Assuming you are sending email from localhost
-	String host = "localhost";
-
-	// Get system properties
-	Properties properties = System.getProperties();
-
-	// Setup mail server
-	properties.setProperty("mail.smtp.host", host);
-	properties.put("mail.smtp.starttls.enable", "true");
-	properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-	properties.put("mail.smtp.auth", "true");
-	properties.put("mail.smtp.host", "smtp.gmail.com");
-	properties.put("mail.smtp.port", "587");
-
-	// Get the default Session object.
-	Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-	    protected PasswordAuthentication getPasswordAuthentication() {
-		return new PasswordAuthentication(from, password);
-	    }
-	});
-
-
-	try {
-	    Message message = new MimeMessage(session);
-	    message.setFrom(new InternetAddress(from));
-	    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-	    message.setSubject("Email to answer:" + userInterface.getUserEmail() + " Name:" + name.getText() + " Subject:" + subject.getText());
-	    message.setText("Email to answer:" + userInterface.getUserEmail() + " " + this.message.getText());
-
-	    Transport.send(message);
-
-	} catch (MessagingException e) {
-	    throw new RuntimeException(e);
-	}
-
     }
 
     @Override
