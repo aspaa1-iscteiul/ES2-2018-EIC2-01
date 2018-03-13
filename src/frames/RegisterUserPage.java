@@ -118,7 +118,7 @@ public class RegisterUserPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
+	userInterface.setUserEmail(email.getText());
 
     }
 
