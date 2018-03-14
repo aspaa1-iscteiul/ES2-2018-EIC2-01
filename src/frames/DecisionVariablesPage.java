@@ -162,6 +162,7 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.setDecisionVariablesFromPage(decisionVariableList);
+	//TODO: Guardar o nome do grupo das variáveis
     }
 
     /**
