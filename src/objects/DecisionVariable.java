@@ -16,7 +16,7 @@ public class DecisionVariable {
     public DataType dataType;
     public String lowerBound;
     public String upperBound;
-    public String domain;
+    public String invalidValues;
     public ArrayList<String> knownSolutions;
 
     /**
@@ -31,18 +31,18 @@ public class DecisionVariable {
      *            for the values the variable can assume
      * @param upperBound
      *            for the values the variable can assume
-     * @param domain
-     *            exception values to the lowerBound-upperBound interval
+     * @param invalidValues
+     *            exception values to the lowerBound-upperBound interval [OPTIONAL]
      * @param knownSolutions
-     *            for this variable from previous iterations
+     *            for this variable from previous iterations [OPTIONAL]
      */
-    public DecisionVariable(String name, DataType dataType, String lowerBound, String upperBound, String domain,
+    public DecisionVariable(String name, DataType dataType, String lowerBound, String upperBound, String invalidValues,
 	    ArrayList<String> knownSolutions) {
 	this.name = name;
 	this.dataType = dataType;
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
-	this.domain = domain;
+	this.invalidValues = invalidValues;
 	this.knownSolutions = knownSolutions;
     }
 
@@ -62,8 +62,8 @@ public class DecisionVariable {
 	return upperBound;
     }
 
-    public String getDomain() {
-	return domain;
+    public String getInvalidValues() {
+	return invalidValues;
     }
 
     public ArrayList<String> getKnownSolutions() {
@@ -77,7 +77,8 @@ public class DecisionVariable {
     @Override
     public String toString() {
 	return Problem.newLine + "\tName: " + name + ", Data Type: " + dataType + ", Lower Bound: " + lowerBound
-		+ ", Upper Bound: " + upperBound + ", Domain: " + domain + ", Known Solutions: " + knownSolutions;
+		+ ", Upper Bound: " + upperBound + ", Invalid Values: " + invalidValues + ", Known Solutions: "
+		+ knownSolutions;
     }
 
 }

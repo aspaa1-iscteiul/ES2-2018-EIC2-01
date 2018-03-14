@@ -42,14 +42,15 @@ public class UserFileUtils {
      * Tags for the XML File nodes
      */
     public final static String tagRoot = "Problem", tagName = "Name", tagDataType = "DataType",
-	    tagLowerBound = "LowerBound", tagUpperBound = "UpperBound", tagDomain = "Domain",
-	    tagProblemDescription = "Description", tagDecisionVariables = "DecisionVariables",
-	    tagDecisionVariable = "DecisionVariable", tagKnownSolutions = "KnownSolutions",
-	    tagKnownSolution = "KnownSolution", tagFitnessFunctions = "FitnessFunctions",
-	    tagFitnessFunction = "FitnessFunction", tagJarFilePath = "JarFilePath",
-	    tagOptimizationCriteriaList = "OptimizationCriteria", tagSingleOptimizationCriteria = "Criteria",
-	    tagOptimizationAlgorithms = "OptimizationAlgorithms", tagOptimizationAlgorithm = "OptimizationAlgorithm",
-	    tagIdealTimeFrame = "IdealTimeFrame", tagMaximumTimeFrame = "MaximumTimeFrame";
+	    tagLowerBound = "LowerBound", tagUpperBound = "UpperBound", tagInvalidValues = "InvalidValues",
+	    tagProblemDescription = "Description", tagDecisionVariablesSetName = "SetName",
+	    tagDecisionVariables = "DecisionVariables", tagDecisionVariable = "DecisionVariable",
+	    tagKnownSolutions = "KnownSolutions", tagKnownSolution = "KnownSolution",
+	    tagFitnessFunctions = "FitnessFunctions", tagFitnessFunction = "FitnessFunction",
+	    tagJarFilePath = "JarFilePath", tagOptimizationCriteriaList = "OptimizationCriteria",
+	    tagSingleOptimizationCriteria = "Criteria", tagOptimizationAlgorithms = "OptimizationAlgorithms",
+	    tagOptimizationAlgorithm = "OptimizationAlgorithm", tagIdealTimeFrame = "IdealTimeFrame",
+	    tagMaximumTimeFrame = "MaximumTimeFrame";
 
     /**
      * Method to write a given Problem object to a XML file according to a
@@ -100,10 +101,17 @@ public class UserFileUtils {
 
 	// Create Name and Description Nodes
 	createTextNode(doc, problemNode, tagName, problem.getProblemName());
-	createTextNode(doc, problemNode, tagProblemDescription, problem.getProblemDescription());
+
+	if (problem.getProblemDescription() != null)
+	    createTextNode(doc, problemNode, tagProblemDescription, problem.getProblemDescription());
 
 	// Create Decision Variables Node and Sub-nodes
 	Element decisionVariblesNode = createEmptyNode(doc, problemNode, tagDecisionVariables);
+
+	if (problem.getDecisionVariablesSetName() != null) {
+	    createTextNode(doc, decisionVariblesNode, tagDecisionVariablesSetName,
+		    problem.getDecisionVariablesSetName());
+	}
 
 	for (DecisionVariable d : problem.getDecisionVariables()) {
 	    Element decisionVaribleNode = createEmptyNode(doc, decisionVariblesNode, tagDecisionVariable);
@@ -112,7 +120,9 @@ public class UserFileUtils {
 	    createTextNode(doc, decisionVaribleNode, tagDataType, d.getDataType().name());
 	    createTextNode(doc, decisionVaribleNode, tagLowerBound, d.getLowerBound());
 	    createTextNode(doc, decisionVaribleNode, tagUpperBound, d.getUpperBound());
-	    createTextNode(doc, decisionVaribleNode, tagDomain, d.getDomain());
+
+	    if (d.getInvalidValues() != null)
+		createTextNode(doc, decisionVaribleNode, tagInvalidValues, d.getInvalidValues());
 
 	    if (d.getKnownSolutions() != null) {
 		Element knownSolutionsNode = createEmptyNode(doc, decisionVaribleNode, tagKnownSolutions);
@@ -149,8 +159,10 @@ public class UserFileUtils {
 
 	// Create Ideal Time Frame Node
 	createTextNode(doc, problemNode, tagIdealTimeFrame, "" + problem.getIdealTimeFrame());
+
 	// Create Maximum Time Frame Node
-	createTextNode(doc, problemNode, tagMaximumTimeFrame, "" + problem.getMaxTimeFrame());
+	if (problem.getMaxTimeFrame() != null)
+	    createTextNode(doc, problemNode, tagMaximumTimeFrame, "" + problem.getMaxTimeFrame());
 
 	return problemNode;
     }
@@ -167,10 +179,11 @@ public class UserFileUtils {
      * @param value
      *            of the new node
      */
-    private static void createTextNode(Document doc, Element rootNode, String tag, String value) {
+    private static Element createTextNode(Document doc, Element rootNode, String tag, String value) {
 	Element node = doc.createElement(tag);
 	node.appendChild(doc.createTextNode(value));
 	rootNode.appendChild(node);
+	return node;
     }
 
     /**
@@ -241,14 +254,21 @@ public class UserFileUtils {
 	Element problemElement = (Element) problemNode;
 
 	problem.setProblemName((getTagValue(tagName, problemElement)));
-	problem.setProblemDescription((getTagValue(tagProblemDescription, problemElement)));
 
+	if (problemElement.getElementsByTagName(tagProblemDescription).getLength() > 0)
+	    problem.setProblemDescription(getTagValue(tagProblemDescription, problemElement));
+
+	if (problemElement.getElementsByTagName(tagDecisionVariablesSetName).getLength() > 0)
+	    problem.setDecisionVariablesSetName(getTagValue(tagDecisionVariablesSetName, problemElement));
+	
 	problem.setDecisionVariables(getDecisionVariables(doc));
 	problem.setFitnessFunctions(getFitnessFunctions(doc));
 	problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));
 
-	problem.setIdealTimeFrame((Double.parseDouble(getTagValue(tagIdealTimeFrame, problemElement))));
-	problem.setMaxTimeFrame((Double.parseDouble(getTagValue(tagMaximumTimeFrame, problemElement))));
+	problem.setIdealTimeFrame((getTagValue(tagIdealTimeFrame, problemElement)));
+
+	if (problemNode.getLastChild().getNodeName().equals(tagMaximumTimeFrame))
+	    problem.setMaxTimeFrame((getTagValue(tagMaximumTimeFrame, problemElement)));
 
 	return problem;
     }
@@ -280,12 +300,21 @@ public class UserFileUtils {
 	    String dataType = getTagValue(tagDataType, decisionVariableElement);
 	    String lowerBound = getTagValue(tagLowerBound, decisionVariableElement);
 	    String upperBound = getTagValue(tagUpperBound, decisionVariableElement);
-	    String domain = getTagValue(tagDomain, decisionVariableElement);
+
+	    NodeList decisionVariableChildNodes = decisionVariableNode.getChildNodes();
+
+	    String invalidValues = null;
+
+	    if (decisionVariableChildNodes.item(4) != null
+		    && decisionVariableChildNodes.item(4).getNodeName().equals(tagInvalidValues))
+		invalidValues = getTagValue(tagInvalidValues, decisionVariableElement);
 
 	    if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
-		decisionVariable = new DecisionVariable(name, DataType.INTEGER, lowerBound, upperBound, domain, null);
+		decisionVariable = new DecisionVariable(name, DataType.INTEGER, lowerBound, upperBound, invalidValues,
+			null);
 	    else
-		decisionVariable = new DecisionVariable(name, DataType.DOUBLE, lowerBound, upperBound, domain, null);
+		decisionVariable = new DecisionVariable(name, DataType.DOUBLE, lowerBound, upperBound, invalidValues,
+			null);
 
 	    Node knownSolutionsNode = decisionVariableNode.getLastChild();
 

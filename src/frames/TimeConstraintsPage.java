@@ -81,9 +81,9 @@ public class TimeConstraintsPage extends SuperPage {
     }
 
     /**
-     * Creates the panel with the fields to fill in the ideal time and max time 
+     * Creates the panel with the fields to fill in the ideal time and max time
      */
-    private void createTimesPanels() {	
+    private void createTimesPanels() {
 	JPanel auxPanel1 = new JPanel();
 	auxPanel1.setBackground(Color.WHITE);
 	JPanel idealPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -233,11 +233,11 @@ public class TimeConstraintsPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	userInterface.getProblem().setIdealTimeFrame(Double.parseDouble(idealTime.getText()));
+	userInterface.getProblem().setIdealTimeFrame(idealTime.getText());
 	try {
-	    userInterface.getProblem().setMaxTimeFrame(Double.parseDouble(maxTime.getText()));
+	    userInterface.getProblem().setMaxTimeFrame(maxTime.getText());
 	} catch (NumberFormatException e) {
-	    userInterface.getProblem().setMaxTimeFrame(Double.MAX_VALUE);
+	    userInterface.getProblem().setMaxTimeFrame("" + Double.MAX_VALUE);
 	}
     }
 
