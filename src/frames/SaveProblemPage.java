@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import utils.UserFileUtils;
+
 /**
  * This class represents the Save Problem Page
  */
@@ -138,6 +140,7 @@ public class SaveProblemPage extends SuperPage {
 		saveButton.setBackground(new Color(155, 226, 155).brighter());
 		savePanel.validate();
 		savePanel.repaint();
+		UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText());
 	    }
 	});
 
@@ -187,5 +190,4 @@ public class SaveProblemPage extends SuperPage {
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
     }
-
 }

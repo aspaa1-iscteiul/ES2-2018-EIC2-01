@@ -163,38 +163,66 @@ public class TimeConstraintsPage extends SuperPage {
 	}
 	try {
 	    Integer.parseInt(idealTime.getText());
-	    idealOk = true;
-	    if (!maxTime.getText().trim().isEmpty()) {
-		Integer.parseInt(maxTime.getText());
-		maxOk = true;
-		if (idealOk == true && maxOk == true
-			&& (Integer.parseInt(idealTime.getText()) <= Integer.parseInt(maxTime.getText()))) {
-		    tmp = true;
-		    FrameUtils.normalFormat(idealTime);
+	    if(Integer.parseInt(idealTime.getText()) > 0) {
+		idealOk = true;  
+		FrameUtils.normalFormat(idealTime);
+
+		if (!maxTime.getText().trim().isEmpty()) {
+		    Integer.parseInt(maxTime.getText());
+		    if(Integer.parseInt(maxTime.getText()) > 0) {
+			maxOk = true;  
+			FrameUtils.normalFormat(maxTime);
+		    } else {
+			FrameUtils.errorFormat(maxTime,
+				"The max time frame must be bigger than zero");
+		    }
+		    if (idealOk == true && maxOk == true
+			    && (Integer.parseInt(idealTime.getText()) <= Integer.parseInt(maxTime.getText()))) {
+			tmp = true;
+			FrameUtils.normalFormat(idealTime);
+		    } else {
+			FrameUtils.errorFormat(idealTime,
+				"The ideal time frame must be smaller than the maximum time frame.");
+		    }
 		} else {
-		    FrameUtils.errorFormat(idealTime,
-			    "The ideal time frame must be smaller than the maximum time frame.");
+		    tmp = true;
 		}
+
 	    } else {
-		tmp = true;
+		FrameUtils.errorFormat(idealTime,
+			"The ideal time frame must be bigger than zero");
 	    }
 	} catch (NumberFormatException e1) {
 	    tmp = false;
 	    try {
 		Double.parseDouble(idealTime.getText());
-		idealOk = true;
-		if (!maxTime.getText().trim().isEmpty()) {
-		    Double.parseDouble(maxTime.getText());
-		    maxOk = true;
-		    if (idealOk == true && maxOk == true
-			    && (Double.parseDouble(idealTime.getText()) <= Double.parseDouble(maxTime.getText()))) {
-			tmp = true;
-			FrameUtils.normalFormat(idealTime);
+		if(Double.parseDouble(idealTime.getText()) > 0) {
+		    idealOk = true;  
+		    FrameUtils.normalFormat(idealTime);
+
+		    if (!maxTime.getText().trim().isEmpty()) {
+			Double.parseDouble(maxTime.getText());
+			if( Double.parseDouble(maxTime.getText()) > 0) {
+			    maxOk = true;  
+			    FrameUtils.normalFormat(maxTime);
+			} else {
+			    FrameUtils.errorFormat(maxTime,
+				    "The max time frame must be bigger than zero");
+			}
+			if (idealOk == true && maxOk == true
+				&& (Double.parseDouble(idealTime.getText()) <= Double.parseDouble(maxTime.getText()))) {
+			    tmp = true;
+			    FrameUtils.normalFormat(idealTime);
+			} else {
+			    FrameUtils.errorFormat(idealTime, "The ideal time must be smaller than the max time.");
+			}
 		    } else {
-			FrameUtils.errorFormat(idealTime, "The ideal time must be smaller than the max time.");
+			tmp = true;
 		    }
+
 		} else {
-		    tmp = true;
+		    FrameUtils.errorFormat(idealTime,
+			    "The ideal time frame must be bigger than zero");
 		}
 	    } catch (NumberFormatException e2) {
 		tmp = false;
