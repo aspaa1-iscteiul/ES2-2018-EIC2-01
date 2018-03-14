@@ -20,15 +20,22 @@ public class TestUserFileUtils {
      * 
      * @return Object Problem for testing
      */
-    public Problem contructProblem() {
-	ArrayList<String> knownSolutions = new ArrayList<String>();
-	knownSolutions.add("3");
-	knownSolutions.add("4");
-	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "Z except 0", knownSolutions);
-	DecisionVariable dv2 = new DecisionVariable("var2", DataType.DOUBLE, "-4.9", "+4.8", "Z except 0.0", null);
+    public Problem contructProblem(int scenario) {
+	ArrayList<String> knownSolutionsDV1 = new ArrayList<String>();
+	knownSolutionsDV1.add("3");
+	knownSolutionsDV1.add("4");
+	ArrayList<String> knownSolutionsDV2 = new ArrayList<String>();
+	knownSolutionsDV2.add("3.5");
+	knownSolutionsDV2.add("4.5");
+	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "0", knownSolutionsDV1);
+	DecisionVariable dv2 = new DecisionVariable("var2", DataType.DOUBLE, "-4.9", "+4.8", "0.0", null);
+	DecisionVariable dv3 = new DecisionVariable("var3", DataType.DOUBLE, "-5.1", "+5.1", null, knownSolutionsDV2);
+	DecisionVariable dv4 = new DecisionVariable("var4", DataType.INTEGER, "-3", "+3", null, null);
 	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
 	decisionVariables.add(dv1);
 	decisionVariables.add(dv2);
+	decisionVariables.add(dv3);
+	decisionVariables.add(dv4);
 
 	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", DataType.INTEGER);
 	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", DataType.DOUBLE);
@@ -43,8 +50,15 @@ public class TestUserFileUtils {
 	optimizationAlgorithms.add("NSGA");
 	optimizationAlgorithms.add("NSGA-2");
 
-	return new Problem("ProblemaTeste", "Descrição do problema de teste", decisionVariables, fitnessFunctions,
-		optimizationAlgorithms, 2.0, 4.0);
+	Problem problem;
+	if (scenario == 1)
+	    problem = new Problem("ProblemaTeste", null, null, decisionVariables, fitnessFunctions,
+		    optimizationAlgorithms, "2.0", "4.0");
+	else
+	    problem = new Problem("ProblemaTeste", "Descrição do problema de teste", "Regras", decisionVariables,
+		    fitnessFunctions, optimizationAlgorithms, "2.0", null);
+
+	return problem;
     }
 
     /**
@@ -59,16 +73,32 @@ public class TestUserFileUtils {
      * Testing a successful scenario of writing a Problem object to a XML document,
      * reading a Problem of that same file and confirming we are obtaining
      * equivalent objects
+     * 
+     * Scenario: set MaxTimeFrame
      */
     @Test
-    public final void successfullyTestWriteToAndReadFromXML() {
-	Problem problemWrite = contructProblem();
-	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles/userConfigTest.xml");
-	Problem problemRead = utils.UserFileUtils.readFromXML("./src/jUnitTests/testFiles/userConfigTest.xml");
+    public final void successfullyTestWriteToAndReadFromXML1() {
+	Problem problemWrite = contructProblem(1);
+	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles/userConfigTest1.xml");
+	Problem problemRead = utils.UserFileUtils.readFromXML("./src/jUnitTests/testFiles/userConfigTest1.xml");
 
 	assertEquals(problemWrite, problemRead);
-	;
+    }
 
+    /**
+     * Testing a successful scenario of writing a Problem object to a XML document,
+     * reading a Problem of that same file and confirming we are obtaining
+     * equivalent objects
+     * 
+     * Scenario: null MaxTimeFrame
+     */
+    @Test
+    public final void successfullyTestWriteToAndReadFromXML2() {
+	Problem problemWrite = contructProblem(2);
+	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles/userConfigTest2.xml");
+	Problem problemRead = utils.UserFileUtils.readFromXML("./src/jUnitTests/testFiles/userConfigTest2.xml");
+
+	assertEquals(problemWrite, problemRead);
     }
 
     /**
@@ -77,11 +107,11 @@ public class TestUserFileUtils {
      */
     @Test
     public final void unsuccessfullyTestWriteToAndReadFromXML() {
-	Problem problemWrite = contructProblem();
+	Problem problemWrite = contructProblem(1);
 	// For testing purposes, the file path passed as an argument has a typographical
 	// error
-	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFikes/userConfigTest.xml");
-	utils.UserFileUtils.readFromXML("./src/jUnitTests/testFilis/userConfigTest.xml");
+	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFikes/userConfigTest1.xml");
+	utils.UserFileUtils.readFromXML("./src/jUnitTests/testFilis/userConfigTest1.xml");
     }
 
 }
