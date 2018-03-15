@@ -311,8 +311,9 @@ public class DecisionVariablesPage extends SuperPage {
 	    while (scn.hasNextLine()) {
 		String line = scn.nextLine().replaceAll(" ", "");
 		if (!line.equals("")) {
+		    //TODO: Read invalid values from file
 		    DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this, line, values[0],
-			    values[1], values[2]);
+			    values[1], values[2], null);
 		    decisionVariableList.add(decisionVariable);
 		    subSubMainPanel.add(decisionVariable.transformIntoAPanel());
 		}

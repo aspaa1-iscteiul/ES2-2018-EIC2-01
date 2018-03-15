@@ -43,7 +43,7 @@ public class DecisionVariablesObject {
      */
 
     public DecisionVariablesObject(final DecisionVariablesPage page, String variableName, String variableDataType,
-	    String lowerLimit, String upperLimit) {
+	    String lowerLimit, String upperLimit, String[] values) {
 	this.pageAssociated = page;
 	variablesPanel = new JPanel();
 	final DecisionVariablesObject tmp = this;
@@ -66,7 +66,7 @@ public class DecisionVariablesObject {
 	dataType.setSelectedItem(variableDataType);
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
-	invalidValues = new JTextField(6);
+	invalidValues = new JTextField(values.toString(), 6);
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	deleteIcon.addMouseListener(new MouseListener() {
@@ -98,7 +98,7 @@ public class DecisionVariablesObject {
     }
 
     public DecisionVariablesObject(final DecisionVariablesPage page) {
-	this(page, null, null, null, null);
+	this(page, null, null, null, null, null);
     }
 
     /**

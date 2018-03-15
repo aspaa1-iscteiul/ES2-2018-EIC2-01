@@ -63,6 +63,38 @@ public class FitnessFunctionObject {
 	warning = new JLabel("No optimization criterias available");
     }
 
+    public FitnessFunctionObject(FitnessFunctionPage page, String filePath, ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
+
+	this.pageAssociated = page;
+	this.checkboxList = new ArrayList<OptimizationCriteriaCheckbox>();
+	uploadButton = FrameUtils.cuteButton("filePath");
+	uploadButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Upload fitness function");
+		// Launches the JFileChooser on the Desktop directory
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+		// Prevents selection of multiple options
+		fileChooser.setMultiSelectionEnabled(false);
+		// Only files with the JAR extension are visible
+		fileChooser.setFileFilter(new FileNameExtensionFilter("JAR File", "jar"));
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(null)) {
+		    uploadButton.setText(fileChooser.getSelectedFile().getAbsolutePath());
+		}
+	    }
+	});
+	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+	uploadButton
+	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	uploadButton.setPreferredSize(new Dimension(135, 22));
+
+	this.checkboxList = checkboxList;
+
+    }
+
+
     /**
      * Transforms the object in a JPanel that will be added to the frame later.
      * 

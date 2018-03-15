@@ -58,6 +58,20 @@ public class KnownSolutionsObject {
 	this.newSolutionInfo = new JLabel("Add new solutions");
     }
 
+    public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
+	    String upperBound, String[] invalidValues, ArrayList<String> solutions) {
+	this.pageAssociated = page;
+	this.name = new JTextField(name.length());
+	this.name.setText(name);
+	this.dataType = type;
+	this.lowerBound = lowerBound;
+	this.upperBound = upperBound;
+	this.setInvalidValues(invalidValues);
+	this.setTextfieldList(getSolutionListInString(solutions));
+	this.addIcon = new JLabel();
+	this.newSolutionInfo = new JLabel("Add new solutions");
+    }
+
     /**
      * Transforms the object in a JPanel that will be added to the frame later.
      * 
@@ -237,6 +251,20 @@ public class KnownSolutionsObject {
 	ArrayList<String> tmp = new ArrayList<String>();
 	for(JTextField text : solutionsList) {
 	    tmp.add(text.getText());
+	}
+	return tmp;
+    }
+
+    /**
+     * Transforms the strings into textfields
+     * @return
+     */
+    private ArrayList<JTextField> getSolutionListInString(ArrayList<String> strings) {
+	ArrayList<JTextField> tmp = new ArrayList<JTextField>();
+	for(String str : strings) {
+	    JTextField text = new JTextField(str.length());
+	    text.setText(str);
+	    tmp.add(text);
 	}
 	return tmp;
     }

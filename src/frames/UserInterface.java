@@ -249,6 +249,20 @@ public class UserInterface {
     }
 
     /**
+     * Transforms the data from problem to the data used in the interface
+     * @param page
+     * @return
+     */
+    public ArrayList<DecisionVariablesObject> createDecisionVariableFromProblem(DecisionVariablesPage page){
+	ArrayList<DecisionVariablesObject> tmp = new ArrayList<DecisionVariablesObject>();
+	for(DecisionVariable dv : problem.getDecisionVariables()) {
+	    tmp.add(new DecisionVariablesObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(),
+		    dv.getUpperBound(), dv.getInvalidValuesInVector()));
+	}
+	return tmp;
+    }
+
+    /**
      * Transforms the data inputs of the interface to the object FitnessFunction
      * that will be used in the object Problem
      * 
@@ -263,6 +277,20 @@ public class UserInterface {
     }
 
     /**
+     * Transforms the data from problem to the data used in the interface
+     * @param page
+     * @return
+     */
+    public ArrayList<FitnessFunctionObject> createFitnessFunctionFromProblem(FitnessFunctionPage page){
+	ArrayList<FitnessFunctionObject> tmp = new ArrayList<FitnessFunctionObject>();
+	for(FitnessFunction ff : problem.getFitnessFunctions()) {
+	    tmp.add(new FitnessFunctionObject(page, ff.getJarFilePath(), 
+		    createOptimizationCriteriaCheckboxesFromProblem(ff.getOptimizationCriteria())));
+	}
+	return tmp;
+    }
+
+    /**
      * Transforms the data inputs of the interface to the object
      * OptimizationCriteria that will be used in the object Problem
      * 
@@ -274,6 +302,21 @@ public class UserInterface {
 	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem()));
 	}
 	return ocList;
+    }
+
+    /**
+     * Transforms the data from problem to the data used in the interface
+     * @param page
+     * @return
+     */
+    public ArrayList<OptimizationCriteriaObject> createOptimizationCriteriaFromProblem(OptimizationCriteriaPage page){
+	ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
+	for(FitnessFunction ff : problem.getFitnessFunctions()) {
+	    for(OptimizationCriteria oc : ff.getOptimizationCriteria()) {
+		tmp.add(new OptimizationCriteriaObject(page, oc.getName(), oc.getDataType().toString()));
+	    }
+	}
+	return tmp;
     }
 
     /**
@@ -296,6 +339,20 @@ public class UserInterface {
     }
 
     /**
+     * Transforms the data from problem to the data used in the interface
+     * @param page
+     * @return
+     */
+    public ArrayList<KnownSolutionsObject> createKnownSolutionsFromProblem(KnownSolutionsPage page) {
+	ArrayList<KnownSolutionsObject> solutions = new ArrayList<KnownSolutionsObject>();
+	for (DecisionVariable dv : problem.getDecisionVariables()) {
+	    solutions.add(new KnownSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(), dv.getUpperBound(),
+		    dv.getInvalidValuesInVector(), dv.getKnownSolutions()));
+	}
+	return solutions;
+    }
+
+    /**
      * Converts a arraylist of strings with the name of the checkboxes selected into an arraylist of optimization criteria
      * to be used in the problem saving
      * @param strings
@@ -313,6 +370,20 @@ public class UserInterface {
 	return tmp;
     }
 
+    /**
+     * Converts a arraylist of optimization criteria into an arraylist of optimization criteria checkboxes
+     * @param strings
+     * @return
+     */
+    private ArrayList<OptimizationCriteriaCheckbox> createOptimizationCriteriaCheckboxesFromProblem(ArrayList<OptimizationCriteria> optimizationCriterias){
+	ArrayList<OptimizationCriteriaCheckbox> tmp = new  ArrayList<OptimizationCriteriaCheckbox>();
+	for(OptimizationCriteria oc : optimizationCriterias) {
+	    OptimizationCriteriaCheckbox occ = new OptimizationCriteriaCheckbox(oc.getName());
+	    occ.getCheckBox().setSelected(true);
+	    tmp.add(occ);
+	}
+	return tmp;
+    }
 
     /**
      * Sets the data from the interface on the optimization problem's

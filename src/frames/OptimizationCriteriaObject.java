@@ -70,6 +70,43 @@ public class OptimizationCriteriaObject {
 	});
     }
 
+    public OptimizationCriteriaObject(OptimizationCriteriaPage ocp, String name, String dataType) {
+	pageAssociated = ocp;
+	variablesPanel = new JPanel();
+	this.name = new JTextField(name);
+	this.dataType = FrameUtils.cuteComboBox(dataTypes);
+	this.dataType.setSelectedItem(dataType);
+	deleteIcon = new JLabel();
+	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
+	final OptimizationCriteriaObject tmp = this;
+	deleteIcon.addMouseListener(new MouseListener() {
+	    @Override
+	    public void mouseClicked(MouseEvent arg0) {
+		EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+			pageAssociated.removeOptimizationCriteriaFromList(tmp);
+		    }
+		});
+	    }
+
+	    @Override
+	    public void mouseEntered(MouseEvent arg0) {
+	    }
+
+	    @Override
+	    public void mouseExited(MouseEvent arg0) {
+	    }
+
+	    @Override
+	    public void mousePressed(MouseEvent arg0) {
+	    }
+
+	    @Override
+	    public void mouseReleased(MouseEvent arg0) {
+	    }
+	});
+    }
+
     /**
      * Transforms the object in a JPanel that will be added to the frame later.
      * 

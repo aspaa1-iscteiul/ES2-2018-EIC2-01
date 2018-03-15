@@ -81,4 +81,9 @@ public class DecisionVariable {
 		+ knownSolutions;
     }
 
+    public String[] getInvalidValuesInVector() {
+	String[] v = invalidValues.split(",");
+	return v;
+    }
+
 }
