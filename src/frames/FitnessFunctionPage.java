@@ -211,14 +211,14 @@ public class FitnessFunctionPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(userInterface.isXmlFileWasImportedAtIndex(1)==true) {
+	if(userInterface.isXmlFileWasImportedAtIndex(2)==true) {
 	    subMainPanel.removeAll();
 	    setThisPage();
 	    fitnessFunctionList = userInterface.getFitnessFunctionFromPage();
 	    for(FitnessFunctionObject ffo : fitnessFunctionList) {
-		subMainPanel.add(ffo.transformIntoAPanel());
+		subMainPanel.add(ffo.transformIntoAPanelWhenReadFromXML());
 	    }
-	    userInterface.putXmlFileWasImportedFalseAtIndex(1);
+	    userInterface.putXmlFileWasImportedFalseAtIndex(2);
 	} else {
 	    if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==false) {
 		for(FitnessFunctionObject ff : fitnessFunctionList) {

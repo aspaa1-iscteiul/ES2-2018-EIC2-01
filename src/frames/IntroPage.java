@@ -93,6 +93,7 @@ public class IntroPage extends SuperPage {
 
 	if (fileChooser.showOpenDialog(userInterface.getFrame()) == JFileChooser.APPROVE_OPTION) {
 	    userInterface.setProblem(UserFileUtils.readFromXML(fileChooser.getSelectedFile().getAbsolutePath()));
+	    userInterface.createProblemId();
 	    userInterface.createDecisionVariableFromProblem(null);
 	    userInterface.createFitnessFunctionFromProblem(null);
 	    userInterface.createOptimizationCriteriaFromProblem(null);

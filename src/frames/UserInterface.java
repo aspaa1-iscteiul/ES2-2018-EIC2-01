@@ -47,10 +47,10 @@ public class UserInterface {
 	problem = new Problem();
 
 	pages = new ArrayList<>();
-	//	pages.add(new HomePage(this));
+	pages.add(new HomePage(this));
 	pages.add(new IntroPage(this));
-	//	pages.add(new RegisterUserPage(this));
-	//	pages.add(new ProblemIdPage(this));
+	pages.add(new RegisterUserPage(this));
+	pages.add(new ProblemIdPage(this));
 	pages.add(new DecisionVariablesPage(this));  
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
@@ -167,17 +167,17 @@ public class UserInterface {
 	frame.validate();
 	frame.repaint();
     }
-   
+
     public boolean[] isXmlFileWasImported() {
-        return xmlFileWasImported;
+	return xmlFileWasImported;
     }
-    
+
     public boolean isXmlFileWasImportedAtIndex(int index) {
-        return xmlFileWasImported[index];
+	return xmlFileWasImported[index];
     }
-    
+
     public void putXmlFileWasImportedFalseAtIndex(int index) {
-        xmlFileWasImported[index] = false;
+	xmlFileWasImported[index] = false;
     }
 
     public ArrayList<DecisionVariablesObject> getDecisionVariablesFromPage() {
@@ -249,6 +249,10 @@ public class UserInterface {
 	user.launch();
     }
 
+    public void createProblemId() {
+	xmlFileWasImported[0] = true;
+    }
+    
     /**
      * Transforms the data inputs of the interface to the object DecisionVariable
      * that will be used in the object Problem
@@ -263,8 +267,8 @@ public class UserInterface {
 	}
 	return dvList;
     }
-
-    /**
+    
+     /**
      * Transforms the data from problem to the data used in the interface
      * @param page
      * @return
@@ -275,7 +279,7 @@ public class UserInterface {
 	    tmp.add(new DecisionVariablesObject(page, dv.getName(), dv.getDataType().name(), dv.getLowerBound(),
 		    dv.getUpperBound(), dv.getInvalidValuesInVector()));
 	}
-	xmlFileWasImported[0] = true;
+	xmlFileWasImported[1] = true;
 	this.decisionVariablesFromPage = tmp;
     }
 
@@ -304,7 +308,7 @@ public class UserInterface {
 	    tmp.add(new FitnessFunctionObject(page, ff.getJarFilePath(), 
 		    createOptimizationCriteriaCheckboxesFromProblem(ff.getOptimizationCriteria())));
 	}
-	xmlFileWasImported[1] = true;
+	xmlFileWasImported[2] = true;
 	this.fitnessFunctionFromPage = tmp;
     }
 
@@ -334,7 +338,7 @@ public class UserInterface {
 		tmp.add(new OptimizationCriteriaObject(page, oc.getName(), oc.getDataType().toString()));
 	    }
 	}
-	xmlFileWasImported[2] = true;
+	xmlFileWasImported[3] = true;
 	this.optimizationCriteriaFromPage = tmp;
     }
 
@@ -368,7 +372,7 @@ public class UserInterface {
 	    tmp.add(new KnownSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(), dv.getUpperBound(),
 		    dv.getInvalidValuesInVector(), dv.getKnownSolutions()));
 	}
-	xmlFileWasImported[3] = true;
+	xmlFileWasImported[4] = true;
 	this.knownSolutionsFromDecisionVariables = tmp;
     }
 

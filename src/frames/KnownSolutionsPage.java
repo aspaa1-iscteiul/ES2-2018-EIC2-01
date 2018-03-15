@@ -135,13 +135,13 @@ public class KnownSolutionsPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
 	subSubMainPanel.removeAll();
-	if(userInterface.isXmlFileWasImportedAtIndex(3)==true) {
+	if(userInterface.isXmlFileWasImportedAtIndex(4)==true) {
 	    setThisPage();
 	    knownSolutionsList = userInterface.getKnownSolutionsList();
 	    for(KnownSolutionsObject kso : knownSolutionsList) {
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
-	    userInterface.putXmlFileWasImportedFalseAtIndex(3);
+	    userInterface.putXmlFileWasImportedFalseAtIndex(4);
 	} else {
 	    if (knownSolutionsList.size() > 0) {
 		for (KnownSolutionsObject kso : knownSolutionsList) {

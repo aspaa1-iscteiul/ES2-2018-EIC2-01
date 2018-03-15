@@ -58,11 +58,18 @@ public class KnownSolutionsObject {
 	this.newSolutionInfo = new JLabel("Add new solutions");
     }
 
-    public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
+    public KnownSolutionsObject(KnownSolutionsPage page, String name, String variableDataType, String lowerBound,
 	    String upperBound, String[] invalidValues, ArrayList<String> solutions) {
 	this.pageAssociated = page;
 	this.name = new JTextField(name, name.length());
-	this.dataType = type;
+
+	if(variableDataType != null) {
+	    if(variableDataType.equals("INTEGER")) {
+		dataType = "Integer";
+	    } else {
+		dataType = "Double";
+	    }
+	}
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
 	this.setInvalidValues(invalidValues);
@@ -262,9 +269,7 @@ public class KnownSolutionsObject {
 	ArrayList<JTextField> tmp = new ArrayList<JTextField>();
 	if(strings != null) {
 	    for(String str : strings) {
-		JTextField text = new JTextField(str.length());
-		text.setText(str);
-		tmp.add(text);
+		tmp.add(new JTextField(str));
 	    }
 	}
 	return tmp;

@@ -146,15 +146,15 @@ public class OptimizationCriteriaPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(userInterface.isXmlFileWasImportedAtIndex(2)==true) {
+	if(userInterface.isXmlFileWasImportedAtIndex(3)==true) {
 	    subSubMainPanel.removeAll();
 	    setThisPage();
 	    optimizationCriteriaList = userInterface.getOptimizationCriteriaFromPage();
 	    for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
 		subSubMainPanel.add(oco.transformIntoAPanel());
 	    }
+	    userInterface.putXmlFileWasImportedFalseAtIndex(3);
 	}
-	 userInterface.putXmlFileWasImportedFalseAtIndex(2);
     }
 
     /**

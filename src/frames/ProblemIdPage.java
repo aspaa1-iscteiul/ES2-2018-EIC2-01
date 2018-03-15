@@ -91,6 +91,11 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+	if(userInterface.isXmlFileWasImportedAtIndex(0)==true) {
+	    problemName.setText(userInterface.getProblem().getProblemName());	 
+	    problemDescription.setText(userInterface.getProblem().getProblemDescription());
+	    userInterface.putXmlFileWasImportedFalseAtIndex(0);
+	}
     }
 
     @Override
