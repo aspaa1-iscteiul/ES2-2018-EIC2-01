@@ -257,8 +257,7 @@ public class UserInterface {
     public ArrayList<FitnessFunction> createFitnessFunctionFinalList() {
 	ArrayList<FitnessFunction> ffList = new ArrayList<FitnessFunction>();
 	for (FitnessFunctionObject ffo : fitnessFunctionFromPage) {
-	    //TODO:
-	    ffList.add(new FitnessFunction(ffo.getPath(), ffo.getTheCheckboxesSelected()));
+	    ffList.add(new FitnessFunction(ffo.getPath(), getOptimizationCriteriaObjectsFromGivenStrings(ffo.getTheCheckboxesSelected()) ));
 	}
 	return ffList;
     }
@@ -297,6 +296,25 @@ public class UserInterface {
     }
 
     /**
+     * Converts a arraylist of strings with the name of the checkboxes selected into an arraylist of optimization criteria
+     * to be used in the problem saving
+     * @param strings
+     * @return
+     */
+    private ArrayList<OptimizationCriteria> getOptimizationCriteriaObjectsFromGivenStrings(ArrayList<String> strings){
+	ArrayList<OptimizationCriteria> tmp = new  ArrayList<OptimizationCriteria>();
+	for(String str : strings) {
+	    for(OptimizationCriteria oco : createOptimizationCriteriaFinalList()) {
+		if(oco.getName().equals(str)) {
+		    tmp.add(oco);
+		}
+	    }
+	}
+	return tmp;
+    }
+
+
+    /**
      * Sets the data from the interface on the optimization problem's
      * characterization
      */
@@ -305,6 +323,5 @@ public class UserInterface {
 	this.problem.setFitnessFunctions(createFitnessFunctionFinalList());
 	this.problem.setOptimizationAlgorithms(optimizationAlgorithmsFromPage);
     }
-
 
 }

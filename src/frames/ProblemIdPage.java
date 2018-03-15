@@ -104,7 +104,7 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.getProblem().setProblemName(problemName.getText());
-	userInterface.getProblem().setProblemName(problemDescription.getText());
+	userInterface.getProblem().setProblemDescription(problemDescription.getText());
     }
 
 }
