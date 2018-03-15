@@ -253,13 +253,13 @@ public class UserInterface {
      * @param page
      * @return
      */
-    public ArrayList<DecisionVariablesObject> createDecisionVariableFromProblem(DecisionVariablesPage page){
+    public void createDecisionVariableFromProblem(DecisionVariablesPage page){
 	ArrayList<DecisionVariablesObject> tmp = new ArrayList<DecisionVariablesObject>();
 	for(DecisionVariable dv : problem.getDecisionVariables()) {
 	    tmp.add(new DecisionVariablesObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(),
 		    dv.getUpperBound(), dv.getInvalidValuesInVector()));
 	}
-	return tmp;
+	this.decisionVariablesFromPage = tmp;
     }
 
     /**
@@ -281,13 +281,13 @@ public class UserInterface {
      * @param page
      * @return
      */
-    public ArrayList<FitnessFunctionObject> createFitnessFunctionFromProblem(FitnessFunctionPage page){
+    public void createFitnessFunctionFromProblem(FitnessFunctionPage page){
 	ArrayList<FitnessFunctionObject> tmp = new ArrayList<FitnessFunctionObject>();
 	for(FitnessFunction ff : problem.getFitnessFunctions()) {
 	    tmp.add(new FitnessFunctionObject(page, ff.getJarFilePath(), 
 		    createOptimizationCriteriaCheckboxesFromProblem(ff.getOptimizationCriteria())));
 	}
-	return tmp;
+	this.fitnessFunctionFromPage = tmp;
     }
 
     /**
@@ -309,14 +309,14 @@ public class UserInterface {
      * @param page
      * @return
      */
-    public ArrayList<OptimizationCriteriaObject> createOptimizationCriteriaFromProblem(OptimizationCriteriaPage page){
+    public void createOptimizationCriteriaFromProblem(OptimizationCriteriaPage page){
 	ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
 	for(FitnessFunction ff : problem.getFitnessFunctions()) {
 	    for(OptimizationCriteria oc : ff.getOptimizationCriteria()) {
 		tmp.add(new OptimizationCriteriaObject(page, oc.getName(), oc.getDataType().toString()));
 	    }
 	}
-	return tmp;
+	this.optimizationCriteriaFromPage = tmp;
     }
 
     /**
@@ -343,13 +343,13 @@ public class UserInterface {
      * @param page
      * @return
      */
-    public ArrayList<KnownSolutionsObject> createKnownSolutionsFromProblem(KnownSolutionsPage page) {
-	ArrayList<KnownSolutionsObject> solutions = new ArrayList<KnownSolutionsObject>();
+    public void createKnownSolutionsFromProblem(KnownSolutionsPage page) {
+	ArrayList<KnownSolutionsObject> tmp = new ArrayList<KnownSolutionsObject>();
 	for (DecisionVariable dv : problem.getDecisionVariables()) {
-	    solutions.add(new KnownSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(), dv.getUpperBound(),
+	    tmp.add(new KnownSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(), dv.getUpperBound(),
 		    dv.getInvalidValuesInVector(), dv.getKnownSolutions()));
 	}
-	return solutions;
+	this.knownSolutionsFromDecisionVariables = tmp;
     }
 
     /**
