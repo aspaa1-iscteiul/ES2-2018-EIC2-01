@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -25,6 +26,7 @@ public class UserInterface {
     private ArrayList<FitnessFunctionObject> fitnessFunctionFromPage;
     private ArrayList<KnownSolutionsObject> knownSolutionsFromDecisionVariables;
     private ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage;
+    private ArrayList<String> optimizationAlgorithmsFromPage;
     private int actualPageIndex = 0;
     private Problem problem;
     private boolean isSingleobjective;
@@ -36,6 +38,7 @@ public class UserInterface {
 	fitnessFunctionFromPage = new ArrayList<FitnessFunctionObject>();
 	knownSolutionsFromDecisionVariables = new ArrayList<KnownSolutionsObject>();
 	optimizationCriteriaFromPage = new ArrayList<OptimizationCriteriaObject>();
+	optimizationAlgorithmsFromPage = new ArrayList<String>();
 
 	problem = new Problem();
 
@@ -193,6 +196,14 @@ public class UserInterface {
 	this.optimizationCriteriaFromPage = optimizationCriteriaFromPage;
     }
 
+    public ArrayList<String> getOptimizationAlgorithmsFromPage() {
+	return optimizationAlgorithmsFromPage;
+    }
+
+    public void setOptimizationAlgorithmsFromPage(ArrayList<String> optimizationAlgorithmsFromPage) {
+	this.optimizationAlgorithmsFromPage = optimizationAlgorithmsFromPage;
+    }
+
     public void setProblem(Problem problem) {
 	this.problem = problem;
     }
@@ -232,7 +243,7 @@ public class UserInterface {
 	ArrayList<DecisionVariable> dvList = new ArrayList<DecisionVariable>();
 	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
 	    dvList.add(new DecisionVariable(dvo.getVariableName(), dvo.getDataTypeToProblem(), dvo.getLowerBound(),
-		    dvo.getUpperBound(), dvo.getInvalidValues().toString() , getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
+		    dvo.getUpperBound(),  Arrays.toString(dvo.getInvalidValues()) , getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
 	}
 	return dvList;
     }
@@ -246,7 +257,8 @@ public class UserInterface {
     public ArrayList<FitnessFunction> createFitnessFunctionFinalList() {
 	ArrayList<FitnessFunction> ffList = new ArrayList<FitnessFunction>();
 	for (FitnessFunctionObject ffo : fitnessFunctionFromPage) {
-	    ffList.add(new FitnessFunction(ffo.getPath(), null));
+	    //TODO:
+	    ffList.add(new FitnessFunction(ffo.getPath(), ffo.getTheCheckboxesSelected()));
 	}
 	return ffList;
     }
@@ -291,7 +303,7 @@ public class UserInterface {
     public void setFinalProblem() {
 	this.problem.setDecisionVariables(createDecisionVariableFinalList());
 	this.problem.setFitnessFunctions(createFitnessFunctionFinalList());
-	this.problem.setOptimizationAlgorithms(null);
+	this.problem.setOptimizationAlgorithms(optimizationAlgorithmsFromPage);
     }
 
 

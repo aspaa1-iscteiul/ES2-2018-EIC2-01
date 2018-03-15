@@ -2,7 +2,6 @@ package frames;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +48,7 @@ public class AlgorithmsPage extends SuperPage {
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-	title.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+	title.setFont(FrameUtils.cuteFont(16));
 	mainPanel.add(title);
 
 	algorithmsListPanel.setLayout(new BoxLayout(algorithmsListPanel, BoxLayout.Y_AXIS));
@@ -95,11 +94,26 @@ public class AlgorithmsPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
-	return false;
+	return true;
+    }
+    
+    /**
+     * Get the names of the checkboxes selected of a fitness function
+     * @return
+     */
+    public ArrayList<String> getTheCheckboxesSelected() {
+	ArrayList<String> tmp = new ArrayList<String>();
+	for(JCheckBox checkbox : algorithmsList) {
+	    if(checkbox.isSelected()==true) {
+		tmp.add(multiobjectiveAlgorithms.get(algorithmsList.indexOf(checkbox)));
+	    }
+	}
+	return tmp;
     }
 
     @Override
     protected void saveToProblem() {
+	userInterface.setOptimizationAlgorithmsFromPage(getTheCheckboxesSelected());
     }
 
 }

@@ -140,6 +140,7 @@ public class SaveProblemPage extends SuperPage {
 		saveButton.setBackground(new Color(155, 226, 155).brighter());
 		savePanel.validate();
 		savePanel.repaint();
+		System.out.println(userInterface.getProblem().toString());
 		UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText());
 	    }
 	});

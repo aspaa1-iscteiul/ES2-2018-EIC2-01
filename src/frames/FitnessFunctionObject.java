@@ -85,7 +85,7 @@ public class FitnessFunctionObject {
     public String getPath() {
 	return uploadButton.getText();
     }
-    
+
     public ArrayList<OptimizationCriteriaCheckbox> getCheckboxList() {
 	return checkboxList;
     }
@@ -176,7 +176,20 @@ public class FitnessFunctionObject {
 	for (OptimizationCriteriaCheckbox occ : checkboxList) {
 	    occ.getCheckBox().setEnabled(true);
 	}
+    }
 
+    /**
+     * Get the names of the checkboxes selected of a fitness function
+     * @return
+     */
+    public ArrayList<String> getTheCheckboxesSelected() {
+	ArrayList<String> tmp = new ArrayList<String>();
+	for(OptimizationCriteriaCheckbox occ : checkboxList) {
+	    if(occ.getCheckBox().isSelected()==true) {
+		tmp.add(occ.getOptimizationCriteriaName().getText());
+	    }
+	}
+	return tmp;
     }
 
 }

@@ -103,8 +103,8 @@ public class ProblemIdPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-
+	userInterface.getProblem().setProblemName(problemName.getText());
+	userInterface.getProblem().setProblemName(problemDescription.getText());
     }
 
 }

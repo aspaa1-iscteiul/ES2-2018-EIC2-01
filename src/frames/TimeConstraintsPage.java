@@ -237,7 +237,8 @@ public class TimeConstraintsPage extends SuperPage {
 	try {
 	    userInterface.getProblem().setMaxTimeFrame(maxTime.getText());
 	} catch (NumberFormatException e) {
-	    userInterface.getProblem().setMaxTimeFrame("" + Double.MAX_VALUE);
+	    Double tmp = Double.MAX_VALUE;
+	    userInterface.getProblem().setMaxTimeFrame(tmp.toString());
 	}
     }
 
