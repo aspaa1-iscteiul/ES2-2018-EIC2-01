@@ -601,7 +601,7 @@ public class Algorithms_jMetal<S> {
     /**
      * Solution<?> and has builder for two variants of the algorithm
      */
-    public Algorithm<TheType> createGeneticAlgorithm(boolean builder, boolean generetaniol) {
+    public Algorithm<TheType> createGeneticAlgorithm(boolean builder, boolean generational) {
 	SolutionListEvaluator<TheType> evaluator = null;
 	SelectionOperator<List<TheType>, TheType> selectionOperator = null;
 	MutationOperator<TheType> mutationOperator = null;
@@ -611,7 +611,7 @@ public class Algorithms_jMetal<S> {
 	Problem<TheType> problem = null;
 
 	if (!builder)
-	    if (generetaniol)
+	    if (generational)
 		return new GenerationalGeneticAlgorithm<TheType>(problem, maxEvaluations, populationSize,
 			crossoverOperator, mutationOperator, selectionOperator, evaluator);
 	    else
