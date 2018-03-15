@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
@@ -15,6 +16,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.apache.commons.lang3.StringUtils;
 
 import objects.DataType;
 
@@ -63,11 +66,19 @@ public class DecisionVariablesObject {
 	    }
 	});
 	dataType = FrameUtils.cuteComboBox(dataTypes);
-	dataType.setSelectedItem(variableDataType);
+	if(variableDataType != null) {
+	    if(variableDataType.equals("INTEGER")) {
+		dataType.setSelectedIndex(0);
+	    } else {
+		dataType.setSelectedIndex(1);
+	    }
+	}
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
 	if(values != null) {
-	    invalidValues = new JTextField(values.toString());
+	    String tmp1 =  StringUtils.remove(Arrays.toString(values), '[');
+	    String tmp2 = StringUtils.remove(tmp1, ']');
+	    invalidValues = new JTextField(tmp2,6);
 	} else {
 	    invalidValues = new JTextField(6);
 	}
@@ -128,6 +139,14 @@ public class DecisionVariablesObject {
 	variablesPanel.add(invalidValues);
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
+    }
+
+    public DecisionVariablesPage getPageAssociated() {
+	return pageAssociated;
+    }
+
+    public void setPageAssociated(DecisionVariablesPage pageAssociated) {
+	this.pageAssociated = pageAssociated;
     }
 
     public void setVariableName(String name) {

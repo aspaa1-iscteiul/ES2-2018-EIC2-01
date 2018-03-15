@@ -141,6 +141,15 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+	if(userInterface.isXmlFileWasImportedAtIndex(0)==true) {
+	    subSubMainPanel.removeAll();
+	    setThisPage();
+	    decisionVariableList = userInterface.getDecisionVariablesFromPage();
+	    for(DecisionVariablesObject dvo : decisionVariableList) {
+		subSubMainPanel.add(dvo.transformIntoAPanel());
+	    }
+	}
+	userInterface.putXmlFileWasImportedFalseAtIndex(0);
     }
 
     @Override
@@ -350,6 +359,12 @@ public class DecisionVariablesPage extends SuperPage {
 	    if (!dvo.getVariableName().equals("") && dvo.getVariableName().equals(varName))
 		count++;
 	return count >= 2;
+    }
+
+    private void setThisPage() {
+	for(DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+	    dvo.setPageAssociated(this);
+	}
     }
 
 }

@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 public class FitnessFunctionPage extends SuperPage {
 
     private static final long serialVersionUID = 1L;
+    private JPanel subMainPanel;
     private ArrayList<FitnessFunctionObject> fitnessFunctionList;
     private ArrayList<ArrayList<OptimizationCriteriaCheckbox>> checkboxList;
     private JButton nextButton;
@@ -82,7 +83,7 @@ public class FitnessFunctionPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel subMainPanel = new JPanel(new BorderLayout());
+	subMainPanel = new JPanel(new BorderLayout());
 	subMainPanel.setBackground(Color.WHITE);
 	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -210,20 +211,30 @@ public class FitnessFunctionPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==false) {
-	    for(FitnessFunctionObject ff : fitnessFunctionList) {
-		ff.setCheckboxList(checkboxList.get(fitnessFunctionList.indexOf(ff)));
+	if(userInterface.isXmlFileWasImportedAtIndex(1)==true) {
+	    subMainPanel.removeAll();
+	    setThisPage();
+	    fitnessFunctionList = userInterface.getFitnessFunctionFromPage();
+	    for(FitnessFunctionObject ffo : fitnessFunctionList) {
+		subMainPanel.add(ffo.transformIntoAPanel());
 	    }
-	    checkboxList.clear();
-	} else if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==true) {
-	    reconstructPage();
+	    userInterface.putXmlFileWasImportedFalseAtIndex(1);
 	} else {
-	    //Primeira vez onde nada foi seleccionado
-	    for (FitnessFunctionObject ffo : fitnessFunctionList) {
-		ffo.createComponents();
-		ffo.cleanData();
+	    if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==false) {
+		for(FitnessFunctionObject ff : fitnessFunctionList) {
+		    ff.setCheckboxList(checkboxList.get(fitnessFunctionList.indexOf(ff)));
+		}
+		checkboxList.clear();
+	    } else if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==true) {
+		reconstructPage();
+	    } else {
+		//Primeira vez onde nada foi seleccionado
+		for (FitnessFunctionObject ffo : fitnessFunctionList) {
+		    ffo.createComponents();
+		    ffo.cleanData();
+		}
+		checkboxList.clear();
 	    }
-	    checkboxList.clear();
 	}
     }
 
@@ -315,5 +326,9 @@ public class FitnessFunctionPage extends SuperPage {
 	this.fitnessFunctionList = fitnessFunctionList;
     }
 
-
+    private void setThisPage() {
+	for(FitnessFunctionObject ffo : userInterface.getFitnessFunctionFromPage()) {
+	    ffo.setPageAssociated(this);
+	}
+    }
 }

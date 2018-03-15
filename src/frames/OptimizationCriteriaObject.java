@@ -70,12 +70,16 @@ public class OptimizationCriteriaObject {
 	});
     }
 
-    public OptimizationCriteriaObject(OptimizationCriteriaPage ocp, String name, String dataType) {
+    public OptimizationCriteriaObject(OptimizationCriteriaPage ocp, String name, String variableDataType) {
 	pageAssociated = ocp;
 	variablesPanel = new JPanel();
 	this.name = new JTextField(name, name.length());
 	this.dataType = FrameUtils.cuteComboBox(dataTypes);
-	this.dataType.setSelectedItem(dataType);
+	if(variableDataType.equals("INTEGER")) {
+	    dataType.setSelectedIndex(0);
+	} else {
+	    dataType.setSelectedIndex(1);
+	}
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	final OptimizationCriteriaObject tmp = this;
@@ -181,4 +185,12 @@ public class OptimizationCriteriaObject {
 	}
     }
 
+    public OptimizationCriteriaPage getPageAssociated() {
+        return pageAssociated;
+    }
+
+    public void setPageAssociated(OptimizationCriteriaPage pageAssociated) {
+        this.pageAssociated = pageAssociated;
+    }
+    
 }

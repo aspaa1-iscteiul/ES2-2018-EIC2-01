@@ -54,6 +54,13 @@ public class DecisionVariable {
 	return dataType;
     }
 
+    public String getDataTypeToString(){ 
+	if(dataType.equals(DataType.INTEGER)) {
+	    return "Integer";
+	} else {
+	    return "Double";
+	}
+    }
     public String getLowerBound() {
 	return lowerBound;
     }

@@ -83,7 +83,7 @@ public class IntroPage extends SuperPage {
     private boolean importXMLFile() {
 	JFileChooser fileChooser = new JFileChooser();
 	// Launches the JFileChooser on the Desktop directory
-	fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+	fileChooser.setCurrentDirectory(new File( "C:\\Users\\Rodrigo\\git\\ES2-2018-EIC2-01\\src\\jUnitTests\\testFiles\\userConfigTest2.xml"));
 	fileChooser.setDialogTitle("Select a problem configuration file");
 	// Prevents selection of multiple options
 	fileChooser.setMultiSelectionEnabled(false);

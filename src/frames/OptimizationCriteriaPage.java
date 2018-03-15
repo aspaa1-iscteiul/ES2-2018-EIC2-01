@@ -146,6 +146,15 @@ public class OptimizationCriteriaPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
+	if(userInterface.isXmlFileWasImportedAtIndex(2)==true) {
+	    subSubMainPanel.removeAll();
+	    setThisPage();
+	    optimizationCriteriaList = userInterface.getOptimizationCriteriaFromPage();
+	    for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
+		subSubMainPanel.add(oco.transformIntoAPanel());
+	    }
+	}
+	 userInterface.putXmlFileWasImportedFalseAtIndex(2);
     }
 
     /**
@@ -202,5 +211,12 @@ public class OptimizationCriteriaPage extends SuperPage {
 	userInterface.isSingleobjective(optimizationCriteriaList.size() == 1);
 	userInterface.setOptimizationCriteriaFromPage(optimizationCriteriaList);
     }
+
+    private void setThisPage() {
+	for(OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
+	    oco.setPageAssociated(this);
+	}
+    }
+
 
 }

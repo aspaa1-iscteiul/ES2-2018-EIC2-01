@@ -35,7 +35,6 @@ public class FitnessFunctionObject {
      * @param page
      */
     public FitnessFunctionObject(FitnessFunctionPage page) {
-
 	this.pageAssociated = page;
 	this.checkboxList = new ArrayList<OptimizationCriteriaCheckbox>();
 	uploadButton = FrameUtils.cuteButton("Upload JAR file");
@@ -66,7 +65,7 @@ public class FitnessFunctionObject {
     public FitnessFunctionObject(FitnessFunctionPage page, String filePath, ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
 	this.pageAssociated = page;
 	this.checkboxList = checkboxList;
-	uploadButton = FrameUtils.cuteButton("filePath");
+	uploadButton = FrameUtils.cuteButton(filePath);
 	uploadButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
@@ -109,6 +108,14 @@ public class FitnessFunctionObject {
 	overallPanel.add(fieldsPanel);
 
 	return overallPanel;
+    }
+  
+    public FitnessFunctionPage getPageAssociated() {
+        return pageAssociated;
+    }
+
+    public void setPageAssociated(FitnessFunctionPage pageAssociated) {
+        this.pageAssociated = pageAssociated;
     }
 
     public String getPath() {
