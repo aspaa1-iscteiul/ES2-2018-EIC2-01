@@ -232,7 +232,7 @@ public class UserInterface {
 	ArrayList<DecisionVariable> dvList = new ArrayList<DecisionVariable>();
 	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
 	    dvList.add(new DecisionVariable(dvo.getVariableName(), dvo.getDataTypeToProblem(), dvo.getLowerBound(),
-		    dvo.getUpperBound(), "Dominio", getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
+		    dvo.getUpperBound(), dvo.getInvalidValues().toString() , getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
 	}
 	return dvList;
     }

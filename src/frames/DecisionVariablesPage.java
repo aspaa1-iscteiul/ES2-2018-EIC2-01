@@ -38,6 +38,7 @@ public class DecisionVariablesPage extends SuperPage {
     private static final long serialVersionUID = 1L;
     private ArrayList<DecisionVariablesObject> decisionVariableList;
     private JPanel subSubMainPanel;
+    private JTextField groupName;
 
     /**
      * 
@@ -70,7 +71,7 @@ public class DecisionVariablesPage extends SuperPage {
 	groupPanel.setBackground(Color.WHITE);
 	JLabel groupLabel = new JLabel("Group name");
 	groupLabel.setFont(FrameUtils.cuteFont(12));
-	JTextField groupName = new JTextField(5);
+	groupName = new JTextField(5);
 	groupName.setBorder(FrameUtils.cuteBorder());
 	groupPanel.add(groupLabel);
 	groupPanel.add(groupName);
@@ -162,7 +163,7 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.setDecisionVariablesFromPage(decisionVariableList);
-	//TODO: Guardar o nome do grupo das variáveis
+	userInterface.getProblem().setDecisionVariablesSetName(groupName.getText());
     }
 
     /**

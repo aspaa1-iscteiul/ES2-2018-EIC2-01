@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -21,8 +22,6 @@ public class KnownSolutionsObject {
 
     private KnownSolutionsPage pageAssociated;
     private JTextField name;
-    private JTextField solution1;
-    private JTextField solution2;
     private ArrayList<JTextField> solutionsList;
     private JLabel addIcon;
     private JLabel newSolutionInfo;
@@ -50,8 +49,8 @@ public class KnownSolutionsObject {
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
 	this.setInvalidValues(invalidValues);
-	this.solution1 = new JTextField(3);
-	this.solution2 = new JTextField(3);
+	JTextField solution1 = new JTextField(3);
+	JTextField solution2 = new JTextField(3);
 	this.solutionsList = new ArrayList<JTextField>();
 	this.solutionsList.add(solution1);
 	this.solutionsList.add(solution2);
@@ -124,71 +123,74 @@ public class KnownSolutionsObject {
     /**
      * Validates the input of a given solution, validating if it agrees with the
      * bounds and data type previously chosen on the variable associated to the
-     * solution
+     * solution and if it agrees with the invalid values chosen
      * 
      * @param textField
      */
     public boolean validateInputs(JTextField textField) {
-	boolean tmp = false;
 	if (textField.getText().isEmpty()) {
 	    FrameUtils.normalFormat(textField);
 	    return true;
 	} else {
+	    boolean tmp = false;
 	    if (dataType.equals("Integer")) {
 		try {
 		    Integer.parseInt(textField.getText());
-		    FrameUtils.normalFormat(textField);
+		    tmp = FrameUtils.normalFormat(textField);
 		    if (!lowerBound.isEmpty() && !upperBound.isEmpty()) {
 			if (Integer.parseInt(textField.getText()) > Integer.parseInt(upperBound)
 				|| Integer.parseInt(textField.getText()) < Integer.parseInt(lowerBound)) {
-			    FrameUtils.errorFormat(textField,
+			    tmp = FrameUtils.errorFormat(textField,
 				    "Solutions must agree with the variable's lower and upper bound");
+			    return tmp;
 			} else {
-			    FrameUtils.normalFormat(textField);
-			    if(!invalidValues.equals(null)) {
-				for(int i = 0; i!= invalidValues.length; i++) {
-				    if(invalidValues[i].equals(textField.getText().trim())) {
-					FrameUtils.errorFormat(textField,
-						"Solutions must agree with the invalid values selected");
-				    } else {
-					FrameUtils.normalFormat(textField);
-					tmp = true;
-				    }
-				}
+			    tmp = FrameUtils.normalFormat(textField);
+			}
+		    }
+		    if(invalidValues != null) {
+			for(int i = 0; i!= invalidValues.length; i++) {
+			    if(invalidValues[i].equals(textField.getText())) {
+				tmp = FrameUtils.errorFormat(textField,
+					"Solutions must agree with the invalid values selected");
+				return tmp;
+			    } else {
+				tmp = FrameUtils.normalFormat(textField);
 			    }
-
 			}
 		    }
 		} catch (NumberFormatException e1) {
-		    FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		    tmp = FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		    return tmp;
 		}
 	    }
 	    if (dataType.equals("Double")) {
 		try {
 		    Double.parseDouble(textField.getText());
-		    FrameUtils.normalFormat(textField);
+		    tmp = FrameUtils.normalFormat(textField);
 		    if (!lowerBound.isEmpty() && !upperBound.isEmpty()) {
 			if (Double.parseDouble(textField.getText()) > Double.parseDouble(upperBound)
 				|| Double.parseDouble(textField.getText()) < Double.parseDouble(lowerBound)) {
-			    FrameUtils.errorFormat(textField,
+			    tmp = FrameUtils.errorFormat(textField,
 				    "Solutions must agree with the variable's lower and upper bound");
+			    return tmp;
 			} else {
-			    FrameUtils.normalFormat(textField);
-			    if(!invalidValues.equals(null)) {
-				for(int i = 0; i!= invalidValues.length; i++) {
-				    if(invalidValues[i].equals(textField.getText().trim())) {
-					FrameUtils.errorFormat(textField,
-						"Solutions must agree with the invalid values selected");
-				    } else {
-					FrameUtils.normalFormat(textField);
-					tmp = true;
-				    }
-				}
+			    tmp = FrameUtils.normalFormat(textField);
+			}
+		    }
+		    if(invalidValues != null) {
+			for(int i = 0; i!= invalidValues.length; i++) {
+			    if(invalidValues[i].equals(textField.getText())) {
+				tmp = FrameUtils.errorFormat(textField,
+					"Solutions must agree with the invalid values selected");
+				return tmp;
+			    } else {
+				tmp = FrameUtils.normalFormat(textField);
 			    }
 			}
 		    }
 		} catch (NumberFormatException e1) {
-		    FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		    tmp = FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		    return tmp;
 		}
 	    }
 	    return tmp;
@@ -201,22 +203,6 @@ public class KnownSolutionsObject {
 
     public void setName(JTextField name) {
 	this.name = name;
-    }
-
-    public JTextField getSolution1() {
-	return solution1;
-    }
-
-    public void setSolution1(JTextField solution1) {
-	this.solution1 = solution1;
-    }
-
-    public JTextField getSolution2() {
-	return solution2;
-    }
-
-    public void setSolution2(JTextField solution2) {
-	this.solution2 = solution2;
     }
 
     public KnownSolutionsPage getPage() {
@@ -242,5 +228,25 @@ public class KnownSolutionsObject {
     public void setInvalidValues(String[] invalidValues) {
 	this.invalidValues = invalidValues;
     }
+
+    /**
+     * Transforms the solutions textfield into strings
+     * @return
+     */
+    private ArrayList<String> getSolutionListInString() {
+	ArrayList<String> tmp = new ArrayList<String>();
+	for(JTextField text : solutionsList) {
+	    tmp.add(text.getText());
+	}
+	return tmp;
+    }
+
+    @Override
+    public String toString() {
+	return "KnownSolutionsObject [name=" + name.getText() + ", solutionsList=" + getSolutionListInString().toString() 
+		+ ", dataType=" + dataType + ", lowerBound=" + lowerBound
+		+ ", upperBound=" + upperBound + ", invalidValues=" + Arrays.toString(invalidValues) + "]";
+    }
+
 
 }
