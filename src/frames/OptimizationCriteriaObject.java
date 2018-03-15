@@ -73,7 +73,7 @@ public class OptimizationCriteriaObject {
     public OptimizationCriteriaObject(OptimizationCriteriaPage ocp, String name, String dataType) {
 	pageAssociated = ocp;
 	variablesPanel = new JPanel();
-	this.name = new JTextField(name);
+	this.name = new JTextField(name, name.length());
 	this.dataType = FrameUtils.cuteComboBox(dataTypes);
 	this.dataType.setSelectedItem(dataType);
 	deleteIcon = new JLabel();

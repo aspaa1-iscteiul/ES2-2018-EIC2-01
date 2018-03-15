@@ -82,7 +82,10 @@ public class DecisionVariable {
     }
 
     public String[] getInvalidValuesInVector() {
-	String[] v = invalidValues.split(",");
+	String[] v = new String[0];
+	if(invalidValues != null) {
+	    v = invalidValues.split(",");
+	}
 	return v;
     }
 

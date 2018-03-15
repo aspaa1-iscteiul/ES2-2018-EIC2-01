@@ -66,7 +66,11 @@ public class DecisionVariablesObject {
 	dataType.setSelectedItem(variableDataType);
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
-	invalidValues = new JTextField(values.toString(), 6);
+	if(values != null) {
+	    invalidValues = new JTextField(values.toString());
+	} else {
+	    invalidValues = new JTextField(6);
+	}
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	deleteIcon.addMouseListener(new MouseListener() {

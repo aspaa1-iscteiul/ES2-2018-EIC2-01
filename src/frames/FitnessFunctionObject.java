@@ -64,9 +64,8 @@ public class FitnessFunctionObject {
     }
 
     public FitnessFunctionObject(FitnessFunctionPage page, String filePath, ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
-
 	this.pageAssociated = page;
-	this.checkboxList = new ArrayList<OptimizationCriteriaCheckbox>();
+	this.checkboxList = checkboxList;
 	uploadButton = FrameUtils.cuteButton("filePath");
 	uploadButton.addActionListener(new ActionListener() {
 	    @Override
@@ -89,8 +88,6 @@ public class FitnessFunctionObject {
 	uploadButton
 	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
-
-	this.checkboxList = checkboxList;
 
     }
 

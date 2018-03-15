@@ -61,8 +61,7 @@ public class KnownSolutionsObject {
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
 	    String upperBound, String[] invalidValues, ArrayList<String> solutions) {
 	this.pageAssociated = page;
-	this.name = new JTextField(name.length());
-	this.name.setText(name);
+	this.name = new JTextField(name, name.length());
 	this.dataType = type;
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
@@ -261,10 +260,12 @@ public class KnownSolutionsObject {
      */
     private ArrayList<JTextField> getSolutionListInString(ArrayList<String> strings) {
 	ArrayList<JTextField> tmp = new ArrayList<JTextField>();
-	for(String str : strings) {
-	    JTextField text = new JTextField(str.length());
-	    text.setText(str);
-	    tmp.add(text);
+	if(strings != null) {
+	    for(String str : strings) {
+		JTextField text = new JTextField(str.length());
+		text.setText(str);
+		tmp.add(text);
+	    }
 	}
 	return tmp;
     }
