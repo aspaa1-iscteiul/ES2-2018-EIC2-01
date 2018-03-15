@@ -3,10 +3,10 @@ package frames;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,13 +24,14 @@ public class AlgorithmsPage extends SuperPage {
      */
     private static final long serialVersionUID = 1L;
 
-    private static final File jMetalMultiobjectiveAlgorithmsDir = new File(
-	    "./jMetal/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective"),
-	    jMetalSingleobjectiveAlgorithmsDir = new File(
-		    "./jMetal/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/singleobjective");
+    private static final List<String> multiobjectiveAlgorithms = Arrays.asList("ABYSS", "CellDE45", "DMOPSO", "GDE3",
+	    "GWASFGA", "IBEA", "MOCell", "MOCHC", "MOEAD", "MOMBI", "NSGAII", "NSGAIII", "OMOPSO", "PAES", "PESA2",
+	    "Random Search", "RNSGAII", "SMPSO", "SMSEMOA", "SPEA2", "WASFGA"),
+	    singleobjectiveAlgorithms = Arrays.asList("Coral Reefs Optimization", "Differential Evolution",
+		    "Elitist Evolution Strategy", "Non Elitist Evolution Strategy", "Generational Genetic Algorithm",
+		    "Steady StateGenetic Algorithm");
     private JLabel title;
     private JPanel algorithmsListPanel;
-    private JButton nextButton;
     private ArrayList<JCheckBox> algorithmsList;
 
     public AlgorithmsPage(UserInterface userInterface) {
@@ -41,7 +42,6 @@ public class AlgorithmsPage extends SuperPage {
     protected void initialize() {
 	title = new JLabel();
 	algorithmsListPanel = new JPanel();
-	nextButton = FrameUtils.cuteButton("Next");
 	algorithmsList = new ArrayList<>();
     }
 
@@ -77,48 +77,13 @@ public class AlgorithmsPage extends SuperPage {
     }
 
     @Override
-    protected void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	nextButton.setEnabled(false);
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToNextPage();
-	    }
-	});
-	buttonsPanel.add(nextButton);
-    }
-
-    @Override
     protected void onTop() {
 	title.setText((userInterface.getIsSingleobjective() ? "Single objective" : "Multi objective")
 		+ " optimization algorithms available");
-	File dir = userInterface.getIsSingleobjective() ? jMetalSingleobjectiveAlgorithmsDir
-		: jMetalMultiobjectiveAlgorithmsDir;
-
-	for (File file : dir.listFiles())
-	    algorithmsList.add(new JCheckBox(file.getName()));
+	List<String> list = userInterface.getIsSingleobjective() ? singleobjectiveAlgorithms : multiobjectiveAlgorithms;
+	
+	for (String algorithm : list)
+	    algorithmsList.add(new JCheckBox(algorithm));
 
 	for (JCheckBox checkBox : algorithmsList) {
 	    checkBox.setBackground(Color.WHITE);
@@ -130,14 +95,11 @@ public class AlgorithmsPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
-	// TODO Auto-generated method stub
 	return false;
     }
 
     @Override
     protected void saveToProblem() {
-	// TODO Auto-generated method stub
-	
     }
 
 }
