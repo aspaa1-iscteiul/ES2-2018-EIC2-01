@@ -163,8 +163,21 @@ public class DecisionVariablesObject {
     }
 
     /**
+     * Get invalid values of the variable on a vector of strings
+     * @return
+     */
+    public String[] getInvalidValues(){
+	if(!invalidValues.getText().trim().isEmpty()) {
+	    String[] v = invalidValues.getText().split(",");
+	    return v;
+	}
+	return null;
+    }
+
+    /**
      * Returns {@code true} if {@linkplain DecisionVariablesObject} have a valid
-     * name and the {@linkplain #dataType} is selected and have a valid bound,
+     * name and the {@linkplain #dataType} is selected and have a valid bound and
+     * valid inputs in the invalid values
      * otherwise {@code false}
      * 
      * @return {@code true} if {@linkplain DecisionVariablesObject} have a valid
@@ -173,6 +186,7 @@ public class DecisionVariablesObject {
      * @see #isValidName()
      * @see #isDataTypeSelected()
      * @see #isValidBound()
+     * @see #isValidValues()
      */
     public boolean isWellFilled() {
 	// methods separated to run all
@@ -301,18 +315,6 @@ public class DecisionVariablesObject {
 	    return false;
 	}
 	return tmp;
-    }
-
-    /**
-     * Get invalid values of the variable on a vector of strings
-     * @return
-     */
-    public String[] getInvalidValues(){
-	if(!invalidValues.getText().trim().isEmpty()) {
-	    String[] v = invalidValues.getText().split(",");
-	    return v;
-	}
-	return null;
     }
 
 }

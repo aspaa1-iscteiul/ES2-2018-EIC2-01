@@ -203,15 +203,36 @@ public class KnownSolutionsPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
-	boolean tmp = true;
-	for (KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
+	boolean[] tmp = new boolean[getOverallNumberOfKnownSolutionsNumber()];
+	int count = 0;
+	for (KnownSolutionsObject kso : knownSolutionsList) {
 	    for (JTextField textField : kso.getTextfieldList()) {
 		if (kso.validateInputs(textField) == false) {
-		    tmp = false;
+		    tmp[count] = false;
+		} else {
+		    tmp[count] = true;
 		}
+		count++;
 	    }
 	}
-	return tmp;
+	for(int i = 0; i != tmp.length; i++) {
+	    if(tmp[i] == false) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    /**
+     * Get the total number of known solutions number
+     * @return
+     */
+    private int getOverallNumberOfKnownSolutionsNumber() {
+	int count = 0;
+	for (KnownSolutionsObject kso : knownSolutionsList) {
+	    count += kso.getTextfieldList().size();
+	}
+	return count;
     }
 
     @Override
