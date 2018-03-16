@@ -168,82 +168,6 @@ public class UserInterface {
 	frame.repaint();
     }
 
-    public boolean[] isXmlFileWasImported() {
-	return xmlFileWasImported;
-    }
-
-    public boolean isXmlFileWasImportedAtIndex(int index) {
-	return xmlFileWasImported[index];
-    }
-
-    public void putXmlFileWasImportedFalseAtIndex(int index) {
-	xmlFileWasImported[index] = false;
-    }
-
-    public ArrayList<DecisionVariablesObject> getDecisionVariablesFromPage() {
-	return decisionVariablesFromPage;
-    }
-
-    public void setDecisionVariablesFromPage(ArrayList<DecisionVariablesObject> decisionVariablesFromPage) {
-	this.decisionVariablesFromPage = decisionVariablesFromPage;
-    }
-
-    public ArrayList<FitnessFunctionObject> getFitnessFunctionFromPage() {
-	return fitnessFunctionFromPage;
-    }
-
-    public void setFitnessFunctionFromPage(ArrayList<FitnessFunctionObject> fitnessFunctionFromPage) {
-	this.fitnessFunctionFromPage = fitnessFunctionFromPage;
-    }
-
-    public ArrayList<KnownSolutionsObject> getKnownSolutionsList() {
-	return this.knownSolutionsFromDecisionVariables;
-    }
-
-    public void setKnownSolutionsList(ArrayList<KnownSolutionsObject> list) {
-	this.knownSolutionsFromDecisionVariables = list;
-    }
-
-    public ArrayList<OptimizationCriteriaObject> getOptimizationCriteriaFromPage() {
-	return optimizationCriteriaFromPage;
-    }
-
-    public void setOptimizationCriteriaFromPage(ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage) {
-	this.optimizationCriteriaFromPage = optimizationCriteriaFromPage;
-    }
-
-    public ArrayList<String> getOptimizationAlgorithmsFromPage() {
-	return optimizationAlgorithmsFromPage;
-    }
-
-    public void setOptimizationAlgorithmsFromPage(ArrayList<String> optimizationAlgorithmsFromPage) {
-	this.optimizationAlgorithmsFromPage = optimizationAlgorithmsFromPage;
-    }
-
-    public void setProblem(Problem problem) {
-	this.problem = problem;
-    }
-
-    public Problem getProblem() {
-	return problem;
-    }
-
-    public String getUserEmail() {
-	return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-	this.userEmail = userEmail;
-    }
-
-    public void isSingleobjective(boolean b) {// XXX horrible name
-	isSingleobjective = b;
-    }
-
-    public boolean getIsSingleobjective() { // XXX horrible name
-	return isSingleobjective;
-    }
-
     public static void main(String[] args) {
 	UserInterface user = new UserInterface();
 	user.launch();
@@ -255,7 +179,7 @@ public class UserInterface {
     public void createProblemId() {
 	xmlFileWasImported[0] = true;
     }
-    
+
     /**
      * Transforms the data inputs of the interface to the object DecisionVariable
      * that will be used in the object Problem
@@ -270,8 +194,8 @@ public class UserInterface {
 	}
 	return dvList;
     }
-    
-     /**
+
+    /**
      * Transforms the data from problem read from a xml file to the data used in the interface
      * @param page
      * @return
@@ -411,7 +335,7 @@ public class UserInterface {
 	}
 	return tmp;
     }
-    
+
     /**
      * Allows to averiguate that a problem was imported from a xml file and that fields ideal time and max time 
      * can be used to populate the gui
@@ -428,6 +352,82 @@ public class UserInterface {
 	this.problem.setDecisionVariables(createDecisionVariableFinalList());
 	this.problem.setFitnessFunctions(createFitnessFunctionFinalList());
 	this.problem.setOptimizationAlgorithms(optimizationAlgorithmsFromPage);
+    }
+
+    public boolean[] isXmlFileWasImported() {
+	return xmlFileWasImported;
+    }
+
+    public boolean isXmlFileWasImportedAtIndex(int index) {
+	return xmlFileWasImported[index];
+    }
+
+    public void putXmlFileWasImportedFalseAtIndex(int index) {
+	xmlFileWasImported[index] = false;
+    }
+
+    public ArrayList<DecisionVariablesObject> getDecisionVariablesFromPage() {
+	return decisionVariablesFromPage;
+    }
+
+    public void setDecisionVariablesFromPage(ArrayList<DecisionVariablesObject> decisionVariablesFromPage) {
+	this.decisionVariablesFromPage = decisionVariablesFromPage;
+    }
+
+    public ArrayList<FitnessFunctionObject> getFitnessFunctionFromPage() {
+	return fitnessFunctionFromPage;
+    }
+
+    public void setFitnessFunctionFromPage(ArrayList<FitnessFunctionObject> fitnessFunctionFromPage) {
+	this.fitnessFunctionFromPage = fitnessFunctionFromPage;
+    }
+
+    public ArrayList<KnownSolutionsObject> getKnownSolutionsList() {
+	return this.knownSolutionsFromDecisionVariables;
+    }
+
+    public void setKnownSolutionsList(ArrayList<KnownSolutionsObject> list) {
+	this.knownSolutionsFromDecisionVariables = list;
+    }
+
+    public ArrayList<OptimizationCriteriaObject> getOptimizationCriteriaFromPage() {
+	return optimizationCriteriaFromPage;
+    }
+
+    public void setOptimizationCriteriaFromPage(ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage) {
+	this.optimizationCriteriaFromPage = optimizationCriteriaFromPage;
+    }
+
+    public ArrayList<String> getOptimizationAlgorithmsFromPage() {
+	return optimizationAlgorithmsFromPage;
+    }
+
+    public void setOptimizationAlgorithmsFromPage(ArrayList<String> optimizationAlgorithmsFromPage) {
+	this.optimizationAlgorithmsFromPage = optimizationAlgorithmsFromPage;
+    }
+
+    public void setProblem(Problem problem) {
+	this.problem = problem;
+    }
+
+    public Problem getProblem() {
+	return problem;
+    }
+
+    public String getUserEmail() {
+	return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+	this.userEmail = userEmail;
+    }
+
+    public void isSingleobjective(boolean b) {// XXX horrible name
+	isSingleobjective = b;
+    }
+
+    public boolean getIsSingleobjective() { // XXX horrible name
+	return isSingleobjective;
     }
 
 }

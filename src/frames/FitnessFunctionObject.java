@@ -62,6 +62,12 @@ public class FitnessFunctionObject {
 	warning = new JLabel("No optimization criterias available");
     }
 
+    /**
+     * Creates a Fitness Function Object with the data read from a XML file
+     * @param page
+     * @param filePath
+     * @param checkboxList
+     */
     public FitnessFunctionObject(FitnessFunctionPage page, String filePath, ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
 	this.pageAssociated = page;
 	this.checkboxList = checkboxList;

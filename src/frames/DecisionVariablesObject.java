@@ -40,11 +40,14 @@ public class DecisionVariablesObject {
 
     /**
      * This object receives a page that contains the frame and has a name, a
-     * dataType, a lower and upper bound.
-     * 
+     * dataType, a lower and upper bound and invalid solutions.
      * @param page
+     * @param variableName
+     * @param variableDataType
+     * @param lowerLimit
+     * @param upperLimit
+     * @param values
      */
-
     public DecisionVariablesObject(final DecisionVariablesPage page, String variableName, String variableDataType,
 	    String lowerLimit, String upperLimit, String[] values) {
 	this.pageAssociated = page;
@@ -74,7 +77,7 @@ public class DecisionVariablesObject {
 	}
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
-	
+
 	if(values != null) {
 	    String tmp1 =  StringUtils.remove(Arrays.toString(values), '[');
 	    String tmp2 = StringUtils.remove(tmp1, ']');
@@ -82,7 +85,7 @@ public class DecisionVariablesObject {
 	} else {
 	    invalidValues = new JTextField(6);
 	}
-	
+
 	DecisionVariablesObject tmp = this;
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
@@ -114,6 +117,10 @@ public class DecisionVariablesObject {
 	});
     }
 
+    /**
+     * 
+     * @param page
+     */
     public DecisionVariablesObject(final DecisionVariablesPage page) {
 	this(page, null, null, null, null, null);
     }

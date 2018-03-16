@@ -39,6 +39,7 @@ public class KnownSolutionsObject {
      * @param type
      * @param lowerBound
      * @param upperBound
+     * @param invalidValues
      */
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
 	    String upperBound, String[] invalidValues) {
@@ -58,6 +59,18 @@ public class KnownSolutionsObject {
 	this.newSolutionInfo = new JLabel("Add new solutions");
     }
 
+    /**
+     * This object will have the solutions to a given variable that must agree
+     * with the lower and upper bounds presented by the variable and it's created with the data
+     * read from a XML file
+     * @param page
+     * @param name
+     * @param variableDataType
+     * @param lowerBound
+     * @param upperBound
+     * @param invalidValues
+     * @param solutions
+     */
     public KnownSolutionsObject(KnownSolutionsPage page, String name, String variableDataType, String lowerBound,
 	    String upperBound, String[] invalidValues, ArrayList<String> solutions) {
 	this.pageAssociated = page;
@@ -217,38 +230,6 @@ public class KnownSolutionsObject {
 	}
     }
 
-    public JTextField getName() {
-	return name;
-    }
-
-    public void setName(JTextField name) {
-	this.name = name;
-    }
-
-    public KnownSolutionsPage getPage() {
-	return pageAssociated;
-    }
-
-    public void setPage(KnownSolutionsPage page) {
-	this.pageAssociated = page;
-    }
-
-    public ArrayList<JTextField> getTextfieldList() {
-	return solutionsList;
-    }
-
-    public void setTextfieldList(ArrayList<JTextField> textfieldList) {
-	this.solutionsList = textfieldList;
-    }
-
-    public String[] getInvalidValues() {
-	return invalidValues;
-    }
-
-    public void setInvalidValues(String[] invalidValues) {
-	this.invalidValues = invalidValues;
-    }
-
     /**
      * Transforms the solutions textfield into strings
      * @return
@@ -282,5 +263,36 @@ public class KnownSolutionsObject {
 		+ ", upperBound=" + upperBound + ", invalidValues=" + Arrays.toString(invalidValues) + "]";
     }
 
+    public JTextField getName() {
+	return name;
+    }
+
+    public void setName(JTextField name) {
+	this.name = name;
+    }
+
+    public KnownSolutionsPage getPage() {
+	return pageAssociated;
+    }
+
+    public void setPage(KnownSolutionsPage page) {
+	this.pageAssociated = page;
+    }
+
+    public ArrayList<JTextField> getTextfieldList() {
+	return solutionsList;
+    }
+
+    public void setTextfieldList(ArrayList<JTextField> textfieldList) {
+	this.solutionsList = textfieldList;
+    }
+
+    public String[] getInvalidValues() {
+	return invalidValues;
+    }
+
+    public void setInvalidValues(String[] invalidValues) {
+	this.invalidValues = invalidValues;
+    }
 
 }

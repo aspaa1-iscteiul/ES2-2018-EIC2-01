@@ -70,6 +70,13 @@ public class OptimizationCriteriaObject {
 	});
     }
 
+    /**
+     * Creates an optimization criteria object with the data read
+     * from a XML file
+     * @param ocp
+     * @param name
+     * @param variableDataType
+     */
     public OptimizationCriteriaObject(OptimizationCriteriaPage ocp, String name, String variableDataType) {
 	pageAssociated = ocp;
 	variablesPanel = new JPanel();
