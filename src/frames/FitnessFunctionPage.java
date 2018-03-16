@@ -238,6 +238,36 @@ public class FitnessFunctionPage extends SuperPage {
 	}
     }
 
+//    /**
+//     * Verify if any optimization criteria was added to the optimization criteria list and if there's any need to update
+//     * the fitness function checkbox
+//     */
+//    private void verifyIfAnyVariableWasAdded() {
+//	//TODO: UNDER CONSTRUCTION
+//	if (userInterface.getOptimizationCriteriaFromPage().size() > 0) {
+//	    ArrayList<FitnessFunctionObject> aux = new ArrayList<FitnessFunctionObject>();
+//	    for (OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
+//		boolean nova = true;
+//		for (FitnessFunctionObject ffo : fitnessFunctionList) {
+//		    String straux = "";
+//		    for(OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
+//			if (occ.getOptimizationCriteriaName().getText().equals(oco.getVariableName())) {
+//			    nova = false;
+//			    break;
+//			} else {
+//			    straux = occ.getOptimizationCriteriaName().getText();
+//			}
+//			aux.add(ffo);
+//		    }
+//		    if (nova == true) {
+//			aux.get(aux.indexOf(ffo)).getCheckboxList().add(new OptimizationCriteriaCheckbox(straux));
+//		    }
+//		}
+//	    }
+//	    fitnessFunctionList = aux;
+//	}
+//    }
+
     @Override
     protected boolean areAllDataWellFilled() {
 	boolean [] tmp = new boolean[userInterface.getOptimizationCriteriaFromPage().size()];

@@ -141,45 +141,16 @@ public class KnownSolutionsPage extends SuperPage {
 	    for(KnownSolutionsObject kso : knownSolutionsList) {
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
+	    verifyIfAnyVariableWasAdded();
+	    verifyIfAnyVariableWasDeleted();
 	    userInterface.putXmlFileWasImportedFalseAtIndex(4);
 	} else {
 	    if (knownSolutionsList.size() > 0) {
 		for (KnownSolutionsObject kso : knownSolutionsList) {
 		    subSubMainPanel.add(kso.transformIntoAPanel());
 		}
-		if (userInterface.getDecisionVariablesFromPage().size() > 0) {
-		    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-			boolean nova = true;
-			for (KnownSolutionsObject kso : knownSolutionsList) {
-			    if (dvo.getVariableName().equals(kso.getName().getText())) {
-				nova = false;
-				break;
-			    }
-			}
-			if (nova == true) {
-			    KnownSolutionsObject ksoAux = new KnownSolutionsObject(this, dvo.getVariableName(),
-				    dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound(), dvo.getInvalidValues());
-			    knownSolutionsList.add(ksoAux);
-			    subSubMainPanel.add(ksoAux.transformIntoAPanel());
-			}
-		    }
-		}
-		if (knownSolutionsList.size() != userInterface.getDecisionVariablesFromPage().size()) {
-		    for (KnownSolutionsObject kso : knownSolutionsList) {
-			boolean toDelete = false;
-			for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-			    if (kso.getName().getText().equals(dvo.getVariableName())) {
-				toDelete = true;
-				break;
-			    }
-			}
-			if (toDelete == false) {
-			    subSubMainPanel.remove(kso.transformIntoAPanel());
-			    KnownSolutionsObject ksoAux = kso;
-			    knownSolutionsList.remove(ksoAux);
-			}
-		    }
-		}
+		verifyIfAnyVariableWasAdded();
+		verifyIfAnyVariableWasDeleted();
 	    } else {
 		if (userInterface.getDecisionVariablesFromPage().size() > 0) {
 		    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
@@ -194,6 +165,53 @@ public class KnownSolutionsPage extends SuperPage {
 		}
 	    }
 	    userInterface.refreshPage();
+	}
+    }
+
+    /**
+     * Verify if any decision variable was added to the decision variables list and if there's any need to update
+     * the known solutions list 
+     */
+    private void verifyIfAnyVariableWasAdded() {
+	if (userInterface.getDecisionVariablesFromPage().size() > 0) {
+	    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+		boolean nova = true;
+		for (KnownSolutionsObject kso : knownSolutionsList) {
+		    if (dvo.getVariableName().equals(kso.getName().getText())) {
+			nova = false;
+			break;
+		    }
+		}
+		if (nova == true) {
+		    KnownSolutionsObject ksoAux = new KnownSolutionsObject(this, dvo.getVariableName(),
+			    dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound(), dvo.getInvalidValues());
+		    knownSolutionsList.add(ksoAux);
+		    subSubMainPanel.add(ksoAux.transformIntoAPanel());
+		}
+	    }
+	}
+    }
+
+    /**
+     * Verify if any decision variable was deleted from the decision variables list and if there's any need to update
+     * the known solutions list 
+     */
+    private void verifyIfAnyVariableWasDeleted() {
+	if (knownSolutionsList.size() != userInterface.getDecisionVariablesFromPage().size()) {
+	    for (KnownSolutionsObject kso : knownSolutionsList) {
+		boolean toDelete = false;
+		for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+		    if (kso.getName().getText().equals(dvo.getVariableName())) {
+			toDelete = true;
+			break;
+		    }
+		}
+		if (toDelete == false) {
+		    subSubMainPanel.remove(kso.transformIntoAPanel());
+		    KnownSolutionsObject ksoAux = kso;
+		    knownSolutionsList.remove(ksoAux);
+		}
+	    }
 	}
     }
 

@@ -49,7 +49,6 @@ public class DecisionVariablesObject {
 	    String lowerLimit, String upperLimit, String[] values) {
 	this.pageAssociated = page;
 	variablesPanel = new JPanel();
-	final DecisionVariablesObject tmp = this;
 	varName = new JTextField(variableName, 6);
 	varName.addKeyListener(new KeyListener() {
 	    @Override
@@ -75,6 +74,7 @@ public class DecisionVariablesObject {
 	}
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
+	
 	if(values != null) {
 	    String tmp1 =  StringUtils.remove(Arrays.toString(values), '[');
 	    String tmp2 = StringUtils.remove(tmp1, ']');
@@ -82,6 +82,8 @@ public class DecisionVariablesObject {
 	} else {
 	    invalidValues = new JTextField(6);
 	}
+	
+	DecisionVariablesObject tmp = this;
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
 	deleteIcon.addMouseListener(new MouseListener() {

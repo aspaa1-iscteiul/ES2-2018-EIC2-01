@@ -20,7 +20,7 @@ public class UserInterface {
 
     private JFrame frame;
     private List<SuperPage> pages;
-    private boolean[] xmlFileWasImported = new boolean[5];
+    private boolean[] xmlFileWasImported = new boolean[6];
     private SendEmailPage emailPage;
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
@@ -249,6 +249,9 @@ public class UserInterface {
 	user.launch();
     }
 
+    /**
+     * Allows to averiguate that a problem was imported from a xml file and that fields problem name and description can be used
+     */
     public void createProblemId() {
 	xmlFileWasImported[0] = true;
     }
@@ -269,7 +272,7 @@ public class UserInterface {
     }
     
      /**
-     * Transforms the data from problem to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the interface
      * @param page
      * @return
      */
@@ -298,7 +301,7 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data from problem to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the interface
      * @param page
      * @return
      */
@@ -327,7 +330,7 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data from problem to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the interface
      * @param page
      * @return
      */
@@ -362,7 +365,7 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data from problem to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the interface
      * @param page
      * @return
      */
@@ -407,6 +410,14 @@ public class UserInterface {
 	    tmp.add(occ);
 	}
 	return tmp;
+    }
+    
+    /**
+     * Allows to averiguate that a problem was imported from a xml file and that fields ideal time and max time 
+     * can be used to populate the gui
+     */
+    public void createTimeConstraints() {
+	xmlFileWasImported[5] = true;
     }
 
     /**
