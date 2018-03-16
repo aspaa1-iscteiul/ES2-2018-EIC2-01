@@ -130,7 +130,7 @@ public class FitnessFunctionObject {
 	fieldsPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	fieldsPanel.setBackground(Color.WHITE);
 	fieldsPanel.add(uploadButton);
-	
+
 	for(OptimizationCriteriaCheckbox checkbox : this.checkboxList) {
 	    fieldsPanel.add(checkbox.getOptimizationCriteriaName());
 	    fieldsPanel.add(checkbox.getCheckBox());
@@ -140,6 +140,30 @@ public class FitnessFunctionObject {
 	overallPanel.add(fieldsPanel);
 	return overallPanel;
     }
+
+//    /**
+//     * Transforms the object in a JPanel that will be added to the frame later given the data from the xml file.
+//     * 
+//     * @return JPanel
+//     */
+//    public JPanel transformIntoAPanelWhenReadFromXMLAndSomethingWasAdded() {
+//	JPanel overallPanel = new JPanel();
+//	overallPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+//	overallPanel.setBackground(Color.WHITE);
+//
+//	fieldsPanel = new JPanel();
+//	fieldsPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+//	fieldsPanel.setBackground(Color.WHITE);
+//	fieldsPanel.add(uploadButton);
+//
+//	for(OptimizationCriteriaCheckbox checkbox : this.checkboxList) {
+//	    fieldsPanel.add(checkbox.getOptimizationCriteriaName());
+//	    fieldsPanel.add(checkbox.getCheckBox());
+//	}
+//
+//	overallPanel.add(fieldsPanel);
+//	return overallPanel;
+//    }
 
     public FitnessFunctionPage getPageAssociated() {
 	return pageAssociated;

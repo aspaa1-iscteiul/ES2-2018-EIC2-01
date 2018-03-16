@@ -218,6 +218,7 @@ public class FitnessFunctionPage extends SuperPage {
 	    for(FitnessFunctionObject ffo : fitnessFunctionList) {
 		subMainPanel.add(ffo.transformIntoAPanelWhenReadFromXML());
 	    }
+//	    verifyIfAnyVariableWasAdded();
 	    userInterface.putXmlFileWasImportedFalseAtIndex(2);
 	} else {
 	    if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==false) {
@@ -238,33 +239,39 @@ public class FitnessFunctionPage extends SuperPage {
 	}
     }
 
-//    /**
+    /**
 //     * Verify if any optimization criteria was added to the optimization criteria list and if there's any need to update
 //     * the fitness function checkbox
 //     */
 //    private void verifyIfAnyVariableWasAdded() {
-//	//TODO: UNDER CONSTRUCTION
 //	if (userInterface.getOptimizationCriteriaFromPage().size() > 0) {
-//	    ArrayList<FitnessFunctionObject> aux = new ArrayList<FitnessFunctionObject>();
+//	    ArrayList<FitnessFunctionObject> fitnessFunctionListAux = new ArrayList<FitnessFunctionObject>();
 //	    for (OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
-//		boolean nova = true;
 //		for (FitnessFunctionObject ffo : fitnessFunctionList) {
-//		    String straux = "";
+//		    boolean nova = true;
+//		    FitnessFunctionObject ffoAux = ffo;
+//		    String strAux = "";
 //		    for(OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
+//			strAux = occ.getOptimizationCriteriaName().getText();
 //			if (occ.getOptimizationCriteriaName().getText().equals(oco.getVariableName())) {
 //			    nova = false;
 //			    break;
-//			} else {
-//			    straux = occ.getOptimizationCriteriaName().getText();
 //			}
-//			aux.add(ffo);
+//		    } 
+//		    if(nova == true) {
+//			ffoAux.getCheckboxList().add(new OptimizationCriteriaCheckbox(strAux));
 //		    }
-//		    if (nova == true) {
-//			aux.get(aux.indexOf(ffo)).getCheckboxList().add(new OptimizationCriteriaCheckbox(straux));
-//		    }
+//		    fitnessFunctionListAux.add(ffoAux);
 //		}
 //	    }
-//	    fitnessFunctionList = aux;
+//	    if(fitnessFunctionList.get(0).getCheckboxList().size() != fitnessFunctionListAux.get(0).getCheckboxList().size()) {
+//		System.out.println("Aqui");
+//		subMainPanel.removeAll();
+//		fitnessFunctionList = fitnessFunctionListAux;
+//		for(FitnessFunctionObject ffo : fitnessFunctionList) {
+//		    subMainPanel.add(ffo.transformIntoAPanelWhenReadFromXMLAndSomethingWasAdded());
+//		}
+//	    }
 //	}
 //    }
 
