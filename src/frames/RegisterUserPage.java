@@ -95,7 +95,7 @@ public class RegisterUserPage extends SuperPage {
 	    return FrameUtils.normalFormat(email);
 	} catch (AddressException ee) {
 	    return FrameUtils.errorFormat(email,
-		    email.getText().equals("") ? "The e-mail address field is mandatory and must be filled in."
+		    email.getText().equals("") ? "The e-mail address field is a mandatory entry field and therefore must be filled in."
 			    : "The e-mail provided does not have a valid format.");
 	}
     }

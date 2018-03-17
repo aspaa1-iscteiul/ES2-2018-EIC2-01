@@ -103,7 +103,7 @@ public class ProblemIdPage extends SuperPage {
 	return Pattern.matches("[a-zA-Z0-9]+", problemName.getText())
 		&& Character.isUpperCase(problemName.getText().charAt(0)) ? FrameUtils.normalFormat(problemName)
 			: FrameUtils.errorFormat(problemName,
-				"The problem's name field is mandatory and must respect the conditions specified in the info section below.");
+				"The problem's name field is a mandatory entry field and it must respect the conditions specified in the info section below.");
     }
 
     @Override

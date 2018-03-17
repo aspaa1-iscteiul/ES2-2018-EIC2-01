@@ -77,7 +77,7 @@ public class UserFileUtils {
 	    StreamResult file = new StreamResult(new File(path));
 
 	    transformer.transform(source, file);
-	    System.out.println("File was saved with sucess");
+	    System.out.println("File was saved sucessfully");
 
 	} catch (Exception e) {
 	    JOptionPane.showMessageDialog(new JFrame(), "A problem occurred while saving the problem's configurations",

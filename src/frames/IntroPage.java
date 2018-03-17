@@ -38,7 +38,7 @@ public class IntroPage extends SuperPage {
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	// XXX change when frame size is set
-	mainPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
+	mainPanel.setBorder(new EmptyBorder(25, 0, 0, 0));
 
 	JLabel messageLabel = new JLabel("<html>With the <font color=red><b>Problem Solving App</b></font> "
 		+ "you can submit your optimization problems for<br><font color=green><u>AUTOMATIC</u></font> "
@@ -56,7 +56,19 @@ public class IntroPage extends SuperPage {
 	mainPanel.add(messageLabel);
 	mainPanel.add(linkLabel);
 
-	FrameUtils.addEmptyLabels(mainPanel, 5);
+	FrameUtils.addEmptyLabels(mainPanel, 2);
+
+	JLabel disclaimerLabel = new JLabel("<html><font color=#cc0052><u><b>DISCLAIMER:</b></u></font><br>"
+		+ "It will not be possible for you to proceed"
+		+ " until all the required fields are properly<br>filled out. To make this process"
+		+ " easier, the invalid fields will be circled in <font color=red><b>red</b></font>"
+		+ " and<br>you may have access to the error message if you <u><b>hover</b></u> over "
+		+ "the respective field.</html>");
+	disclaimerLabel.setFont(FrameUtils.cuteFont(14));
+
+	mainPanel.add(disclaimerLabel);
+
+	FrameUtils.addEmptyLabels(mainPanel, 3);
 
 	JButton submitButton = FrameUtils.cuteButton("Submit a new problem for evalution");
 	submitButton.addActionListener(new ActionListener() {
@@ -81,12 +93,14 @@ public class IntroPage extends SuperPage {
 	    }
 	});
 	mainPanel.add(importButton);
+
     }
 
     private boolean importXMLFile() {
 	JFileChooser fileChooser = new JFileChooser();
 	// Launches the JFileChooser on the Desktop directory
-	fileChooser.setCurrentDirectory(new File( "C:\\Users\\Rodrigo\\git\\ES2-2018-EIC2-01\\src\\jUnitTests\\testFiles\\userConfigTest2.xml"));
+	fileChooser.setCurrentDirectory(
+		new File("C:\\Users\\Rodrigo\\git\\ES2-2018-EIC2-01\\src\\jUnitTests\\testFiles\\userConfigTest2.xml"));
 	fileChooser.setDialogTitle("Select a problem configuration file");
 	// Prevents selection of multiple options
 	fileChooser.setMultiSelectionEnabled(false);

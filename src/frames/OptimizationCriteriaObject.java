@@ -157,7 +157,7 @@ public class OptimizationCriteriaObject {
      */
     private boolean isValidName() {
 	String text = name.getText();
-	String info = (text.equals("") ? "The optimization criteria's name field is mandatory and must be filled in."
+	String info = (text.equals("") ? "The optimization criteria's name field is a mandatory entry field and therefore must be filled in."
 		: "") + (pageAssociated.isNameRepeated(text) ? "The optimization criteria's name must be unique." : "");
 	return !info.equals("") ? FrameUtils.errorFormat(name, info) : FrameUtils.normalFormat(name);
     }
@@ -170,7 +170,7 @@ public class OptimizationCriteriaObject {
     private boolean isDataTypeSelected() {
 	return dataType.getSelectedItem() == null
 		? FrameUtils.errorFormat(dataType,
-			"The optimization criteria's data type field is mandatory must be filled in.")
+			"The optimization criteria's data type field is a mandatory entry field and therefore must be filled in.")
 			: FrameUtils.normalFormat(dataType);
 
     }

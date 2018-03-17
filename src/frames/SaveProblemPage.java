@@ -141,6 +141,7 @@ public class SaveProblemPage extends SuperPage {
 		savePanel.validate();
 		savePanel.repaint();
 		System.out.println(userInterface.getProblem().toString());
+		System.out.println(filePath.getText());
 		UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText());
 	    }
 	});
