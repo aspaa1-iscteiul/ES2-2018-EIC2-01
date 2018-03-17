@@ -27,7 +27,7 @@ public class TestUserFileUtils {
 	ArrayList<String> knownSolutionsDV2 = new ArrayList<String>();
 	knownSolutionsDV2.add("3.5");
 	knownSolutionsDV2.add("4.5");
-	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "0, 1, 2", knownSolutionsDV1);
+	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "0,1,2", knownSolutionsDV1);
 	DecisionVariable dv2 = new DecisionVariable("var2", DataType.DOUBLE, "-4.9", "+4.8", "0.0", null);
 	DecisionVariable dv3 = new DecisionVariable("var3", DataType.DOUBLE, "-5.1", "+5.1", null, knownSolutionsDV2);
 	DecisionVariable dv4 = new DecisionVariable("var4", DataType.INTEGER, "-3", "+3", null, null);

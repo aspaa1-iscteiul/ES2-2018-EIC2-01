@@ -327,7 +327,7 @@ public class DecisionVariablesObject {
 		    }
 		    FrameUtils.normalFormat(invalidValues);
 		}catch(NumberFormatException e) {
-		    FrameUtils.errorFormat(invalidValues, "The invalid values must in agreement with the data type selected");
+		    FrameUtils.errorFormat(invalidValues, "The invalid values provided must be in agreement with the data type selected.");
 		    return false;
 		}
 	    }else if(dataType.getSelectedItem().equals("Double")) {
@@ -343,7 +343,7 @@ public class DecisionVariablesObject {
 		}
 	    }
 	}else {
-	    FrameUtils.errorFormat(invalidValues, "The invalid values must contain only numbers or ','");
+	    FrameUtils.errorFormat(invalidValues, "The invalid values provided can only contain numbers and/or commas.");
 	    return false;
 	}
 	return tmp;

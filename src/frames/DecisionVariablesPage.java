@@ -69,7 +69,7 @@ public class DecisionVariablesPage extends SuperPage {
 
 	JPanel decisionVariablesSetPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	decisionVariablesSetPanel.setBackground(Color.WHITE);
-	JLabel setNameLabel = new JLabel("Decision variables' set name");
+	JLabel setNameLabel = new JLabel("Decision variables' set name: ");
 	setNameLabel.setFont(FrameUtils.cuteFont(12));
 	decisionVariablesSetName = new JTextField(5);
 	decisionVariablesSetName.setBorder(FrameUtils.cuteBorder());
