@@ -54,13 +54,6 @@ public class DecisionVariable {
 	return dataType;
     }
 
-    public String getDataTypeToString(){ 
-	if(dataType.equals(DataType.INTEGER)) {
-	    return "Integer";
-	} else {
-	    return "Double";
-	}
-    }
     public String getLowerBound() {
 	return lowerBound;
     }
@@ -89,11 +82,11 @@ public class DecisionVariable {
     }
 
     public String[] getInvalidValuesInVector() {
-	String[] v = new String[0];
-	if(invalidValues != null) {
-	    v = invalidValues.split(",");
+	String[] invalidValuesVector = new String[0];
+	if (invalidValues != null) {
+	    invalidValuesVector = invalidValues.split(",");
 	}
-	return v;
+	return invalidValuesVector;
     }
 
 }
