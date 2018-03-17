@@ -50,8 +50,8 @@ public class KnownSolutionsObject {
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
 	this.setInvalidValues(invalidValues);
-	JTextField solution1 = new JTextField(3);
-	JTextField solution2 = new JTextField(3);
+	JTextField solution1 = new JTextField(2);
+	JTextField solution2 = new JTextField(2);
 	this.solutionsList = new ArrayList<JTextField>();
 	this.solutionsList.add(solution1);
 	this.solutionsList.add(solution2);

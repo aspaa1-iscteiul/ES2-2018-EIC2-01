@@ -218,5 +218,12 @@ public class OptimizationCriteriaPage extends SuperPage {
 	}
     }
 
+    @Override
+    protected void clearDataFromPage() {
+	optimizationCriteriaList.clear();
+	mainPanel.removeAll();
+	subSubMainPanel.removeAll();
+	createMainPanel();
+    }
 
 }

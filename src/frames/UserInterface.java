@@ -21,6 +21,7 @@ public class UserInterface {
     private JFrame frame;
     private List<SuperPage> pages;
     private boolean[] xmlFileWasImported = new boolean[6];
+    private boolean wasSomethingImported = false;
     private SendEmailPage emailPage;
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
@@ -354,6 +355,26 @@ public class UserInterface {
 	this.problem.setOptimizationAlgorithms(optimizationAlgorithmsFromPage);
     }
 
+    /**
+     * Clean all the data if the user decides to submit a new problem 
+     */
+    public void cleanData(){
+	problem = new Problem();
+	userEmail = null;
+	decisionVariablesFromPage.clear();
+	fitnessFunctionFromPage.clear();
+	knownSolutionsFromDecisionVariables.clear();
+	optimizationCriteriaFromPage.clear();
+	optimizationAlgorithmsFromPage.clear();
+	for(int i = 0; i != xmlFileWasImported.length; i++) {
+	    xmlFileWasImported[i] = false;
+	}
+	for(SuperPage page : pages) {
+	    page.clearDataFromPage();
+	}
+	wasSomethingImported = false;
+    }
+
     public boolean[] isXmlFileWasImported() {
 	return xmlFileWasImported;
     }
@@ -428,6 +449,14 @@ public class UserInterface {
 
     public boolean getIsSingleobjective() { // XXX horrible name
 	return isSingleobjective;
+    }
+
+    public boolean wasSomethingImported() {
+	return wasSomethingImported;
+    }
+
+    public void setWasSomethingImported(boolean wasSomethingImported) {
+	this.wasSomethingImported = wasSomethingImported;
     }
 
 }

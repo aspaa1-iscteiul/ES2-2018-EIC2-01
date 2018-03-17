@@ -116,5 +116,10 @@ public abstract class SuperPage extends JPanel {
      * Saves what needs to be saved in class {@link Problem}
      */
     protected abstract void saveToProblem();
+    
+    /**
+     * Clears all the data on the page
+     */
+    protected abstract void clearDataFromPage();
 
 }

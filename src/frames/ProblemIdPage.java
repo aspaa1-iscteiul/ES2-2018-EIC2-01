@@ -111,5 +111,11 @@ public class ProblemIdPage extends SuperPage {
 	userInterface.getProblem().setProblemName(problemName.getText());
 	userInterface.getProblem().setProblemDescription(problemDescription.getText());
     }
+    
+    @Override
+    protected void clearDataFromPage() {
+	problemName.setText(null);
+	problemDescription.setText(null);
+    }
 
 }

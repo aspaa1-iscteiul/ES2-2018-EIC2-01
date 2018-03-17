@@ -250,5 +250,11 @@ public class TimeConstraintsPage extends SuperPage {
 	    userInterface.getProblem().setMaxTimeFrame(tmp.toString());
 	}
     }
+    
+    @Override
+    protected void clearDataFromPage() {
+	idealTime.setText(null);
+	maxTime.setText(null);
+    }
 
 }

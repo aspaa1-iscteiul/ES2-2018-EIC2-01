@@ -191,4 +191,10 @@ public class SaveProblemPage extends SuperPage {
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
     }
+    
+    @Override
+    protected void clearDataFromPage() {
+	fileName.setText(null);
+	filePath.setText(null);
+    }
 }

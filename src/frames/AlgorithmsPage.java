@@ -115,5 +115,10 @@ public class AlgorithmsPage extends SuperPage {
     protected void saveToProblem() {
 	userInterface.setOptimizationAlgorithmsFromPage(getTheCheckboxesSelected());
     }
+    
+    @Override
+    protected void clearDataFromPage() {
+	algorithmsList.clear();
+    }
 
 }

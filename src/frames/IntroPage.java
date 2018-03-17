@@ -62,6 +62,9 @@ public class IntroPage extends SuperPage {
 	submitButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
+		if(userInterface.wasSomethingImported()==true){
+		    userInterface.cleanData();
+		}
 		userInterface.goToNextPage();
 	    }
 	});
@@ -99,6 +102,7 @@ public class IntroPage extends SuperPage {
 	    userInterface.createOptimizationCriteriaFromProblem(null);
 	    userInterface.createKnownSolutionsFromProblem(null);
 	    userInterface.createTimeConstraints();
+	    userInterface.setWasSomethingImported(true);
 	    return true;
 	}
 	return false;
@@ -159,6 +163,12 @@ public class IntroPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
+    }
+
+    @Override
+    protected void clearDataFromPage() {
+	// TODO Auto-generated method stub
+
     }
 
 }

@@ -120,5 +120,11 @@ public class RegisterUserPage extends SuperPage {
     protected void saveToProblem() {
 	userInterface.setUserEmail(email.getText());
     }
+    
+    @Override
+    protected void clearDataFromPage() {
+	email.setText(null);
+	checkBox.setSelected(false);
+    }
 
 }

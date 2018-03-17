@@ -141,4 +141,10 @@ public class SendEmailPage extends SuperPage {
 	// TODO Auto-generated method stub
     }
 
+    @Override
+    protected void clearDataFromPage() {
+	// TODO Auto-generated method stub
+	
+    }
+
 }

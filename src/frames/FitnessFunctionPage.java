@@ -218,7 +218,7 @@ public class FitnessFunctionPage extends SuperPage {
 	    for(FitnessFunctionObject ffo : fitnessFunctionList) {
 		subMainPanel.add(ffo.transformIntoAPanelWhenReadFromXML());
 	    }
-//	    verifyIfAnyVariableWasAdded();
+	    //verifyIfAnyVariableWasAdded();
 	    userInterface.putXmlFileWasImportedFalseAtIndex(2);
 	} else {
 	    if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==false) {
@@ -243,37 +243,37 @@ public class FitnessFunctionPage extends SuperPage {
 //     * Verify if any optimization criteria was added to the optimization criteria list and if there's any need to update
 //     * the fitness function checkbox
 //     */
-//    private void verifyIfAnyVariableWasAdded() {
-//	if (userInterface.getOptimizationCriteriaFromPage().size() > 0) {
-//	    ArrayList<FitnessFunctionObject> fitnessFunctionListAux = new ArrayList<FitnessFunctionObject>();
-//	    for (OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
-//		for (FitnessFunctionObject ffo : fitnessFunctionList) {
-//		    boolean nova = true;
-//		    FitnessFunctionObject ffoAux = ffo;
-//		    String strAux = "";
-//		    for(OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
-//			strAux = occ.getOptimizationCriteriaName().getText();
-//			if (occ.getOptimizationCriteriaName().getText().equals(oco.getVariableName())) {
-//			    nova = false;
-//			    break;
-//			}
-//		    } 
-//		    if(nova == true) {
-//			ffoAux.getCheckboxList().add(new OptimizationCriteriaCheckbox(strAux));
-//		    }
-//		    fitnessFunctionListAux.add(ffoAux);
-//		}
-//	    }
-//	    if(fitnessFunctionList.get(0).getCheckboxList().size() != fitnessFunctionListAux.get(0).getCheckboxList().size()) {
-//		System.out.println("Aqui");
-//		subMainPanel.removeAll();
-//		fitnessFunctionList = fitnessFunctionListAux;
-//		for(FitnessFunctionObject ffo : fitnessFunctionList) {
-//		    subMainPanel.add(ffo.transformIntoAPanelWhenReadFromXMLAndSomethingWasAdded());
-//		}
-//	    }
-//	}
-//    }
+    //    private void verifyIfAnyVariableWasAdded() {
+    //	if (userInterface.getOptimizationCriteriaFromPage().size() > 0) {
+    //	    ArrayList<FitnessFunctionObject> fitnessFunctionListAux = new ArrayList<FitnessFunctionObject>();
+    //	    for (OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
+    //		for (FitnessFunctionObject ffo : fitnessFunctionList) {
+    //		    boolean nova = true;
+    //		    FitnessFunctionObject ffoAux = ffo;
+    //		    String strAux = "";
+    //		    for(OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
+    //			strAux = occ.getOptimizationCriteriaName().getText();
+    //			if (occ.getOptimizationCriteriaName().getText().equals(oco.getVariableName())) {
+    //			    nova = false;
+    //			    break;
+    //			}
+    //		    } 
+    //		    if(nova == true) {
+    //			ffoAux.getCheckboxList().add(new OptimizationCriteriaCheckbox(strAux));
+    //		    }
+    //		    fitnessFunctionListAux.add(ffoAux);
+    //		}
+    //	    }
+    //	    if(fitnessFunctionList.get(0).getCheckboxList().size() != fitnessFunctionListAux.get(0).getCheckboxList().size()) {
+    //		System.out.println("Aqui");
+    //		subMainPanel.removeAll();
+    //		fitnessFunctionList = fitnessFunctionListAux;
+    //		for(FitnessFunctionObject ffo : fitnessFunctionList) {
+    //		    subMainPanel.add(ffo.transformIntoAPanelWhenReadFromXMLAndSomethingWasAdded());
+    //		}
+    //	    }
+    //	}
+    //    }
 
     @Override
     protected boolean areAllDataWellFilled() {
@@ -368,4 +368,14 @@ public class FitnessFunctionPage extends SuperPage {
 	    ffo.setPageAssociated(this);
 	}
     }
+
+    //TODO: A página não avança apesar de não dar nenhum erro, a valiadação não está a ser feita não sei porquê
+    @Override
+    protected void clearDataFromPage() {
+	fitnessFunctionList.clear();
+	checkboxList.clear();
+	mainPanel.removeAll();
+	createMainPanel();
+    }
+
 }

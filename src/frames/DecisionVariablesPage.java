@@ -370,4 +370,13 @@ public class DecisionVariablesPage extends SuperPage {
 	}
     }
 
+    @Override
+    protected void clearDataFromPage() {
+	decisionVariableList.clear();
+	groupName.setText(null);
+	mainPanel.removeAll();
+	subSubMainPanel.removeAll();
+	createMainPanel();
+    }
+
 }

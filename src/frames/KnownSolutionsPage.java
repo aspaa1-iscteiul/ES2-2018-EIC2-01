@@ -143,6 +143,7 @@ public class KnownSolutionsPage extends SuperPage {
 	    }
 	    verifyIfAnyVariableWasAdded();
 	    verifyIfAnyVariableWasDeleted();
+	    reconstructToLookNice();
 	    userInterface.putXmlFileWasImportedFalseAtIndex(4);
 	} else {
 	    if (knownSolutionsList.size() > 0) {
@@ -151,6 +152,7 @@ public class KnownSolutionsPage extends SuperPage {
 		}
 		verifyIfAnyVariableWasAdded();
 		verifyIfAnyVariableWasDeleted();
+		reconstructToLookNice();
 	    } else {
 		if (userInterface.getDecisionVariablesFromPage().size() > 0) {
 		    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
@@ -197,21 +199,32 @@ public class KnownSolutionsPage extends SuperPage {
      * the known solutions list 
      */
     private void verifyIfAnyVariableWasDeleted() {
-	if (knownSolutionsList.size() != userInterface.getDecisionVariablesFromPage().size()) {
-	    for (KnownSolutionsObject kso : knownSolutionsList) {
-		boolean toDelete = false;
-		for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-		    if (kso.getName().getText().equals(dvo.getVariableName())) {
-			toDelete = true;
-			break;
-		    }
-		}
-		if (toDelete == false) {
-		    subSubMainPanel.remove(kso.transformIntoAPanel());
-		    KnownSolutionsObject ksoAux = kso;
-		    knownSolutionsList.remove(ksoAux);
+	ArrayList<KnownSolutionsObject>  knownSolutionsListAux = new ArrayList<KnownSolutionsObject>();
+	for (KnownSolutionsObject kso : knownSolutionsList) {
+	    boolean toDelete = true;
+	    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+		if (kso.getName().getText().equals(dvo.getVariableName())) {
+		    toDelete = false;
+		    break;
 		}
 	    }
+	    if (toDelete == true) {
+		knownSolutionsListAux.add(kso);
+	    }
+	}
+	for(KnownSolutionsObject ksoAux : knownSolutionsListAux) {
+	    subSubMainPanel.remove(ksoAux.transformIntoAPanel());
+	    knownSolutionsList.remove(ksoAux);
+	}
+    }
+
+    /**Clean data and reconstruct to put everything in the right place
+     * 
+     */
+    private void reconstructToLookNice() {
+	subSubMainPanel.removeAll();
+	for(KnownSolutionsObject kso : knownSolutionsList) {
+	    subSubMainPanel.add(kso.transformIntoAPanel());
 	}
     }
 
@@ -271,6 +284,11 @@ public class KnownSolutionsPage extends SuperPage {
 	for(KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
 	    kso.setPage(this);
 	}
+    }
+
+    @Override
+    protected void clearDataFromPage() {
+	knownSolutionsList.clear();
     }
 
 }
