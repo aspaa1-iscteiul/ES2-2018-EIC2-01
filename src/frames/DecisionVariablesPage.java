@@ -38,7 +38,7 @@ public class DecisionVariablesPage extends SuperPage {
     private static final long serialVersionUID = 1L;
     private ArrayList<DecisionVariablesObject> decisionVariableList;
     private JPanel subSubMainPanel;
-    private JTextField groupName;
+    private JTextField decisionVariablesSetName;
 
     /**
      * 
@@ -67,16 +67,16 @@ public class DecisionVariablesPage extends SuperPage {
 
 	mainPanel.add(titlePanel);
 
-	JPanel groupPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-	groupPanel.setBackground(Color.WHITE);
-	JLabel groupLabel = new JLabel("Group name");
-	groupLabel.setFont(FrameUtils.cuteFont(12));
-	groupName = new JTextField(5);
-	groupName.setBorder(FrameUtils.cuteBorder());
-	groupPanel.add(groupLabel);
-	groupPanel.add(groupName);
+	JPanel decisionVariablesSetPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	decisionVariablesSetPanel.setBackground(Color.WHITE);
+	JLabel setNameLabel = new JLabel("Decision variables' set name");
+	setNameLabel.setFont(FrameUtils.cuteFont(12));
+	decisionVariablesSetName = new JTextField(5);
+	decisionVariablesSetName.setBorder(FrameUtils.cuteBorder());
+	decisionVariablesSetPanel.add(setNameLabel);
+	decisionVariablesSetPanel.add(decisionVariablesSetName);
 
-	mainPanel.add(groupPanel);
+	mainPanel.add(decisionVariablesSetPanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
@@ -149,7 +149,7 @@ public class DecisionVariablesPage extends SuperPage {
 		subSubMainPanel.add(dvo.transformIntoAPanel());
 	    }
 	    if(userInterface.getProblem().getDecisionVariablesSetName()!=null) {
-		groupName.setText(userInterface.getProblem().getDecisionVariablesSetName());
+		decisionVariablesSetName.setText(userInterface.getProblem().getDecisionVariablesSetName());
 	    }
 	}
 	userInterface.putXmlFileWasImportedFalseAtIndex(1);
@@ -175,7 +175,7 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.setDecisionVariablesFromPage(decisionVariableList);
-	userInterface.getProblem().setDecisionVariablesSetName(groupName.getText());
+	userInterface.getProblem().setDecisionVariablesSetName(decisionVariablesSetName.getText());
     }
 
     /**

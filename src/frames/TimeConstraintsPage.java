@@ -166,7 +166,7 @@ public class TimeConstraintsPage extends SuperPage {
     protected boolean areAllDataWellFilled() {
 	Boolean tmp = false;
 	if (idealTime.getText().trim().isEmpty()) {
-	    FrameUtils.errorFormat(idealTime, "The ideal time field is mandatory and must be filled in.");
+	    FrameUtils.errorFormat(idealTime, "The ideal time field is a mandatory entry field and therefore must be filled in.");
 	} else {
 	    FrameUtils.normalFormat(idealTime);
 	}

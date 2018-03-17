@@ -234,7 +234,7 @@ public class DecisionVariablesObject {
      */
     private boolean isValidName() {
 	String text = varName.getText();
-	String info = (text.equals("") ? "The variable's name field is mandatory and must be filled in. " : "")
+	String info = (text.equals("") ? "The variable's name field is a mandatory entry field and therefore must be filled in. " : "")
 		+ (pageAssociated.isNameRepeated(text) ? "The variable's name must be unique." : "");
 	return !info.equals("") ? FrameUtils.errorFormat(varName, info) : FrameUtils.normalFormat(varName);
     }
@@ -247,7 +247,7 @@ public class DecisionVariablesObject {
     private boolean isDataTypeSelected() {
 	return dataType.getSelectedItem() == null
 		? FrameUtils.errorFormat(dataType,
-			"The decision variable's data type field is mandatory and must be filled in.")
+			"The decision variable's data type field is a mandatory entry field and therefore must be filled in.")
 			: FrameUtils.normalFormat(dataType);
 
     }
@@ -267,7 +267,7 @@ public class DecisionVariablesObject {
 	String boundStr = lower ? "lower" : "upper";
 	if (bound.getText().equals(""))
 	    return FrameUtils.errorFormat(bound,
-		    "The " + boundStr + " bound field is mandatory and must be filled in.");
+		    "The " + boundStr + " bound field is a mandatory entry field and therefore must be filled in.");
 
 	try {
 	    if (dataType.getSelectedItem().toString().equals("Integer"))
@@ -278,7 +278,7 @@ public class DecisionVariablesObject {
 	    return FrameUtils.errorFormat(bound, "The " + boundStr + " bound provided is not a valid number.");
 	} catch (NullPointerException e) {
 	    return FrameUtils.errorFormat(bound,
-		    "The decision variable's data type field is mandatory and must be filled in.");
+		    "The decision variable's data type field is a mandatory entry field and therefore must be filled in.");
 	}
 	return FrameUtils.normalFormat(bound);
     }
