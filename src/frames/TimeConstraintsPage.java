@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
+
 /**
  * This class represents the Time Constraints Page
  */

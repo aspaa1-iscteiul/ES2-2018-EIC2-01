@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
+
 public class RegisterUserPage extends SuperPage {
 
     /**

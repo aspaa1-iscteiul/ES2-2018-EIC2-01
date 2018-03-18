@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import frames.frameUtils.FrameUtils;
 import utils.UserFileUtils;
 
 public class IntroPage extends SuperPage {

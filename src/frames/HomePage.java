@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import frames.frameUtils.FrameUtils;
+
 public class HomePage extends SuperPage {
 
     /**

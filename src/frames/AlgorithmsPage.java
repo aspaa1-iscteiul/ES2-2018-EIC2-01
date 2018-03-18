@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
+
 public class AlgorithmsPage extends SuperPage {
 
     /**

@@ -1,4 +1,4 @@
-package frames;
+package frames.frameUtils;
 
 import java.awt.Color;
 import java.awt.Font;

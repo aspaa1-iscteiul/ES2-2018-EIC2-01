@@ -18,6 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
+import frames.graphicalObjects.DecisionVariablesObject;
+import frames.graphicalObjects.KnownSolutionsObject;
+
 /**
  * This class represents the Known Solutions Page
  */

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PackageAnalysis>
+    <Package name="jUnitTests" x="789" y="130">
+        <DependencyLink destination="utils"/>
+        <DependencyLink destination="objects"/>
+    </Package>
+    <Package name="objects" x="371" y="129"/>
+    <Package name="jUnitTests.testFiles" x="837" y="168"/>
+    <Package name="utils" x="606" y="241">
+        <DependencyLink destination="objects"/>
+    </Package>
+    <Package name="frames" x="372" y="322">
+        <DependencyLink destination="frames.frameUtils"/>
+        <DependencyLink destination="utils"/>
+        <DependencyLink destination="objects"/>
+        <DependencyLink destination="frames.graphicalObjects">
+            <Point x="271" y="282"/>
+        </DependencyLink>
+    </Package>
+    <Package name="frames.frameUtils" x="149" y="397"/>
+    <Package name="frames.graphicalObjects" x="132" y="129">
+        <DependencyLink destination="frames.frameUtils"/>
+        <DependencyLink destination="frames">
+            <Point x="359" y="184"/>
+        </DependencyLink>
+        <DependencyLink destination="objects"/>
+    </Package>
+    <Package name="frames.images" x="410" y="359"/>
+</PackageAnalysis>

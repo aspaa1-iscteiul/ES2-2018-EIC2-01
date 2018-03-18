@@ -16,6 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.Email;
+import frames.frameUtils.FrameUtils;
+
 /**
  * This class represents the Send Email Page
  */

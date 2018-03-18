@@ -11,6 +11,11 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import frames.graphicalObjects.DecisionVariablesObject;
+import frames.graphicalObjects.FitnessFunctionObject;
+import frames.graphicalObjects.KnownSolutionsObject;
+import frames.graphicalObjects.OptimizationCriteriaCheckbox;
+import frames.graphicalObjects.OptimizationCriteriaObject;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
 import objects.OptimizationCriteria;

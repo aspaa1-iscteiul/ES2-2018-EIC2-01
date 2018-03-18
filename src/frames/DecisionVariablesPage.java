@@ -29,6 +29,9 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
+import frames.graphicalObjects.DecisionVariablesObject;
+
 /**
  * This class represents the Decision Variables Page
  */
@@ -373,7 +376,7 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void clearDataFromPage() {
 	decisionVariableList.clear();
-	groupName.setText(null);
+	decisionVariablesSetName.setText(null);
 	mainPanel.removeAll();
 	subSubMainPanel.removeAll();
 	createMainPanel();

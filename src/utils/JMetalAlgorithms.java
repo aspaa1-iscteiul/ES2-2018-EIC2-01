@@ -76,7 +76,7 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
-public class Algorithms_jMetal<S> {
+public class JMetalAlgorithms<S> {
 
     public static void main(String[] args) {
 	System.out.println("Note: DoubleSolution <=> Solution<Double> && BinarySolution <=> Solution<BinarySet>\n\n");

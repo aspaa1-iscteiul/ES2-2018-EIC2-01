@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
+
 /**
  * This class represents the Home Center page that contains FAQ and an option to
  * send an email

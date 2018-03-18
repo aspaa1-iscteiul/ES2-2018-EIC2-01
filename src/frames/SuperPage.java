@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
 import objects.Problem;
 
 public abstract class SuperPage extends JPanel {
@@ -20,7 +21,7 @@ public abstract class SuperPage extends JPanel {
      */
     private static final long serialVersionUID = 1L;
     protected JPanel mainPanel, buttonsPanel;
-    protected UserInterface userInterface;
+    public UserInterface userInterface;
 
     public SuperPage(UserInterface userInterface) {
 	super();

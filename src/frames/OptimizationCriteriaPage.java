@@ -19,6 +19,9 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.FrameUtils;
+import frames.graphicalObjects.OptimizationCriteriaObject;
+
 /**
  * This class represents the Optimization Criteria Page
  */
