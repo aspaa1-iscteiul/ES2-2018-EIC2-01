@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PackageAnalysis>
-    <Package name="jUnitTests" x="789" y="130">
+    <Package name="jUnitTests" x="711" y="94">
         <DependencyLink destination="utils"/>
         <DependencyLink destination="objects"/>
     </Package>
-    <Package name="objects" x="371" y="129"/>
-    <Package name="jUnitTests.testFiles" x="837" y="168"/>
-    <Package name="utils" x="606" y="241">
+    <Package name="objects" x="408" y="95"/>
+    <Package name="jUnitTests.testFiles" x="765" y="121"/>
+    <Package name="utils" x="726" y="287">
         <DependencyLink destination="objects"/>
     </Package>
-    <Package name="frames" x="372" y="322">
+    <Package name="frames" x="409" y="288">
         <DependencyLink destination="frames.frameUtils"/>
         <DependencyLink destination="utils"/>
         <DependencyLink destination="objects"/>
         <DependencyLink destination="frames.graphicalObjects">
-            <Point x="271" y="282"/>
+            <Point x="326" y="297"/>
         </DependencyLink>
     </Package>
-    <Package name="frames.frameUtils" x="149" y="397"/>
-    <Package name="frames.graphicalObjects" x="132" y="129">
+    <Package name="frames.frameUtils" x="186" y="363"/>
+    <Package name="frames.graphicalObjects" x="169" y="95">
         <DependencyLink destination="frames.frameUtils"/>
-        <DependencyLink destination="frames">
-            <Point x="359" y="184"/>
-        </DependencyLink>
+        <DependencyLink destination="frames"/>
         <DependencyLink destination="objects"/>
     </Package>
-    <Package name="frames.images" x="410" y="359"/>
+    <Package name="frames.images" x="448" y="315"/>
 </PackageAnalysis>

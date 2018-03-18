@@ -9,6 +9,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
     <Class name="frames.SaveProblemPage" x="1231" y="631">
@@ -20,6 +21,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
     </Class>
     <Class name="frames.HomeCenterPage" x="830" y="676">
         <AttributesDisplayFilter public-accepted="true"
@@ -30,6 +32,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
     </Class>
     <Class name="frames.SuperPage" x="703" y="434">
         <AttributesDisplayFilter public-accepted="true"
@@ -43,6 +46,7 @@
             endpointName="userInterface" kind="Simple">
             <Point x="677" y="581"/>
         </Association>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
     </Class>
     <Class name="frames.KnownSolutionsPage" x="1100" y="173">
         <AttributesDisplayFilter public-accepted="true"
@@ -53,6 +57,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
     <Class name="frames.FitnessFunctionPage" x="1131" y="291">
@@ -64,6 +69,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
     <Class name="frames.AlgorithmsPage" x="1192" y="528">
@@ -75,6 +81,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
     <Class name="frames.RegisterUserPage" x="1096" y="663">
@@ -86,6 +93,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
     <Class name="frames.HomePage" x="723" y="269">
@@ -97,6 +105,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
     </Class>
     <Class name="frames.OptimizationCriteriaPage" x="709" y="105">
         <AttributesDisplayFilter public-accepted="true"
@@ -107,6 +116,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
     <Class name="frames.TimeConstraintsPage" x="963" y="663">
@@ -118,7 +128,17 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
+    </Class>
+    <Class name="frames.frameUtils.FrameUtils" x="1076" y="104">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
     </Class>
     <Class name="frames.UserInterface" x="212" y="232">
         <AttributesDisplayFilter public-accepted="true"
@@ -143,9 +163,19 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
-    <Class name="frames.SendEmailPage" x="693" y="678">
+    <Class name="frames.frameUtils.Email" x="521" y="105">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="frames.SendEmailPage" x="693" y="676">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -154,6 +184,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
     </Class>
     <Class name="frames.IntroPage" x="641" y="269">
         <AttributesDisplayFilter public-accepted="true"
@@ -164,6 +195,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
         <Extension destinationClassName="frames.SuperPage"/>
+        <Communication destinationClassName="frames.frameUtils.FrameUtils"/>
         <Communication destinationClassName="frames.UserInterface"/>
     </Class>
 </ClassDiagram>
