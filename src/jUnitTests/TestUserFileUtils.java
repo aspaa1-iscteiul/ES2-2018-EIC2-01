@@ -74,7 +74,8 @@ public class TestUserFileUtils {
      * reading a Problem of that same file and confirming we are obtaining
      * equivalent objects
      * 
-     * Scenario:  null Problem's Description, null DecisionVariablesSetName, set MaxTimeFrame
+     * Scenario: null Problem's Description, null DecisionVariablesSetName, set
+     * MaxTimeFrame
      */
     @Test
     public final void successfullyTestWriteToAndReadFromXML1() {
@@ -90,7 +91,8 @@ public class TestUserFileUtils {
      * reading a Problem of that same file and confirming we are obtaining
      * equivalent objects
      * 
-     * Scenario: set Problem's Description, set DecisionVariablesSetName, null MaxTimeFrame
+     * Scenario: set Problem's Description, set DecisionVariablesSetName, null
+     * MaxTimeFrame
      */
     @Test
     public final void successfullyTestWriteToAndReadFromXML2() {
