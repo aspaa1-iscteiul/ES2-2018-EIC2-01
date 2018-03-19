@@ -10,9 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 public class FrameUtils {
@@ -62,10 +60,7 @@ public class FrameUtils {
     // XXX change @return
     public static boolean errorFormat(JComponent jComponent, String errorMessage) {
 	if (jComponent instanceof JCheckBox) {
-	    // because JCheckBox does not have a border ?
 	    jComponent.setForeground(Color.RED);
-	    jComponent.setBorder(new LineBorder(Color.red,2));
-	    ((JCheckBox) jComponent).setBorderPainted(true);
 	} else {
 	    int var = jComponent instanceof JComboBox ? 0 : 10;
 	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED, 2),
@@ -89,9 +84,7 @@ public class FrameUtils {
     // XXX change @return
     public static boolean normalFormat(JComponent jComponent) {
 	if (jComponent instanceof JCheckBox) {
-	    // because JCheckBox does not have a border ?
 	    jComponent.setForeground(Color.BLACK);
-	    jComponent.setBorder(UIManager.getBorder("jComponent.Border"));
 	} else {
 	    int var = jComponent instanceof JComboBox ? 0 : 10;
 	    jComponent.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
