@@ -137,13 +137,18 @@ public class SaveProblemPage extends SuperPage {
 	saveButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
-		userInterface.setFinalProblem();
-		saveButton.setBackground(new Color(155, 226, 155).brighter());
+		try {
+		    userInterface.setFinalProblem();
+		    // TODO O fileName não pode conter caracteres especiais e tem de terminar em .xml
+		    UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText(), "/" + fileName.getText());
+		    saveButton.setBackground(new Color(155, 226, 155).brighter());
+		} catch (Exception e) {
+		    saveButton.setBackground(Color.RED.brighter());
+		}
 		savePanel.validate();
 		savePanel.repaint();
 		System.out.println(userInterface.getProblem().toString());
 		System.out.println(filePath.getText());
-		UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText());
 	    }
 	});
 
@@ -193,7 +198,7 @@ public class SaveProblemPage extends SuperPage {
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
     }
-    
+
     @Override
     protected void clearDataFromPage() {
 	fileName.setText(null);

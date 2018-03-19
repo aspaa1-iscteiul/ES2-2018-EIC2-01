@@ -2,8 +2,9 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -61,7 +62,7 @@ public class UserFileUtils {
      * @param path
      *            for the directory in which to store the XML File
      */
-    public static void writeToXML(Problem problem, String path) {
+    public static void writeToXML(Problem problem, String path, String fileName) {
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
 	try {
@@ -74,7 +75,11 @@ public class UserFileUtils {
 	    Transformer transformer = transformerFactory.newTransformer();
 	    DOMSource source = new DOMSource(doc);
 
-	    StreamResult file = new StreamResult(new File(path));
+	    if (fileName.trim().equals("/"))
+		fileName = getDefaultName(problem.getProblemName());
+
+	    StreamResult file = new StreamResult(new File(path + fileName));
+	    System.out.println("Nome do ficheiro: " + path + fileName);
 
 	    transformer.transform(source, file);
 	    System.out.println("File was saved sucessfully");
@@ -83,6 +88,17 @@ public class UserFileUtils {
 	    JOptionPane.showMessageDialog(new JFrame(), "A problem occurred while saving the problem's configurations",
 		    "Error message", JOptionPane.ERROR_MESSAGE);
 	}
+    }
+
+    private static String getDefaultName(String problemName) {
+	Calendar now = Calendar.getInstance();
+	int year = now.get(Calendar.YEAR);
+	int month = now.get(Calendar.MONTH) + 1; // Note: zero based!
+	int day = now.get(Calendar.DAY_OF_MONTH);
+	int hour = now.get(Calendar.HOUR_OF_DAY);
+	int minute = now.get(Calendar.MINUTE);
+	int second = now.get(Calendar.SECOND);
+	return "/" + problemName + "_" + year + "." + month + "." + day + "_" + hour + "." + minute + "." + second + ".xml";
     }
 
     /**
@@ -261,7 +277,7 @@ public class UserFileUtils {
 
 	if (problemElement.getElementsByTagName(tagDecisionVariablesSetName).getLength() > 0)
 	    problem.setDecisionVariablesSetName(getTagValue(tagDecisionVariablesSetName, problemElement));
-	
+
 	problem.setDecisionVariables(getDecisionVariables(doc));
 	problem.setFitnessFunctions(getFitnessFunctions(doc));
 	problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));

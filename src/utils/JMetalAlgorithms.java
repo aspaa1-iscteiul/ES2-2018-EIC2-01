@@ -55,7 +55,6 @@ import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.NonElitistEvol
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
-import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -75,6 +74,7 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
+import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
 
 public class JMetalAlgorithms<S> {
 

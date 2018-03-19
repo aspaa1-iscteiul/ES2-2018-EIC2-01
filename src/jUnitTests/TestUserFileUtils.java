@@ -80,7 +80,7 @@ public class TestUserFileUtils {
     @Test
     public final void successfullyTestWriteToAndReadFromXML1() {
 	Problem problemWrite = contructProblem(1);
-	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles/userConfigTest1.xml");
+	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles", "/userConfigTest1.xml");
 	Problem problemRead = utils.UserFileUtils.readFromXML("./src/jUnitTests/testFiles/userConfigTest1.xml");
 
 	assertEquals(problemWrite, problemRead);
@@ -97,7 +97,8 @@ public class TestUserFileUtils {
     @Test
     public final void successfullyTestWriteToAndReadFromXML2() {
 	Problem problemWrite = contructProblem(2);
-	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles/userConfigTest2.xml");
+	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles", "/userConfigTest2.xml");
+	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles", "/");
 	Problem problemRead = utils.UserFileUtils.readFromXML("./src/jUnitTests/testFiles/userConfigTest2.xml");
 
 	assertEquals(problemWrite, problemRead);
@@ -112,7 +113,7 @@ public class TestUserFileUtils {
 	Problem problemWrite = contructProblem(1);
 	// For testing purposes, the file path passed as an argument has a typographical
 	// error
-	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFikes/userConfigTest1.xml");
+	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFikes", "/userConfigTest1.xml");
 	utils.UserFileUtils.readFromXML("./src/jUnitTests/testFilis/userConfigTest1.xml");
     }
 

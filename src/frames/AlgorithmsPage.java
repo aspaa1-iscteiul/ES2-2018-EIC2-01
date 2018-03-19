@@ -118,7 +118,7 @@ public class AlgorithmsPage extends SuperPage {
 	}
 	if(count==0) {
 	    for(JCheckBox checkbox : algorithmsList) {
-		FrameUtils.errorFormat(checkbox, "At least one algorithm must be chosen");
+		FrameUtils.errorFormat(checkbox, "You must chose at least one optimization algorithm.");
 	    }
 	    return false;
 	} else {
