@@ -53,13 +53,13 @@ public class UserInterface {
 	problem = new Problem();
 
 	pages = new ArrayList<>();
-	pages.add(new HomePage(this));
+//	pages.add(new HomePage(this));
 	pages.add(new IntroPage(this));
-	pages.add(new RegisterUserPage(this));
-	pages.add(new ProblemIdPage(this));
-	pages.add(new DecisionVariablesPage(this));  
-	pages.add(new OptimizationCriteriaPage(this));
-	pages.add(new FitnessFunctionPage(this));
+//	pages.add(new RegisterUserPage(this));
+//	pages.add(new ProblemIdPage(this));
+//	pages.add(new DecisionVariablesPage(this));  
+//	pages.add(new OptimizationCriteriaPage(this));
+//	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
 	pages.add(new AlgorithmsPage(this));
 	pages.add(new TimeConstraintsPage(this));
@@ -342,6 +342,18 @@ public class UserInterface {
 	return tmp;
     }
 
+    /**
+     * Transforms the data from problem read from a xml file to the data used in the interface
+     * @return
+     */
+    public void createOptimizationAlgorithmsFromProblem() {
+	ArrayList<String> tmp = new ArrayList<String>();
+	for(String string : problem.getOptimizationAlgorithms()) {
+	   tmp.add(string);
+	}
+	this.optimizationAlgorithmsFromPage = tmp;
+    }
+    
     /**
      * Allows to averiguate that a problem was imported from a xml file and that fields ideal time and max time 
      * can be used to populate the gui

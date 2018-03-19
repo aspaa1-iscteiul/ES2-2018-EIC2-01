@@ -79,10 +79,13 @@ public class AlgorithmsPage extends SuperPage {
 
     @Override
     protected void onTop() {
+	algorithmsList.clear();
+	algorithmsListPanel.removeAll();
+
 	title.setText((userInterface.getIsSingleobjective() ? "Single objective" : "Multi objective")
 		+ " optimization algorithms available");
 	List<String> list = userInterface.getIsSingleobjective() ? singleobjectiveAlgorithms : multiobjectiveAlgorithms;
-	
+
 	for (String algorithm : list)
 	    algorithmsList.add(new JCheckBox(algorithm));
 
@@ -90,15 +93,42 @@ public class AlgorithmsPage extends SuperPage {
 	    checkBox.setBackground(Color.WHITE);
 	    algorithmsListPanel.add(checkBox);
 	}
+
+	if( userInterface.getOptimizationAlgorithmsFromPage().size()>0) {
+	    for (JCheckBox checkBox : algorithmsList) {
+		for(String string : userInterface.getOptimizationAlgorithmsFromPage()) {
+		    if(checkBox.getText().equals(string)) {
+			checkBox.setSelected(true);
+		    }
+		}
+	    }
+	}
+	
 	algorithmsListPanel.repaint();
 	algorithmsListPanel.revalidate();
     }
 
     @Override
     protected boolean areAllDataWellFilled() {
-	return true;
+	int count = 0;
+	for(JCheckBox checkbox : algorithmsList) {
+	    if(checkbox.isSelected()==true) {
+		count++;
+	    }
+	}
+	if(count==0) {
+	    for(JCheckBox checkbox : algorithmsList) {
+		FrameUtils.errorFormat(checkbox, "At least one algorithm must be chosen");
+	    }
+	    return false;
+	} else {
+	    for(JCheckBox checkbox : algorithmsList) {
+		FrameUtils.normalFormat(checkbox);
+	    }
+	    return true;
+	}
     }
-    
+
     /**
      * Get the names of the checkboxes selected of a fitness function
      * @return
@@ -117,10 +147,12 @@ public class AlgorithmsPage extends SuperPage {
     protected void saveToProblem() {
 	userInterface.setOptimizationAlgorithmsFromPage(getTheCheckboxesSelected());
     }
-    
+
     @Override
     protected void clearDataFromPage() {
-	algorithmsList.clear();
+	for(JCheckBox checkbox : algorithmsList) {
+	    checkbox.setSelected(false);
+	}
     }
 
 }
