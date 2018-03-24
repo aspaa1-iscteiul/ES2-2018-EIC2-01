@@ -43,33 +43,6 @@ public class OptimizationCriteriaObject {
 	dataType.setSelectedItem(null);
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
-	final OptimizationCriteriaObject tmp = this;
-	deleteIcon.addMouseListener(new MouseListener() {
-	    @Override
-	    public void mouseClicked(MouseEvent arg0) {
-		EventQueue.invokeLater(new Runnable() {
-		    public void run() {
-			pageAssociated.removeOptimizationCriteriaFromList(tmp);
-		    }
-		});
-	    }
-
-	    @Override
-	    public void mouseEntered(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mouseExited(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mousePressed(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mouseReleased(MouseEvent arg0) {
-	    }
-	});
     }
 
     /**
@@ -91,13 +64,29 @@ public class OptimizationCriteriaObject {
 	}
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
-	final OptimizationCriteriaObject tmp = this;
+    }
+
+    /**
+     * Transforms the object in a JPanel that will be added to the frame later.
+     * 
+     * @return JPanel
+     */
+    public JPanel transformIntoAPanel() {
+	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+	variablesPanel.setBackground(Color.WHITE);
+	name.setBorder(FrameUtils.cuteBorder());
+	name.setPreferredSize(new Dimension(10, 22));
+	variablesPanel.add(name);
+	FrameUtils.addEmptyLabels(variablesPanel, 3);
+	variablesPanel.add(dataType);
+	FrameUtils.addEmptyLabels(variablesPanel, 2);
+	
 	deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
 		EventQueue.invokeLater(new Runnable() {
 		    public void run() {
-			pageAssociated.removeOptimizationCriteriaFromList(tmp);
+			pageAssociated.removeOptimizationCriteriaFromList(OptimizationCriteriaObject.this);
 		    }
 		});
 	    }
@@ -118,22 +107,7 @@ public class OptimizationCriteriaObject {
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
 	});
-    }
-
-    /**
-     * Transforms the object in a JPanel that will be added to the frame later.
-     * 
-     * @return JPanel
-     */
-    public JPanel transformIntoAPanel() {
-	variablesPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-	variablesPanel.setBackground(Color.WHITE);
-	name.setBorder(FrameUtils.cuteBorder());
-	name.setPreferredSize(new Dimension(10, 22));
-	variablesPanel.add(name);
-	FrameUtils.addEmptyLabels(variablesPanel, 3);
-	variablesPanel.add(dataType);
-	FrameUtils.addEmptyLabels(variablesPanel, 2);
+	
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
     }

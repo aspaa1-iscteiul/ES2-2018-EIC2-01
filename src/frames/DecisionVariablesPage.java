@@ -146,10 +146,10 @@ public class DecisionVariablesPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	if(userInterface.isXmlFileWasImportedAtIndex(1)==true) {
 	    subSubMainPanel.removeAll();
-	    setThisPage();
 	    decisionVariableList = userInterface.getDecisionVariablesFromPage();
 	    for(DecisionVariablesObject dvo : decisionVariableList) {
 		subSubMainPanel.add(dvo.transformIntoAPanel());
+		dvo.setPageAssociated(this);
 	    }
 	    if(userInterface.getProblem().getDecisionVariablesSetName()!=null) {
 		decisionVariablesSetName.setText(userInterface.getProblem().getDecisionVariablesSetName());
@@ -347,9 +347,13 @@ public class DecisionVariablesPage extends SuperPage {
      * @param dvo
      */
     public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
-	decisionVariableList.remove(dvo);
-	subSubMainPanel.remove(dvo.transformIntoAPanel());
-	userInterface.refreshPage();
+	EventQueue.invokeLater(new Runnable() {
+	    public void run() {
+		decisionVariableList.remove(dvo);
+		subSubMainPanel.remove(dvo.transformIntoAPanel());
+		userInterface.refreshPage();
+	    }
+	});
     }
 
     /**
@@ -365,12 +369,6 @@ public class DecisionVariablesPage extends SuperPage {
 	    if (!dvo.getVariableName().equals("") && dvo.getVariableName().equals(varName))
 		count++;
 	return count >= 2;
-    }
-
-    private void setThisPage() {
-	for(DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-	    dvo.setPageAssociated(this);
-	}
     }
 
     @Override

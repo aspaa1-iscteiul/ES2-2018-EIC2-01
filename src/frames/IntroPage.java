@@ -75,9 +75,7 @@ public class IntroPage extends SuperPage {
 	submitButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		if(userInterface.wasSomethingImported()==true){
-		    userInterface.cleanData();
-		}
+		userInterface.cleanData();
 		userInterface.goToNextPage();
 	    }
 	});

@@ -98,4 +98,30 @@ public class FrameUtils {
 	return new Font("Solid Edge ASNI Unicode", Font.PLAIN, size);
     }
 
+    // XXX change @return
+    public static boolean errorFormatOfString(JComponent jComponent, String errorMessage) {
+	jComponent.setForeground(Color.RED);
+	jComponent.setToolTipText(errorMessage);
+	return false;
+    }
+
+    /**
+     * Adds a black border to the <b>jComponent</b>, and removes an error
+     * message if it has one
+     * 
+     * @param jComponent
+     *            The component where a red border and the <b>errorMessage</b>
+     *            will be added
+     * @return {@code true} because the method is called when something is right
+     * @see JComponent#setBorder(Border)
+     * @see JComponent#setToolTipText(String)
+     */
+    // XXX change @return
+    public static boolean normalFormatOfString(JComponent jComponent) {
+	jComponent.setForeground(Color.BLACK);
+	jComponent.setToolTipText(null);
+	return true;
+    }
+
+
 }

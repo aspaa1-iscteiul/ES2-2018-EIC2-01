@@ -2,7 +2,6 @@ package frames.graphicalObjects;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -88,35 +87,8 @@ public class DecisionVariablesObject {
 	    invalidValues = new JTextField(6);
 	}
 
-	DecisionVariablesObject tmp = this;
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
-	deleteIcon.addMouseListener(new MouseListener() {
-	    @Override
-	    public void mouseClicked(MouseEvent arg0) {
-		EventQueue.invokeLater(new Runnable() {
-		    public void run() {
-			page.removeDecisionVariableFromList(tmp);
-		    }
-		});
-	    }
-
-	    @Override
-	    public void mouseEntered(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mouseExited(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mousePressed(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mouseReleased(MouseEvent arg0) {
-	    }
-	});
     }
 
     /**
@@ -143,6 +115,31 @@ public class DecisionVariablesObject {
 	upperBound.setPreferredSize(new Dimension(10, 22));
 	invalidValues.setBorder(FrameUtils.cuteBorder());
 	invalidValues.setPreferredSize(new Dimension(10, 22));
+
+	deleteIcon.addMouseListener(new MouseListener() {
+	    @Override
+	    public void mouseClicked(MouseEvent arg0) {
+		pageAssociated.removeDecisionVariableFromList(DecisionVariablesObject.this);
+	    }
+
+	    @Override
+	    public void mouseEntered(MouseEvent arg0) {
+	    }
+
+	    @Override
+	    public void mouseExited(MouseEvent arg0) {
+	    }
+
+	    @Override
+	    public void mousePressed(MouseEvent arg0) {
+	    }
+
+	    @Override
+	    public void mouseReleased(MouseEvent arg0) {
+	    }
+	});
+
+
 	variablesPanel.add(varName);
 	variablesPanel.add(dataType);
 	variablesPanel.add(lowerBound);
