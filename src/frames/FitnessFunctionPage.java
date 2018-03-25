@@ -275,7 +275,31 @@ public class FitnessFunctionPage extends SuperPage {
 		return false;
 	    }
 	}
+	boolean[] jarFilesWereUploaded = verifyIfJarFilesWereUploaded();
+	for(int i = 0 ; i != jarFilesWereUploaded.length; i++) {
+	    if(jarFilesWereUploaded[i] == false) {
+		return false;
+	    }
+	}
 	return true;
+    }
+
+    /**
+     * Goes over all the fitness function objects from the page and verifys
+     * if all of them have a jar file associated
+     */
+    public boolean[] verifyIfJarFilesWereUploaded() {
+	boolean[] tmp = new boolean[fitnessFunctionList.size()];
+	for(FitnessFunctionObject ffo : fitnessFunctionList) {	
+	    if(ffo.isJarFileUploaded()==false) {
+		FrameUtils.errorFormat(ffo.getUploadButton(), "Every fitness function must have a jar file uploaded");
+		tmp[fitnessFunctionList.indexOf(ffo)] = false;
+	    } else {
+		FrameUtils.normalFormat(ffo.getUploadButton());
+		tmp[fitnessFunctionList.indexOf(ffo)] = true;
+	    }
+	}
+	return tmp;
     }
 
     @Override

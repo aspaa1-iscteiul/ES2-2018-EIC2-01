@@ -29,6 +29,7 @@ public class FitnessFunctionObject {
 
     private FitnessFunctionPage pageAssociated;
     private JPanel fieldsPanel;
+    private boolean jarFileUploaded;
     private JButton uploadButton;
     private ArrayList<OptimizationCriteriaCheckbox> checkboxList;
     private JLabel warning;
@@ -39,6 +40,7 @@ public class FitnessFunctionObject {
      */
     public FitnessFunctionObject(FitnessFunctionPage page) {
 	this.pageAssociated = page;
+	this.setJarFileUploaded(false);
 	this.checkboxList = new ArrayList<OptimizationCriteriaCheckbox>();
 	uploadButton = FrameUtils.cuteButton("Upload JAR file");
 	uploadButton.addActionListener(new ActionListener() {
@@ -55,6 +57,9 @@ public class FitnessFunctionObject {
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(null)) {
 		    uploadButton.setText(fileChooser.getSelectedFile().getAbsolutePath());
+		    setJarFileUploaded(true);
+		} else {
+		    setJarFileUploaded(false);
 		}
 	    }
 	});
@@ -171,6 +176,10 @@ public class FitnessFunctionObject {
 	return uploadButton.getText();
     }
 
+    public JButton getUploadButton() {
+	return uploadButton;
+    }
+    
     public ArrayList<OptimizationCriteriaCheckbox> getCheckboxList() {
 	return checkboxList;
     }
@@ -178,6 +187,15 @@ public class FitnessFunctionObject {
     public void setCheckboxList(ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
 	this.checkboxList = checkboxList;
     }
+
+    public boolean isJarFileUploaded() {
+	return jarFileUploaded;
+    }
+
+    public void setJarFileUploaded(boolean jarFileUploaded) {
+	this.jarFileUploaded = jarFileUploaded;
+    }
+
 
     /**
      * Creates the checkboxes and adds them to the frame, analyzing if they should
