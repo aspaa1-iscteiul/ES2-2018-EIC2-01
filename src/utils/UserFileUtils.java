@@ -98,7 +98,8 @@ public class UserFileUtils {
 	int hour = now.get(Calendar.HOUR_OF_DAY);
 	int minute = now.get(Calendar.MINUTE);
 	int second = now.get(Calendar.SECOND);
-	return "/" + problemName + "_" + year + "." + month + "." + day + "_" + hour + "." + minute + "." + second + ".xml";
+	return "/" + problemName + "_" + year + "." + month + "." + day + "_" + hour + "." + minute + "." + second
+		+ ".xml";
     }
 
     /**
@@ -164,6 +165,12 @@ public class UserFileUtils {
 
 		createTextNode(doc, optimizationCriteriaNode, tagName, criteria.getName());
 		createTextNode(doc, optimizationCriteriaNode, tagDataType, criteria.getDataType().name());
+
+		if (criteria.getKnownSolutions() != null) {
+		    Element knownSolutionsNode = createEmptyNode(doc, optimizationCriteriaNode, tagKnownSolutions);
+		    for (String solution : criteria.getKnownSolutions())
+			createTextNode(doc, knownSolutionsNode, tagKnownSolution, solution);
+		}
 	    }
 
 	}
@@ -398,9 +405,27 @@ public class UserFileUtils {
 		String dataType = getTagValue(tagDataType, optimizationCriteriaElement);
 
 		if (dataType.equalsIgnoreCase(DataType.INTEGER.name()))
-		    optCriteria = new OptimizationCriteria(name, DataType.INTEGER);
+		    optCriteria = new OptimizationCriteria(name, DataType.INTEGER, null);
 		else
-		    optCriteria = new OptimizationCriteria(name, DataType.DOUBLE);
+		    optCriteria = new OptimizationCriteria(name, DataType.DOUBLE, null);
+
+		Node knownSolutionsNode = optimizationCriteriaNode.getLastChild();
+
+		if (knownSolutionsNode.getNodeName().equals(tagKnownSolutions)) {
+
+		    ArrayList<String> knownSolutions = new ArrayList<>();
+
+		    NodeList knownSolutionsList = knownSolutionsNode.getChildNodes();
+
+		    for (int index3 = 0; index3 < knownSolutionsList.getLength(); index3++) {
+			Node knownSolutionNode = knownSolutionsList.item(index3);
+			String knownSolution = knownSolutionNode.getTextContent();
+
+			knownSolutions.add(knownSolution);
+
+		    }
+		    optCriteria.setKnownSolutions(knownSolutions);
+		}
 
 		optimizationCriteria.add(optCriteria);
 

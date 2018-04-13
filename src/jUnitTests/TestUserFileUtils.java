@@ -21,15 +21,15 @@ public class TestUserFileUtils {
      * @return Object Problem for testing
      */
     public Problem contructProblem(int scenario) {
-	ArrayList<String> knownSolutionsDV1 = new ArrayList<String>();
-	knownSolutionsDV1.add("3");
-	knownSolutionsDV1.add("4");
-	ArrayList<String> knownSolutionsDV2 = new ArrayList<String>();
-	knownSolutionsDV2.add("3.5");
-	knownSolutionsDV2.add("4.5");
-	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "0,1,2", knownSolutionsDV1);
+	ArrayList<String> knownSolutionsInteger = new ArrayList<String>();
+	knownSolutionsInteger.add("3");
+	knownSolutionsInteger.add("4");
+	ArrayList<String> knownSolutionsDouble = new ArrayList<String>();
+	knownSolutionsDouble.add("3.5");
+	knownSolutionsDouble.add("4.5");
+	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "0,1,2", knownSolutionsInteger);
 	DecisionVariable dv2 = new DecisionVariable("var2", DataType.DOUBLE, "-4.9", "+4.8", "0.0", null);
-	DecisionVariable dv3 = new DecisionVariable("var3", DataType.DOUBLE, "-5.1", "+5.1", null, knownSolutionsDV2);
+	DecisionVariable dv3 = new DecisionVariable("var3", DataType.DOUBLE, "-5.1", "+5.1", null, knownSolutionsDouble);
 	DecisionVariable dv4 = new DecisionVariable("var4", DataType.INTEGER, "-3", "+3", null, null);
 	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
 	decisionVariables.add(dv1);
@@ -37,8 +37,8 @@ public class TestUserFileUtils {
 	decisionVariables.add(dv3);
 	decisionVariables.add(dv4);
 
-	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", DataType.INTEGER);
-	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", DataType.DOUBLE);
+	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", DataType.INTEGER, null);
+	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", DataType.DOUBLE, knownSolutionsDouble);
 	ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
 	optimizationCriteria.add(oc1);
 	optimizationCriteria.add(oc2);
