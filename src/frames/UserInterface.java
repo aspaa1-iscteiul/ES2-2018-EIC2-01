@@ -54,10 +54,10 @@ public class UserInterface {
 
 	pages = new ArrayList<>();
 	pages.add(new HomePage(this));
-//	pages.add(new IntroPage(this));
-//	pages.add(new RegisterUserPage(this));
-//	pages.add(new ProblemIdPage(this));
-//	pages.add(new DecisionVariablesPage(this));  
+	pages.add(new IntroPage(this));
+	pages.add(new RegisterUserPage(this));
+	pages.add(new ProblemIdPage(this));
+	pages.add(new DecisionVariablesPage(this));  
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
