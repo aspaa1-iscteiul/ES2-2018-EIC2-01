@@ -254,7 +254,7 @@ public class UserInterface {
     public ArrayList<OptimizationCriteria> createOptimizationCriteriaFinalList() {
 	ArrayList<OptimizationCriteria> ocList = new ArrayList<OptimizationCriteria>();
 	for (OptimizationCriteriaObject oco : optimizationCriteriaFromPage) {
-	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem()));
+	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem(),null));
 	}
 	return ocList;
     }

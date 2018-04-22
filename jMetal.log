@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-03-25T16:19:39</date>
-  <millis>1521991179829</millis>
+  <date>2018-04-22T21:09:11</date>
+  <millis>1524427751696</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,30 +13,30 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-03-25T16:19:39</date>
-  <millis>1521991179904</millis>
+  <date>2018-04-22T21:09:11</date>
+  <millis>1524427751832</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.runner.multiobjective.ABYSSRunner</class>
   <method>main</method>
   <thread>1</thread>
-  <message>Total execution time: 1144ms</message>
+  <message>Total execution time: 1729ms</message>
 </record>
 <record>
-  <date>2018-03-25T16:19:39</date>
-  <millis>1521991179960</millis>
+  <date>2018-04-22T21:09:11</date>
+  <millis>1524427751951</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
   <method>printFinalSolutionSet</method>
   <thread>1</thread>
-  <message>Random seed: 1521991178657</message>
+  <message>Random seed: 1524427749929</message>
 </record>
 <record>
-  <date>2018-03-25T16:19:39</date>
-  <millis>1521991179965</millis>
+  <date>2018-04-22T21:09:11</date>
+  <millis>1524427751955</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -46,8 +46,8 @@
   <message>Objectives values have been written to file FUN.tsv</message>
 </record>
 <record>
-  <date>2018-03-25T16:19:39</date>
-  <millis>1521991179970</millis>
+  <date>2018-04-22T21:09:11</date>
+  <millis>1524427751961</millis>
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
