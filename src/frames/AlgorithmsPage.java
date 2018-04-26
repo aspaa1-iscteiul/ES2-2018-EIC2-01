@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -66,15 +65,6 @@ public class AlgorithmsPage extends SuperPage {
 
 	mainPanel.add(scrollPane);
 
-	FrameUtils.addEmptyLabels(mainPanel, 1);
-
-	JButton preselectionButton = FrameUtils.cuteButton("Preselection");
-	mainPanel.add(preselectionButton);
-
-	FrameUtils.addEmptyLabels(mainPanel, 1);
-
-	JButton automaticSelectionButton = FrameUtils.cuteButton("Automatic Selection");
-	mainPanel.add(automaticSelectionButton);
     }
 
     @Override
