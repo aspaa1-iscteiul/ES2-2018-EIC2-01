@@ -139,7 +139,8 @@ public class SaveProblemPage extends SuperPage {
 	    public void actionPerformed(ActionEvent arg0) {
 		try {
 		    userInterface.setFinalProblem();
-		    // TODO O fileName não pode conter caracteres especiais e tem de terminar em .xml
+		    // TODO O fileName não pode conter caracteres especiais e
+		    // tem de terminar em .xml
 		    UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText(), "/" + fileName.getText());
 		    saveButton.setBackground(new Color(155, 226, 155).brighter());
 		} catch (Exception e) {
@@ -177,7 +178,7 @@ public class SaveProblemPage extends SuperPage {
 	finishButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		System.out.println("Everything concluded");
+		userInterface.runProblem();
 	    }
 	});
 	buttonsPanel.add(finishButton);

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,7 @@ import frames.graphicalObjects.FitnessFunctionObject;
 import frames.graphicalObjects.KnownSolutionsObject;
 import frames.graphicalObjects.OptimizationCriteriaCheckbox;
 import frames.graphicalObjects.OptimizationCriteriaObject;
+import jMetal.JMetalDoubleProblem;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
 import objects.OptimizationCriteria;
@@ -254,7 +256,8 @@ public class UserInterface {
     public ArrayList<OptimizationCriteria> createOptimizationCriteriaFinalList() {
 	ArrayList<OptimizationCriteria> ocList = new ArrayList<OptimizationCriteria>();
 	for (OptimizationCriteriaObject oco : optimizationCriteriaFromPage) {
-	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem()));
+	    // TODO missing ArrayList<String> knownSolutions
+	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem(), null));
 	}
 	return ocList;
     }
@@ -474,6 +477,18 @@ public class UserInterface {
 
     public void setWasSomethingImported(boolean wasSomethingImported) {
 	this.wasSomethingImported = wasSomethingImported;
+    }
+
+    // TODO only runs for double
+    public void runProblem() {
+	setFinalProblem();
+	JMetalDoubleProblem jMetalProblem = new JMetalDoubleProblem(problem);
+	try {
+	    jMetalProblem.run();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 
 }
