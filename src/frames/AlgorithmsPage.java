@@ -137,7 +137,11 @@ public class AlgorithmsPage extends SuperPage {
 	ArrayList<String> tmp = new ArrayList<String>();
 	for(JCheckBox checkbox : algorithmsList) {
 	    if(checkbox.isSelected()==true) {
-		tmp.add(multiobjectiveAlgorithms.get(algorithmsList.indexOf(checkbox)));
+		if(userInterface.getIsSingleobjective()==true) {
+		    tmp.add(singleobjectiveAlgorithms.get(algorithmsList.indexOf(checkbox)));
+		} else {
+		    tmp.add(multiobjectiveAlgorithms.get(algorithmsList.indexOf(checkbox)));
+		}
 	    }
 	}
 	return tmp;
