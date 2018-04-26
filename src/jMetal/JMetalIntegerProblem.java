@@ -1,11 +1,10 @@
 package jMetal;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
+import org.apache.commons.io.IOUtils;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
@@ -56,15 +55,13 @@ public class JMetalIntegerProblem extends AbstractIntegerProblem {
 	    for (FitnessFunction f : fitnessFunctions) {
 		args[2] = f.jarFilePath;
 		for (OptimizationCriteria o : f.optimizationCriteria) {
-		    args[3] = "./" + getName() + "_objectives/" + o.name + ".log";
-		    File file = new File(args[3]);
-		    file.createNewFile();
+		    args[3] = o.name;
 
-		    new ProcessBuilder(args).start().waitFor();
+		    Process p = new ProcessBuilder(args).start();
+		    String output = IOUtils.toString(p.getInputStream());
+		    p.waitFor();
 
-		    Scanner scn = new Scanner(file);
-		    solution.setObjective(index, Double.parseDouble(scn.nextLine()));
-		    scn.close();
+		    solution.setObjective(index, Integer.parseInt(output));
 		    index++;
 		}
 	    }

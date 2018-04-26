@@ -1,7 +1,5 @@
 package jarTests.integerTests;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class TestInteger {
@@ -18,9 +16,7 @@ public class TestInteger {
 	for (int index = 0; index < solutions.length; index++)
 	    solutions[index] = Integer.parseInt(args[index + 1]);
 
-	FileWriter fileWriter = new FileWriter(new File(args[0]));
-	fileWriter.write(evaluate(solutions) + "");
-	fileWriter.close();
+	System.out.println(evaluate(solutions));
     }
 
 }

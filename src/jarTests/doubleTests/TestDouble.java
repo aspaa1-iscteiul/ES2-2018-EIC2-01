@@ -4,10 +4,17 @@ import java.io.IOException;
 
 public class TestDouble {
 
-    public static double evaluate(double[] solutions, boolean plus) {
+    public static double evaluate(double[] solutions) {
 	double sum = 0;
 	for (int index = 0; index < solutions.length; index++)
-	    sum += (plus ? -1 : 1) * solutions[index];
+	    sum += solutions[index];
+	return sum;
+    }
+    
+    public static double evaluate2(double[] solutions) {
+	double sum = 0;
+	for (int index = 0; index < solutions.length; index++)
+	    sum -= solutions[index];
 	return sum;
     }
 
@@ -16,7 +23,11 @@ public class TestDouble {
 	for (int index = 0; index < solutions.length; index++)
 	    solutions[index] = Double.parseDouble(args[index + 1]);
 
-	System.out.println(evaluate(solutions, args[0].equals("1")));
+	if(args[0].equals("1")) {
+	System.out.println(evaluate(solutions));
+	} else {
+		System.out.println(evaluate2(solutions));
+	}
     }
 
 }
