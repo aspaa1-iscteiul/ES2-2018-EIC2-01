@@ -6,7 +6,14 @@ public class TestInteger {
 
     public static int evaluate(int[] solutions) {
 	int sum = 0;
-	for (int index = 0; index < solutions.length; index++)
+	for (int index = 0; index < solutions.length; index += 2)
+	    sum += solutions[index];
+	return sum;
+    }
+
+    public static int evaluate2(int[] solutions) {
+	int sum = 0;
+	for (int index = 1; index < solutions.length; index += 2)
 	    sum += solutions[index];
 	return sum;
     }
@@ -16,7 +23,11 @@ public class TestInteger {
 	for (int index = 0; index < solutions.length; index++)
 	    solutions[index] = Integer.parseInt(args[index + 1]);
 
-	System.out.println(evaluate(solutions));
+	if (args[0].equals("1")) {
+	    System.out.println(evaluate(solutions));
+	} else {
+	    System.out.println(evaluate2(solutions));
+	}
     }
 
 }

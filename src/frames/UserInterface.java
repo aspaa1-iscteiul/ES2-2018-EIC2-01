@@ -18,6 +18,9 @@ import frames.graphicalObjects.KnownSolutionsObject;
 import frames.graphicalObjects.OptimizationCriteriaCheckbox;
 import frames.graphicalObjects.OptimizationCriteriaObject;
 import jMetal.JMetalDoubleProblem;
+import jMetal.JMetalIntegerProblem;
+import jMetal.JMetalProblem;
+import objects.DataType;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
 import objects.OptimizationCriteria;
@@ -482,7 +485,12 @@ public class UserInterface {
     // TODO only runs for double
     public void runProblem() {
 	setFinalProblem();
-	JMetalDoubleProblem jMetalProblem = new JMetalDoubleProblem(problem);
+	JMetalProblem jMetalProblem;
+	if(problem.getDecisionVariables().get(0).dataType == DataType.DOUBLE) {
+	    jMetalProblem = new JMetalDoubleProblem(problem);
+	} else {
+	    jMetalProblem = new JMetalIntegerProblem(problem);
+	}
 	try {
 	    jMetalProblem.run();
 	} catch (IOException e) {

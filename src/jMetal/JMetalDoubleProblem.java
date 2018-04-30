@@ -29,9 +29,9 @@ import objects.OptimizationCriteria;
 import objects.Problem;
 
 @SuppressWarnings("serial")
-public class JMetalDoubleProblem extends AbstractDoubleProblem {
+public class JMetalDoubleProblem extends AbstractDoubleProblem implements JMetalProblem {
 
-    private static final int INDEPENDENT_RUNS = 5;
+    private static final int INDEPENDENT_RUNS = 4, MAX_EVALUATIONS = 2000;
 
     private ArrayList<FitnessFunction> fitnessFunctions;
 
@@ -78,8 +78,7 @@ public class JMetalDoubleProblem extends AbstractDoubleProblem {
 		    String output = IOUtils.toString(p.getInputStream());
 		    p.waitFor();
 
-		    solution.setObjective(index, Double.parseDouble(output));
-		    index++;
+		    solution.setObjective(index++, Double.parseDouble(output));
 		}
 	    }
 	} catch (IOException | InterruptedException e) {
@@ -88,6 +87,7 @@ public class JMetalDoubleProblem extends AbstractDoubleProblem {
 	}
     }
 
+    @Override
     public void run() throws IOException {
 	String experimentBaseDirectory = "experimentBaseDirectory";
 
@@ -112,7 +112,7 @@ public class JMetalDoubleProblem extends AbstractDoubleProblem {
 	new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run();
     }
 
-    private static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+    private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
 	    List<ExperimentProblem<DoubleSolution>> problemList) {
 	List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
@@ -120,8 +120,7 @@ public class JMetalDoubleProblem extends AbstractDoubleProblem {
 	    Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i).getProblem(),
 		    new SBXCrossover(1.0, 5),
 		    new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
-			    // TODO setMaxEvaluations(500)
-			    .setMaxEvaluations(500).setPopulationSize(100).build();
+			    .setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(100).build();
 	    algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", problemList.get(i).getTag()));
 	}
 
