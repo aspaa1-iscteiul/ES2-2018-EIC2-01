@@ -17,9 +17,10 @@ import frames.graphicalObjects.FitnessFunctionObject;
 import frames.graphicalObjects.KnownSolutionsObject;
 import frames.graphicalObjects.OptimizationCriteriaCheckbox;
 import frames.graphicalObjects.OptimizationCriteriaObject;
-import jMetal.JMetalDoubleProblem;
-import jMetal.JMetalIntegerProblem;
 import jMetal.JMetalProblem;
+import jMetal.binaryConfiguration.MyBinaryProblem;
+import jMetal.doubleConfiguration.MyDoubleProblem;
+import jMetal.integerConfiguration.MyIntegerProblem;
 import objects.DataType;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
@@ -482,17 +483,19 @@ public class UserInterface {
 	this.wasSomethingImported = wasSomethingImported;
     }
 
-    // TODO only runs for double
     public void runProblem() {
 	setFinalProblem();
 	JMetalProblem jMetalProblem;
-	if(problem.getDecisionVariables().get(0).dataType == DataType.DOUBLE) {
-	    jMetalProblem = new JMetalDoubleProblem(problem);
+	DataType type = problem.getDecisionVariables().get(0).dataType;
+	if(type == DataType.DOUBLE) {
+	    jMetalProblem = new MyDoubleProblem(problem);
+	} else if(type == DataType.INTEGER){
+	    jMetalProblem = new MyIntegerProblem(problem);
 	} else {
-	    jMetalProblem = new JMetalIntegerProblem(problem);
+	    jMetalProblem = new MyBinaryProblem(problem);
 	}
 	try {
-	    jMetalProblem.run();
+	    jMetalProblem.run(problem.getOptimizationAlgorithms());
 	} catch (IOException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();

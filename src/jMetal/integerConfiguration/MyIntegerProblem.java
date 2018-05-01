@@ -1,4 +1,4 @@
-package jMetal;
+package jMetal.integerConfiguration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,36 +6,28 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
+import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
-import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+import jMetal.JMetalProblem;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
 import objects.OptimizationCriteria;
 import objects.Problem;
 
 @SuppressWarnings("serial")
-public class JMetalIntegerProblem extends AbstractIntegerProblem implements JMetalProblem {
-
-    private static final int INDEPENDENT_RUNS = 4, MAX_EVALUATIONS = 2000;
+public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalProblem {
 
     private ArrayList<FitnessFunction> fitnessFunctions;
 
-    public JMetalIntegerProblem(Problem problem) {
+    private IntegerAlgorithms algorithms = new IntegerAlgorithms();
+
+    public MyIntegerProblem(Problem problem) {
 	setName(problem.getProblemName());
 
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
@@ -89,43 +81,34 @@ public class JMetalIntegerProblem extends AbstractIntegerProblem implements JMet
     }
 
     @Override
-    public void run() throws IOException {
-	String experimentBaseDirectory = "experimentBaseDirectory";
-
-	List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
-	problemList.add(new ExperimentProblem<>(this));
+    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
+	ExperimentProblem<IntegerSolution> problem = new ExperimentProblem<>(this);
 
 	List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = configureAlgorithmList(
-		problemList);
+		problem, algorithmsNames);
 
-	Experiment<IntegerSolution, List<IntegerSolution>> experiment = new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>(
-		getName()).setAlgorithmList(algorithmList).setProblemList(problemList)
-			.setExperimentBaseDirectory(experimentBaseDirectory).setOutputParetoFrontFileName("FUN")
-			.setOutputParetoSetFileName("VAR")
-			.setReferenceFrontDirectory(experimentBaseDirectory + "/referenceFronts")
-			.setIndicatorList(Arrays.asList(new PISAHypervolume<IntegerSolution>()))
-			.setIndependentRuns(INDEPENDENT_RUNS).setNumberOfCores(8).build();
-
-	new ExecuteAlgorithms<>(experiment).run();
-	new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
-	new ComputeQualityIndicators<>(experiment).run();
-	new GenerateLatexTablesWithStatistics(experiment).run();
-	new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run();
+	return new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>(getName()).setAlgorithmList(algorithmList)
+		.setProblemList(Arrays.asList(problem));
     }
 
     private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> configureAlgorithmList(
-	    List<ExperimentProblem<IntegerSolution>> problemList) {
+	    ExperimentProblem<IntegerSolution> experimentProblem, ArrayList<String> algorithmsNames) {
 	List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithms = new ArrayList<>();
 
-	for (int i = 0; i < problemList.size(); i++) {
-	    Algorithm<List<IntegerSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i).getProblem(),
-		    new IntegerSBXCrossover(0.9, 20.0),
-		    new IntegerPolynomialMutation(1 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
-			    .setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(100).build();
-	    algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", problemList.get(i).getTag()));
+	IntegerProblem problem = (IntegerProblem) experimentProblem.getProblem();
+
+	for (String algorithmName : algorithmsNames) {
+	    algorithms.add(new ExperimentAlgorithm<>(this.algorithms.getMultiObjectiveAlgortihm(algorithmName, problem),
+		    algorithmName, problem.getName()));
 	}
 
 	return algorithms;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public PISAHypervolume<IntegerSolution> type() {
+	return new PISAHypervolume<IntegerSolution>();
     }
 
 }
