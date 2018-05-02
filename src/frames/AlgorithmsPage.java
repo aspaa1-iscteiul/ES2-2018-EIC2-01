@@ -3,7 +3,6 @@ package frames;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -16,6 +15,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import jMetal.doubleConfiguration.DoubleAlgorithms;
 
 public class AlgorithmsPage extends SuperPage {
 
@@ -24,12 +24,6 @@ public class AlgorithmsPage extends SuperPage {
      */
     private static final long serialVersionUID = 1L;
 
-    private static final List<String> multiobjectiveAlgorithms = Arrays.asList("ABYSS", "CellDE45", "DMOPSO", "GDE3",
-	    "GWASFGA", "IBEA", "MOCell", "MOCHC", "MOEAD", "MOMBI", "NSGAII", "NSGAIII", "OMOPSO", "PAES", "PESA2",
-	    "Random Search", "RNSGAII", "SMPSO", "SMSEMOA", "SPEA2", "WASFGA"),
-	    singleobjectiveAlgorithms = Arrays.asList("Coral Reefs Optimization", "Differential Evolution",
-		    "Elitist Evolution Strategy", "Non Elitist Evolution Strategy", "Generational Genetic Algorithm",
-		    "Steady StateGenetic Algorithm");
     private JLabel title;
     private JPanel algorithmsListPanel;
     private ArrayList<JCheckBox> algorithmsList;
@@ -74,7 +68,9 @@ public class AlgorithmsPage extends SuperPage {
 
 	title.setText((userInterface.getIsSingleobjective() ? "Single objective" : "Multi objective")
 		+ " optimization algorithms available");
-	List<String> list = userInterface.getIsSingleobjective() ? singleobjectiveAlgorithms : multiobjectiveAlgorithms;
+	// TODO
+	List<String> list = userInterface.getIsSingleobjective() ? DoubleAlgorithms.SINGLE_OBJECTIVE
+		: DoubleAlgorithms.MULTI_OBJECTIVE;
 
 	for (String algorithm : list)
 	    algorithmsList.add(new JCheckBox(algorithm));
@@ -84,16 +80,16 @@ public class AlgorithmsPage extends SuperPage {
 	    algorithmsListPanel.add(checkBox);
 	}
 
-	if( userInterface.getOptimizationAlgorithmsFromPage().size()>0) {
+	if (userInterface.getOptimizationAlgorithmsFromPage().size() > 0) {
 	    for (JCheckBox checkBox : algorithmsList) {
-		for(String string : userInterface.getOptimizationAlgorithmsFromPage()) {
-		    if(checkBox.getText().equals(string)) {
+		for (String string : userInterface.getOptimizationAlgorithmsFromPage()) {
+		    if (checkBox.getText().equals(string)) {
 			checkBox.setSelected(true);
 		    }
 		}
 	    }
 	}
-	
+
 	algorithmsListPanel.repaint();
 	algorithmsListPanel.revalidate();
     }
@@ -101,18 +97,18 @@ public class AlgorithmsPage extends SuperPage {
     @Override
     protected boolean areAllDataWellFilled() {
 	int count = 0;
-	for(JCheckBox checkbox : algorithmsList) {
-	    if(checkbox.isSelected()==true) {
+	for (JCheckBox checkbox : algorithmsList) {
+	    if (checkbox.isSelected() == true) {
 		count++;
 	    }
 	}
-	if(count==0) {
-	    for(JCheckBox checkbox : algorithmsList) {
+	if (count == 0) {
+	    for (JCheckBox checkbox : algorithmsList) {
 		FrameUtils.errorFormat(checkbox, "You must chose at least one optimization algorithm.");
 	    }
 	    return false;
 	} else {
-	    for(JCheckBox checkbox : algorithmsList) {
+	    for (JCheckBox checkbox : algorithmsList) {
 		FrameUtils.normalFormat(checkbox);
 	    }
 	    return true;
@@ -121,16 +117,18 @@ public class AlgorithmsPage extends SuperPage {
 
     /**
      * Get the names of the checkboxes selected of a fitness function
+     * 
      * @return
      */
     public ArrayList<String> getTheCheckboxesSelected() {
 	ArrayList<String> tmp = new ArrayList<String>();
-	for(JCheckBox checkbox : algorithmsList) {
-	    if(checkbox.isSelected()==true) {
-		if(userInterface.getIsSingleobjective()==true) {
-		    tmp.add(singleobjectiveAlgorithms.get(algorithmsList.indexOf(checkbox)));
+	for (JCheckBox checkbox : algorithmsList) {
+	    if (checkbox.isSelected() == true) {
+		// TODO
+		if (userInterface.getIsSingleobjective() == true) {
+		    tmp.add(DoubleAlgorithms.SINGLE_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
 		} else {
-		    tmp.add(multiobjectiveAlgorithms.get(algorithmsList.indexOf(checkbox)));
+		    tmp.add(DoubleAlgorithms.MULTI_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
 		}
 	    }
 	}
@@ -144,7 +142,7 @@ public class AlgorithmsPage extends SuperPage {
 
     @Override
     protected void clearDataFromPage() {
-	for(JCheckBox checkbox : algorithmsList) {
+	for (JCheckBox checkbox : algorithmsList) {
 	    checkbox.setSelected(false);
 	}
     }

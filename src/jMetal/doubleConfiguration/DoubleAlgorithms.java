@@ -42,21 +42,22 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
      * Multi Objective
      */
 
+    // TODO PESA2 not working
     public static final List<String> MULTI_OBJECTIVE = Arrays.asList("DMOPSO", "GDE3", "IBEA", "MOCell",
-	    "Constraint MOEAD", "MOEAD", "MOEADD", "MOEADDRA", "MOEADSTM", "NSGAII", "NSGAIII", "PAES", "PESA2",
+	    "Constraint MOEAD", "MOEAD", "MOEADD", "MOEADDRA", "MOEADSTM", "NSGAII", "NSGAIII", "PAES", // "PESA2",
 	    "Random Search", "SMSEMOA", "SPEA2");
 
     @SuppressWarnings("unchecked")
     public Algorithm<List<DoubleSolution>> getMultiObjectiveAlgortihm(String algorithmName, DoubleProblem problem) {
-	String algorithm = algorithmName.replaceAll(" ", "");
-
-	if (!MULTI_OBJECTIVE.contains(algorithm))
+	if (!MULTI_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
-		    algorithm + " is not a valid multiobjective algorithm for DoubleProblem");
+		    algorithmName + " is not a valid multiobjective algorithm for DoubleProblem");
+
+	String algorithm = algorithmName.replaceAll(" ", "");
 
 	try {
 	    Method method = getClass().getMethod("get" + algorithm, DoubleProblem.class);
-	    return (Algorithm<List<DoubleSolution>>) method.invoke(problem);
+	    return (Algorithm<List<DoubleSolution>>) method.invoke(this, problem);
 	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
 		| InvocationTargetException e) {
 	    e.printStackTrace();
@@ -112,14 +113,16 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<DoubleSolution>> getNSGAIII(DoubleProblem problem) {
-	return new NSGAIIIBuilder<>(problem).setMaxIterations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE)
-		.build();
+	return new NSGAIIIBuilder<>(problem).setCrossoverOperator(crossoverOperator)
+		.setMutationOperator(mutationOperator(problem)).setMaxIterations(MAX_EVALUATIONS)
+		.setPopulationSize(POPULATION_SIZE).build();
     }
 
     public Algorithm<List<DoubleSolution>> getPAES(DoubleProblem problem) {
 	return new PAESBuilder<>(problem).setMaxEvaluations(MAX_EVALUATIONS).build();
     }
 
+    // TODO PESA2 not working
     public Algorithm<List<DoubleSolution>> getPESA2(DoubleProblem problem) {
 	return new PESA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
