@@ -488,11 +488,11 @@ public class UserInterface {
 	JMetalProblem jMetalProblem;
 	DataType type = problem.getDecisionVariables().get(0).dataType;
 	if(type == DataType.DOUBLE) {
-	    jMetalProblem = new MyDoubleProblem(problem);
+	    jMetalProblem = new MyDoubleProblem(problem, getIsSingleobjective());
 	} else if(type == DataType.INTEGER){
-	    jMetalProblem = new MyIntegerProblem(problem);
+	    jMetalProblem = new MyIntegerProblem(problem, getIsSingleobjective());
 	} else {
-	    jMetalProblem = new MyBinaryProblem(problem);
+	    jMetalProblem = new MyBinaryProblem(problem, getIsSingleobjective());
 	}
 	try {
 	    jMetalProblem.run(problem.getOptimizationAlgorithms());

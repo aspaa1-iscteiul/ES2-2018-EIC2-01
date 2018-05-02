@@ -26,8 +26,11 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     private ArrayList<FitnessFunction> fitnessFunctions;
 
     private BinaryAlgorithms algorithms = new BinaryAlgorithms();
+    private boolean isSingleObjective;
 
-    public MyBinaryProblem(Problem problem) {
+    public MyBinaryProblem(Problem problem, boolean isSingleObjective) {
+	this.isSingleObjective = isSingleObjective;
+	
 	setName(problem.getProblemName());
 
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
@@ -89,13 +92,18 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 
     @Override
     public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
-	ExperimentProblem<BinarySolution> problem = new ExperimentProblem<>(this);
+	ExperimentProblem<BinarySolution> experimentProblem = new ExperimentProblem<>(this);
+	
+	// TODO not using single objective
+	if(isSingleObjective) {
+	    configureSingleObjectiveAlgorithmList(experimentProblem, algorithmsNames);
+	}
 
-	List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = configureAlgorithmList(problem,
+	List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = configureAlgorithmList(experimentProblem,
 		algorithmsNames);
 
 	return new ExperimentBuilder<BinarySolution, List<BinarySolution>>(getName()).setAlgorithmList(algorithmList)
-		.setProblemList(Arrays.asList(problem));
+		.setProblemList(Arrays.asList(experimentProblem));
     }
 
     private List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureAlgorithmList(
@@ -107,6 +115,21 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 	for (String algorithmName : algorithmsNames) {
 	    algorithms.add(new ExperimentAlgorithm<>(this.algorithms.getMultiObjectiveAlgortihm(algorithmName, problem),
 		    algorithmName, problem.getName()));
+	}
+
+	return algorithms;
+    }
+
+    private List<ExperimentAlgorithm<BinarySolution, BinarySolution>> configureSingleObjectiveAlgorithmList(
+	    ExperimentProblem<BinarySolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	List<ExperimentAlgorithm<BinarySolution, BinarySolution>> algorithms = new ArrayList<>();
+
+	BinaryProblem problem = (BinaryProblem) experimentProblem.getProblem();
+
+	for (String algorithmName : algorithmsNames) {
+	    algorithms.add(new ExperimentAlgorithm<BinarySolution, BinarySolution>(
+		    this.algorithms.getSingleObjectiveAlgortihm(algorithmName, problem), algorithmName,
+		    problem.getName()));
 	}
 
 	return algorithms;

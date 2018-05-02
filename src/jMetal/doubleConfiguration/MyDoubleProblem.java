@@ -26,8 +26,11 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
     private ArrayList<FitnessFunction> fitnessFunctions;
 
     private DoubleAlgorithms algorithms = new DoubleAlgorithms();
+    private boolean isSingleObjective;
 
-    public MyDoubleProblem(Problem problem) {
+    public MyDoubleProblem(Problem problem, boolean isSingleObjective) {
+	this.isSingleObjective = isSingleObjective;
+
 	setName(problem.getProblemName());
 
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
@@ -81,17 +84,19 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
 
     @Override
     public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
+	ExperimentProblem<DoubleSolution> experimentProblem = new ExperimentProblem<>(this);
 
-	ExperimentProblem<DoubleSolution> problem = new ExperimentProblem<>(this);
-
-	List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList = configureAlgorithmList(problem,
-		algorithmsNames);
-
+	// TODO not using single objective
+	if (isSingleObjective) {
+	    configureSingleObjectiveAlgorithmList(experimentProblem, algorithmsNames);
+	}
+	List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList = configureMultiObjectiveAlgorithmList(
+		experimentProblem, algorithmsNames);
 	return new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>(getName()).setAlgorithmList(algorithmList)
-		.setProblemList(Arrays.asList(problem));
+		.setProblemList(Arrays.asList(experimentProblem));
     }
 
-    private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+    private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureMultiObjectiveAlgorithmList(
 	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames) {
 	List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
@@ -100,6 +105,21 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
 	for (String algorithmName : algorithmsNames) {
 	    algorithms.add(new ExperimentAlgorithm<>(this.algorithms.getMultiObjectiveAlgortihm(algorithmName, problem),
 		    algorithmName, problem.getName()));
+	}
+
+	return algorithms;
+    }
+
+    private List<ExperimentAlgorithm<DoubleSolution, DoubleSolution>> configureSingleObjectiveAlgorithmList(
+	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	List<ExperimentAlgorithm<DoubleSolution, DoubleSolution>> algorithms = new ArrayList<>();
+
+	DoubleProblem problem = (DoubleProblem) experimentProblem.getProblem();
+
+	for (String algorithmName : algorithmsNames) {
+	    algorithms.add(new ExperimentAlgorithm<DoubleSolution, DoubleSolution>(
+		    this.algorithms.getSingleObjectiveAlgortihm(algorithmName, problem), algorithmName,
+		    problem.getName()));
 	}
 
 	return algorithms;

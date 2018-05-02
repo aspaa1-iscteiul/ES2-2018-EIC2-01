@@ -26,8 +26,11 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
     private ArrayList<FitnessFunction> fitnessFunctions;
 
     private IntegerAlgorithms algorithms = new IntegerAlgorithms();
+    private boolean isSingleObjective;
 
-    public MyIntegerProblem(Problem problem) {
+    public MyIntegerProblem(Problem problem, boolean isSingleObjective) {
+	this.isSingleObjective = isSingleObjective;
+	
 	setName(problem.getProblemName());
 
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
@@ -82,16 +85,21 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 
     @Override
     public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
-	ExperimentProblem<IntegerSolution> problem = new ExperimentProblem<>(this);
+	ExperimentProblem<IntegerSolution> experimentProblem = new ExperimentProblem<>(this);
 
-	List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = configureAlgorithmList(
-		problem, algorithmsNames);
+	// TODO not using single objective
+	if(isSingleObjective) {
+	    configureSingleObjectiveAlgorithmList(experimentProblem, algorithmsNames);
+	}
+	
+	List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = configureMultiObjectiveAlgorithmList(
+		experimentProblem, algorithmsNames);
 
 	return new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>(getName()).setAlgorithmList(algorithmList)
-		.setProblemList(Arrays.asList(problem));
+		.setProblemList(Arrays.asList(experimentProblem));
     }
 
-    private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> configureAlgorithmList(
+    private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> configureMultiObjectiveAlgorithmList(
 	    ExperimentProblem<IntegerSolution> experimentProblem, ArrayList<String> algorithmsNames) {
 	List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithms = new ArrayList<>();
 
@@ -100,6 +108,21 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 	for (String algorithmName : algorithmsNames) {
 	    algorithms.add(new ExperimentAlgorithm<>(this.algorithms.getMultiObjectiveAlgortihm(algorithmName, problem),
 		    algorithmName, problem.getName()));
+	}
+
+	return algorithms;
+    }
+
+    private List<ExperimentAlgorithm<IntegerSolution, IntegerSolution>> configureSingleObjectiveAlgorithmList(
+	    ExperimentProblem<IntegerSolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	List<ExperimentAlgorithm<IntegerSolution, IntegerSolution>> algorithms = new ArrayList<>();
+
+	IntegerProblem problem = (IntegerProblem) experimentProblem.getProblem();
+
+	for (String algorithmName : algorithmsNames) {
+	    algorithms.add(new ExperimentAlgorithm<IntegerSolution, IntegerSolution>(
+		    this.algorithms.getSingleObjectiveAlgortihm(algorithmName, problem), algorithmName,
+		    problem.getName()));
 	}
 
 	return algorithms;
