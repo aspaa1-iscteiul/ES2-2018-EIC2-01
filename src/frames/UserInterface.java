@@ -27,7 +27,7 @@ public class UserInterface {
 
     private JFrame frame;
     private List<SuperPage> pages;
-    private boolean[] xmlFileWasImported = new boolean[6];
+    private boolean[] xmlFileWasImported = new boolean[7];
     private boolean wasSomethingImported = false;
     private SendEmailPage emailPage;
     private String userEmail;
@@ -266,8 +266,13 @@ public class UserInterface {
     public ArrayList<OptimizationCriteria> createOptimizationCriteriaFinalList() {
 	ArrayList<OptimizationCriteria> ocList = new ArrayList<OptimizationCriteria>();
 	for (OptimizationCriteriaObject oco : optimizationCriteriaFromPage) {
-	    // TODO missing ArrayList<String> knownSolutions
-	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem(), null));
+	   ArrayList<String> solutionsAux = new ArrayList<String>();
+	   for(KnownOptimizationCriteriaSolutionsObject ksoco : knownSolutionsFromOptimizationCriteria) {
+	       if(ksoco.getName().getText().equals(oco.getVariableName())){
+		   solutionsAux = ksoco.getSolutionListInString();
+	       }
+	   }
+	    ocList.add(new OptimizationCriteria(oco.getVariableName(), oco.getDataTypeToProblem(), solutionsAux));
 	}
 	return ocList;
     }
@@ -316,7 +321,7 @@ public class UserInterface {
      * @param page
      * @return
      */
-    public void createKnownSolutionsFromProblem(KnownDecisionVariablesSolutionsPage page) {
+    public void createKnownDecisionVariablesSolutionsFromProblem(KnownDecisionVariablesSolutionsPage page) {
 	ArrayList<KnownDecisionVariablesSolutionsObject> tmp = new ArrayList<KnownDecisionVariablesSolutionsObject>();
 	for (DecisionVariable dv : problem.getDecisionVariables()) {
 	    tmp.add(new KnownDecisionVariablesSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(),
@@ -326,6 +331,23 @@ public class UserInterface {
 	this.knownSolutionsFromDecisionVariables = tmp;
     }
 
+    /**
+     * Transforms the data from problem read from a xml file to the data used in the
+     * interface
+     * 
+     * @param page
+     * @return
+     */
+    public void createKnownOptimizationCriteriaSolutionsFromProblem(KnownOptimizationCriteriaSolutionsPage page) {
+	ArrayList<KnownOptimizationCriteriaSolutionsObject> tmp = new ArrayList<KnownOptimizationCriteriaSolutionsObject>();
+	for (OptimizationCriteria oc : problem.getFitnessFunctions().get(0).getOptimizationCriteria()) {
+	    tmp.add(new KnownOptimizationCriteriaSolutionsObject(page, oc.getName(), oc.getDataType().toString(),
+		    oc.getKnownSolutions()));
+	}
+	xmlFileWasImported[5] = true;
+	this.knownSolutionsFromOptimizationCriteria = tmp;
+    }
+    
     /**
      * Converts a arraylist of strings with the name of the checkboxes selected into
      * an arraylist of optimization criteria to be used in the problem saving
@@ -382,7 +404,7 @@ public class UserInterface {
      * fields ideal time and max time can be used to populate the gui
      */
     public void createTimeConstraints() {
-	xmlFileWasImported[5] = true;
+	xmlFileWasImported[6] = true;
     }
 
     /**

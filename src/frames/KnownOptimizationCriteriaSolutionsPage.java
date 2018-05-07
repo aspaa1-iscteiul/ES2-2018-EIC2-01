@@ -139,25 +139,97 @@ public class KnownOptimizationCriteriaSolutionsPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
 	subSubMainPanel.removeAll();
-	if (knownSolutionsList.size() > 0) {
-	    for (KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
-		subSubMainPanel.add(kocso.transformIntoAPanel());
+	if(userInterface.isXmlFileWasImportedAtIndex(5)==true) {
+	    setThisPage();
+	    knownSolutionsList = userInterface.getKnownOptimizationCriteriaSolutionsList();
+	    for(KnownOptimizationCriteriaSolutionsObject kso : knownSolutionsList) {
+		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
-
+	    verifyIfAnyCriteriaWasAdded();
+	    verifyIfAnyVariableWasDeleted();
+	    reconstructToLookNice();
+	    userInterface.putXmlFileWasImportedFalseAtIndex(5);
 	} else {
-	    if (userInterface.getDecisionVariablesFromPage().size() > 0) {
-		for (OptimizationCriteriaObject oc : userInterface.getOptimizationCriteriaFromPage()) {
-		    KnownOptimizationCriteriaSolutionsObject oc1 = new KnownOptimizationCriteriaSolutionsObject(this, oc.getVariableName(), 
-			    oc.getDataType());
-		    knownSolutionsList.add(oc1);
-		    subSubMainPanel.add(oc1.transformIntoAPanel());
+	    if (knownSolutionsList.size() > 0) {
+		for (KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
+		    subSubMainPanel.add(kocso.transformIntoAPanel());
 		}
-		userInterface.setKnownOptimizationCriteriaSolutionsList(knownSolutionsList);
+		verifyIfAnyCriteriaWasAdded();
+		verifyIfAnyVariableWasDeleted();
+		reconstructToLookNice();
 	    } else {
-		subSubMainPanel.add(warning);
+		if (userInterface.getDecisionVariablesFromPage().size() > 0) {
+		    for (OptimizationCriteriaObject oc : userInterface.getOptimizationCriteriaFromPage()) {
+			KnownOptimizationCriteriaSolutionsObject oc1 = new KnownOptimizationCriteriaSolutionsObject(this, oc.getVariableName(), 
+				oc.getDataType());
+			knownSolutionsList.add(oc1);
+			subSubMainPanel.add(oc1.transformIntoAPanel());
+		    }
+		    userInterface.setKnownOptimizationCriteriaSolutionsList(knownSolutionsList);
+		} else {
+		    subSubMainPanel.add(warning);
+		}
+	    }
+	    userInterface.refreshPage();
+	}
+    }
+
+    /**
+     * Verify if any decision variable was added to the decision variables list and if there's any need to update
+     * the known solutions list 
+     */
+    private void verifyIfAnyCriteriaWasAdded() {
+	if (userInterface.getOptimizationCriteriaFromPage().size() > 0) {
+	    for (OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
+		boolean nova = true;
+		for (KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
+		    if (oco.getVariableName().equals(kocso.getName().getText())) {
+			nova = false;
+			break;
+		    }
+		}
+		if (nova == true) {
+		    KnownOptimizationCriteriaSolutionsObject ksoAux = new KnownOptimizationCriteriaSolutionsObject(this, oco.getVariableName(),
+			    oco.getDataType());
+		    knownSolutionsList.add(ksoAux);
+		    subSubMainPanel.add(ksoAux.transformIntoAPanel());
+		}
 	    }
 	}
-	userInterface.refreshPage();
+    }
+
+    /**
+     * Verify if any decision variable was deleted from the decision variables list and if there's any need to update
+     * the known solutions list 
+     */
+    private void verifyIfAnyVariableWasDeleted() {
+	ArrayList<KnownOptimizationCriteriaSolutionsObject>  knownSolutionsListAux = new ArrayList<KnownOptimizationCriteriaSolutionsObject>();
+	for (KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
+	    boolean toDelete = true;
+	    for (OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
+		if (kocso.getName().getText().equals(oco.getVariableName())) {
+		    toDelete = false;
+		    break;
+		}
+	    }
+	    if (toDelete == true) {
+		knownSolutionsListAux.add(kocso);
+	    }
+	}
+	for(KnownOptimizationCriteriaSolutionsObject kocsoAux : knownSolutionsListAux) {
+	    subSubMainPanel.remove(kocsoAux.transformIntoAPanel());
+	    knownSolutionsList.remove(kocsoAux);
+	}
+    }
+
+    /**Clean data and reconstruct to put everything in the right place
+     * 
+     */
+    private void reconstructToLookNice() {
+	subSubMainPanel.removeAll();
+	for(KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
+	    subSubMainPanel.add(kocso.transformIntoAPanel());
+	}
     }
 
     /**

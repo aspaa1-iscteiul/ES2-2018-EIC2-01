@@ -91,7 +91,7 @@ public class KnownDecisionVariablesSolutionsObject {
 	this.lowerBound = lowerBound;
 	this.upperBound = upperBound;
 	this.setInvalidValues(invalidValues);
-	this.setTextfieldList(getSolutionListInString(solutions));
+	this.setTextfieldList(getSolutionListInTextField(solutions));
 	this.addIcon = new JLabel();
 	this.newSolutionInfo = new JLabel("Add new solutions");
     }
@@ -251,7 +251,7 @@ public class KnownDecisionVariablesSolutionsObject {
      * Transforms the strings into textfields
      * @return
      */
-    private ArrayList<JTextField> getSolutionListInString(ArrayList<String> strings) {
+    private ArrayList<JTextField> getSolutionListInTextField(ArrayList<String> strings) {
 	ArrayList<JTextField> tmp = new ArrayList<JTextField>();
 	if(strings != null) {
 	    for(String str : strings) {

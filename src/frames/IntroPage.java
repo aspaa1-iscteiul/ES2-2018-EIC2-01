@@ -113,7 +113,8 @@ public class IntroPage extends SuperPage {
 	    userInterface.createDecisionVariableFromProblem(null);
 	    userInterface.createFitnessFunctionFromProblem(null);
 	    userInterface.createOptimizationCriteriaFromProblem(null);
-	    userInterface.createKnownSolutionsFromProblem(null);
+	    userInterface.createKnownDecisionVariablesSolutionsFromProblem(null);
+	    userInterface.createKnownOptimizationCriteriaSolutionsFromProblem(null);
 	    userInterface.createOptimizationAlgorithmsFromProblem();
 	    userInterface.createTimeConstraints();
 	    userInterface.setWasSomethingImported(true);
