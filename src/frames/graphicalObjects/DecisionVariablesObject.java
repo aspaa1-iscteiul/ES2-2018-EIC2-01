@@ -8,10 +8,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -32,11 +30,11 @@ public class DecisionVariablesObject {
     private DecisionVariablesPage pageAssociated;
     private JPanel variablesPanel;
     private JTextField varName;
-    private final static String[] dataTypes = { "Integer", "Double" };
-    private JComboBox<String> dataType;
+    private String dataType;
     private JTextField lowerBound;
     private JTextField upperBound;
     private JTextField invalidValues;
+
     private JLabel deleteIcon;
 
     /**
@@ -68,17 +66,17 @@ public class DecisionVariablesObject {
 	    public void keyPressed(KeyEvent e) {
 	    }
 	});
-	dataType = FrameUtils.cuteComboBox(dataTypes);
 	if(variableDataType != null) {
 	    if(variableDataType.equals("INTEGER")) {
-		dataType.setSelectedIndex(0);
+		dataType = "Integer";
+	    } else if(variableDataType.equals("DOUBLE")) {
+		dataType = "Double";
 	    } else {
-		dataType.setSelectedIndex(1);
+		dataType = "Binary";
 	    }
 	}
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
-
 	if(values != null) {
 	    String tmp1 =  StringUtils.remove(Arrays.toString(values), '[');
 	    String tmp2 = StringUtils.remove(tmp1, ']');
@@ -86,7 +84,6 @@ public class DecisionVariablesObject {
 	} else {
 	    invalidValues = new JTextField(6);
 	}
-
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
     }
@@ -109,12 +106,6 @@ public class DecisionVariablesObject {
 	variablesPanel.setBackground(Color.WHITE);
 	varName.setBorder(FrameUtils.cuteBorder());
 	varName.setPreferredSize(new Dimension(10, 22));
-	lowerBound.setBorder(FrameUtils.cuteBorder());
-	lowerBound.setPreferredSize(new Dimension(10, 22));
-	upperBound.setBorder(FrameUtils.cuteBorder());
-	upperBound.setPreferredSize(new Dimension(10, 22));
-	invalidValues.setBorder(FrameUtils.cuteBorder());
-	invalidValues.setPreferredSize(new Dimension(10, 22));
 
 	deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
@@ -141,12 +132,35 @@ public class DecisionVariablesObject {
 
 
 	variablesPanel.add(varName);
-	variablesPanel.add(dataType);
-	variablesPanel.add(lowerBound);
-	variablesPanel.add(upperBound);
-	variablesPanel.add(invalidValues);
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
+    }
+
+    /**
+     * Returns {@code true} if {@linkplain DecisionVariablesObject} have a valid
+     * name otherwise {@code false}
+     * 
+     * @return {@code true} if {@linkplain DecisionVariablesObject} have a valid
+     *         name and otherwise {@code false}
+     * @see #isValidName()
+     */
+    public boolean isWellFilled() {
+	// methods separated to run all
+	boolean isValidName = isValidName();
+	return isValidName;
+    }
+
+    /**
+     * @return {@code true} if the {@link #varName} is not empty and is not
+     *         repeated, otherwise {@code false} and evidence the error
+     * @see DecisionVariablesPage#isNameRepeated(String)
+     * @see FrameUtils#errorFormat(JComponent, String)
+     */
+    private boolean isValidName() {
+	String text = varName.getText();
+	String info = (text.equals("") ? "The variable's name field is a mandatory entry field and therefore must be filled in. " : "")
+		+ (pageAssociated.isNameRepeated(text) ? "The variable's name must be unique." : "");
+	return !info.equals("") ? FrameUtils.errorFormat(varName, info) : FrameUtils.normalFormat(varName);
     }
 
     public DecisionVariablesPage getPageAssociated() {
@@ -166,11 +180,17 @@ public class DecisionVariablesObject {
     }
 
     public String getDataType() {
-	return dataType.getSelectedItem().toString();
+	return dataType;
     }
 
     public DataType getDataTypeToProblem() {
-	return dataType.getSelectedItem().toString().equals("Integer") ? DataType.INTEGER : DataType.DOUBLE;
+	if( dataType.equals("Integer")) {
+	    return DataType.INTEGER;
+	} else if( dataType.equals("Double")) {
+	    return DataType.DOUBLE;
+	} else {
+	    return DataType.BINARY;
+	}
     }
 
     public String getLowerBound() {
@@ -181,8 +201,8 @@ public class DecisionVariablesObject {
 	return upperBound.getText();
     }
 
-    public void setVariableDataType(String type) {
-	dataType.setSelectedItem(type);
+    public void setVariableDataType(String variableDataType) {
+	dataType = variableDataType;
     }
 
     public void setLowerBound(String lower) {
@@ -205,147 +225,9 @@ public class DecisionVariablesObject {
 	return null;
     }
 
-    /**
-     * Returns {@code true} if {@linkplain DecisionVariablesObject} have a valid
-     * name and the {@linkplain #dataType} is selected and have a valid bound and
-     * valid inputs in the invalid values
-     * otherwise {@code false}
-     * 
-     * @return {@code true} if {@linkplain DecisionVariablesObject} have a valid
-     *         name and the {@linkplain #dataType} is selected and have a valid
-     *         bound, otherwise {@code false}
-     * @see #isValidName()
-     * @see #isDataTypeSelected()
-     * @see #isValidBound()
-     * @see #isValidValues()
-     */
-    public boolean isWellFilled() {
-	// methods separated to run all
-	boolean isValidName = isValidName(), isDataTypeSelected = isDataTypeSelected(), isValidBound = isValidBound(), isValidValues = isValidValues();
-	return isValidName && isDataTypeSelected && isValidBound && isValidValues;
+    public void setInvalidValues(String text) {
+	invalidValues.setText(text);
     }
 
-    /**
-     * @return {@code true} if the {@link #varName} is not empty and is not
-     *         repeated, otherwise {@code false} and evidence the error
-     * @see DecisionVariablesPage#isNameRepeated(String)
-     * @see FrameUtils#errorFormat(JComponent, String)
-     */
-    private boolean isValidName() {
-	String text = varName.getText();
-	String info = (text.equals("") ? "The variable's name field is a mandatory entry field and therefore must be filled in. " : "")
-		+ (pageAssociated.isNameRepeated(text) ? "The variable's name must be unique." : "");
-	return !info.equals("") ? FrameUtils.errorFormat(varName, info) : FrameUtils.normalFormat(varName);
-    }
-
-    /**
-     * @return {@code true} if the {@link #dataType} has an item selected,
-     *         otherwise {@code false} and evidence the error
-     * @see FrameUtils#errorFormat(JComponent, String)
-     */
-    private boolean isDataTypeSelected() {
-	return dataType.getSelectedItem() == null
-		? FrameUtils.errorFormat(dataType,
-			"The decision variable's data type field is a mandatory entry field and therefore must be filled in.")
-			: FrameUtils.normalFormat(dataType);
-
-    }
-
-    /**
-     * @param lower
-     *            {@code true} if it is to validate the number in
-     *            {@linkplain #lowerBound}, otherwise it is to validate the
-     *            number in {@linkplain #upperBound}
-     * @return {@code true} if the {@code JTextField}, indicated by
-     *         <b>lower</b>, contains a valid number, otherwise {@code false}
-     *         and evidence the error
-     * @see FrameUtils#errorFormat(JComponent, String)
-     */
-    private boolean isValidNumber(boolean lower) {
-	JTextField bound = lower ? lowerBound : upperBound;
-	String boundStr = lower ? "lower" : "upper";
-	if (bound.getText().equals(""))
-	    return FrameUtils.errorFormat(bound,
-		    "The " + boundStr + " bound field is a mandatory entry field and therefore must be filled in.");
-
-	try {
-	    if (dataType.getSelectedItem().toString().equals("Integer"))
-		Integer.parseInt(bound.getText());
-	    else
-		Double.parseDouble(bound.getText());
-	} catch (NumberFormatException e) {
-	    return FrameUtils.errorFormat(bound, "The " + boundStr + " bound provided is not a valid number.");
-	} catch (NullPointerException e) {
-	    return FrameUtils.errorFormat(bound,
-		    "The decision variable's data type field is a mandatory entry field and therefore must be filled in.");
-	}
-	return FrameUtils.normalFormat(bound);
-    }
-
-    /**
-     * @return {@code true} if {@linkplain #lowerBound} and
-     *         {@linkplain #upperBound} have valid numbers and if the lower
-     *         limit is less than the upper limit, otherwise {@code false} and
-     *         evidence the error
-     * @see #isValidNumber(boolean)
-     * @see FrameUtils#errorFormat(JComponent, String)
-     */
-    private boolean isValidBound() {
-	// separated to run all methods
-	boolean lowerBoundValid = isValidNumber(true), upperBoundValid = isValidNumber(false);
-	if (lowerBoundValid && upperBoundValid) {
-	    boolean isInteger = dataType.getSelectedItem().toString().equals("Integer");
-	    double lower = isInteger ? Integer.parseInt(lowerBound.getText())
-		    : Double.parseDouble(lowerBound.getText());
-	    double upper = isInteger ? Integer.parseInt(upperBound.getText())
-		    : Double.parseDouble(upperBound.getText());
-	    return upper <= lower
-		    ? FrameUtils.errorFormat(upperBound, "The upper bound must be bigger than the lower bound")
-			    : FrameUtils.normalFormat(upperBound);
-	}
-	return false;
-    }
-
-    /**
-     * @return {@code true} if {@linkplain #invalidValues}
-     *         have valid numbers separated by ',' or is empty,
-     *          otherwise {@code false} and evidence the error
-     * @see FrameUtils#errorFormat(JComponent, String)
-     */
-    private boolean isValidValues() {
-	boolean tmp = true;
-	if(invalidValues.getText().isEmpty()) {
-	    FrameUtils.normalFormat(invalidValues);
-	} else if(Pattern.matches("[.,0-9]+", invalidValues.getText())) {
-	    FrameUtils.normalFormat(invalidValues);
-	    if(dataType.getSelectedItem().equals("Integer")) {
-		String[] v = invalidValues.getText().split(",");
-		try {
-		    for(int i = 0; i != v.length; i++) {
-			Integer.parseInt(v[i]);
-		    }
-		    FrameUtils.normalFormat(invalidValues);
-		}catch(NumberFormatException e) {
-		    FrameUtils.errorFormat(invalidValues, "The invalid values provided must be in agreement with the data type selected.");
-		    return false;
-		}
-	    }else if(dataType.getSelectedItem().equals("Double")) {
-		String[] v = invalidValues.getText().split(",");
-		try {
-		    for(int i = 0; i != v.length; i++) {
-			Double.parseDouble(v[i]);
-		    }
-		    FrameUtils.normalFormat(invalidValues);
-		}catch(NumberFormatException e) {
-		    FrameUtils.errorFormat(invalidValues, "The invalid values must in agreement with the data type selected");
-		    return false;
-		}
-	    }
-	}else {
-	    FrameUtils.errorFormat(invalidValues, "The invalid values provided can only contain numbers and/or commas.");
-	    return false;
-	}
-	return tmp;
-    }
 
 }

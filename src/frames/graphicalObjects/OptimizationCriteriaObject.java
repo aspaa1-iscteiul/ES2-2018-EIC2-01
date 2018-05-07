@@ -26,7 +26,7 @@ public class OptimizationCriteriaObject {
 
     private OptimizationCriteriaPage pageAssociated;
     private JTextField name;
-    private String[] dataTypes = { "Integer", "Double" };
+    private String[] dataTypes = { "Integer", "Double", "Binary"};
     private JComboBox<String> dataType;
     private JLabel deleteIcon;
     private JPanel variablesPanel;
@@ -59,8 +59,10 @@ public class OptimizationCriteriaObject {
 	this.dataType = FrameUtils.cuteComboBox(dataTypes);
 	if(variableDataType.equals("INTEGER")) {
 	    dataType.setSelectedIndex(0);
-	} else {
+	} else if(variableDataType.equals("DOUBLE")){
 	    dataType.setSelectedIndex(1);
+	} else {
+	    dataType.setSelectedIndex(2);
 	}
 	deleteIcon = new JLabel();
 	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
@@ -163,8 +165,10 @@ public class OptimizationCriteriaObject {
     public DataType getDataTypeToProblem() {
 	if (dataType.getSelectedItem().toString().equals("Integer")) {
 	    return DataType.INTEGER;
-	} else {
+	} else if(dataType.getSelectedItem().toString().equals("Double")){
 	    return DataType.DOUBLE;
+	} else {
+	    return DataType.BINARY;
 	}
     }
 
