@@ -82,7 +82,7 @@ public class OptimizationCriteriaObject {
 	FrameUtils.addEmptyLabels(variablesPanel, 3);
 	variablesPanel.add(dataType);
 	FrameUtils.addEmptyLabels(variablesPanel, 2);
-	
+
 	deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
@@ -109,7 +109,7 @@ public class OptimizationCriteriaObject {
 	    public void mouseReleased(MouseEvent arg0) {
 	    }
 	});
-	
+
 	variablesPanel.add(deleteIcon);
 	return variablesPanel;
     }
@@ -157,6 +157,10 @@ public class OptimizationCriteriaObject {
 	return name.getText();
     }
 
+    public String getDataType() {
+	return dataType.getSelectedItem().toString();
+    }
+
     /**
      * Transforms the dataType selected to an enumerate
      * 
@@ -173,11 +177,11 @@ public class OptimizationCriteriaObject {
     }
 
     public OptimizationCriteriaPage getPageAssociated() {
-        return pageAssociated;
+	return pageAssociated;
     }
 
     public void setPageAssociated(OptimizationCriteriaPage pageAssociated) {
-        this.pageAssociated = pageAssociated;
+	this.pageAssociated = pageAssociated;
     }
-    
+
 }

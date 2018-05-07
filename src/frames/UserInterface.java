@@ -13,7 +13,8 @@ import javax.swing.JTextField;
 
 import frames.graphicalObjects.DecisionVariablesObject;
 import frames.graphicalObjects.FitnessFunctionObject;
-import frames.graphicalObjects.KnownSolutionsObject;
+import frames.graphicalObjects.KnownDecisionVariablesSolutionsObject;
+import frames.graphicalObjects.KnownOptimizationCriteriaSolutionsObject;
 import frames.graphicalObjects.OptimizationCriteriaCheckbox;
 import frames.graphicalObjects.OptimizationCriteriaObject;
 import jMetal.JMetalRun;
@@ -32,7 +33,8 @@ public class UserInterface {
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
     private ArrayList<FitnessFunctionObject> fitnessFunctionFromPage;
-    private ArrayList<KnownSolutionsObject> knownSolutionsFromDecisionVariables;
+    private ArrayList<KnownDecisionVariablesSolutionsObject> knownSolutionsFromDecisionVariables;
+    private ArrayList<KnownOptimizationCriteriaSolutionsObject> knownSolutionsFromOptimizationCriteria;
     private ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage;
     private ArrayList<String> optimizationAlgorithmsFromPage;
     private int actualPageIndex = 0;
@@ -47,21 +49,23 @@ public class UserInterface {
 	emailPage = new SendEmailPage(this);
 	decisionVariablesFromPage = new ArrayList<DecisionVariablesObject>();
 	fitnessFunctionFromPage = new ArrayList<FitnessFunctionObject>();
-	knownSolutionsFromDecisionVariables = new ArrayList<KnownSolutionsObject>();
+	knownSolutionsFromDecisionVariables = new ArrayList<KnownDecisionVariablesSolutionsObject>();
+	knownSolutionsFromOptimizationCriteria = new ArrayList<KnownOptimizationCriteriaSolutionsObject>();
 	optimizationCriteriaFromPage = new ArrayList<OptimizationCriteriaObject>();
 	optimizationAlgorithmsFromPage = new ArrayList<String>();
 
 	problem = new Problem();
 
 	pages = new ArrayList<>();
-	pages.add(new HomePage(this));
-	pages.add(new IntroPage(this));
-	pages.add(new RegisterUserPage(this));
-	pages.add(new ProblemIdPage(this));
+//	pages.add(new HomePage(this));
+//	pages.add(new IntroPage(this));
+//	pages.add(new RegisterUserPage(this));
+//	pages.add(new ProblemIdPage(this));
 	pages.add(new DecisionVariablesPage(this));
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
-	pages.add(new KnownSolutionsPage(this));
+	pages.add(new KnownDecisionVariablesSolutionsPage(this));
+	pages.add(new KnownOptimizationCriteriaSolutionsPage(this));
 	pages.add(new AlgorithmsPage(this));
 	pages.add(new TimeConstraintsPage(this));
 	pages.add(new HomeCenterPage(this));
@@ -295,7 +299,7 @@ public class UserInterface {
      */
     public ArrayList<String> getKnownSolutionsOfGivenVariable(String varName) {
 	ArrayList<String> solutions = new ArrayList<String>();
-	for (KnownSolutionsObject kso : knownSolutionsFromDecisionVariables) {
+	for (KnownDecisionVariablesSolutionsObject kso : knownSolutionsFromDecisionVariables) {
 	    if (kso.getName().getText().equals(varName)) {
 		for (JTextField text : kso.getTextfieldList()) {
 		    solutions.add(text.getText());
@@ -312,10 +316,10 @@ public class UserInterface {
      * @param page
      * @return
      */
-    public void createKnownSolutionsFromProblem(KnownSolutionsPage page) {
-	ArrayList<KnownSolutionsObject> tmp = new ArrayList<KnownSolutionsObject>();
+    public void createKnownSolutionsFromProblem(KnownDecisionVariablesSolutionsPage page) {
+	ArrayList<KnownDecisionVariablesSolutionsObject> tmp = new ArrayList<KnownDecisionVariablesSolutionsObject>();
 	for (DecisionVariable dv : problem.getDecisionVariables()) {
-	    tmp.add(new KnownSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(),
+	    tmp.add(new KnownDecisionVariablesSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(),
 		    dv.getUpperBound(), dv.getInvalidValuesInVector(), dv.getKnownSolutions()));
 	}
 	xmlFileWasImported[4] = true;
@@ -439,12 +443,20 @@ public class UserInterface {
 	this.fitnessFunctionFromPage = fitnessFunctionFromPage;
     }
 
-    public ArrayList<KnownSolutionsObject> getKnownSolutionsList() {
+    public ArrayList<KnownDecisionVariablesSolutionsObject> getKnownDecisionVariablesSolutionsList() {
 	return this.knownSolutionsFromDecisionVariables;
     }
 
-    public void setKnownSolutionsList(ArrayList<KnownSolutionsObject> list) {
+    public void setKnownDecisionVariablesSolutionsList(ArrayList<KnownDecisionVariablesSolutionsObject> list) {
 	this.knownSolutionsFromDecisionVariables = list;
+    }
+    
+    public ArrayList<KnownOptimizationCriteriaSolutionsObject> getKnownOptimizationCriteriaSolutionsList() {
+	return this.knownSolutionsFromOptimizationCriteria;
+    }
+
+    public void setKnownOptimizationCriteriaSolutionsList(ArrayList<KnownOptimizationCriteriaSolutionsObject> list) {
+	this.knownSolutionsFromOptimizationCriteria = list;
     }
 
     public ArrayList<OptimizationCriteriaObject> getOptimizationCriteriaFromPage() {

@@ -19,17 +19,17 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
-import frames.graphicalObjects.DecisionVariablesObject;
-import frames.graphicalObjects.KnownSolutionsObject;
+import frames.graphicalObjects.KnownOptimizationCriteriaSolutionsObject;
+import frames.graphicalObjects.OptimizationCriteriaObject;
 
 /**
  * This class represents the Known Solutions Page
  */
 
-public class KnownSolutionsPage extends SuperPage {
+public class KnownOptimizationCriteriaSolutionsPage extends SuperPage {
 
     private static final long serialVersionUID = 1L;
-    private ArrayList<KnownSolutionsObject> knownSolutionsList;
+    private ArrayList<KnownOptimizationCriteriaSolutionsObject> knownSolutionsList;
     private JButton nextButton; 
     private JPanel subSubMainPanel;
 
@@ -37,13 +37,13 @@ public class KnownSolutionsPage extends SuperPage {
      * 
      * @param userInterface
      */
-    public KnownSolutionsPage(UserInterface userInterface) {
+    public KnownOptimizationCriteriaSolutionsPage(UserInterface userInterface) {
 	super(userInterface);
     }
 
     @Override
     protected void initialize() {
-	knownSolutionsList = new ArrayList<KnownSolutionsObject>();
+	knownSolutionsList = new ArrayList<KnownOptimizationCriteriaSolutionsObject>();
 	nextButton = FrameUtils.cuteButton("Next");
     }
 
@@ -55,7 +55,7 @@ public class KnownSolutionsPage extends SuperPage {
 
 	JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	titlePanel.setBackground(Color.WHITE);
-	JLabel titleLabel = new JLabel("Known Solution(s)");
+	JLabel titleLabel = new JLabel("Known Optimization Criteria Solution(s)");
 	titleLabel.setFont(FrameUtils.cuteFont(16));
 	titlePanel.add(titleLabel);
 	mainPanel.add(titlePanel);
@@ -139,97 +139,25 @@ public class KnownSolutionsPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	JPanel warning = warningPanel();
 	subSubMainPanel.removeAll();
-	if(userInterface.isXmlFileWasImportedAtIndex(4)==true) {
-	    setThisPage();
-	    knownSolutionsList = userInterface.getKnownSolutionsList();
-	    for(KnownSolutionsObject kso : knownSolutionsList) {
-		subSubMainPanel.add(kso.transformIntoAPanel());
+	if (knownSolutionsList.size() > 0) {
+	    for (KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
+		subSubMainPanel.add(kocso.transformIntoAPanel());
 	    }
-	    verifyIfAnyVariableWasAdded();
-	    verifyIfAnyVariableWasDeleted();
-	    reconstructToLookNice();
-	    userInterface.putXmlFileWasImportedFalseAtIndex(4);
+
 	} else {
-	    if (knownSolutionsList.size() > 0) {
-		for (KnownSolutionsObject kso : knownSolutionsList) {
-		    subSubMainPanel.add(kso.transformIntoAPanel());
+	    if (userInterface.getDecisionVariablesFromPage().size() > 0) {
+		for (OptimizationCriteriaObject oc : userInterface.getOptimizationCriteriaFromPage()) {
+		    KnownOptimizationCriteriaSolutionsObject oc1 = new KnownOptimizationCriteriaSolutionsObject(this, oc.getVariableName(), 
+			    oc.getDataType());
+		    knownSolutionsList.add(oc1);
+		    subSubMainPanel.add(oc1.transformIntoAPanel());
 		}
-		verifyIfAnyVariableWasAdded();
-		verifyIfAnyVariableWasDeleted();
-		reconstructToLookNice();
+		userInterface.setKnownOptimizationCriteriaSolutionsList(knownSolutionsList);
 	    } else {
-		if (userInterface.getDecisionVariablesFromPage().size() > 0) {
-		    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-			KnownSolutionsObject kso = new KnownSolutionsObject(this, dvo.getVariableName(), dvo.getDataType(),
-				dvo.getLowerBound(), dvo.getUpperBound(), dvo.getInvalidValues());
-			knownSolutionsList.add(kso);
-			subSubMainPanel.add(kso.transformIntoAPanel());
-		    }
-		    userInterface.setKnownSolutionsList(knownSolutionsList);
-		} else {
-		    subSubMainPanel.add(warning);
-		}
-	    }
-	    userInterface.refreshPage();
-	}
-    }
-
-    /**
-     * Verify if any decision variable was added to the decision variables list and if there's any need to update
-     * the known solutions list 
-     */
-    private void verifyIfAnyVariableWasAdded() {
-	if (userInterface.getDecisionVariablesFromPage().size() > 0) {
-	    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-		boolean nova = true;
-		for (KnownSolutionsObject kso : knownSolutionsList) {
-		    if (dvo.getVariableName().equals(kso.getName().getText())) {
-			nova = false;
-			break;
-		    }
-		}
-		if (nova == true) {
-		    KnownSolutionsObject ksoAux = new KnownSolutionsObject(this, dvo.getVariableName(),
-			    dvo.getDataType(), dvo.getLowerBound(), dvo.getUpperBound(), dvo.getInvalidValues());
-		    knownSolutionsList.add(ksoAux);
-		    subSubMainPanel.add(ksoAux.transformIntoAPanel());
-		}
+		subSubMainPanel.add(warning);
 	    }
 	}
-    }
-
-    /**
-     * Verify if any decision variable was deleted from the decision variables list and if there's any need to update
-     * the known solutions list 
-     */
-    private void verifyIfAnyVariableWasDeleted() {
-	ArrayList<KnownSolutionsObject>  knownSolutionsListAux = new ArrayList<KnownSolutionsObject>();
-	for (KnownSolutionsObject kso : knownSolutionsList) {
-	    boolean toDelete = true;
-	    for (DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-		if (kso.getName().getText().equals(dvo.getVariableName())) {
-		    toDelete = false;
-		    break;
-		}
-	    }
-	    if (toDelete == true) {
-		knownSolutionsListAux.add(kso);
-	    }
-	}
-	for(KnownSolutionsObject ksoAux : knownSolutionsListAux) {
-	    subSubMainPanel.remove(ksoAux.transformIntoAPanel());
-	    knownSolutionsList.remove(ksoAux);
-	}
-    }
-
-    /**Clean data and reconstruct to put everything in the right place
-     * 
-     */
-    private void reconstructToLookNice() {
-	subSubMainPanel.removeAll();
-	for(KnownSolutionsObject kso : knownSolutionsList) {
-	    subSubMainPanel.add(kso.transformIntoAPanel());
-	}
+	userInterface.refreshPage();
     }
 
     /**
@@ -249,7 +177,7 @@ public class KnownSolutionsPage extends SuperPage {
     protected boolean areAllDataWellFilled() {
 	boolean[] tmp = new boolean[getOverallNumberOfKnownSolutionsNumber()];
 	int count = 0;
-	for (KnownSolutionsObject kso : knownSolutionsList) {
+	for (KnownOptimizationCriteriaSolutionsObject kso : knownSolutionsList) {
 	    for (JTextField textField : kso.getTextfieldList()) {
 		if (kso.validateInputs(textField) == false) {
 		    tmp[count] = false;
@@ -273,7 +201,7 @@ public class KnownSolutionsPage extends SuperPage {
      */
     private int getOverallNumberOfKnownSolutionsNumber() {
 	int count = 0;
-	for (KnownSolutionsObject kso : knownSolutionsList) {
+	for (KnownOptimizationCriteriaSolutionsObject kso : knownSolutionsList) {
 	    count += kso.getTextfieldList().size();
 	}
 	return count;
@@ -281,12 +209,12 @@ public class KnownSolutionsPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	userInterface.setKnownSolutionsList(knownSolutionsList);
+	userInterface.setKnownOptimizationCriteriaSolutionsList(knownSolutionsList);
     }
 
     private void setThisPage() {
-	for(KnownSolutionsObject kso : userInterface.getKnownSolutionsList()) {
-	    kso.setPage(this);
+	for(KnownOptimizationCriteriaSolutionsObject kocso : userInterface.getKnownOptimizationCriteriaSolutionsList()) {
+	    kocso.setPage(this);
 	}
     }
 

@@ -14,16 +14,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import frames.KnownSolutionsPage;
+import frames.KnownDecisionVariablesSolutionsPage;
 import frames.frameUtils.FrameUtils;
 
 /**
  * This object was created to aid the construction of the Known Solutions Page
  */
 
-public class KnownSolutionsObject {
+public class KnownDecisionVariablesSolutionsObject {
 
-    private KnownSolutionsPage pageAssociated;
+    private KnownDecisionVariablesSolutionsPage pageAssociated;
     private JTextField name;
     private ArrayList<JTextField> solutionsList;
     private JLabel addIcon;
@@ -44,7 +44,7 @@ public class KnownSolutionsObject {
      * @param upperBound
      * @param invalidValues
      */
-    public KnownSolutionsObject(KnownSolutionsPage page, String name, String type, String lowerBound,
+    public KnownDecisionVariablesSolutionsObject(KnownDecisionVariablesSolutionsPage page, String name, String type, String lowerBound,
 	    String upperBound, String[] invalidValues) {
 	this.pageAssociated = page;
 	this.name = new JTextField(name.length());
@@ -74,7 +74,7 @@ public class KnownSolutionsObject {
      * @param invalidValues
      * @param solutions
      */
-    public KnownSolutionsObject(KnownSolutionsPage page, String name, String variableDataType, String lowerBound,
+    public KnownDecisionVariablesSolutionsObject(KnownDecisionVariablesSolutionsPage page, String name, String variableDataType, String lowerBound,
 	    String upperBound, String[] invalidValues, ArrayList<String> solutions) {
 	this.pageAssociated = page;
 	this.name = new JTextField(name, name.length());
@@ -82,8 +82,10 @@ public class KnownSolutionsObject {
 	if(variableDataType != null) {
 	    if(variableDataType.equals("INTEGER")) {
 		dataType = "Integer";
-	    } else {
+	    } else if(variableDataType.equals("DOUBLE")) {
 		dataType = "Double";
+	    } else {
+		dataType = "Binary";
 	    }
 	}
 	this.lowerBound = lowerBound;
@@ -274,11 +276,11 @@ public class KnownSolutionsObject {
 	this.name = name;
     }
 
-    public KnownSolutionsPage getPage() {
+    public KnownDecisionVariablesSolutionsPage getPage() {
 	return pageAssociated;
     }
 
-    public void setPage(KnownSolutionsPage page) {
+    public void setPage(KnownDecisionVariablesSolutionsPage page) {
 	this.pageAssociated = page;
     }
 
