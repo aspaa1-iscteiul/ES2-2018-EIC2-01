@@ -27,10 +27,11 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 
     private BinaryAlgorithms algorithms = new BinaryAlgorithms();
     private boolean isSingleObjective;
+    private int evaluateIteration = 0;
 
     public MyBinaryProblem(Problem problem, boolean isSingleObjective) {
 	this.isSingleObjective = isSingleObjective;
-	
+
 	setName(problem.getProblemName());
 
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
@@ -63,6 +64,8 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 
     @Override
     public void evaluate(BinarySolution solution) {
+	evaluateIteration++;
+
 	String[] args = new String[4 + solution.getNumberOfVariables()];
 	args[0] = "java";
 	args[1] = "-jar";
@@ -93,14 +96,14 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     @Override
     public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
 	ExperimentProblem<BinarySolution> experimentProblem = new ExperimentProblem<>(this);
-	
+
 	// TODO not using single objective
-	if(isSingleObjective) {
+	if (isSingleObjective) {
 	    configureSingleObjectiveAlgorithmList(experimentProblem, algorithmsNames);
 	}
 
-	List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = configureAlgorithmList(experimentProblem,
-		algorithmsNames);
+	List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = configureAlgorithmList(
+		experimentProblem, algorithmsNames);
 
 	return new ExperimentBuilder<BinarySolution, List<BinarySolution>>(getName()).setAlgorithmList(algorithmList)
 		.setProblemList(Arrays.asList(experimentProblem));
@@ -139,6 +142,11 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     @Override
     public PISAHypervolume<BinarySolution> type() {
 	return new PISAHypervolume<BinarySolution>();
+    }
+
+    @Override
+    public int evaluateIteration() {
+	return evaluateIteration;
     }
 
 }

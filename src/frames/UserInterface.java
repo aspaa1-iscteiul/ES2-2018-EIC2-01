@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,11 +16,7 @@ import frames.graphicalObjects.FitnessFunctionObject;
 import frames.graphicalObjects.KnownSolutionsObject;
 import frames.graphicalObjects.OptimizationCriteriaCheckbox;
 import frames.graphicalObjects.OptimizationCriteriaObject;
-import jMetal.JMetalProblem;
-import jMetal.binaryConfiguration.MyBinaryProblem;
-import jMetal.doubleConfiguration.MyDoubleProblem;
-import jMetal.integerConfiguration.MyIntegerProblem;
-import objects.DataType;
+import jMetal.JMetalRun;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
 import objects.OptimizationCriteria;
@@ -46,7 +41,7 @@ public class UserInterface {
 
     public UserInterface() {
 	frame = new JFrame("ES2-2018-EIC2-01");
-	for(int i = 0; i != xmlFileWasImported.length; i++) {
+	for (int i = 0; i != xmlFileWasImported.length; i++) {
 	    xmlFileWasImported[i] = false;
 	}
 	emailPage = new SendEmailPage(this);
@@ -63,7 +58,7 @@ public class UserInterface {
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
 	pages.add(new ProblemIdPage(this));
-	pages.add(new DecisionVariablesPage(this));  
+	pages.add(new DecisionVariablesPage(this));
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
 	pages.add(new KnownSolutionsPage(this));
@@ -186,7 +181,8 @@ public class UserInterface {
     }
 
     /**
-     * Allows to averiguate that a problem was imported from a xml file and that fields problem name and description can be used
+     * Allows to averiguate that a problem was imported from a xml file and that
+     * fields problem name and description can be used
      */
     public void createProblemId() {
 	xmlFileWasImported[0] = true;
@@ -202,19 +198,22 @@ public class UserInterface {
 	ArrayList<DecisionVariable> dvList = new ArrayList<DecisionVariable>();
 	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
 	    dvList.add(new DecisionVariable(dvo.getVariableName(), dvo.getDataTypeToProblem(), dvo.getLowerBound(),
-		    dvo.getUpperBound(),  Arrays.toString(dvo.getInvalidValues()) , getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
+		    dvo.getUpperBound(), Arrays.toString(dvo.getInvalidValues()),
+		    getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
 	}
 	return dvList;
     }
 
     /**
-     * Transforms the data from problem read from a xml file to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the
+     * interface
+     * 
      * @param page
      * @return
      */
-    public void createDecisionVariableFromProblem(DecisionVariablesPage page){
+    public void createDecisionVariableFromProblem(DecisionVariablesPage page) {
 	ArrayList<DecisionVariablesObject> tmp = new ArrayList<DecisionVariablesObject>();
-	for(DecisionVariable dv : problem.getDecisionVariables()) {
+	for (DecisionVariable dv : problem.getDecisionVariables()) {
 	    tmp.add(new DecisionVariablesObject(page, dv.getName(), dv.getDataType().name(), dv.getLowerBound(),
 		    dv.getUpperBound(), dv.getInvalidValuesInVector()));
 	}
@@ -231,20 +230,23 @@ public class UserInterface {
     public ArrayList<FitnessFunction> createFitnessFunctionFinalList() {
 	ArrayList<FitnessFunction> ffList = new ArrayList<FitnessFunction>();
 	for (FitnessFunctionObject ffo : fitnessFunctionFromPage) {
-	    ffList.add(new FitnessFunction(ffo.getPath(), getOptimizationCriteriaObjectsFromGivenStrings(ffo.getTheCheckboxesSelected()) ));
+	    ffList.add(new FitnessFunction(ffo.getPath(),
+		    getOptimizationCriteriaObjectsFromGivenStrings(ffo.getTheCheckboxesSelected())));
 	}
 	return ffList;
     }
 
     /**
-     * Transforms the data from problem read from a xml file to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the
+     * interface
+     * 
      * @param page
      * @return
      */
-    public void createFitnessFunctionFromProblem(FitnessFunctionPage page){
+    public void createFitnessFunctionFromProblem(FitnessFunctionPage page) {
 	ArrayList<FitnessFunctionObject> tmp = new ArrayList<FitnessFunctionObject>();
-	for(FitnessFunction ff : problem.getFitnessFunctions()) {
-	    tmp.add(new FitnessFunctionObject(page, ff.getJarFilePath(), 
+	for (FitnessFunction ff : problem.getFitnessFunctions()) {
+	    tmp.add(new FitnessFunctionObject(page, ff.getJarFilePath(),
 		    createOptimizationCriteriaCheckboxesFromProblem(ff.getOptimizationCriteria())));
 	}
 	xmlFileWasImported[2] = true;
@@ -267,14 +269,16 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data from problem read from a xml file to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the
+     * interface
+     * 
      * @param page
      * @return
      */
-    public void createOptimizationCriteriaFromProblem(OptimizationCriteriaPage page){
+    public void createOptimizationCriteriaFromProblem(OptimizationCriteriaPage page) {
 	ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
-	for(FitnessFunction ff : problem.getFitnessFunctions()) {
-	    for(OptimizationCriteria oc : ff.getOptimizationCriteria()) {
+	for (FitnessFunction ff : problem.getFitnessFunctions()) {
+	    for (OptimizationCriteria oc : ff.getOptimizationCriteria()) {
 		tmp.add(new OptimizationCriteriaObject(page, oc.getName(), oc.getDataType().toString()));
 	    }
 	}
@@ -302,31 +306,34 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data from problem read from a xml file to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the
+     * interface
+     * 
      * @param page
      * @return
      */
     public void createKnownSolutionsFromProblem(KnownSolutionsPage page) {
 	ArrayList<KnownSolutionsObject> tmp = new ArrayList<KnownSolutionsObject>();
 	for (DecisionVariable dv : problem.getDecisionVariables()) {
-	    tmp.add(new KnownSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(), dv.getUpperBound(),
-		    dv.getInvalidValuesInVector(), dv.getKnownSolutions()));
+	    tmp.add(new KnownSolutionsObject(page, dv.getName(), dv.getDataType().toString(), dv.getLowerBound(),
+		    dv.getUpperBound(), dv.getInvalidValuesInVector(), dv.getKnownSolutions()));
 	}
 	xmlFileWasImported[4] = true;
 	this.knownSolutionsFromDecisionVariables = tmp;
     }
 
     /**
-     * Converts a arraylist of strings with the name of the checkboxes selected into an arraylist of optimization criteria
-     * to be used in the problem saving
+     * Converts a arraylist of strings with the name of the checkboxes selected into
+     * an arraylist of optimization criteria to be used in the problem saving
+     * 
      * @param strings
      * @return
      */
-    private ArrayList<OptimizationCriteria> getOptimizationCriteriaObjectsFromGivenStrings(ArrayList<String> strings){
-	ArrayList<OptimizationCriteria> tmp = new  ArrayList<OptimizationCriteria>();
-	for(String str : strings) {
-	    for(OptimizationCriteria oco : createOptimizationCriteriaFinalList()) {
-		if(oco.getName().equals(str)) {
+    private ArrayList<OptimizationCriteria> getOptimizationCriteriaObjectsFromGivenStrings(ArrayList<String> strings) {
+	ArrayList<OptimizationCriteria> tmp = new ArrayList<OptimizationCriteria>();
+	for (String str : strings) {
+	    for (OptimizationCriteria oco : createOptimizationCriteriaFinalList()) {
+		if (oco.getName().equals(str)) {
 		    tmp.add(oco);
 		}
 	    }
@@ -335,13 +342,16 @@ public class UserInterface {
     }
 
     /**
-     * Converts a arraylist of optimization criteria into an arraylist of optimization criteria checkboxes
+     * Converts a arraylist of optimization criteria into an arraylist of
+     * optimization criteria checkboxes
+     * 
      * @param strings
      * @return
      */
-    private ArrayList<OptimizationCriteriaCheckbox> createOptimizationCriteriaCheckboxesFromProblem(ArrayList<OptimizationCriteria> optimizationCriterias){
-	ArrayList<OptimizationCriteriaCheckbox> tmp = new  ArrayList<OptimizationCriteriaCheckbox>();
-	for(OptimizationCriteria oc : optimizationCriterias) {
+    private ArrayList<OptimizationCriteriaCheckbox> createOptimizationCriteriaCheckboxesFromProblem(
+	    ArrayList<OptimizationCriteria> optimizationCriterias) {
+	ArrayList<OptimizationCriteriaCheckbox> tmp = new ArrayList<OptimizationCriteriaCheckbox>();
+	for (OptimizationCriteria oc : optimizationCriterias) {
 	    OptimizationCriteriaCheckbox occ = new OptimizationCriteriaCheckbox(oc.getName());
 	    occ.getCheckBox().setSelected(true);
 	    tmp.add(occ);
@@ -350,20 +360,22 @@ public class UserInterface {
     }
 
     /**
-     * Transforms the data from problem read from a xml file to the data used in the interface
+     * Transforms the data from problem read from a xml file to the data used in the
+     * interface
+     * 
      * @return
      */
     public void createOptimizationAlgorithmsFromProblem() {
 	ArrayList<String> tmp = new ArrayList<String>();
-	for(String string : problem.getOptimizationAlgorithms()) {
-	   tmp.add(string);
+	for (String string : problem.getOptimizationAlgorithms()) {
+	    tmp.add(string);
 	}
 	this.optimizationAlgorithmsFromPage = tmp;
     }
-    
+
     /**
-     * Allows to averiguate that a problem was imported from a xml file and that fields ideal time and max time 
-     * can be used to populate the gui
+     * Allows to averiguate that a problem was imported from a xml file and that
+     * fields ideal time and max time can be used to populate the gui
      */
     public void createTimeConstraints() {
 	xmlFileWasImported[5] = true;
@@ -380,9 +392,9 @@ public class UserInterface {
     }
 
     /**
-     * Clean all the data if the user decides to submit a new problem 
+     * Clean all the data if the user decides to submit a new problem
      */
-    public void cleanData(){
+    public void cleanData() {
 	problem = new Problem();
 	userEmail = null;
 	decisionVariablesFromPage.clear();
@@ -390,10 +402,10 @@ public class UserInterface {
 	knownSolutionsFromDecisionVariables.clear();
 	optimizationCriteriaFromPage.clear();
 	optimizationAlgorithmsFromPage.clear();
-	for(int i = 0; i != xmlFileWasImported.length; i++) {
+	for (int i = 0; i != xmlFileWasImported.length; i++) {
 	    xmlFileWasImported[i] = false;
 	}
-	for(SuperPage page : pages) {
+	for (SuperPage page : pages) {
 	    page.clearDataFromPage();
 	}
 	wasSomethingImported = false;
@@ -484,22 +496,9 @@ public class UserInterface {
     }
 
     public void runProblem() {
+	frame.dispose();
 	setFinalProblem();
-	JMetalProblem jMetalProblem;
-	DataType type = problem.getDecisionVariables().get(0).dataType;
-	if(type == DataType.DOUBLE) {
-	    jMetalProblem = new MyDoubleProblem(problem, getIsSingleobjective());
-	} else if(type == DataType.INTEGER){
-	    jMetalProblem = new MyIntegerProblem(problem, getIsSingleobjective());
-	} else {
-	    jMetalProblem = new MyBinaryProblem(problem, getIsSingleobjective());
-	}
-	try {
-	    jMetalProblem.run(problem.getOptimizationAlgorithms());
-	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+	new JMetalRun(problem, getIsSingleobjective()).run();
     }
 
 }

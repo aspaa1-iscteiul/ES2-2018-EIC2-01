@@ -27,10 +27,11 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 
     private IntegerAlgorithms algorithms = new IntegerAlgorithms();
     private boolean isSingleObjective;
+    private int evaluateIteration = 0;
 
     public MyIntegerProblem(Problem problem, boolean isSingleObjective) {
 	this.isSingleObjective = isSingleObjective;
-	
+
 	setName(problem.getProblemName());
 
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
@@ -56,6 +57,8 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 
     @Override
     public void evaluate(IntegerSolution solution) {
+	evaluateIteration++;
+
 	String[] args = new String[4 + solution.getNumberOfVariables()];
 	args[0] = "java";
 	args[1] = "-jar";
@@ -88,10 +91,10 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 	ExperimentProblem<IntegerSolution> experimentProblem = new ExperimentProblem<>(this);
 
 	// TODO not using single objective
-	if(isSingleObjective) {
+	if (isSingleObjective) {
 	    configureSingleObjectiveAlgorithmList(experimentProblem, algorithmsNames);
 	}
-	
+
 	List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = configureMultiObjectiveAlgorithmList(
 		experimentProblem, algorithmsNames);
 
@@ -132,6 +135,11 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
     @Override
     public PISAHypervolume<IntegerSolution> type() {
 	return new PISAHypervolume<IntegerSolution>();
+    }
+
+    @Override
+    public int evaluateIteration() {
+	return evaluateIteration;
     }
 
 }
