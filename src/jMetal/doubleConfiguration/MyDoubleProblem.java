@@ -27,6 +27,7 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
 
     private DoubleAlgorithms algorithms = new DoubleAlgorithms();
     private boolean isSingleObjective;
+    private int evaluateIteration = 0;
 
     public MyDoubleProblem(Problem problem, boolean isSingleObjective) {
 	this.isSingleObjective = isSingleObjective;
@@ -56,6 +57,8 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
 
     @Override
     public void evaluate(DoubleSolution solution) {
+	evaluateIteration++;
+
 	String[] args = new String[4 + solution.getNumberOfVariables()];
 	args[0] = "java";
 	args[1] = "-jar";
@@ -129,6 +132,11 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
     @Override
     public PISAHypervolume<DoubleSolution> type() {
 	return new PISAHypervolume<DoubleSolution>();
+    }
+
+    @Override
+    public int evaluateIteration() {
+	return evaluateIteration;
     }
 
 }
