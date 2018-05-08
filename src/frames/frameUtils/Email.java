@@ -11,7 +11,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
- * Conta de email do grupo: Email: ES22018EIC201@gmail.com<br>
+ * Conta de email do grupo:<br>
+ * Email: ES22018EIC201@gmail.com<br>
  * Password: ES2-2018-EIC2-01AGRS
  */
 
