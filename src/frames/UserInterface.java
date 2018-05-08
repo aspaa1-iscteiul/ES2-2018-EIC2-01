@@ -532,7 +532,7 @@ public class UserInterface {
     public void runProblem() {
 	frame.dispose();
 	setFinalProblem();
-	new JMetalRun(problem, getIsSingleobjective()).run();
+	new JMetalRun(problem, getIsSingleobjective(), getUserEmail()).run();
     }
 
 }

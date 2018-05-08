@@ -36,7 +36,8 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
      * Multi Objective
      */
 
-    public static final List<String> MULTI_OBJECTIVE = Arrays.asList("MOCell", "NSGAII", "NSGAIII", "PAES", "PESA2",
+    // TODO PESA2 and NSGAIII not working
+    public static final List<String> MULTI_OBJECTIVE = Arrays.asList("MOCell", "NSGAII", "PAES", // "NSGAIII", "PESA2",
 	    "Random Search", "SMSEMOA", "SPEA2");
 
     @SuppressWarnings("unchecked")
@@ -67,6 +68,7 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
+    // TODO not working
     public Algorithm<List<IntegerSolution>> getNSGAIII(IntegerProblem problem) {
 	return new NSGAIIIBuilder<>(problem).setMaxIterations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE)
 		.build();
@@ -76,6 +78,7 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
 	return new PAESBuilder<>(problem).setMaxEvaluations(MAX_EVALUATIONS).build();
     }
 
+    // TODO not working
     public Algorithm<List<IntegerSolution>> getPESA2(IntegerProblem problem) {
 	return new PESA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();

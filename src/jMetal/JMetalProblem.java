@@ -17,7 +17,7 @@ import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFro
 public interface JMetalProblem {
 
     public static final int INDEPENDENT_RUNS = 5;
-    
+
     public int evaluateIteration();
 
     public default void run(ArrayList<String> algorithmsNames) throws IOException {

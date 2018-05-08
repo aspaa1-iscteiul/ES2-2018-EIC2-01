@@ -1,5 +1,6 @@
 package jMetal;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -9,8 +10,10 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import frames.frameUtils.Email;
 import jMetal.binaryConfiguration.MyBinaryProblem;
 import jMetal.doubleConfiguration.MyDoubleProblem;
 import jMetal.integerConfiguration.MyIntegerProblem;
@@ -23,15 +26,20 @@ public class JMetalRun {
     private boolean isSingleobjective;
     private int iterations;
     private JMetalProblem jMetalProblem;
+    private Email email;
 
-    public JMetalRun(Problem problem, boolean isSingleobjective) {
+    public JMetalRun(Problem problem, boolean isSingleobjective, String userEmail) {
 	this.problem = problem;
 	this.isSingleobjective = isSingleobjective;
 	iterations = JMetalProblem.INDEPENDENT_RUNS * JMetalAlgorithms.MAX_EVALUATIONS
 		* problem.getOptimizationAlgorithms().size();
+	email = new Email(userEmail);
     }
 
     public void run() {
+	// TODO change subject and message
+	email.sendEmail(problem.getProblemName() + " started", "");
+
 	DataType type = problem.getDecisionVariables().get(0).dataType;
 	if (type == DataType.DOUBLE) {
 	    jMetalProblem = new MyDoubleProblem(problem, isSingleobjective);
@@ -49,10 +57,13 @@ public class JMetalRun {
 	    public void run() {
 		try {
 		    jMetalProblem.run(problem.getOptimizationAlgorithms());
+		    p.interrupt();
 		    afterRunning();
 		} catch (IOException e) {
-		    // TODO Auto-generated catch block
+		    // TODO change subject and message
+		    email.sendEmail("Error", "");
 		    e.printStackTrace();
+		    System.exit(1);
 		}
 	    }
 	});
@@ -66,10 +77,12 @@ public class JMetalRun {
     private class Progress extends Thread {
 	private JProgressBar progressBar;
 	private JFrame progressFrame;
-	private int value;
 
 	public Progress() {
-	    value = 0;
+	    UIManager.put("ProgressBar.background", Color.LIGHT_GRAY);
+	    UIManager.put("ProgressBar.foreground", Color.GREEN);
+	    UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
+	    UIManager.put("ProgressBar.selectionForeground", Color.BLACK);
 
 	    progressBar = new JProgressBar(0, iterations);
 	    progressBar.setPreferredSize(new Dimension(400, 22));
@@ -91,20 +104,29 @@ public class JMetalRun {
 
 	@Override
 	public void run() {
-	    while ((value = jMetalProblem.evaluateIteration()) < iterations) {
-		double percentage = (value / (double) iterations) * 100;
+	    boolean p25 = false, p50 = false, p75 = false;
+	    while (jMetalProblem.evaluateIteration() < iterations) {
+		double percentage = (jMetalProblem.evaluateIteration() / (double) iterations) * 100;
 		progressBar.setString(String.format("%.2f", percentage) + " %");
-		if (percentage == 25) {
-		    System.out.println("email de 25%");
-		} else if (percentage == 50) {
-		    System.out.println("email de 50%");
-		} else if (percentage == 75) {
-		    System.out.println("email de 75%");
+		if (percentage >= 25 && !p25) {
+		    p25 = true;
+		    // TODO change subject and message
+		    email.sendEmail(problem.getProblemName() + " is 25% complete", "");
+		    System.out.println("email de 25% sended...");
+		} else if (percentage >= 50 && !p50) {
+		    p50 = true;
+		    // TODO change subject and message
+		    email.sendEmail(problem.getProblemName() + " is 50% complete", "");
+		    System.out.println("email de 50% sended...");
+		} else if (percentage >= 75 && !p75) {
+		    p75 = true;
+		    // TODO change subject and message
+		    email.sendEmail(problem.getProblemName() + " is 75% complete", "");
+		    System.out.println("email de 75% sended...");
 		}
 		try {
 		    Thread.sleep(100);
 		} catch (InterruptedException e) {
-		    // TODO Auto-generated catch block
 		    e.printStackTrace();
 		}
 	    }
