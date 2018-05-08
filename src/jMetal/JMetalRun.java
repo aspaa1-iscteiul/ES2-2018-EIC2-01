@@ -83,9 +83,11 @@ public class JMetalRun {
 	    UIManager.put("ProgressBar.foreground", Color.GREEN);
 	    UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
 	    UIManager.put("ProgressBar.selectionForeground", Color.BLACK);
+	    UIManager.put("ProgressBar.repaintInterval", new Integer(1));
+	    UIManager.put("ProgressBar.cycleTime", new Integer(200));
 
 	    progressBar = new JProgressBar(0, iterations);
-	    progressBar.setPreferredSize(new Dimension(400, 22));
+	    progressBar.setPreferredSize(new Dimension(500, 22));
 	    progressBar.setStringPainted(true);
 	    progressBar.setFont(new Font("Consolas", Font.PLAIN, 18));
 	    progressBar.setIndeterminate(true);
