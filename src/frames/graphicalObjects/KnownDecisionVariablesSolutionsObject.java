@@ -300,4 +300,14 @@ public class KnownDecisionVariablesSolutionsObject {
 	this.invalidValues = invalidValues;
     }
 
+    public void organizeSolutionsList() {
+	ArrayList<JTextField> solutionsListAux = new ArrayList<JTextField>();
+	for(JTextField text : solutionsList) {
+	    if(!text.getText().toString().isEmpty()) {
+		solutionsListAux.add(text);
+	    }
+	}
+	solutionsList = solutionsListAux;
+    }
+
 }

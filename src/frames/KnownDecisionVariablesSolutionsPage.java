@@ -281,12 +281,22 @@ public class KnownDecisionVariablesSolutionsPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
+	organizeList();
 	userInterface.setKnownDecisionVariablesSolutionsList(knownSolutionsList);
     }
 
     private void setThisPage() {
 	for(KnownDecisionVariablesSolutionsObject kso : userInterface.getKnownDecisionVariablesSolutionsList()) {
 	    kso.setPage(this);
+	}
+    }
+
+    /**
+     * Removes null data from KnownSolutionsList
+     */
+    public void organizeList() {
+	for(KnownDecisionVariablesSolutionsObject kdvso : knownSolutionsList) {
+	    kdvso.organizeSolutionsList();
 	}
     }
 

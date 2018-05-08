@@ -281,12 +281,22 @@ public class KnownOptimizationCriteriaSolutionsPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
+	organizeList();
 	userInterface.setKnownOptimizationCriteriaSolutionsList(knownSolutionsList);
     }
 
     private void setThisPage() {
 	for(KnownOptimizationCriteriaSolutionsObject kocso : userInterface.getKnownOptimizationCriteriaSolutionsList()) {
 	    kocso.setPage(this);
+	}
+    }
+
+    /**
+     * Removes null data from KnownSolutionsList
+     */
+    public void organizeList() {
+	for(KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
+	    kocso.organizeSolutionsList();
 	}
     }
 

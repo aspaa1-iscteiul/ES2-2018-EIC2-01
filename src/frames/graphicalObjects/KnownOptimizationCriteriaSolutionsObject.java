@@ -118,6 +118,41 @@ public class KnownOptimizationCriteriaSolutionsObject {
     }
 
     /**
+     * Validates the input of a given solution, validating if it agrees with the
+     * bounds and data type previously chosen on the variable associated to the
+     * solution and if it agrees with the invalid values chosen
+     * 
+     * @param textField
+     */
+    public boolean validateInputs(JTextField textField) {
+	if (textField.getText().isEmpty()) {
+	    FrameUtils.normalFormat(textField);
+	    return true;
+	} else {
+	    boolean tmp = false;
+	    if (dataType.equals("Integer")) {
+		try {
+		    Integer.parseInt(textField.getText());
+		    tmp = FrameUtils.normalFormat(textField);
+		} catch (NumberFormatException e1) {
+		    tmp = FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		    return tmp;
+		}
+	    }
+	    if (dataType.equals("Double")) {
+		try {
+		    Double.parseDouble(textField.getText());
+		    tmp = FrameUtils.normalFormat(textField);
+		} catch (NumberFormatException e1) {
+		    tmp = FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
+		    return tmp;
+		}
+	    }
+	    return tmp;
+	}
+    }
+
+    /**
      * Transforms the solutions textfield into strings
      * @return
      */
@@ -173,39 +208,14 @@ public class KnownOptimizationCriteriaSolutionsObject {
 	this.solutionsList = textfieldList;
     }
 
-    /**
-     * Validates the input of a given solution, validating if it agrees with the
-     * bounds and data type previously chosen on the variable associated to the
-     * solution and if it agrees with the invalid values chosen
-     * 
-     * @param textField
-     */
-    public boolean validateInputs(JTextField textField) {
-	if (textField.getText().isEmpty()) {
-	    FrameUtils.normalFormat(textField);
-	    return true;
-	} else {
-	    boolean tmp = false;
-	    if (dataType.equals("Integer")) {
-		try {
-		    Integer.parseInt(textField.getText());
-		    tmp = FrameUtils.normalFormat(textField);
-		} catch (NumberFormatException e1) {
-		    tmp = FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
-		    return tmp;
-		}
+    public void organizeSolutionsList() {
+	ArrayList<JTextField> solutionsListAux = new ArrayList<JTextField>();
+	for(JTextField text : solutionsList) {
+	    if(!text.getText().toString().isEmpty()) {
+		solutionsListAux.add(text);
 	    }
-	    if (dataType.equals("Double")) {
-		try {
-		    Double.parseDouble(textField.getText());
-		    tmp = FrameUtils.normalFormat(textField);
-		} catch (NumberFormatException e1) {
-		    tmp = FrameUtils.errorFormat(textField, "Solutions must have the same data type has the variable");
-		    return tmp;
-		}
-	    }
-	    return tmp;
 	}
+	solutionsList = solutionsListAux;
     }
 
 }
