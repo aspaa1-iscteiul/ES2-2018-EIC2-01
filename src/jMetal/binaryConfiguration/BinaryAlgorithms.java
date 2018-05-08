@@ -36,9 +36,9 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
     /*
      * Multi Objective
      */
-
-    public static final List<String> MULTI_OBJECTIVE = Arrays.asList("MOCell", "MOCHC", "NSGAII", "NSGAIII", "PAES",
-	    "PESA2", "Random Search", "SMSEMOA", "SPEA2");
+    // TODO PESA2 and NSGAIII not working
+    public static final List<String> MULTI_OBJECTIVE = Arrays.asList("MOCell", "MOCHC", "NSGAII", // "NSGAIII", "PESA2",
+	    "PAES", "Random Search", "SMSEMOA", "SPEA2");
 
     @SuppressWarnings("unchecked")
     public Algorithm<List<BinarySolution>> getMultiObjectiveAlgortihm(String algorithmName, BinaryProblem problem) {
@@ -72,6 +72,7 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
+    // TODO not working
     public Algorithm<List<BinarySolution>> getNSGAIII(BinaryProblem problem) {
 	return new NSGAIIIBuilder<>(problem).setMaxIterations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE)
 		.build();
@@ -81,6 +82,7 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
 	return new PAESBuilder<>(problem).setMaxEvaluations(MAX_EVALUATIONS).build();
     }
 
+    // TODO not working
     public Algorithm<List<BinarySolution>> getPESA2(BinaryProblem problem) {
 	return new PESA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
