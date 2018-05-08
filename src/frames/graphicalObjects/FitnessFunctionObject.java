@@ -139,6 +139,8 @@ public class FitnessFunctionObject {
 	fieldsPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 	fieldsPanel.setBackground(Color.WHITE);
 	fieldsPanel.add(uploadButton);
+	uploadButton.setText(getPath());
+	jarFileUploaded = true;
 
 	if(pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
 	    for (OptimizationCriteriaObject oco : pageAssociated.userInterface.getOptimizationCriteriaFromPage()) {

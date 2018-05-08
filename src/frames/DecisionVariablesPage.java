@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -194,6 +195,20 @@ public class DecisionVariablesPage extends SuperPage {
 	if(userInterface.isXmlFileWasImportedAtIndex(1)==true) {
 	    subSubMainPanel.removeAll();
 	    decisionVariableList = userInterface.getDecisionVariablesFromPage();
+	    if(decisionVariableList.get(0).getDataType() != null) {
+		if(decisionVariableList.get(0).getDataType().equals("Integer")) {
+		    dataType.setSelectedIndex(0);
+		} else if(decisionVariableList.get(0).getDataType().equals("Double")) {
+		    dataType.setSelectedIndex(1);
+		} else {
+		    dataType.setSelectedIndex(2);
+		}
+	    }
+	    lowerBound.setText(decisionVariableList.get(0).getLowerBound());
+	    upperBound.setText(decisionVariableList.get(0).getUpperBound());
+	    if(!Arrays.toString(decisionVariableList.get(0).getInvalidValues()).equals("[null]")) {
+		invalidValues.setText(Arrays.toString(decisionVariableList.get(0).getInvalidValues()));
+	    }
 	    for(DecisionVariablesObject dvo : decisionVariableList) {
 		subSubMainPanel.add(dvo.transformIntoAPanel());
 		dvo.setPageAssociated(this);
