@@ -153,14 +153,14 @@ public class TimeConstraintsPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(userInterface.isXmlFileWasImportedAtIndex(5)==true) {
+	if(userInterface.isXmlFileWasImportedAtIndex(6)==true) {
 	    if(userInterface.getProblem().getIdealTimeFrame()!=null) {
 		idealTime.setText(userInterface.getProblem().getIdealTimeFrame());
 	    }
 	    if(userInterface.getProblem().getMaxTimeFrame()!=null) {
 		maxTime.setText(userInterface.getProblem().getMaxTimeFrame());
 	    }
-	    userInterface.putXmlFileWasImportedFalseAtIndex(5);
+	    userInterface.putXmlFileWasImportedFalseAtIndex(6);
 	}
     }
 
