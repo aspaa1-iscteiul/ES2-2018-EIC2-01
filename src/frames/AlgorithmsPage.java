@@ -146,5 +146,4 @@ public class AlgorithmsPage extends SuperPage {
 	    checkbox.setSelected(false);
 	}
     }
-
 }

@@ -27,18 +27,18 @@ public class TestUserFileUtils {
 	ArrayList<String> knownSolutionsDouble = new ArrayList<String>();
 	knownSolutionsDouble.add("3.5");
 	knownSolutionsDouble.add("4.5");
-	DecisionVariable dv1 = new DecisionVariable("var1", DataType.INTEGER, "-5", "+5", "0,1,2", knownSolutionsInteger);
-	DecisionVariable dv2 = new DecisionVariable("var2", DataType.DOUBLE, "-4.9", "+4.8", "0.0", null);
-	DecisionVariable dv3 = new DecisionVariable("var3", DataType.DOUBLE, "-5.1", "+5.1", null, knownSolutionsDouble);
-	DecisionVariable dv4 = new DecisionVariable("var4", DataType.INTEGER, "-3", "+3", null, null);
+	DecisionVariable dv1 = new DecisionVariable("var1", knownSolutionsInteger);
+	DecisionVariable dv2 = new DecisionVariable("var2", null);
+	DecisionVariable dv3 = new DecisionVariable("var3", knownSolutionsDouble);
+	DecisionVariable dv4 = new DecisionVariable("var4", null);
 	ArrayList<DecisionVariable> decisionVariables = new ArrayList<>();
 	decisionVariables.add(dv1);
 	decisionVariables.add(dv2);
 	decisionVariables.add(dv3);
 	decisionVariables.add(dv4);
 
-	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", DataType.INTEGER, null);
-	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", DataType.DOUBLE, knownSolutionsDouble);
+	OptimizationCriteria oc1 = new OptimizationCriteria("oc1", null);
+	OptimizationCriteria oc2 = new OptimizationCriteria("oc2", knownSolutionsDouble);
 	ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
 	optimizationCriteria.add(oc1);
 	optimizationCriteria.add(oc2);
@@ -52,12 +52,12 @@ public class TestUserFileUtils {
 
 	Problem problem;
 	if (scenario == 1)
-	    problem = new Problem("ProblemaTeste", null, null, decisionVariables, fitnessFunctions,
-		    optimizationAlgorithms, "2.0", "4.0");
+	    problem = new Problem("ProblemaTeste", null, null, DataType.INTEGER, null, null, null, decisionVariables,
+		    DataType.BINARY, fitnessFunctions, optimizationAlgorithms, "2.0", null);
 	else
-	    problem = new Problem("ProblemaTeste", "Descrição do problema de teste", "Regras", decisionVariables,
-		    fitnessFunctions, optimizationAlgorithms, "2.0", null);
-
+	    problem = new Problem("ProblemaTeste", "Descrição do problema de teste", "Regras", DataType.DOUBLE, "-5.0",
+		    "+5.0", "0.0", decisionVariables, DataType.DOUBLE, fitnessFunctions, optimizationAlgorithms, "2.0",
+		    "4.0");
 	return problem;
     }
 
@@ -122,9 +122,10 @@ public class TestUserFileUtils {
      */
     @Test
     public final void testGetInvalidValuesInVector() {
-	Problem problem = contructProblem(1);
-	problem.getDecisionVariables().get(0).getInvalidValuesInVector();
-	problem.getDecisionVariables().get(2).getInvalidValuesInVector();
+	Problem problem1 = contructProblem(1);
+	problem1.getInvalidValuesInVector();
+	Problem problem2 = contructProblem(2);
+	problem2.getInvalidValuesInVector();
     }
 
 }

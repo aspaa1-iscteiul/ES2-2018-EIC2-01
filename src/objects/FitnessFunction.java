@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class FitnessFunction {
 
-    public String jarFilePath;
-    public ArrayList<OptimizationCriteria> optimizationCriteria;
+    private String jarFilePath;
+    private ArrayList<OptimizationCriteria> optimizationCriteria;
 
     /**
      * Constructor for FitnessFunctions

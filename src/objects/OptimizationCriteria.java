@@ -11,24 +11,19 @@ import java.util.ArrayList;
  */
 public class OptimizationCriteria {
 
-    public String name;
-    public DataType dataType;
-    public ArrayList<String> knownSolutions;
+    private String name;
+    private ArrayList<String> knownSolutions;
 
     /**
      * Constructor for OptimizationCriteria
      * 
      * @param name
      *            of the optimizationCriteria
-     * @param dataType
-     *            of the optimizationCriteria: {@code DataType.INTEGER} or
-     *            {@code DataType.DOUBLE}
      * @param knownSolutions
      *            for this criteria from previous iterations [OPTIONAL]
      */
-    public OptimizationCriteria(String name, DataType dataType, ArrayList<String> knownSolutions) {
+    public OptimizationCriteria(String name, ArrayList<String> knownSolutions) {
 	this.name = name;
-	this.dataType = dataType;
 	this.knownSolutions = knownSolutions;
     }
 
@@ -36,10 +31,6 @@ public class OptimizationCriteria {
 	return name;
     }
 
-    public DataType getDataType() {
-	return dataType;
-    }
-    
     public ArrayList<String> getKnownSolutions() {
 	return knownSolutions;
     }
@@ -47,11 +38,10 @@ public class OptimizationCriteria {
     public void setKnownSolutions(ArrayList<String> knownSolutions) {
 	this.knownSolutions = knownSolutions;
     }
-    
+
     @Override
     public String toString() {
-	return Problem.newLine + "\t \t Name: " + name + ", Data Type: " + dataType + ", Known Solutions: "
-		+ knownSolutions;
+	return Problem.newLine + "\t \t Name: " + name + ", Known Solutions: " + knownSolutions;
     }
 
 }
