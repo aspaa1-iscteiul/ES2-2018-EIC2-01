@@ -1,0 +1,21 @@
+3rd Sprint - From April 14 to April 28 (2 weeks)
+
+What went well?
+1)	The group presented a great work dynamic
+2)	All constituents of the team followed the SCRUM methodology working collaboratively and making significant contributions to improve the features developed in the Sprint. 
+3)	During the daily Sprint meetings the different members communicated to the team their progress and impediments to the continuation of the work in a clear way. 
+4)	The workload was distributed equally among team members
+5)	The requirements elicitation and analysis, as well as the consequent specification of the system functionalities, that we carried out at the beginning of the project allowed us to progress rapidly in the development of the optimization feature
+
+What did not go as well?
+1)	In the same two weeks that were allocated to this sprint, we had the delivery of the first phase of the project for the curricular unit of Distributed Information Systems, the first oral evaluation of the same UC, the delivery of the report on the second evaluation laboratory of Digital Networks III as well as the delivery of the State of the Project - week 8 in the scope of Person-Machine Interaction. As expected, it was extremely difficult to complete all the tasks defined for this iteration.
+
+What should we start doing?
+1)	In the Sprint planning meeting, before defining the sprint tasks, we should take into account our workload during the iteration.
+
+What should we keep doing?
+1)	At the beginning of Sprint, we set out in a very detailed way the Sprint Backlog tasks on the Trello collaborative work platform. We must continue to do so because this practice has allowed us to have a clear and structured view of the work to be developed during the iteration.
+2)	We should continue to resort to Trello checklists to keep track of what still needs to be done.
+
+What should we stop doing?
+1)	For the next iterations, we must confirm our implementation decisions with the client (teacher) instead of just discussing them as a team. Involving the customer in decision making will allow us to minimize the risk of developing an application that does not conform to customer requirements.
