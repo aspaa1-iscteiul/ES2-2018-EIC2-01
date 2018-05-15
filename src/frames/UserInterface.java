@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -206,7 +207,7 @@ public class UserInterface {
 	this.problem.setDecisionVariablesDataType(decisionVariablesFromPage.get(0).getDataTypeToProblem());
 	this.problem.setDecisionVariablesLowerBound(decisionVariablesFromPage.get(0).getLowerBound());
 	this.problem.setDecisionVariablesUpperBound(decisionVariablesFromPage.get(0).getUpperBound());
-	this.problem.setDecisionVariablesInvalidValues(decisionVariablesFromPage.get(0).getInvalidValues().toString());
+	this.problem.setDecisionVariablesInvalidValues(Arrays.toString(decisionVariablesFromPage.get(0).getInvalidValues()));
 	return dvList;
     }
 
@@ -279,6 +280,7 @@ public class UserInterface {
 		}
 	    }
 	    ocList.add(new OptimizationCriteria(oco.getVariableName(), solutionsAux));
+	    this.problem.setOptimizationCriteriaDataType(optimizationCriteriaFromPage.get(0).getDataTypeToProblem());
 	}
 	return ocList;
     }
