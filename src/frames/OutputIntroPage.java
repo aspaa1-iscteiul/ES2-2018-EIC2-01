@@ -46,7 +46,7 @@ public class OutputIntroPage extends SuperPage{
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	mainPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
-	
+
 	JPanel infoPanel = new JPanel(new FlowLayout());
 	infoPanel.setBackground(Color.white);
 	JLabel messageLabel = new JLabel("<html>The optimization process is <font color=green><b>complete.</b></font> "
@@ -57,6 +57,12 @@ public class OutputIntroPage extends SuperPage{
 
 	FrameUtils.addEmptyLabels(mainPanel, 2);
 
+	JPanel subPanel = new JPanel();
+	subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
+	subPanel.setBackground(Color.white);
+	subPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+
 	int numberOfLines = 0;
 	if((testAlgorithms.size())%3==0){
 	    numberOfLines = (testAlgorithms.size())/3;
@@ -64,12 +70,6 @@ public class OutputIntroPage extends SuperPage{
 	    numberOfLines = ((testAlgorithms.size())/3)+1;
 	}
 
-	JPanel subPanel = new JPanel();
-	subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
-	subPanel.setBackground(Color.white);
-	subPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-	
 	for(int i = 0; i != numberOfLines; i++ ) {
 	    int count = 3;
 	    JPanel auxPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
@@ -87,7 +87,7 @@ public class OutputIntroPage extends SuperPage{
 	    subPanel.add(auxPanel);
 	    FrameUtils.addEmptyLabels(subPanel, 1);
 	}
-	
+
 	JScrollPane scrollPane = new JScrollPane(subPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane.setPreferredSize(new Dimension(510, 240));
