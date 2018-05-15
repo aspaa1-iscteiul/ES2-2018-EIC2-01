@@ -455,7 +455,7 @@ public class DecisionVariablesPage extends SuperPage {
      * Get invalid values of the variable on a vector of strings
      * @return
      */
-    public String[] getInvalidValues(){
+    public String[] getInvalidValuesOnVector(){
 	if(!invalidValues.getText().trim().isEmpty()) {
 	    String[] v = invalidValues.getText().split(",");
 	    return v;
@@ -598,5 +598,18 @@ public class DecisionVariablesPage extends SuperPage {
 	return tmp;
     }
 
+    public JTextField getLowerBound() {
+        return lowerBound;
+    }
+
+
+    public JTextField getUpperBound() {
+        return upperBound;
+    }
+  
+    public JTextField getInvalidValues() {
+        return invalidValues;
+    }
+  
 
 }
