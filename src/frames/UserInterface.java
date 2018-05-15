@@ -203,6 +203,10 @@ public class UserInterface {
 	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
 	    dvList.add(new DecisionVariable(dvo.getVariableName(), getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
 	}
+	this.problem.setDecisionVariablesDataType(decisionVariablesFromPage.get(0).getDataTypeToProblem());
+	this.problem.setDecisionVariablesLowerBound(decisionVariablesFromPage.get(0).getLowerBound());
+	this.problem.setDecisionVariablesUpperBound(decisionVariablesFromPage.get(0).getUpperBound());
+	this.problem.setDecisionVariablesInvalidValues(decisionVariablesFromPage.get(0).getInvalidValues().toString());
 	return dvList;
     }
 
