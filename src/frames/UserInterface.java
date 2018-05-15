@@ -225,9 +225,6 @@ public class UserInterface {
 		    problem.getDecisionVariablesLowerBound(), problem.getDecisionVariablesUpperBound(), 
 		    problem.getInvalidValuesInVector()));
 	}
-	page.getLowerBound().setText(problem.getDecisionVariablesLowerBound());
-	page.getUpperBound().setText(problem.getDecisionVariablesUpperBound());
-	page.getInvalidValues().setText(problem.getDecisionVariablesInvalidValues());
 	xmlFileWasImported[1] = true;
 	this.decisionVariablesFromPage = tmp;
     }

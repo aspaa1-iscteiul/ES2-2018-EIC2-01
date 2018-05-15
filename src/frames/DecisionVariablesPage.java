@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -195,19 +194,23 @@ public class DecisionVariablesPage extends SuperPage {
 	if(userInterface.isXmlFileWasImportedAtIndex(1)==true) {
 	    subSubMainPanel.removeAll();
 	    decisionVariableList = userInterface.getDecisionVariablesFromPage();
-	    if(decisionVariableList.get(0).getDataType() != null) {
-		if(decisionVariableList.get(0).getDataType().equals("Integer")) {
+	    if(userInterface.getProblem().getDecisionVariablesDataType() != null) {
+		if(userInterface.getProblem().getDecisionVariablesDataType().name().equals("INTEGER")) {
 		    dataType.setSelectedIndex(0);
-		} else if(decisionVariableList.get(0).getDataType().equals("Double")) {
+		} else if(userInterface.getProblem().getDecisionVariablesDataType().name().equals("DOUBLE")) {
 		    dataType.setSelectedIndex(1);
 		} else {
 		    dataType.setSelectedIndex(2);
 		}
 	    }
-	    lowerBound.setText(decisionVariableList.get(0).getLowerBound());
-	    upperBound.setText(decisionVariableList.get(0).getUpperBound());
-	    if(!Arrays.toString(decisionVariableList.get(0).getInvalidValues()).equals("[null]")) {
-		invalidValues.setText(Arrays.toString(decisionVariableList.get(0).getInvalidValues()));
+	    if(userInterface.getProblem().getDecisionVariablesLowerBound() != null) {
+		lowerBound.setText(userInterface.getProblem().getDecisionVariablesLowerBound());
+	    }
+	    if(userInterface.getProblem().getDecisionVariablesUpperBound() != null) {
+		upperBound.setText(userInterface.getProblem().getDecisionVariablesUpperBound());
+	    }
+	    if(!userInterface.getProblem().getDecisionVariablesInvalidValues().equals("[null]")) {
+		invalidValues.setText(userInterface.getProblem().getDecisionVariablesInvalidValues());
 	    }
 	    for(DecisionVariablesObject dvo : decisionVariableList) {
 		subSubMainPanel.add(dvo.transformIntoAPanel());
@@ -599,17 +602,17 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     public JTextField getLowerBound() {
-        return lowerBound;
+	return lowerBound;
     }
 
 
     public JTextField getUpperBound() {
-        return upperBound;
+	return upperBound;
     }
-  
+
     public JTextField getInvalidValues() {
-        return invalidValues;
+	return invalidValues;
     }
-  
+
 
 }

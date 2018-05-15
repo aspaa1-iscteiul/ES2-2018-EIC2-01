@@ -87,8 +87,9 @@ public class IntroPage extends SuperPage {
 	importButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		if (importXMLFile())
+		if (importXMLFile()) {
 		    userInterface.goToNextPage();
+		}
 	    }
 	});
 	mainPanel.add(importButton);
@@ -99,7 +100,7 @@ public class IntroPage extends SuperPage {
 	JFileChooser fileChooser = new JFileChooser();
 	// Launches the JFileChooser on the Desktop directory
 	fileChooser.setCurrentDirectory(
-		new File("C:\\Users\\Rodrigo\\git\\ES2-2018-EIC2-01\\src\\jUnitTests\\testFiles\\userConfigTest2.xml"));
+		new File("C:\\Users\\Rodrigo\\git\\ES2-2018-EIC2-01\\src\\jUnitTests\\testFiles"));
 	fileChooser.setDialogTitle("Select a problem configuration file");
 	// Prevents selection of multiple options
 	fileChooser.setMultiSelectionEnabled(false);

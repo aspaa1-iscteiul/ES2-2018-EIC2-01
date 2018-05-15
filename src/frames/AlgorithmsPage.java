@@ -79,7 +79,7 @@ public class AlgorithmsPage extends SuperPage {
 	    checkBox.setBackground(Color.WHITE);
 	    algorithmsListPanel.add(checkBox);
 	}
-
+	
 	if (userInterface.getOptimizationAlgorithmsFromPage().size() > 0) {
 	    for (JCheckBox checkBox : algorithmsList) {
 		for (String string : userInterface.getOptimizationAlgorithmsFromPage()) {
