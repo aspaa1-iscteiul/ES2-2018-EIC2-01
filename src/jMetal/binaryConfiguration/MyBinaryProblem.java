@@ -40,20 +40,8 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 	int sum = 0;
 	fitnessFunctions = new ArrayList<>(problem.getFitnessFunctions());
 	for (FitnessFunction fitness : fitnessFunctions)
-	    sum += fitness.optimizationCriteria.size();
+	    sum += fitness.getOptimizationCriteria().size();
 	setNumberOfObjectives(sum);
-
-	List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()),
-		upperLimit = new ArrayList<>(getNumberOfVariables());
-
-	for (int index = 0; index < getNumberOfVariables(); index++) {
-	    lowerLimit.add(Integer.parseInt(list.get(index).lowerBound));
-	    upperLimit.add(Integer.parseInt(list.get(index).upperBound));
-	}
-
-	// TODO
-	// setLowerLimit(lowerLimit);
-	// setUpperLimit(upperLimit);
     }
 
     @Override
@@ -75,9 +63,9 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 	try {
 	    int index = 0;
 	    for (FitnessFunction f : fitnessFunctions) {
-		args[2] = f.jarFilePath;
-		for (OptimizationCriteria o : f.optimizationCriteria) {
-		    args[3] = o.name;
+		args[2] = f.getJarFilePath();
+		for (OptimizationCriteria o : f.getOptimizationCriteria()) {
+		    args[3] = o.getName();
 
 		    Process p = new ProcessBuilder(args).start();
 		    String output = IOUtils.toString(p.getInputStream());

@@ -3,6 +3,7 @@ package jMetal.integerConfiguration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -40,19 +41,13 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 	int sum = 0;
 	fitnessFunctions = new ArrayList<>(problem.getFitnessFunctions());
 	for (FitnessFunction fitness : fitnessFunctions)
-	    sum += fitness.optimizationCriteria.size();
+	    sum += fitness.getOptimizationCriteria().size();
 	setNumberOfObjectives(sum);
 
-	List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()),
-		upperLimit = new ArrayList<>(getNumberOfVariables());
-
-	for (int index = 0; index < getNumberOfVariables(); index++) {
-	    lowerLimit.add(Integer.parseInt(list.get(index).lowerBound));
-	    upperLimit.add(Integer.parseInt(list.get(index).upperBound));
-	}
-
-	setLowerLimit(lowerLimit);
-	setUpperLimit(upperLimit);
+	setLowerLimit(Collections.nCopies(getNumberOfVariables(),
+		Integer.parseInt(problem.getDecisionVariablesLowerBound())));
+	setUpperLimit(Collections.nCopies(getNumberOfVariables(),
+		Integer.parseInt(problem.getDecisionVariablesUpperBound())));
     }
 
     @Override
@@ -68,9 +63,9 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 	try {
 	    int index = 0;
 	    for (FitnessFunction f : fitnessFunctions) {
-		args[2] = f.jarFilePath;
-		for (OptimizationCriteria o : f.optimizationCriteria) {
-		    args[3] = o.name;
+		args[2] = f.getJarFilePath();
+		for (OptimizationCriteria o : f.getOptimizationCriteria()) {
+		    args[3] = o.getName();
 
 		    Process p = new ProcessBuilder(args).start();
 		    String output = IOUtils.toString(p.getInputStream());

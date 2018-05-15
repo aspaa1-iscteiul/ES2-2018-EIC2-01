@@ -40,7 +40,7 @@ public class JMetalRun {
 	// TODO change subject and message
 	email.sendEmail(problem.getProblemName() + " started", "");
 
-	DataType type = problem.getDecisionVariables().get(0).dataType;
+	DataType type = problem.getDecisionVariablesDataType();
 	if (type == DataType.DOUBLE) {
 	    jMetalProblem = new MyDoubleProblem(problem, isSingleobjective);
 	} else if (type == DataType.INTEGER) {
