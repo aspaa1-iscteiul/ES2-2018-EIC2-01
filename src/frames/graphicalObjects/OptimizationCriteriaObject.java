@@ -80,8 +80,6 @@ public class OptimizationCriteriaObject {
 	name.setPreferredSize(new Dimension(10, 22));
 	variablesPanel.add(name);
 	FrameUtils.addEmptyLabels(variablesPanel, 3);
-	variablesPanel.add(dataType);
-	FrameUtils.addEmptyLabels(variablesPanel, 2);
 
 	deleteIcon.addMouseListener(new MouseListener() {
 	    @Override
@@ -173,6 +171,18 @@ public class OptimizationCriteriaObject {
 	    return DataType.DOUBLE;
 	} else {
 	    return DataType.BINARY;
+	}
+    }
+
+    public void setDataType(String str) {
+	if(str != null) {
+	    if(str.equals("Integer")) {
+		dataType.setSelectedIndex(0);
+	    } else if(str.equals("Double")) {
+		dataType.setSelectedIndex(1);
+	    } else {
+		dataType.setSelectedIndex(2);
+	    }
 	}
     }
 

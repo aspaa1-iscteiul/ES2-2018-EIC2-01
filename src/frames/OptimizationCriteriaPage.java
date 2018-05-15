@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,6 +31,8 @@ public class OptimizationCriteriaPage extends SuperPage {
 
     private static final long serialVersionUID = 1L;
     private ArrayList<OptimizationCriteriaObject> optimizationCriteriaList;
+    private final static String[] dataTypes = { "Integer", "Double", "Binary" };
+    private JComboBox<String> dataType;
     private JPanel subSubMainPanel;
 
     /**
@@ -60,6 +63,18 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
+	JPanel introPanel = new JPanel(new BorderLayout());
+	introPanel.setBackground(Color.WHITE);
+	introPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
+		BorderFactory.createEmptyBorder(10, 10, 10, 10))); 
+
+	introPanel.add(labelsPanel2(), BorderLayout.CENTER);
+	introPanel.add(valuesPanel(), BorderLayout.SOUTH);
+
+	mainPanel.add(introPanel);
+
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+
 	JPanel subMainPanel = new JPanel(new BorderLayout());
 	subMainPanel.setBackground(Color.WHITE);
 	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
@@ -72,9 +87,6 @@ public class OptimizationCriteriaPage extends SuperPage {
 	name.setBorder(new EmptyBorder(0, 0, 0, 122));
 	name.setFont(FrameUtils.cuteFont(12));
 	infoPanel.add(name);
-	JLabel dataType = new JLabel("Data Type");
-	dataType.setFont(FrameUtils.cuteFont(12));
-	infoPanel.add(dataType);
 
 	subMainPanel.add(infoPanel, BorderLayout.NORTH);
 
@@ -139,17 +151,44 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	JScrollPane scrollPane = new JScrollPane(subMainPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setPreferredSize(new Dimension(450, 250));
+	scrollPane.setPreferredSize(new Dimension(450, 150));
 
 	mainPanel.add(scrollPane);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
     }
 
-    @Override
+    private JPanel labelsPanel2() {
+	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	panel.setBackground(Color.WHITE);
+	JLabel dataType = new JLabel("Data Type");
+	dataType.setBorder(new EmptyBorder(0, 0, 0, 15));
+	dataType.setFont(FrameUtils.cuteFont(12));
+	panel.add(dataType);
+	return panel;
+    }
+
+    private JPanel valuesPanel() {
+	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	panel.setBackground(Color.WHITE);
+	dataType = FrameUtils.cuteComboBox(dataTypes);
+	panel.add(dataType);
+	return panel;
+    }
+
+    @Override 
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	if(userInterface.isXmlFileWasImportedAtIndex(3)==true) {
+	    if(userInterface.getProblem().getOptimizationCriteriaDataType() != null) {
+		if(userInterface.getProblem().getOptimizationCriteriaDataType().name().equals("INTEGER")) {
+		    dataType.setSelectedIndex(0);
+		} else if(userInterface.getProblem().getOptimizationCriteriaDataType().name().equals("DOUBLE")) {
+		    dataType.setSelectedIndex(1);
+		} else {
+		    dataType.setSelectedIndex(2);
+		}
+	    }
 	    subSubMainPanel.removeAll();
 	    setThisPage();
 	    optimizationCriteriaList = userInterface.getOptimizationCriteriaFromPage();
@@ -193,6 +232,9 @@ public class OptimizationCriteriaPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
+	for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
+	    oco.setDataType(dataType.getSelectedItem().toString());
+	}
 	if (optimizationCriteriaList.isEmpty()) {
 	    // XXX change message
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
