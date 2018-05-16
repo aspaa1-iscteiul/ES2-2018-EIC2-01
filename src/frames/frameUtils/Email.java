@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -124,11 +125,17 @@ public class Email {
 		    Multipart multipart = new MimeMultipart();
 
 		        messageBodyPart = new MimeBodyPart();
-		        String file = attachmentPath;
+		        String file = attachmentPath + "\\" + attachmentName;
+		        System.out.println(file);
+		        
+		        BodyPart textPart = new MimeBodyPart();
+		        textPart.setText(messageText); 
+		        
 		        String fileName = attachmentName;
 		        DataSource source = new FileDataSource(file);
 		        messageBodyPart.setDataHandler(new DataHandler(source));
 		        messageBodyPart.setFileName(fileName);
+		        multipart.addBodyPart(textPart);
 		        multipart.addBodyPart(messageBodyPart);
 
 		        message.setContent(multipart);
