@@ -68,7 +68,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 	introPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10))); 
 
-	introPanel.add(labelsPanel2(), BorderLayout.CENTER);
+	introPanel.add(labelsPanel(), BorderLayout.CENTER);
 	introPanel.add(valuesPanel(), BorderLayout.SOUTH);
 
 	mainPanel.add(introPanel);
@@ -158,7 +158,12 @@ public class OptimizationCriteriaPage extends SuperPage {
 	FrameUtils.addEmptyLabels(mainPanel, 1);
     }
 
-    private JPanel labelsPanel2() {
+    /**
+     * Creates the panel with the labels that display information 
+     * about the optimization criteria attributes
+     * @return
+     */
+    private JPanel labelsPanel() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
 	JLabel dataType = new JLabel("Data Type");
@@ -168,6 +173,10 @@ public class OptimizationCriteriaPage extends SuperPage {
 	return panel;
     }
 
+    /**
+     * Creates the panel with the inputs of the optimization criteria attributes
+     * @return
+     */
     private JPanel valuesPanel() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);

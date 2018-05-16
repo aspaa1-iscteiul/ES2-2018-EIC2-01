@@ -183,6 +183,11 @@ public class DecisionVariablesObject {
 	return dataType;
     }
 
+    /**
+     * Transforms the dataType selected to an enumerate
+     * 
+     * @return
+     */
     public DataType getDataTypeToProblem() {
 	if( dataType.equals("Integer")) {
 	    return DataType.INTEGER;

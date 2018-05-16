@@ -79,7 +79,7 @@ public class AlgorithmsPage extends SuperPage {
 	    checkBox.setBackground(Color.WHITE);
 	    algorithmsListPanel.add(checkBox);
 	}
-	
+
 	if (userInterface.getOptimizationAlgorithmsFromPage().size() > 0) {
 	    for (JCheckBox checkBox : algorithmsList) {
 		for (String string : userInterface.getOptimizationAlgorithmsFromPage()) {
@@ -115,8 +115,20 @@ public class AlgorithmsPage extends SuperPage {
 	}
     }
 
+    @Override
+    protected void saveToProblem() {
+	userInterface.setOptimizationAlgorithmsFromPage(getTheCheckboxesSelected());
+    }
+
+    @Override
+    protected void clearDataFromPage() {
+	for (JCheckBox checkbox : algorithmsList) {
+	    checkbox.setSelected(false);
+	}
+    }
+
     /**
-     * Get the names of the checkboxes selected of a fitness function
+     * Get the names of the checkboxes of the algorithms selected
      * 
      * @return
      */
@@ -133,17 +145,5 @@ public class AlgorithmsPage extends SuperPage {
 	    }
 	}
 	return tmp;
-    }
-
-    @Override
-    protected void saveToProblem() {
-	userInterface.setOptimizationAlgorithmsFromPage(getTheCheckboxesSelected());
-    }
-
-    @Override
-    protected void clearDataFromPage() {
-	for (JCheckBox checkbox : algorithmsList) {
-	    checkbox.setSelected(false);
-	}
     }
 }

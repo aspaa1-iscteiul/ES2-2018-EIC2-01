@@ -208,6 +208,9 @@ public class KnownOptimizationCriteriaSolutionsObject {
 	this.solutionsList = textfieldList;
     }
 
+    /**
+     * Organizes the known solutions list and removes null data
+     */
     public void organizeSolutionsList() {
 	ArrayList<JTextField> solutionsListAux = new ArrayList<JTextField>();
 	for(JTextField text : solutionsList) {

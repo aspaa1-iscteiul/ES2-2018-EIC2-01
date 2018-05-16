@@ -168,6 +168,10 @@ public class DecisionVariablesPage extends SuperPage {
 	return panel;
     }
 
+    /**
+     * Creates the panel with the inputs of the decision variables attributes
+     * @return
+     */
     private JPanel valuesPanel() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
