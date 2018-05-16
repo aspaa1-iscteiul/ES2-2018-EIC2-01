@@ -71,6 +71,8 @@ public class UserInterface {
 	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
 	pages.add(new OutputIntroPage(this));
+	pages.add(new OutputAlgorithmsPage(this));
+	pages.add(new OutputKnownSolutionsPage(this));
     }
 
     /**
