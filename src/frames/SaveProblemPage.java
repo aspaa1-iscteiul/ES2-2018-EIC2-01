@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import frames.frameUtils.Email;
 import frames.frameUtils.FrameUtils;
 import utils.UserFileUtils;
 
@@ -32,6 +33,11 @@ public class SaveProblemPage extends SuperPage {
     private JTextField filePath;
     private JButton saveButton;
     private JButton finishButton;
+    private String subject = "Otimização em curso: “ + “Nome do Problema ” + “Ano-Mês-Dia Hora:Minuto";
+    private String messageText = "Muito obrigado por usar esta plataforma de otimização. Será informado por email sobre o "
+    	+ "progresso do processo de otimização, quando o processo de otimização tiver atingido 25%, 50%, 75% do"
+    	+ " total do tempo estimado, e também quando o processo tiver terminado, com sucesso ou devido à "
+    	+ "ocorrência de erros.";
 
     /**
      * 
@@ -143,6 +149,7 @@ public class SaveProblemPage extends SuperPage {
 		    // tem de terminar em .xml
 		    UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText(), "/" + fileName.getText());
 		    saveButton.setBackground(new Color(155, 226, 155).brighter());
+		    new Email(userInterface.getUserEmail()).sendEmailWithAttachment(subject, messageText, filePath.getText(), fileName.getText());
 		} catch (Exception e) {
 		    saveButton.setBackground(Color.RED.brighter());
 		}
