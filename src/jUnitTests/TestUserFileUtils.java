@@ -48,7 +48,7 @@ public class TestUserFileUtils {
 
 	ArrayList<String> optimizationAlgorithms = new ArrayList<>();
 	optimizationAlgorithms.add("NSGA");
-	optimizationAlgorithms.add("NSGA-2");
+	optimizationAlgorithms.add("NSGAII");
 
 	Problem problem;
 	if (scenario == 1)
