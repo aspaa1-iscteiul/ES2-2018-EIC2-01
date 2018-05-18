@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -44,11 +45,6 @@ public class GraphGenerator extends JPanel {
 
     public GraphGenerator(List<Double> scores, List<Double> knownSolutions) {
 	this.scores = scores;
-	scores.add(4.3);
-	scores.add(2.3);
-	scores.add(7.3);
-	scores.add(5.2);
-	scores.add(2.4);
 	this.knownSolutions = knownSolutions;
 	knownSolutions.add(1.2);
 	knownSolutions.add(6.2);
@@ -71,11 +67,11 @@ public class GraphGenerator extends JPanel {
 	    int y1 = (int) ((getMaxScore() - scores.get(i)) * yScale + padding);
 	    graphPoints.add(new Point(x1, y1));
 	}
-	
+
 	List<Point> graphPoints2 = new ArrayList<>();
 	for (int i = 0; i < knownSolutions.size(); i++) {
 	    int x1 = (int) (0.03 * xScale + padding + labelPadding);
-	    int y1 = (int) ((getMaxScore() - scores.get(i)) * yScale + padding);
+	    int y1 = (int) ((getMaxScore() - knownSolutions.get(i)) * yScale + padding);
 	    graphPoints2.add(new Point(x1, y1));
 	}
 
@@ -146,7 +142,7 @@ public class GraphGenerator extends JPanel {
 	    int ovalH = pointWidth;
 	    g2.fillOval(x, y, ovalW, ovalH);
 	}
-	
+
 	g2.setStroke(oldStroke);
 	g2.setColor(pointColorKnownSolution);
 	for (int i = 0; i < graphPoints2.size(); i++) {
@@ -156,7 +152,7 @@ public class GraphGenerator extends JPanel {
 	    int ovalH = pointWidth;
 	    g2.fillOval(x, y, ovalW*2, ovalH*2);
 	}
-	
+
     }
 
     @Override
@@ -169,11 +165,15 @@ public class GraphGenerator extends JPanel {
     }
 
     private double getMaxScore() {
-	double maxScore = Double.MIN_VALUE;
+	double maxScoreValues = Double.MIN_VALUE;
 	for (Double score : scores) {
-	    maxScore = Math.max(maxScore, score);
+	    maxScoreValues = Math.max(maxScoreValues, score);
 	}
-	return maxScore;
+	double maxScoreSolutions = Double.MIN_VALUE;
+	for (Double score : knownSolutions) {
+	    maxScoreSolutions = Math.max(maxScoreSolutions, score);
+	}
+	return Math.max(maxScoreSolutions, maxScoreValues);
     }
 
     public void setScores(List<Double> scores) {
@@ -186,11 +186,11 @@ public class GraphGenerator extends JPanel {
 	return scores;
     }
 
-    private static void createAndShowGui() {
-	List<Double> scores = new ArrayList<>();
+    private static void createAndShowGui(ArrayList<Double> list, String graphName) {
+	List<Double> scores = list;
 	List<Double> knownSolutions = new ArrayList<>();
 	JPanel mainPanel = new JPanel();
-	JLabel title = new JLabel("Variation of results with runs for Var1");
+	JLabel title = new JLabel("Variation of results with runs for " + graphName);
 	mainPanel.setLayout(new BorderLayout());
 	title.setFont(new Font("Arial", Font.BOLD, 20));
 	title.setHorizontalAlignment(JLabel.CENTER);
@@ -214,7 +214,11 @@ public class GraphGenerator extends JPanel {
     public static void main(String[] args) {
 	SwingUtilities.invokeLater(new Runnable() {
 	    public void run() {
-		createAndShowGui();
+		FileReader fileReader = new FileReader();
+		int count = 0;
+		for(ArrayList<Double> list : fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")+"/src/utils/values.txt"))) {
+		    createAndShowGui(list, ("GraphName" + count++));
+		}
 	    }
 	});
     }
