@@ -128,8 +128,30 @@ public class SaveProblemPage extends SuperPage {
 	pathPanel.add(filePath, BorderLayout.CENTER);
 	mainPanel.add(pathPanel);
 
-	FrameUtils.addEmptyLabels(mainPanel, 2);
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+	
+	JPanel infoPanel = new JPanel(new BorderLayout());
+	infoPanel.setBackground(Color.WHITE);
+	JPanel auxPanel = new JPanel(new BorderLayout());
+	auxPanel.setBackground(Color.WHITE);
+	JLabel infoIcon = new JLabel();
+	infoIcon.setIcon(new ImageIcon("./src/frames/images/info_icon.png"));
+	auxPanel.add(infoIcon, BorderLayout.NORTH);
+	infoPanel.add(auxPanel, BorderLayout.WEST);
+	JLabel infoLabel = new JLabel("<html>Please note that, when indicating a path, you <b>must use ABSOLUTE <br> names</b>. "
+		+ "For instance, if you wish to save the document in your Desktop <br>"
+		+ "it <font color=red><b>isn't sufficient to write 'Desktop'</b></font>. Instead, you should opt for <u>one</u> of<br> "
+		+ "the variantions listed below: <br><br> "  
+		+ "<font color=green><b>C://Users//Username//Desktop/</b></font><br>" 
+		+ "<font color=green><b>C://Users//Username//Desktop</b></font><br>" 
+		+ "<font color=green><b>C:/Users/Username/Desktop</b></font></html>");
+	infoLabel.setFont(FrameUtils.cuteFont(12));
+	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
+	infoPanel.add(infoLabel, BorderLayout.CENTER);
+	mainPanel.add(infoPanel);
 
+	FrameUtils.addEmptyLabels(mainPanel, 1);
+	
 	savePanel = new JPanel(new BorderLayout());
 	savePanel.setBackground(Color.WHITE);
 	savePanel.add(saveButton, BorderLayout.WEST);
