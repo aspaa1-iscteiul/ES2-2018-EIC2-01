@@ -16,5 +16,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/ES1-2017-EIC2-01/jMetal/jmetal-core-5.3.jar" sourcepath="/ES1-2017-EIC2-01/jMetal/jmetal-problem-5.3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
