@@ -48,6 +48,7 @@ public class AdminFileUtils {
      * 
      */
     public static void createTemplate(String path) {
+	System.out.println(path);
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
 	try {

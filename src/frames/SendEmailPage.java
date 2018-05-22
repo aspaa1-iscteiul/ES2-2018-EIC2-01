@@ -106,6 +106,21 @@ public class SendEmailPage extends SuperPage {
 
     @Override
     protected void createButtonsPanel() {
+
+	submitButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		new Email("ES22018EIC201@gmail.com").sendEmail(
+			"Email to answer:" + userInterface.getUserEmail() + " Name:" + name.getText() + " Subject:"
+				+ subject.getText(),
+			"Email to answer:" + userInterface.getUserEmail() + "\n" + message.getText());
+		userInterface.returnFromEmailPage();
+	    }
+	});
+	buttonsPanel.add(submitButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
 	JButton cancelButton = FrameUtils.cuteButton("Cancel");
 	cancelButton.addActionListener(new ActionListener() {
 	    @Override
@@ -115,17 +130,6 @@ public class SendEmailPage extends SuperPage {
 	});
 	buttonsPanel.add(cancelButton);
 
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	submitButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		new Email("ES22018EIC201@gmail.com").sendEmail("Email to answer:" + userInterface.getUserEmail() + " Name:" + name.getText() + 
-			" Subject:" + subject.getText(), "Email to answer:" + userInterface.getUserEmail() + "\n" + message.getText());
-		userInterface.returnFromEmailPage();
-	    }
-	});
-	buttonsPanel.add(submitButton);
     }
 
     @Override
@@ -147,7 +151,7 @@ public class SendEmailPage extends SuperPage {
     @Override
     protected void clearDataFromPage() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

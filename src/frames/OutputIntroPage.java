@@ -44,7 +44,7 @@ public class OutputIntroPage extends SuperPage{
 	JPanel infoPanel = new JPanel(new FlowLayout());
 	infoPanel.setBackground(Color.white);
 	JLabel messageLabel = new JLabel("<html>The optimization process is <font color=green><b>complete.</b></font> "
-		+ " Please <u>select one of the options</u> below to <br><font color=blue>view results.</font></html>");
+		+ " Please <u>select one of the options</u> below to <br><font color=blue>view the results.</font></html>");
 	messageLabel.setFont(FrameUtils.cuteFont(14));
 	infoPanel.add(messageLabel);
 	mainPanel.add(infoPanel);

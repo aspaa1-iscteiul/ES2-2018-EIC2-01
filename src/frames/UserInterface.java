@@ -18,6 +18,7 @@ import frames.graphicalObjects.KnownOptimizationCriteriaSolutionsObject;
 import frames.graphicalObjects.OptimizationCriteriaCheckbox;
 import frames.graphicalObjects.OptimizationCriteriaObject;
 import jMetal.JMetalRun;
+import objects.Admin;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
 import objects.OptimizationCriteria;
@@ -41,6 +42,7 @@ public class UserInterface {
     private ArrayList<String> optimizationAlgorithmsFromPage;
     private int actualPageIndex = 0;
     private Problem problem;
+    private Admin admin;
     private boolean isSingleobjective;
 
     public UserInterface() {
@@ -57,6 +59,7 @@ public class UserInterface {
 	optimizationAlgorithmsFromPage = new ArrayList<String>();
 
 	problem = new Problem();
+	admin = Admin.getDefaultAdmin();
 
 	pages = new ArrayList<>();
 	pages.add(new HomePage(this));
@@ -587,6 +590,21 @@ public class UserInterface {
 
     public void setWasSomethingImported(boolean wasSomethingImported) {
 	this.wasSomethingImported = wasSomethingImported;
+    }
+
+    /**
+     * @return the admin
+     */
+    public Admin getAdmin() {
+	return admin;
+    }
+
+    /**
+     * @param admin
+     *            the admin to set
+     */
+    public void setAdmin(Admin admin) {
+	this.admin = admin;
     }
 
     public void runProblem() {
