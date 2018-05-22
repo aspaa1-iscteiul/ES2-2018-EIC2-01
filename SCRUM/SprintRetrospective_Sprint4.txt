@@ -1,0 +1,18 @@
+4th Sprint - From April 29 to May 12 (2 weeks)
+
+What went well?
+1)	All constituents of the team followed the SCRUM methodology. 
+
+What did not go as well?
+1)	During the daily meetings, impediments to the progress of the work were raised, namely due to the approximation of the deadline for the Intelligent Systems Technologies project of one of the members of the group. This circumstance was so strenuous that the said element came to ponder the desistence of the Software Engineering project. If this were to happen, due to the overload of work, it would be very difficult for the remaining members to finish the features foreseen for the Sprint in question.
+2)	Due to the inconvenience caused by the circumstances described above, the progression of the work was not as expeditious as in previous iterations.
+
+What should we start doing?
+1)	All in all, we should start to make a more realistic planning, prioritizing the essential functionalities and disregarding to some extent the concern with the user’s Quality of Experience (QoE).
+
+What should we keep doing?
+1)	At the beginning of Sprint, we set out in a very detailed way the Sprint Backlog tasks on the Trello collaborative work platform. We must continue to do so because this practice has allowed us to have a clear and structured view of the work to be developed during the iteration.
+2)	We should continue to resort to Trello checklists to keep track of what still needs to be done.
+
+What should we stop doing?
+1)	For the next iterations, we must confirm our implementation decisions with the client (teacher) instead of just discussing them as a team. Involving the customer in decision making will allow us to minimize the risk of developing an application that does not conform to customer requirements. In this Sprint in particular, the group interpreted the use of the D3 library to be mandatory, which would imply that the respective functionality had to be implemented in JavaScript. However, as it turned out, that library was aimed at groups that chose to deploy Web applications, and so the remaining groups would have some freedom to build the graphs that they thought would better reflect optimization process solutions.

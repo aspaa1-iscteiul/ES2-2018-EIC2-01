@@ -6,7 +6,7 @@ What went well?
 3)	During the daily Sprint meetings the different members communicated to the team their progress and impediments to the continuation of the work in a clear way. 
 4)	The workload was distributed equally among team members
 5)	The group made a correct estimation of the duration of each task during the Sprint planning meeting.
-6)	While implementing the corrective measures prescribed on the Code Inspection Report, we identified other problems, which we corrected in time .
+6)	While implementing the corrective measures prescribed on the Code Inspection Report, we identified other problems, which we corrected in time.
 
 What did not go as well?
 1)	Since during the last week of the iteration we had several tests and/or project submission deadlines for other courses, we couldn’t dedicate as much time to this project as in our previous sprint.

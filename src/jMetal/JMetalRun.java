@@ -1,15 +1,24 @@
 package jMetal;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.Executors;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
@@ -70,7 +79,32 @@ public class JMetalRun {
     }
 
     private void afterRunning() {
-	// TODO Auto-generated method stub
+	SwingUtilities.invokeLater(new Runnable() {
+	    @Override
+	    public void run() {
+		String problemName = problem.getProblemName();
+		String problemDir = "./experimentBaseDirectory/" + problemName;
+		try {
+		    ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "Rscript", "HV.Boxplot.R" });
+		    processBuilder.directory(new File(problemDir + "/R/").getAbsoluteFile());
+		    processBuilder.start().waitFor();
+
+		    Desktop.getDesktop().open(new File(problemDir + "/R/HV.Boxplot.eps"));
+		} catch (IOException | InterruptedException e) {
+		    new RException(null);
+		}
+		try {
+		    ProcessBuilder processBuilder = new ProcessBuilder(
+			    new String[] { "pdflatex", problemName + ".tex" });
+		    processBuilder.directory(new File(problemDir + "/latex/").getAbsoluteFile());
+		    processBuilder.start().waitFor();
+
+		    Desktop.getDesktop().open(new File(problemDir + "/latex/" + problemName + ".pdf"));
+		} catch (InterruptedException | IOException e) {
+		    new LatexException(null);
+		}
+	    }
+	});
 	System.out.println("algorithms finished... show graphics with results...");
     }
 
@@ -134,6 +168,66 @@ public class JMetalRun {
 	    }
 	    progressFrame.dispose();
 	}
+    }
+
+    public static class RException extends MouseAdapter {
+	private static final String NEW_LINE = "<br/>";
+	private JLabel label;
+	private JFrame frame;
+
+	public RException(JFrame frame) {
+	    label = new JLabel("<html>Ocorreu um problema ao compilar com o Rscript.exe" + NEW_LINE + NEW_LINE
+		    + "Sugestão de resolução:" + NEW_LINE
+		    + "Por favor, verifique se tem uma aplicação para compilação de documentos .R instalada no seu computador e, caso"
+		    + NEW_LINE
+		    + "tenha, verifique ainda que o path para o executável Rscript.exe se encontra incluído na variável de ambiente PATH"
+		    + NEW_LINE + NEW_LINE
+		    + "(Poderá proceder ao download do pacote de software R em: <a href=\"\">https://cran.r-project.org/</a>)</html>");
+	    label.addMouseListener(this);
+	    this.frame = frame;
+	    JOptionPane.showMessageDialog(frame, label, "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void mousePressed(MouseEvent event) {
+	    if (event.getX() >= 342 && event.getX() <= 486 && event.getY() >= 96 && event.getY() <= 111)
+		try {
+		    Desktop.getDesktop().browse(new URI("https://cran.r-project.org/"));
+		} catch (IOException | URISyntaxException e) {
+		    JOptionPane.showMessageDialog(frame, "Por favor, verifique se tem um browser instalado.",
+			    "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+    }
+
+    public static class LatexException extends MouseAdapter {
+	private static final String NEW_LINE = "<br/>";
+	private JFrame frame;
+	private JLabel label;
+
+	public LatexException(JFrame frame) {
+	    label = new JLabel("<html>Ocorreu um problema ao compilar com o pdflatex.exe" + NEW_LINE + NEW_LINE
+		    + "Sugestão de resolução:" + NEW_LINE
+		    + "Por favor, verifique se tem uma aplicação para compilação de documentos .tex instalada no seu computador e, caso"
+		    + NEW_LINE
+		    + "tenha, verifique ainda que o path para o executável pdflatex.exe se encontra incluído na variável de ambiente PATH"
+		    + NEW_LINE + NEW_LINE
+		    + "(Poderá proceder ao download do pacote de software MiKTeX em: <a href=\"\">https://miktex.org/download</a>)</html>");
+	    label.addMouseListener(this);
+	    this.frame = frame;
+	    JOptionPane.showMessageDialog(frame, label, "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void mousePressed(MouseEvent event) {
+	    if (event.getX() >= 373 && event.getX() <= 533 && event.getY() >= 96 && event.getY() <= 111)
+		try {
+		    Desktop.getDesktop().browse(new URI("https://miktex.org/download"));
+		} catch (IOException | URISyntaxException e) {
+		    JOptionPane.showMessageDialog(frame, "Por favor, verifique se tem um browser instalado.",
+			    "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
     }
 
 }

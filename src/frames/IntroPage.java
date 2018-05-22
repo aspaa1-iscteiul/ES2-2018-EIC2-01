@@ -100,7 +100,7 @@ public class IntroPage extends SuperPage {
 	JFileChooser fileChooser = new JFileChooser();
 	// Launches the JFileChooser on the Desktop directory
 	fileChooser.setCurrentDirectory(
-		new File("C:\\Users\\Rodrigo\\git\\ES2-2018-EIC2-01\\src\\jUnitTests\\testFiles"));
+		new File("C:\\Users\\Rodrigo\\git\\ES2-2018-EIC2-01\\src\\jUnitTests\\testFiles")); //TODO
 	fileChooser.setDialogTitle("Select a problem configuration file");
 	// Prevents selection of multiple options
 	fileChooser.setMultiSelectionEnabled(false);
