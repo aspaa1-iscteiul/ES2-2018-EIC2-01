@@ -43,7 +43,7 @@ public class RegisterUserPage extends SuperPage {
 
 	JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	emailPanel.setBackground(Color.WHITE);
-	JLabel emailLabel = new JLabel("Email address:");
+	JLabel emailLabel = new JLabel("<html><font color=red><b>*</b></font> Email address:");
 	emailLabel.setFont(FrameUtils.cuteFont(14));
 	emailPanel.add(emailLabel);
 	email.setBorder(FrameUtils.cuteBorder());

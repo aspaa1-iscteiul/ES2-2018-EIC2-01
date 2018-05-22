@@ -135,7 +135,7 @@ public class DecisionVariablesPage extends SuperPage {
     private JPanel labelsPanel() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
-	JLabel name = new JLabel(" Name");
+	JLabel name = new JLabel("<html><font color=red><b> *</b></font> Name</html>");
 	// to add space between the labels
 	name.setBorder(new EmptyBorder(0, 0, 0, 52));
 	name.setFont(FrameUtils.cuteFont(12));
@@ -151,14 +151,14 @@ public class DecisionVariablesPage extends SuperPage {
     private JPanel labelsPanel2() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
-	JLabel dataType = new JLabel("Data Type");
+	JLabel dataType = new JLabel("<html><font color=red><b>*</b></font> Data Type");
 	dataType.setBorder(new EmptyBorder(0, 0, 0, 15));
 	dataType.setFont(FrameUtils.cuteFont(12));
 	panel.add(dataType);
-	JLabel lowerLabel = new JLabel("Lower Bound     ");
+	JLabel lowerLabel = new JLabel("<html><font color=red><b>*</b></font> Lower Bound     ");
 	lowerLabel.setFont(FrameUtils.cuteFont(12));
 	panel.add(lowerLabel);
-	JLabel upperLabel = new JLabel("Upper Bound");
+	JLabel upperLabel = new JLabel("<html><font color=red><b>*</b></font> Upper Bound");
 	upperLabel.setBorder(new EmptyBorder(0, 0, 0, 16));
 	upperLabel.setFont(FrameUtils.cuteFont(12));
 	panel.add(upperLabel);
@@ -344,13 +344,13 @@ public class DecisionVariablesPage extends SuperPage {
      */
     private String[] askUserForVariableAttributes() {
 	JPanel inputPanel = new JPanel(new GridLayout(3, 2));
-	inputPanel.add(new JLabel("Data Type: "));
+	inputPanel.add(new JLabel("<html><font color=red><b>*</b></font> Data Type: "));
 	JComboBox<String> dataType = new JComboBox<String>(new String[] { "Integer", "Double" });
 	inputPanel.add(dataType);
-	inputPanel.add(new JLabel("Lower Bound: "));
+	inputPanel.add(new JLabel("<html><font color=red><b>*</b></font> Lower Bound: "));
 	JTextField lowerBound = new JTextField();
 	inputPanel.add(lowerBound);
-	inputPanel.add(new JLabel("Upper Bound: "));
+	inputPanel.add(new JLabel("<html><font color=red><b>*</b></font> Upper Bound: "));
 	JTextField upperBound = new JTextField();
 	inputPanel.add(upperBound);
 

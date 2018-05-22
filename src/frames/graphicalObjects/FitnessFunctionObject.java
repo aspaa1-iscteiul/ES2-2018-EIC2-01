@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
@@ -34,6 +35,8 @@ public class FitnessFunctionObject {
     private ArrayList<OptimizationCriteriaCheckbox> checkboxList;
     private JLabel warning;
 
+    public static String newLine = System.getProperty("line.separator");
+
     /**
      * 
      * @param page
@@ -46,10 +49,19 @@ public class FitnessFunctionObject {
 	uploadButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
+		JOptionPane.showMessageDialog(fieldsPanel,
+			"The JAR file chosen should behave according to the established evaluation protocol. " + newLine
+				+ "That is, it should receive as input the name of the optimization criteria to be "
+				+ newLine
+				+ "calculated as well as the solutions vector and it should return as an output the "
+				+ newLine + "value of the optimization criterion for this solution." + newLine,
+			"Exchange protocol", JOptionPane.INFORMATION_MESSAGE);
+
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Upload fitness function");
 		// Launches the JFileChooser on the Desktop directory
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+		String user = System.getProperty("user.name"); // platform independent
+		fileChooser.setCurrentDirectory(new File("C:\\Users\\" + user + "\\Desktop"));
 		// Prevents selection of multiple options
 		fileChooser.setMultiSelectionEnabled(false);
 		// Only files with the JAR extension are visible
@@ -65,18 +77,20 @@ public class FitnessFunctionObject {
 	});
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	uploadButton
-	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+		.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
 	warning = new JLabel("No optimization criterias available");
     }
 
     /**
      * Creates a Fitness Function Object with the data read from a XML file
+     * 
      * @param page
      * @param filePath
      * @param checkboxList
      */
-    public FitnessFunctionObject(FitnessFunctionPage page, String filePath, ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
+    public FitnessFunctionObject(FitnessFunctionPage page, String filePath,
+	    ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
 	this.pageAssociated = page;
 	this.checkboxList = checkboxList;
 	uploadButton = FrameUtils.cuteButton(filePath);
@@ -99,11 +113,10 @@ public class FitnessFunctionObject {
 	});
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	uploadButton
-	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+		.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
 
     }
-
 
     /**
      * Transforms the object in a JPanel that will be added to the frame later.
@@ -125,8 +138,9 @@ public class FitnessFunctionObject {
     }
 
     /**
-     * Transforms the object in a JPanel that will be added to the frame later given the data from the xml file.
-     * Also verifies if any optimization criteria from the xml file was deleted of another optimization criteria was added
+     * Transforms the object in a JPanel that will be added to the frame later given
+     * the data from the xml file. Also verifies if any optimization criteria from
+     * the xml file was deleted of another optimization criteria was added
      * 
      * @return JPanel
      */
@@ -142,19 +156,19 @@ public class FitnessFunctionObject {
 	uploadButton.setText(getPath());
 	jarFileUploaded = true;
 
-	if(pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
+	if (pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
 	    for (OptimizationCriteriaObject oco : pageAssociated.userInterface.getOptimizationCriteriaFromPage()) {
 		boolean tmp = false;
-		for(OptimizationCriteriaCheckbox checkbox : this.checkboxList) {
-		    if(checkbox.getOptimizationCriteriaName().getText().equals(oco.getVariableName())){
+		for (OptimizationCriteriaCheckbox checkbox : this.checkboxList) {
+		    if (checkbox.getOptimizationCriteriaName().getText().equals(oco.getVariableName())) {
 			fieldsPanel.add(checkbox.getOptimizationCriteriaName());
 			fieldsPanel.add(checkbox.getCheckBox());
 			checkbox.getCheckBox().setSelected(true);
 			tmp = true;
 			break;
-		    } 
+		    }
 		}
-		if(tmp == false) {
+		if (tmp == false) {
 		    OptimizationCriteriaCheckbox ocoTmp = new OptimizationCriteriaCheckbox(oco.getVariableName());
 		    checkboxList.add(ocoTmp);
 		    fieldsPanel.add(ocoTmp.getOptimizationCriteriaName());
@@ -181,7 +195,7 @@ public class FitnessFunctionObject {
     public JButton getUploadButton() {
 	return uploadButton;
     }
-    
+
     public ArrayList<OptimizationCriteriaCheckbox> getCheckboxList() {
 	return checkboxList;
     }
@@ -197,7 +211,6 @@ public class FitnessFunctionObject {
     public void setJarFileUploaded(boolean jarFileUploaded) {
 	this.jarFileUploaded = jarFileUploaded;
     }
-
 
     /**
      * Creates the checkboxes and adds them to the frame, analyzing if they should
@@ -285,12 +298,13 @@ public class FitnessFunctionObject {
 
     /**
      * Get the names of the checkboxes selected of a fitness function
+     * 
      * @return
      */
     public ArrayList<String> getTheCheckboxesSelected() {
 	ArrayList<String> tmp = new ArrayList<String>();
-	for(OptimizationCriteriaCheckbox occ : checkboxList) {
-	    if(occ.getCheckBox().isSelected()==true) {
+	for (OptimizationCriteriaCheckbox occ : checkboxList) {
+	    if (occ.getCheckBox().isSelected() == true) {
 		tmp.add(occ.getOptimizationCriteriaName().getText());
 	    }
 	}

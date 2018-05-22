@@ -82,7 +82,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	infoPanel.setBackground(Color.WHITE);
-	JLabel name = new JLabel(" Name");
+	JLabel name = new JLabel("<html><font color=red><b> *</b></font> Name</html>");
 	// to add space between the labels
 	name.setBorder(new EmptyBorder(0, 0, 0, 122));
 	name.setFont(FrameUtils.cuteFont(12));
@@ -166,7 +166,7 @@ public class OptimizationCriteriaPage extends SuperPage {
     private JPanel labelsPanel() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
-	JLabel dataType = new JLabel("Data Type");
+	JLabel dataType = new JLabel("<html><font color=red><b>*</b></font> Data Type");
 	dataType.setBorder(new EmptyBorder(0, 0, 0, 15));
 	dataType.setFont(FrameUtils.cuteFont(12));
 	panel.add(dataType);

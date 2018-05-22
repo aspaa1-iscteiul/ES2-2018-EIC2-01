@@ -90,7 +90,7 @@ public class TimeConstraintsPage extends SuperPage {
 	auxPanel1.setBackground(Color.WHITE);
 	JPanel idealPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	idealPanel.setBackground(Color.white);
-	JLabel idealLabel = new JLabel("Ideal time frame:          ");
+	JLabel idealLabel = new JLabel("<html><font color=red><b>*</b></font> Ideal time frame:          ");
 	idealLabel.setFont(FrameUtils.cuteFont(12));
 	idealPanel.add(idealLabel);
 	idealTime.setBorder(FrameUtils.cuteBorder());

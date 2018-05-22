@@ -43,7 +43,7 @@ public class ProblemIdPage extends SuperPage {
 
 	JPanel problemPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	problemPanel.setBackground(Color.WHITE);
-	JLabel problemLabel = new JLabel("Problem name:");
+	JLabel problemLabel = new JLabel("<html><font color=red><b>*</b></font> Problem name:");
 	problemLabel.setFont(FrameUtils.cuteFont(14));
 	problemPanel.add(problemLabel);
 	problemName.setBorder(FrameUtils.cuteBorder());

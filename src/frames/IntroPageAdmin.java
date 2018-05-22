@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -64,6 +65,8 @@ public class IntroPageAdmin extends SuperPage {
 	    public void actionPerformed(ActionEvent e) {
 		String user = System.getProperty("user.name"); // platform independent
 		utils.AdminFileUtils.createTemplate("C:\\Users\\" + user + "\\Desktop\\config.xml");
+		JOptionPane.showMessageDialog(mainPanel, "The requested template was downloaded to your desktop.",
+			"Download completed", JOptionPane.INFORMATION_MESSAGE);
 	    }
 	});
 	mainPanel.add(importButton);
