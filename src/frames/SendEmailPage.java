@@ -98,7 +98,7 @@ public class SendEmailPage extends SuperPage {
 	JScrollPane scrollPane = new JScrollPane(message);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	// A dimensão tem que ser posta no scrollPane e não no results
-	scrollPane.setPreferredSize(new Dimension(60, 100));
+	scrollPane.setPreferredSize(new Dimension(60, 200));
 	messagePanel.add(scrollPane, BorderLayout.CENTER);
 
 	mainPanel.add(messagePanel);

@@ -62,6 +62,7 @@ public class UserInterface {
 	pages.add(new HomePage(this));
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
+	pages.add(new HomeCenterPage(this));
 	pages.add(new ProblemIdPage(this));
 	pages.add(new DecisionVariablesPage(this));
 	pages.add(new OptimizationCriteriaPage(this));
@@ -70,7 +71,6 @@ public class UserInterface {
 	pages.add(new KnownOptimizationCriteriaSolutionsPage(this));
 	pages.add(new AlgorithmsPage(this));
 	pages.add(new TimeConstraintsPage(this));
-	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
 	pages.add(new OutputIntroPage(this));
 	pages.add(new OutputKnownSolutionsPage(this));
@@ -119,7 +119,7 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-    
+
     /**
      * Allows to go the OutputAlgorithmPage
      */
@@ -131,7 +131,7 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-    
+
     /**
      * Allows to go the OutputKnownSolutionsPage(
      */
@@ -143,7 +143,7 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-    
+
     /**
      * Allows to go back from the SendEmailPage to the HomeCenterPage
      */
@@ -154,7 +154,7 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-    
+
     /**
      * Allows to go back from the SendEmailPage to the OutputAlgorithmPage
      */
@@ -251,12 +251,14 @@ public class UserInterface {
     public ArrayList<DecisionVariable> createDecisionVariableFinalList() {
 	ArrayList<DecisionVariable> dvList = new ArrayList<DecisionVariable>();
 	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
-	    dvList.add(new DecisionVariable(dvo.getVariableName(), getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
+	    dvList.add(new DecisionVariable(dvo.getVariableName(),
+		    getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
 	}
 	this.problem.setDecisionVariablesDataType(decisionVariablesFromPage.get(0).getDataTypeToProblem());
 	this.problem.setDecisionVariablesLowerBound(decisionVariablesFromPage.get(0).getLowerBound());
 	this.problem.setDecisionVariablesUpperBound(decisionVariablesFromPage.get(0).getUpperBound());
-	this.problem.setDecisionVariablesInvalidValues(Arrays.toString(decisionVariablesFromPage.get(0).getInvalidValues()));
+	this.problem.setDecisionVariablesInvalidValues(
+		Arrays.toString(decisionVariablesFromPage.get(0).getInvalidValues()));
 	return dvList;
     }
 
@@ -271,7 +273,7 @@ public class UserInterface {
 	ArrayList<DecisionVariablesObject> tmp = new ArrayList<DecisionVariablesObject>();
 	for (DecisionVariable dv : problem.getDecisionVariables()) {
 	    tmp.add(new DecisionVariablesObject(page, dv.getName(), problem.getDecisionVariablesDataType().name(),
-		    problem.getDecisionVariablesLowerBound(), problem.getDecisionVariablesUpperBound(), 
+		    problem.getDecisionVariablesLowerBound(), problem.getDecisionVariablesUpperBound(),
 		    problem.getInvalidValuesInVector()));
 	}
 	xmlFileWasImported[1] = true;
@@ -320,8 +322,8 @@ public class UserInterface {
 	ArrayList<OptimizationCriteria> ocList = new ArrayList<OptimizationCriteria>();
 	for (OptimizationCriteriaObject oco : optimizationCriteriaFromPage) {
 	    ArrayList<String> solutionsAux = new ArrayList<String>();
-	    for(KnownOptimizationCriteriaSolutionsObject ksoco : knownSolutionsFromOptimizationCriteria) {
-		if(ksoco.getName().getText().equals(oco.getVariableName())){
+	    for (KnownOptimizationCriteriaSolutionsObject ksoco : knownSolutionsFromOptimizationCriteria) {
+		if (ksoco.getName().getText().equals(oco.getVariableName())) {
 		    solutionsAux = ksoco.getSolutionListInString();
 		}
 	    }
@@ -342,7 +344,8 @@ public class UserInterface {
 	ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
 	for (FitnessFunction ff : problem.getFitnessFunctions()) {
 	    for (OptimizationCriteria oc : ff.getOptimizationCriteria()) {
-		tmp.add(new OptimizationCriteriaObject(page, oc.getName(), problem.getOptimizationCriteriaDataType().toString()));
+		tmp.add(new OptimizationCriteriaObject(page, oc.getName(),
+			problem.getOptimizationCriteriaDataType().toString()));
 	    }
 	}
 	xmlFileWasImported[3] = true;
@@ -378,9 +381,10 @@ public class UserInterface {
     public void createKnownDecisionVariablesSolutionsFromProblem(KnownDecisionVariablesSolutionsPage page) {
 	ArrayList<KnownDecisionVariablesSolutionsObject> tmp = new ArrayList<KnownDecisionVariablesSolutionsObject>();
 	for (DecisionVariable dv : problem.getDecisionVariables()) {
-	    tmp.add(new KnownDecisionVariablesSolutionsObject(page, dv.getName(),  problem.getDecisionVariablesDataType().name(),
-		    problem.getDecisionVariablesLowerBound(), problem.getDecisionVariablesUpperBound(), 
-		    problem.getInvalidValuesInVector(), dv.getKnownSolutions()));
+	    tmp.add(new KnownDecisionVariablesSolutionsObject(page, dv.getName(),
+		    problem.getDecisionVariablesDataType().name(), problem.getDecisionVariablesLowerBound(),
+		    problem.getDecisionVariablesUpperBound(), problem.getInvalidValuesInVector(),
+		    dv.getKnownSolutions()));
 	}
 	xmlFileWasImported[4] = true;
 	this.knownSolutionsFromDecisionVariables = tmp;
@@ -396,8 +400,8 @@ public class UserInterface {
     public void createKnownOptimizationCriteriaSolutionsFromProblem(KnownOptimizationCriteriaSolutionsPage page) {
 	ArrayList<KnownOptimizationCriteriaSolutionsObject> tmp = new ArrayList<KnownOptimizationCriteriaSolutionsObject>();
 	for (OptimizationCriteria oc : problem.getFitnessFunctions().get(0).getOptimizationCriteria()) {
-	    tmp.add(new KnownOptimizationCriteriaSolutionsObject(page, oc.getName(), problem.getOptimizationCriteriaDataType().toString(),
-		    oc.getKnownSolutions()));
+	    tmp.add(new KnownOptimizationCriteriaSolutionsObject(page, oc.getName(),
+		    problem.getOptimizationCriteriaDataType().toString(), oc.getKnownSolutions()));
 	}
 	xmlFileWasImported[5] = true;
 	this.knownSolutionsFromOptimizationCriteria = tmp;
