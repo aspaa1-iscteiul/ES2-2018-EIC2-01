@@ -100,7 +100,7 @@ public class IntroPageAdmin extends SuperPage {
 	backButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
+		userInterface.returnFromIntroPageAdmin();
 	    }
 	});
 	buttonsPanel.add(backButton);

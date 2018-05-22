@@ -33,6 +33,17 @@ public class HomePage extends SuperPage {
 
     @Override
     protected void createButtonsPanel() {
+	JButton adminButton = FrameUtils.cuteButton("Sign in as Admin");
+	adminButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		userInterface.goToIntroPageAdmin();
+	    }
+	});
+	buttonsPanel.add(adminButton);
+	
+	FrameUtils.addEmptyLabels(buttonsPanel, 35);
+	
 	JButton startButton = FrameUtils.cuteButton("Start");
 	startButton.addActionListener(new ActionListener() {
 	    @Override

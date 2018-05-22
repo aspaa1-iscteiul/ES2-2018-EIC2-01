@@ -30,6 +30,7 @@ public class UserInterface {
     private List<SuperPage> pages;
     private boolean[] xmlFileWasImported = new boolean[7];
     private boolean wasSomethingImported = false;
+    private IntroPageAdmin introPageAdmin;
     private SendEmailPage emailPage;
     private OutputAlgorithmsPage outputAlgorithmsPage;
     private OutputKnownSolutionsPage outputKnownSolutionsPage;
@@ -63,7 +64,6 @@ public class UserInterface {
 
 	pages = new ArrayList<>();
 	pages.add(new HomePage(this));
-	pages.add(new IntroPageAdmin(this));
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
 	pages.add(new HomeCenterPage(this));
@@ -114,6 +114,18 @@ public class UserInterface {
     }
 
     /**
+     * Allows to go the IntroPageAdmin
+     */
+    public void goToIntroPageAdmin() {
+	frame.remove(pages.get(actualPageIndex));
+	introPageAdmin = new IntroPageAdmin(this);
+	SuperPage page = introPageAdmin;
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+    
+    /**
      * Allows to go the SendEmailPage
      */
     public void goToEmailPage() {
@@ -147,7 +159,18 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-
+    
+     /**
+     * Allows to go back from the IntroPageAdmin to the HomeCenterPage
+     */
+    public void returnFromIntroPageAdmin() {
+	frame.remove(introPageAdmin);
+	SuperPage page = pages.get(actualPageIndex);
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+    
     /**
      * Allows to go back from the SendEmailPage to the HomeCenterPage
      */
