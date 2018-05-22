@@ -5,14 +5,22 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -151,11 +159,14 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	JScrollPane scrollPane = new JScrollPane(subMainPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setPreferredSize(new Dimension(450, 150));
+	scrollPane.setPreferredSize(new Dimension(450, 170));
 
 	mainPanel.add(scrollPane);
-
 	FrameUtils.addEmptyLabels(mainPanel, 1);
+	
+	importFromFilePanel();
+	
+	FrameUtils.addEmptyLabels(buttonsPanel, 1);
     }
 
     /**
@@ -183,6 +194,87 @@ public class OptimizationCriteriaPage extends SuperPage {
 	dataType = FrameUtils.cuteComboBox(dataTypes);
 	panel.add(dataType);
 	return panel;
+    }
+
+    /**
+     * Imports the data of the file selected to the panel
+     */
+    private void importFromFilePanel() {
+	JButton importFromFile = FrameUtils.cuteButton("Import from file");
+	importFromFile.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		if (JOptionPane.showConfirmDialog(userInterface.getFrame(),
+			"The imported file must only have one decision variable name per line. "
+				+ System.lineSeparator()
+				+ "The decision variables name field does not support spaces between characters."
+				+ System.lineSeparator()
+				+ "Therefore, if spaces are found while reading the document they will be automatically removed.",
+				"Import decision variables", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.WARNING_MESSAGE) != JOptionPane.OK_OPTION)
+		    return;
+
+		JFileChooser fileChooser = new JFileChooser();
+		// Launches the JFileChooser on the Desktop directory
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+		fileChooser.setDialogTitle("Select a file with the variables names");
+		// Prevents selection of multiple options
+		fileChooser.setMultiSelectionEnabled(false);
+
+		if (fileChooser.showOpenDialog(userInterface.getFrame()) == JFileChooser.APPROVE_OPTION)
+		    readImportedFile(fileChooser.getSelectedFile(), askUserForVariableAttributes());
+	    }
+	});
+	buttonsPanel.add(importFromFile);
+	FrameUtils.addEmptyLabels(buttonsPanel, 21);
+    }
+
+    /**
+     * Ask user to input values on variables created
+     * 
+     * @return
+     */
+    private String[] askUserForVariableAttributes() {
+	JPanel inputPanel = new JPanel(new GridLayout(3, 2));
+	inputPanel.add(new JLabel("<html><font color=red><b>*</b></font> Data Type: "));
+	JComboBox<String> dataType = new JComboBox<String>(new String[] { "Integer", "Double" });
+	inputPanel.add(dataType);
+
+	if (JOptionPane.showConfirmDialog(userInterface.getFrame(), inputPanel, "Enter the attributes to all variables",
+		JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+	    String type = (String) dataType.getSelectedItem();
+	    return new String[] { type };
+	}
+	return null;
+    }
+    
+    /**
+     * Reads an imported variable and creates variables with the read values and
+     * places them on the frame
+     * 
+     * @param selectedFile
+     * @param values
+     */
+    private void readImportedFile(File selectedFile, String[] values) {
+	if (values == null)
+	    return;
+	try {
+	    Scanner scn = new Scanner(selectedFile);
+	    while (scn.hasNextLine()) {
+		String line = scn.nextLine().replaceAll(" ", "");
+		if (!line.equals("")) {
+		    //TODO: Read invalid values from file
+		    OptimizationCriteriaObject oco = new OptimizationCriteriaObject(this, line, values[0]);
+		    optimizationCriteriaList.add(oco);
+		    subSubMainPanel.add(oco.transformIntoAPanel());
+		}
+	    }
+	    userInterface.refreshPage();
+	    scn.close();
+	} catch (FileNotFoundException e) {
+	    JOptionPane.showMessageDialog(userInterface.getFrame(),
+		    "The file " + selectedFile.getAbsolutePath() + " doesn't exists");
+	}
     }
 
     @Override 

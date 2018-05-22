@@ -125,6 +125,8 @@ public class DecisionVariablesPage extends SuperPage {
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	importFromFilePanel();
+	
+	FrameUtils.addEmptyLabels(buttonsPanel, 1);
     }
 
     /**
@@ -135,6 +137,7 @@ public class DecisionVariablesPage extends SuperPage {
     private JPanel labelsPanel() {
 	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	panel.setBackground(Color.WHITE);
+	FrameUtils.addEmptyLabels(panel, 1);
 	JLabel name = new JLabel("<html><font color=red><b> *</b></font> Name</html>");
 	// to add space between the labels
 	name.setBorder(new EmptyBorder(0, 0, 0, 52));
