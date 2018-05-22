@@ -44,8 +44,8 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
 
     // TODO PESA2 and NSGAIII not working
     public static final List<String> MULTI_OBJECTIVE = Arrays.asList("DMOPSO", "GDE3", "IBEA", "MOCell",
-	    "Constraint MOEAD", "MOEAD", "MOEADD", "MOEADDRA", "MOEADSTM", "NSGAII", "PAES", // "NSGAIII", "PESA2",
-	    "Random Search", "SMSEMOA", "SPEA2");
+	    "ConstraintMOEAD", "MOEAD", "MOEADD", "MOEADDRA", "MOEADSTM", "NSGAII", "PAES", // "NSGAIII", "PESA2",
+	    "RandomSearch", "SMSEMOA", "SPEA2");
 
     @SuppressWarnings("unchecked")
     public Algorithm<List<DoubleSolution>> getMultiObjectiveAlgortihm(String algorithmName, DoubleProblem problem) {
@@ -53,10 +53,8 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
 	    throw new IllegalArgumentException(
 		    algorithmName + " is not a valid multiobjective algorithm for DoubleProblem");
 
-	String algorithm = algorithmName.replaceAll(" ", "");
-
 	try {
-	    Method method = getClass().getMethod("get" + algorithm, DoubleProblem.class);
+	    Method method = getClass().getMethod("get" + algorithmName, DoubleProblem.class);
 	    return (Algorithm<List<DoubleSolution>>) method.invoke(this, problem);
 	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
 		| InvocationTargetException e) {
@@ -146,19 +144,17 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
      * Single Objective
      */
 
-    public static final List<String> SINGLE_OBJECTIVE = Arrays.asList("Differential Evolution",
-	    "Evolution Strategy Elitist", "Evolution Strategy Non Elitist", "Genetic Algorithm");
+    public static final List<String> SINGLE_OBJECTIVE = Arrays.asList("DifferentialEvolution",
+	    "EvolutionStrategyElitist", "EvolutionStrategyNonElitist", "GeneticAlgorithm");
 
     @SuppressWarnings("unchecked")
     public Algorithm<DoubleSolution> getSingleObjectiveAlgortihm(String algorithmName, DoubleProblem problem) {
-	String algorithm = algorithmName.replaceAll(" ", "");
-
-	if (!SINGLE_OBJECTIVE.contains(algorithm))
+	if (!SINGLE_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
-		    algorithm + " is not a valid singleobjective algorithm for DoubleProblem");
+		    algorithmName + " is not a valid singleobjective algorithm for DoubleProblem");
 
 	try {
-	    Method method = getClass().getMethod("get" + algorithm, DoubleProblem.class);
+	    Method method = getClass().getMethod("get" + algorithmName, DoubleProblem.class);
 	    return (Algorithm<DoubleSolution>) method.invoke(problem);
 	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
 		| InvocationTargetException e) {
