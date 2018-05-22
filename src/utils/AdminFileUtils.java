@@ -40,14 +40,14 @@ public class AdminFileUtils {
      * Tags for the XML File nodes
      */
     public final static String tagRoot = "ConfigParameters", tagAdminEmail = "Admin_email", tagFAQ = "FAQ",
-	    tagQABlock = "Q&A_Block", tagQuestion = "Question", tagAnswer = "Answer", tagScriptsPath = "Scripts_Path";
+	    tagQABlock = "QA_Block", tagQuestion = "Question", tagAnswer = "Answer", tagScriptsPath = "Scripts_Path";
 
     /**
      * Method to create a template of the config.xml file according to a determined
      * hierarchical structure
      * 
      */
-    public static void createTemplate() {
+    public static void createTemplate(String path) {
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
 	try {
@@ -62,7 +62,7 @@ public class AdminFileUtils {
 	    Transformer transformer = transformerFactory.newTransformer();
 	    DOMSource source = new DOMSource(doc);
 
-	    StreamResult file = new StreamResult(new File("C:\\config.xml"));
+	    StreamResult file = new StreamResult(new File(path));
 
 	    transformer.transform(source, file);
 	    System.out.println("config.xml template was saved sucessfully");

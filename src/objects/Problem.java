@@ -200,6 +200,12 @@ public class Problem {
 	this.maxTimeFrame = maxTimeFrame;
     }
 
+    /**
+     * This method redefines the string printing of the Problem's attributes
+     * 
+     * @see java.lang.Object#toString()
+     * 
+     */
     @Override
     public String toString() {
 	return "Problem's Name: " + problemName + newLine + "Problem's Description: " + problemDescription + newLine

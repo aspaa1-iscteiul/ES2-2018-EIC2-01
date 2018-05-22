@@ -7,12 +7,6 @@ public class QABlock {
     private String answer;
 
     /**
-     * Empty constructor for the QABlock class
-     */
-    public QABlock() {
-    }
-
-    /**
      * Constructor for the QABlock class
      * 
      * @param question
@@ -31,26 +25,10 @@ public class QABlock {
     }
 
     /**
-     * @param question
-     *            the question to set
-     */
-    public void setQuestion(String question) {
-	this.question = question;
-    }
-
-    /**
      * @return the answer
      */
     public String getAnswer() {
 	return answer;
-    }
-
-    /**
-     * @param answer
-     *            the answer to set
-     */
-    public void setAnswer(String answer) {
-	this.answer = answer;
     }
 
     /**
@@ -73,6 +51,18 @@ public class QABlock {
 	faq.add(qaBlock2);
 
 	return faq;
+    }
+
+    /**
+     * 
+     * This method redefines the string printing of the Q&A Block's attributes
+     * 
+     * @see java.lang.Object#toString()
+     * 
+     */
+    @Override
+    public String toString() {
+	return "Question: " + question + Problem.newLine + "Answer: " + answer + Problem.newLine;
     }
 
 }

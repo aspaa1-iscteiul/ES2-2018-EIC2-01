@@ -90,4 +90,29 @@ public class Admin {
 	Admin admin = new Admin("admin@gmail.com", faq, "C:\\");
 	return admin;
     }
+
+    /**
+     * 
+     * This method redefines the string printing of the admin's attributes
+     * 
+     * @see java.lang.Object#toString()
+     * 
+     */
+    @Override
+    public String toString() {
+	return "Admin's email: " + email + Problem.newLine + "FAQ Section: " + faq + Problem.newLine + "Script's Path: "
+		+ scriptsPath + Problem.newLine;
+    }
+
+    /**
+     * Indicates whether some other object is "equal to" this one. Although this
+     * method can receive any object as an argument, it does not validate whether it
+     * is really an instantiated objected of the class Admin. Instead, this function
+     * assumes the object passed as an argument is a Problem Object.
+     */
+    public boolean equals(Object obj) {
+	Admin other = (Admin) obj;
+	return this.toString().equals(other.toString());
+    }
+
 }
