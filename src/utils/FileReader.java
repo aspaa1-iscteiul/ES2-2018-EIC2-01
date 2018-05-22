@@ -7,9 +7,10 @@ import java.util.Scanner;
 
 public class FileReader {
 
-    private ArrayList<ArrayList<Double>> list = new ArrayList<ArrayList<Double>>();
+    private ArrayList<ArrayList<Double>> variableList = new ArrayList<ArrayList<Double>>();
+    private ArrayList<ArrayList<Double>> runList = new ArrayList<ArrayList<Double>>();
 
-    private void readFile(File file) {
+    private void readFileInVariablePerspective(File file) {
 	int lineNumber = 0;
 	try{
 	    Scanner scanner = new Scanner(file, "UTF-8");
@@ -24,11 +25,11 @@ public class FileReader {
 		    for(int i = 0; i < parsedVariablesValues.length; i++) {
 			ArrayList<Double> aux = new ArrayList<Double>();
 			aux.add(parsedVariablesValues[i]);
-			list.add(aux);
+			variableList.add(aux);
 		    }
 		} else {
 		    for(int i = 0; i < parsedVariablesValues.length; i++) {
-			list.get(i).add(parsedVariablesValues[i]);
+			variableList.get(i).add(parsedVariablesValues[i]);
 		    }
 		}
 		lineNumber++;
@@ -38,10 +39,36 @@ public class FileReader {
 	    fe.printStackTrace();
 	}
     }
-    
-    public ArrayList<ArrayList<Double>> readFileAndReturnList(File file) {
-	readFile(file);
-	return list;
+
+    private void readFileInRunPerspective(File file) {
+	try{
+	    Scanner scanner = new Scanner(file, "UTF-8");
+	    while (scanner.hasNext()) {
+		String tmp = scanner.nextLine();
+		String[] variablesValues = tmp.split(" ");
+		Double[] parsedVariablesValues = new Double[variablesValues.length];
+		for(int i = 0; i < variablesValues.length; i++) {
+		    parsedVariablesValues[i] = Double.parseDouble(variablesValues[i]);
+		}
+		ArrayList<Double> aux = new ArrayList<Double>();
+		for(int i = 0; i < parsedVariablesValues.length; i++) {
+		    aux.add(parsedVariablesValues[i]);
+		}
+		runList.add(aux);
+	    }
+	    scanner.close();
+	} catch (FileNotFoundException fe) {
+	    fe.printStackTrace();
+	}
     }
 
+    public ArrayList<ArrayList<Double>> readFileAndReturnList(File file) {
+	readFileInVariablePerspective(file);
+	return variableList;
+    }
+
+    public ArrayList<ArrayList<Double>> readFileAndReturnListInRunPerspective(File file) {
+	readFileInRunPerspective(file);
+	return runList;
+    }
 }

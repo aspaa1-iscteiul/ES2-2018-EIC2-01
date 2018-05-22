@@ -216,7 +216,7 @@ public class GraphGenerator extends JPanel {
 	    public void run() {
 		FileReader fileReader = new FileReader();
 		int count = 0;
-		for(ArrayList<Double> list : fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")+"/src/utils/values.txt"))) {
+		for(ArrayList<Double> list : fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt"))) {
 		    createAndShowGui(list, ("GraphName" + count++));
 		}
 	    }

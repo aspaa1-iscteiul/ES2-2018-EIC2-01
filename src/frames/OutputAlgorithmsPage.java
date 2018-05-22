@@ -2,9 +2,14 @@ package frames;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,6 +17,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import utils.FileReader;
 
 public class OutputAlgorithmsPage extends SuperPage {
 
@@ -19,6 +25,8 @@ public class OutputAlgorithmsPage extends SuperPage {
      * 
      */
     private static final long serialVersionUID = 1L;
+    private JPanel subPanel;
+    private JPanel subPanel2;
 
     public OutputAlgorithmsPage(UserInterface userInterface) {
 	super(userInterface);
@@ -51,23 +59,22 @@ public class OutputAlgorithmsPage extends SuperPage {
 	JPanel subMainPanel = new JPanel();
 	subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.X_AXIS));
 	subMainPanel.setBackground(Color.white);
-	
-	JPanel subPanel = new JPanel();
+
+	subPanel = new JPanel();
 	subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
 	subPanel.setBackground(Color.white);
 	subPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-	FrameUtils.addEmptyLabels(subPanel, 1);
 	JScrollPane scrollPane = new JScrollPane(subPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane.setPreferredSize(new Dimension(200, 260));
 	subMainPanel.add(scrollPane);
-	
+
 	JLabel whiteSpace = new JLabel("       ");
 	subMainPanel.add(whiteSpace);
-	
-	JPanel subPanel2 = new JPanel();
+
+	subPanel2 = new JPanel();
 	subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
 	subPanel2.setBackground(Color.white);
 	subPanel2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
@@ -77,14 +84,43 @@ public class OutputAlgorithmsPage extends SuperPage {
 	scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane2.setPreferredSize(new Dimension(200, 260));
 	subMainPanel.add(scrollPane2);
-	
+
 	mainPanel.add(subMainPanel);
 
+    }
+
+    private void constructPage(int runNumber){
+	FileReader fileReader = new FileReader();
+	ArrayList<Double> list = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt")).get(runNumber);
+	for(Double doub : list) {
+	    String str = userInterface.getDecisionVariablesFromPage().get(list.indexOf(doub)).getVariableName() + "   " 
+		    + doub.toString();
+	    subPanel.add(new JLabel(str));
+	}
+	ArrayList<Double> list2 = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt")).get(runNumber);
+	for(Double doub : list2) {
+	    String str = userInterface.getDecisionVariablesFromPage().get(list2.indexOf(doub)).getVariableName() + "   " 
+		    + doub.toString();
+	    subPanel2.add(new JLabel(str));
+	}
+    }
+
+    @Override
+    protected void createButtonsPanel() {
+	JButton homeButton = FrameUtils.cuteButton("Home");
+	homeButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.returnFromOutputAlgorithmPage();
+	    }
+	});
+	buttonsPanel.add(homeButton);
     }
 
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Algorithm");
+	constructPage(0);
     }
 
     @Override

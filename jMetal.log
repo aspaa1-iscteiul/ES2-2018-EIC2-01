@@ -2,58 +2,134 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-16T18:26:29</date>
-  <millis>1526491589783</millis>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044055</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>1</thread>
+  <thread>29</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-16T18:26:29</date>
-  <millis>1526491589873</millis>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044092</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.runner.multiobjective.ABYSSRunner</class>
-  <method>main</method>
-  <thread>1</thread>
-  <message>Total execution time: 1140ms</message>
+  <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
+  <method>run</method>
+  <thread>29</thread>
+  <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-16T18:26:29</date>
-  <millis>1526491589932</millis>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044127</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Random seed: 1526491588608</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>29</thread>
+  <message>Creating experimentBaseDirectory/ProblemaTeste/data/MOEAD/ProblemaTeste</message>
 </record>
 <record>
-  <date>2018-05-16T18:26:29</date>
-  <millis>1526491589934</millis>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044128</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Objectives values have been written to file FUN.tsv</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>32</thread>
+  <message>Creating experimentBaseDirectory/ProblemaTeste/data/GDE3/ProblemaTeste</message>
 </record>
 <record>
-  <date>2018-05-16T18:26:29</date>
-  <millis>1526491589936</millis>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044131</millis>
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Variables values have been written to file VAR.tsv</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>30</thread>
+  <message>Creating experimentBaseDirectory/ProblemaTeste/data/Constraint MOEAD/ProblemaTeste</message>
 </record>
-</log>
+<record>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044132</millis>
+  <sequence>5</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>29</thread>
+  <message> Running algorithm: MOEAD, problem: ProblemaTeste, run: 0, funFile: experimentBaseDirectory/ProblemaTeste/data/MOEAD/ProblemaTeste/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044135</millis>
+  <sequence>7</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>33</thread>
+  <message>Creating experimentBaseDirectory/ProblemaTeste/data/MOEADD/ProblemaTeste</message>
+</record>
+<record>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044134</millis>
+  <sequence>6</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>31</thread>
+  <message>Creating experimentBaseDirectory/ProblemaTeste/data/NSGAII/ProblemaTeste</message>
+</record>
+<record>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044137</millis>
+  <sequence>8</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>33</thread>
+  <message> Running algorithm: MOEADD, problem: ProblemaTeste, run: 0, funFile: experimentBaseDirectory/ProblemaTeste/data/MOEADD/ProblemaTeste/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044138</millis>
+  <sequence>9</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>31</thread>
+  <message> Running algorithm: NSGAII, problem: ProblemaTeste, run: 0, funFile: experimentBaseDirectory/ProblemaTeste/data/NSGAII/ProblemaTeste/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044139</millis>
+  <sequence>10</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>32</thread>
+  <message> Running algorithm: GDE3, problem: ProblemaTeste, run: 0, funFile: experimentBaseDirectory/ProblemaTeste/data/GDE3/ProblemaTeste/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-20T14:47:24</date>
+  <millis>1526824044142</millis>
+  <sequence>11</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>30</thread>
+  <message> Running algorithm: Constraint MOEAD, problem: ProblemaTeste, run: 0, funFile: experimentBaseDirectory/ProblemaTeste/data/Constraint MOEAD/ProblemaTeste/FUN0.tsv</message>
+</record>

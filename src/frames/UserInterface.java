@@ -30,6 +30,7 @@ public class UserInterface {
     private boolean[] xmlFileWasImported = new boolean[7];
     private boolean wasSomethingImported = false;
     private SendEmailPage emailPage;
+    private OutputAlgorithmsPage outputAlgorithmsPage;
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
     private ArrayList<FitnessFunctionObject> fitnessFunctionFromPage;
@@ -71,7 +72,6 @@ public class UserInterface {
 	pages.add(new HomeCenterPage(this));
 	pages.add(new SaveProblemPage(this));
 	pages.add(new OutputIntroPage(this));
-	pages.add(new OutputAlgorithmsPage(this));
 	pages.add(new OutputKnownSolutionsPage(this));
     }
 
@@ -118,7 +118,19 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-
+    
+    /**
+     * Allows to go the OutputAlgorithmPage
+     */
+    public void goToOutputAlgorithmPage() {
+	frame.remove(pages.get(actualPageIndex));
+	outputAlgorithmsPage = new OutputAlgorithmsPage(this);
+	SuperPage page = outputAlgorithmsPage;
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+    
     /**
      * Allows to go back from the SendEmailPage to the HomeCenterPage
      */
@@ -129,6 +141,18 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
+    
+    /**
+     * Allows to go back from the SendEmailPage to the OutputAlgorithmPage
+     */
+    public void returnFromOutputAlgorithmPage() {
+	frame.remove(outputAlgorithmsPage);
+	SuperPage page = pages.get(actualPageIndex);
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+
 
     /**
      * Makes the adjustments to the {@linkplain #frame} and the displays it

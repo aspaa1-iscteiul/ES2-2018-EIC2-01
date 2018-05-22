@@ -24,7 +24,8 @@ public class OutputIntroPage extends SuperPage{
      * 
      */
     private static final long serialVersionUID = 1L;
-    public ArrayList<String> testAlgorithms;
+    private ArrayList<String> testAlgorithms;
+    private JPanel subPanel;
 
     public OutputIntroPage(UserInterface userInterface) {
 	super(userInterface);
@@ -33,13 +34,6 @@ public class OutputIntroPage extends SuperPage{
     @Override
     protected void initialize() {
 	testAlgorithms = new ArrayList<String>();
-	testAlgorithms.add("Algorithm1");
-	testAlgorithms.add("Algorithm2");
-	testAlgorithms.add("Algorithm3");
-	testAlgorithms.add("Algorithm4");
-	testAlgorithms.add("Algorithm5");
-	testAlgorithms.add("Known Solutions");
-	testAlgorithms.add("Graphs");
     }
 
     @Override
@@ -57,36 +51,11 @@ public class OutputIntroPage extends SuperPage{
 
 	FrameUtils.addEmptyLabels(mainPanel, 2);
 
-	JPanel subPanel = new JPanel();
+	subPanel = new JPanel();
 	subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
 	subPanel.setBackground(Color.white);
 	subPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
-	int numberOfLines = 0;
-	if((testAlgorithms.size())%3==0){
-	    numberOfLines = (testAlgorithms.size())/3;
-	} else { 
-	    numberOfLines = ((testAlgorithms.size())/3)+1;
-	}
-
-	for(int i = 0; i != numberOfLines; i++ ) {
-	    int count = 3;
-	    JPanel auxPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-	    auxPanel.setBackground(Color.white);
-	    while(count > 0) {
-		if(testAlgorithms.size() > 0 ) {
-		    JButton button = FrameUtils.cuteButton(testAlgorithms.remove(0));
-		    button.setPreferredSize(new Dimension(140,30));
-		    auxPanel.add(button);
-		    count--;
-		} else {
-		    break;
-		}
-	    }
-	    subPanel.add(auxPanel);
-	    FrameUtils.addEmptyLabels(subPanel, 1);
-	}
 
 	JScrollPane scrollPane = new JScrollPane(subPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -109,6 +78,14 @@ public class OutputIntroPage extends SuperPage{
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Output Intro Page");
+	testAlgorithms.clear();
+	if(userInterface.getOptimizationAlgorithmsFromPage()!= null) {
+	    for(String str : userInterface.getOptimizationAlgorithmsFromPage()) {
+		testAlgorithms.add(str);
+	    }
+	}
+	testAlgorithms.add("Known Solutions");
+	constructPage();
     }
 
     @Override
@@ -124,7 +101,42 @@ public class OutputIntroPage extends SuperPage{
 
     @Override
     protected void clearDataFromPage() {
-	// TODO Auto-generated method stub
+    }
+
+    private void constructPage() {
+	subPanel.removeAll();
+	int numberOfLines = 0;
+	if((testAlgorithms.size())%3==0){
+	    numberOfLines = (testAlgorithms.size())/3;
+	} else { 
+	    numberOfLines = ((testAlgorithms.size())/3)+1;
+	}
+
+	for(int i = 0; i != numberOfLines; i++ ) {
+	    int count = 3;
+	    JPanel auxPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	    auxPanel.setBackground(Color.white);
+	    while(count > 0) {
+		if(testAlgorithms.size() > 0 ) {
+		    JButton button = FrameUtils.cuteButton(testAlgorithms.remove(0));
+		    button.setPreferredSize(new Dimension(140,30));
+		    button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+			    userInterface.goToOutputAlgorithmPage();
+			}
+			
+		    });
+		    auxPanel.add(button);
+		    count--;
+		} else {
+		    break;
+		}
+	    }
+	    subPanel.add(auxPanel);
+	    FrameUtils.addEmptyLabels(subPanel, 1);
+	}
     }
 
 }
