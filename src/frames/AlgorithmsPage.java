@@ -2,6 +2,7 @@ package frames;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +43,14 @@ public class AlgorithmsPage extends SuperPage {
     @Override
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
+	mainPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
+	
+	JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+	titlePanel.setBackground(Color.WHITE);
 	title.setFont(FrameUtils.cuteFont(16));
-	mainPanel.add(title);
+	titlePanel.add(title);
+
+	mainPanel.add(titlePanel);
 
 	algorithmsListPanel.setLayout(new BoxLayout(algorithmsListPanel, BoxLayout.Y_AXIS));
 	algorithmsListPanel.setBackground(Color.WHITE);
@@ -53,7 +59,7 @@ public class AlgorithmsPage extends SuperPage {
 	scrollPane.setBackground(Color.WHITE);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	// TODO remove when frame size is set
-	scrollPane.setPreferredSize(new Dimension(200, 200));
+	scrollPane.setPreferredSize(new Dimension(200, 300));
 	scrollPane.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(20, 40, 10, 10),
 		BorderFactory.createLineBorder(Color.BLACK, 2)));
 
