@@ -66,6 +66,7 @@ public class DecisionVariablesObject {
 	    public void keyPressed(KeyEvent e) {
 	    }
 	});
+	FrameUtils.addEmptyLabels(variablesPanel, 2);
 	if(variableDataType != null) {
 	    if(variableDataType.equals("INTEGER")) {
 		dataType = "Integer";

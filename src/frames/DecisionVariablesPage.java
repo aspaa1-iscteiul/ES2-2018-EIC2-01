@@ -140,6 +140,7 @@ public class DecisionVariablesPage extends SuperPage {
 	name.setBorder(new EmptyBorder(0, 0, 0, 52));
 	name.setFont(FrameUtils.cuteFont(12));
 	panel.add(name);
+	FrameUtils.addEmptyLabels(panel, 1);
 	return panel;
     }
 
@@ -155,13 +156,16 @@ public class DecisionVariablesPage extends SuperPage {
 	dataType.setBorder(new EmptyBorder(0, 0, 0, 15));
 	dataType.setFont(FrameUtils.cuteFont(12));
 	panel.add(dataType);
+	FrameUtils.addEmptyLabels(panel, 1);
 	JLabel lowerLabel = new JLabel("<html><font color=red><b>*</b></font> Lower Bound     ");
 	lowerLabel.setFont(FrameUtils.cuteFont(12));
 	panel.add(lowerLabel);
+	FrameUtils.addEmptyLabels(panel, 3);
 	JLabel upperLabel = new JLabel("<html><font color=red><b>*</b></font> Upper Bound");
 	upperLabel.setBorder(new EmptyBorder(0, 0, 0, 16));
 	upperLabel.setFont(FrameUtils.cuteFont(12));
 	panel.add(upperLabel);
+	FrameUtils.addEmptyLabels(panel, 2);
 	JLabel invalidValuesLabel = new JLabel("Invalid values");
 	invalidValuesLabel.setFont(FrameUtils.cuteFont(12));
 	panel.add(invalidValuesLabel);
@@ -180,14 +184,18 @@ public class DecisionVariablesPage extends SuperPage {
 	upperBound = new JTextField(6);
 	invalidValues = new JTextField(6);
 	lowerBound.setBorder(FrameUtils.cuteBorder());
-	lowerBound.setPreferredSize(new Dimension(10, 22));
+	lowerBound.setPreferredSize(new Dimension(8, 22));
 	upperBound.setBorder(FrameUtils.cuteBorder());
-	upperBound.setPreferredSize(new Dimension(10, 22));
+	upperBound.setPreferredSize(new Dimension(8, 22));
 	invalidValues.setBorder(FrameUtils.cuteBorder());
 	invalidValues.setPreferredSize(new Dimension(10, 22));
+	FrameUtils.addEmptyLabels(panel, 1);
 	panel.add(dataType);
+	FrameUtils.addEmptyLabels(panel, 2);
 	panel.add(lowerBound);
+	FrameUtils.addEmptyLabels(panel, 2);
 	panel.add(upperBound);
+	FrameUtils.addEmptyLabels(panel, 2);
 	panel.add(invalidValues);
 	return panel;
     }
@@ -306,8 +314,6 @@ public class DecisionVariablesPage extends SuperPage {
      * Imports the data of the file selected to the panel
      */
     private void importFromFilePanel() {
-	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-	panel.setBackground(Color.WHITE);
 	JButton importFromFile = FrameUtils.cuteButton("Import from file");
 	importFromFile.addActionListener(new ActionListener() {
 	    @Override
@@ -333,8 +339,8 @@ public class DecisionVariablesPage extends SuperPage {
 		    readImportedFile(fileChooser.getSelectedFile(), askUserForVariableAttributes());
 	    }
 	});
-	panel.add(importFromFile);
-	mainPanel.add(panel);
+	buttonsPanel.add(importFromFile);
+	FrameUtils.addEmptyLabels(buttonsPanel, 25);
     }
 
     /**
