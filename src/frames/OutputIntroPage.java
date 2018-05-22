@@ -124,9 +124,13 @@ public class OutputIntroPage extends SuperPage{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			    userInterface.goToOutputAlgorithmPage();
+			    if(button.getText().equals("Known Solutions")) {
+				userInterface.goToOutputKnownSolutionsPage();
+			    } else {
+				userInterface.goToOutputAlgorithmPage();
+			    }
 			}
-			
+
 		    });
 		    auxPanel.add(button);
 		    count--;

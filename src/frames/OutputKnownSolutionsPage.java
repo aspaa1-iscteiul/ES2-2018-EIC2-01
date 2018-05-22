@@ -3,7 +3,9 @@ package frames;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +17,8 @@ import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
 import frames.graphicalObjects.DecisionVariablesObject;
+import utils.FileReader;
+import utils.GraphGenerator;
 
 public class OutputKnownSolutionsPage extends SuperPage {
 
@@ -22,7 +26,7 @@ public class OutputKnownSolutionsPage extends SuperPage {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private JPanel subPanel;
+    private JPanel subPanel, subPanel2;
 
     public OutputKnownSolutionsPage(UserInterface userInterface) {
 	super(userInterface);
@@ -59,20 +63,20 @@ public class OutputKnownSolutionsPage extends SuperPage {
 
 	JScrollPane scrollPane = new JScrollPane(subPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setPreferredSize(new Dimension(140, 260));
+	scrollPane.setPreferredSize(new Dimension(140, 300));
 	subMainPanel.add(scrollPane);
 
 	JLabel whiteSpace = new JLabel("       ");
 	subMainPanel.add(whiteSpace);
 
-	JPanel subPanel2 = new JPanel();
+	subPanel2 = new JPanel();
 	subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
 	subPanel2.setBackground(Color.white);
 	subPanel2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-	subPanel2.setPreferredSize(new Dimension(300, 260));
-	subPanel2.setMaximumSize(new Dimension(300, 260));
-	subPanel2.setMinimumSize(new Dimension(300, 260));
+		BorderFactory.createEmptyBorder(2, 2, 2, 2)));
+	subPanel2.setPreferredSize(new Dimension(350, 300));
+	subPanel2.setMaximumSize(new Dimension(350, 300));
+	subPanel2.setMinimumSize(new Dimension(350, 300));
 	subMainPanel.add(subPanel2);
 
 	mainPanel.add(subMainPanel);
@@ -81,9 +85,37 @@ public class OutputKnownSolutionsPage extends SuperPage {
     
     private void constructPanel() {
 	for(DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-	    JButton button = new JButton(dvo.getVariableName());
+	    JButton button = FrameUtils.cuteButton(dvo.getVariableName());
+	    button.setPreferredSize(new Dimension(50,30));
+	    FrameUtils.addEmptyLabels(subPanel, 1);
+	    button.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+		    // TODO Auto-generated method stub
+		    subPanel2.removeAll();
+		    FileReader fileReader = new FileReader();
+		    subPanel2.add(GraphGenerator.createAndShowGui(fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")
+			    +"/src/utils/valuesTest.txt")).get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)), "Graph"));
+		    repaint();
+		    updateUI();
+		}
+		
+	    });
 	    subPanel.add(button);
 	}
+    }
+    
+    @Override
+    protected void createButtonsPanel() {
+	JButton homeButton = FrameUtils.cuteButton("Home");
+	homeButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.returnFromOutputKnownSolutionsPage();
+	    }
+	});
+	buttonsPanel.add(homeButton);
     }
 
     @Override

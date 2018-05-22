@@ -11,13 +11,10 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -186,16 +183,16 @@ public class GraphGenerator extends JPanel {
 	return scores;
     }
 
-    private static void createAndShowGui(ArrayList<Double> list, String graphName) {
+    public static JPanel createAndShowGui(ArrayList<Double> list, String graphName) {
 	List<Double> scores = list;
 	List<Double> knownSolutions = new ArrayList<>();
 	JPanel mainPanel = new JPanel();
 	JLabel title = new JLabel("Variation of results with runs for " + graphName);
 	mainPanel.setLayout(new BorderLayout());
-	title.setFont(new Font("Arial", Font.BOLD, 20));
+	title.setFont(new Font("Arial", Font.BOLD, 10));
 	title.setHorizontalAlignment(JLabel.CENTER);
 	GraphGenerator graphPanel = new GraphGenerator(scores, knownSolutions);
-	graphPanel.setPreferredSize(new Dimension(800, 600));
+	graphPanel.setPreferredSize(new Dimension(350, 300));
 	VerticalPanel vertPanel = new VerticalPanel();
 	HorizontalPanel horiPanel = new HorizontalPanel();
 
@@ -203,24 +200,7 @@ public class GraphGenerator extends JPanel {
 	mainPanel.add(horiPanel, BorderLayout.SOUTH);
 	mainPanel.add(vertPanel, BorderLayout.WEST);
 	mainPanel.add(graphPanel, BorderLayout.CENTER);
-	JFrame frame = new JFrame("DrawGraph");
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.getContentPane().add(mainPanel);
-	frame.pack();
-	frame.setLocationRelativeTo(null);
-	frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-	SwingUtilities.invokeLater(new Runnable() {
-	    public void run() {
-		FileReader fileReader = new FileReader();
-		int count = 0;
-		for(ArrayList<Double> list : fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt"))) {
-		    createAndShowGui(list, ("GraphName" + count++));
-		}
-	    }
-	});
+	return mainPanel;
     }
 
 }

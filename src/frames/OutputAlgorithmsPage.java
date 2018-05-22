@@ -93,13 +93,13 @@ public class OutputAlgorithmsPage extends SuperPage {
 	FileReader fileReader = new FileReader();
 	ArrayList<Double> list = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt")).get(runNumber);
 	for(Double doub : list) {
-	    String str = userInterface.getDecisionVariablesFromPage().get(list.indexOf(doub)).getVariableName() + "   " 
+	    String str = userInterface.getDecisionVariablesFromPage().get(list.indexOf(doub)).getVariableName() + "        " 
 		    + doub.toString();
 	    subPanel.add(new JLabel(str));
 	}
 	ArrayList<Double> list2 = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt")).get(runNumber);
 	for(Double doub : list2) {
-	    String str = userInterface.getDecisionVariablesFromPage().get(list2.indexOf(doub)).getVariableName() + "   " 
+	    String str = userInterface.getDecisionVariablesFromPage().get(list2.indexOf(doub)).getVariableName() + "        " 
 		    + doub.toString();
 	    subPanel2.add(new JLabel(str));
 	}

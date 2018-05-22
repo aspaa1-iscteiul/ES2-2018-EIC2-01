@@ -23,7 +23,7 @@ public class VerticalPanel extends JPanel {
 	Graphics2D gg = (Graphics2D) g;
 	gg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-	Font font = new Font("Arial", Font.PLAIN, 15);
+	Font font = new Font("Arial", Font.PLAIN, 10);
 
 	String string = "Value";
 
