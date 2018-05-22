@@ -87,7 +87,7 @@ public class Admin {
      */
     public static Admin getDefaultAdmin() {
 	ArrayList<QABlock> faq = QABlock.getDefaultFAQ();
-	Admin admin = new Admin("admin@gmail.com", faq, "C:\\");
+	Admin admin = new Admin("problemsolving.group01@gmail.com", faq, "C:\\");
 	return admin;
     }
 
