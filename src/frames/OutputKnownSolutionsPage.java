@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,6 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import frames.graphicalObjects.DecisionVariablesObject;
 
 public class OutputKnownSolutionsPage extends SuperPage {
 
@@ -20,6 +22,7 @@ public class OutputKnownSolutionsPage extends SuperPage {
      * 
      */
     private static final long serialVersionUID = 1L;
+    private JPanel subPanel;
 
     public OutputKnownSolutionsPage(UserInterface userInterface) {
 	super(userInterface);
@@ -48,13 +51,12 @@ public class OutputKnownSolutionsPage extends SuperPage {
 	subMainPanel.setLayout(new BoxLayout(subMainPanel, BoxLayout.X_AXIS));
 	subMainPanel.setBackground(Color.white);
 
-	JPanel subPanel = new JPanel();
+	subPanel = new JPanel();
 	subPanel.setLayout(new BoxLayout(subPanel, BoxLayout.Y_AXIS));
 	subPanel.setBackground(Color.white);
 	subPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
 		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-	FrameUtils.addEmptyLabels(subPanel, 1);
 	JScrollPane scrollPane = new JScrollPane(subPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane.setPreferredSize(new Dimension(140, 260));
@@ -75,12 +77,19 @@ public class OutputKnownSolutionsPage extends SuperPage {
 
 	mainPanel.add(subMainPanel);
 
-
+    }
+    
+    private void constructPanel() {
+	for(DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+	    JButton button = new JButton(dvo.getVariableName());
+	    subPanel.add(button);
+	}
     }
 
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Known Solutions");
+	constructPanel();
     }
 
     @Override

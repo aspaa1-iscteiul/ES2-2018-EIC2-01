@@ -31,6 +31,7 @@ public class UserInterface {
     private boolean wasSomethingImported = false;
     private SendEmailPage emailPage;
     private OutputAlgorithmsPage outputAlgorithmsPage;
+    private OutputKnownSolutionsPage outputKnownSolutionsPage;
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
     private ArrayList<FitnessFunctionObject> fitnessFunctionFromPage;
@@ -132,6 +133,18 @@ public class UserInterface {
     }
     
     /**
+     * Allows to go the OutputKnownSolutionsPage(
+     */
+    public void goToOutputKnownSolutionsPage() {
+	frame.remove(pages.get(actualPageIndex));
+	outputKnownSolutionsPage = new OutputKnownSolutionsPage(this);
+	SuperPage page = outputKnownSolutionsPage;
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+    
+    /**
      * Allows to go back from the SendEmailPage to the HomeCenterPage
      */
     public void returnFromEmailPage() {
@@ -145,6 +158,17 @@ public class UserInterface {
     /**
      * Allows to go back from the SendEmailPage to the OutputAlgorithmPage
      */
+    public void returnFromOutputKnownSolutionsPage() {
+	frame.remove(outputKnownSolutionsPage);
+	SuperPage page = pages.get(actualPageIndex);
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+
+    /**
+     * Allows to go back from the SendEmailPage to the OutputAlgorithmPage
+     */
     public void returnFromOutputAlgorithmPage() {
 	frame.remove(outputAlgorithmsPage);
 	SuperPage page = pages.get(actualPageIndex);
@@ -152,7 +176,6 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-
 
     /**
      * Makes the adjustments to the {@linkplain #frame} and the displays it
