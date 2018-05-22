@@ -7,6 +7,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
@@ -21,11 +22,14 @@ import javax.mail.internet.MimeMultipart;
  * Conta de email do grupo:<br>
  * Email: ES22018EIC201@gmail.com<br>
  * Password: ES2-2018-EIC2-01AGRS
+ * Email Admin: problemsolving.group01@gmail.com
+ * Password: ES2-2018-EIC2-01AGRS
  */
 
 public class Email {
 
     private String to;
+    private String toCC;
     private String from;
     private String password;
     private String host;
@@ -37,6 +41,7 @@ public class Email {
      */
     public Email(String to) {
 	this.to = to;
+	this.toCC = "ProblemSolving.Group01@gmail.com";
 	this.from = "ES22018EIC201@gmail.com";
 	this.password = "ES2-2018-EIC2-01AGRS";
 	this.host = "localhost";
@@ -74,9 +79,10 @@ public class Email {
 		    Message message = new MimeMessage(session);
 		    message.setFrom(new InternetAddress(from));
 		    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+		    message.addRecipient(RecipientType.CC, new InternetAddress(toCC));
 		    message.setSubject(subject);
 		    message.setText(messageText);
-		    
+
 		    Transport.send(message);
 
 		} catch (MessagingException e) {
@@ -118,29 +124,30 @@ public class Email {
 		    Message message = new MimeMessage(session);
 		    message.setFrom(new InternetAddress(from));
 		    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+		    message.addRecipient(RecipientType.CC, new InternetAddress(toCC));
 		    message.setSubject(subject);
 		    message.setText(messageText);
-		    
+
 		    MimeBodyPart messageBodyPart = new MimeBodyPart();
 		    Multipart multipart = new MimeMultipart();
 
-		        messageBodyPart = new MimeBodyPart();
-		        String file = attachmentPath + "\\" + attachmentName;
-		        System.out.println(file);
-		        
-		        BodyPart textPart = new MimeBodyPart();
-		        textPart.setText(messageText); 
-		        
-		        String fileName = attachmentName;
-		        DataSource source = new FileDataSource(file);
-		        messageBodyPart.setDataHandler(new DataHandler(source));
-		        messageBodyPart.setFileName(fileName);
-		        multipart.addBodyPart(textPart);
-		        multipart.addBodyPart(messageBodyPart);
+		    messageBodyPart = new MimeBodyPart();
+		    String file = attachmentPath + "\\" + attachmentName;
+		    System.out.println(file);
 
-		        message.setContent(multipart);
+		    BodyPart textPart = new MimeBodyPart();
+		    textPart.setText(messageText); 
 
-		    
+		    String fileName = attachmentName;
+		    DataSource source = new FileDataSource(file);
+		    messageBodyPart.setDataHandler(new DataHandler(source));
+		    messageBodyPart.setFileName(fileName);
+		    multipart.addBodyPart(textPart);
+		    multipart.addBodyPart(messageBodyPart);
+
+		    message.setContent(multipart);
+
+
 		    Transport.send(message);
 
 		} catch (MessagingException e) {
@@ -149,7 +156,7 @@ public class Email {
 	    }
 	}.start();
     }
-    
+
     public String getTo() {
 	return to;
     }
