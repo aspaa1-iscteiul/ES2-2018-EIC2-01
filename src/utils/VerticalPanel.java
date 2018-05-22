@@ -11,6 +11,11 @@ import javax.swing.JPanel;
 
 public class VerticalPanel extends JPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     public VerticalPanel() {
 	setPreferredSize(new Dimension(25, 0));
     }
@@ -29,8 +34,6 @@ public class VerticalPanel extends JPanel {
 
 	FontMetrics metrics = g.getFontMetrics(font);
 	int width = metrics.stringWidth(string);
-	int height = metrics.getHeight();
-
 	gg.setFont(font);
 
 	drawRotate(gg, getWidth(), (getHeight() + width) / 2, 270, string);
