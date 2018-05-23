@@ -36,11 +36,11 @@ public class JMetalRun {
     private int iterations;
     private JMetalProblem jMetalProblem;
     private Email email;
-    private UserInterface userinterface;
+    private UserInterface userInterface;
 
     public JMetalRun(UserInterface userinterface, Problem problem, boolean isSingleobjective, String userEmail,
 	    String adminEmail) {
-	this.userinterface = userinterface;
+	this.userInterface = userinterface;
 	this.problem = problem;
 	this.isSingleobjective = isSingleobjective;
 	iterations = JMetalProblem.INDEPENDENT_RUNS * JMetalAlgorithms.MAX_EVALUATIONS
@@ -50,6 +50,8 @@ public class JMetalRun {
     }
 
     public void run() {
+	userInterface.showFrame(false);
+
 	// TODO change subject and message
 	email.sendEmail(problem.getProblemName() + " started", "");
 
@@ -103,7 +105,8 @@ public class JMetalRun {
 	} catch (InterruptedException | IOException e) {
 	    new LatexException(null);
 	}
-	userinterface.goToNextPage();
+	userInterface.showFrame(true);
+	userInterface.goToNextPage();
     }
 
     private class Progress extends Thread {

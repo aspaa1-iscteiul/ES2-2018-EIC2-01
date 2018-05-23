@@ -30,6 +30,8 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 
     private String[] args;
 
+    private int bitsPerVariable;
+
     public MyBinaryProblem(Problem problem, boolean isSingleObjective) {
 	this.isSingleObjective = isSingleObjective;
 
@@ -44,6 +46,8 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 	    sum += fitness.getOptimizationCriteria().size();
 	setNumberOfObjectives(sum);
 
+	bitsPerVariable = Integer.parseInt(problem.getDecisionVariablesUpperBound());
+
 	args = new String[3 + list.size()];
 	args[0] = "java";
 	args[1] = "-jar";
@@ -52,8 +56,7 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 
     @Override
     protected int getBitsPerVariable(int index) {
-	// TODO Auto-generated method stub
-	return 0;
+	return bitsPerVariable;
     }
 
     @Override
