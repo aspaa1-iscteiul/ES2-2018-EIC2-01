@@ -164,6 +164,14 @@ public class Email {
     public void setTo(String to) {
 	this.to = to;
     }
+    
+    public String getToCC() {
+        return toCC;
+    }
+
+    public void setToCC(String toCC) {
+        this.toCC = toCC;
+    }
 
     public String getFrom() {
 	return from;

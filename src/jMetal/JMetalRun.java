@@ -37,12 +37,13 @@ public class JMetalRun {
     private JMetalProblem jMetalProblem;
     private Email email;
 
-    public JMetalRun(Problem problem, boolean isSingleobjective, String userEmail) {
+    public JMetalRun(Problem problem, boolean isSingleobjective, String userEmail, String adminEmail) {
 	this.problem = problem;
 	this.isSingleobjective = isSingleobjective;
 	iterations = JMetalProblem.INDEPENDENT_RUNS * JMetalAlgorithms.MAX_EVALUATIONS
 		* problem.getOptimizationAlgorithms().size();
 	email = new Email(userEmail);
+	email.setToCC(adminEmail);
     }
 
     public void run() {
