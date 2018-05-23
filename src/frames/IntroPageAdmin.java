@@ -87,7 +87,7 @@ public class IntroPageAdmin extends SuperPage {
 	fileChooser.setAcceptAllFileFilterUsed(false);
 
 	if (fileChooser.showOpenDialog(userInterface.getFrame()) == JFileChooser.APPROVE_OPTION) {
-	    userInterface.setAdmin(AdminFileUtils.readFromXML(fileChooser.getSelectedFile().getAbsolutePath()));
+	    userInterface.setAdmin(AdminFileUtils.loadAdmin(fileChooser.getSelectedFile().getAbsolutePath()));
 	    return true;
 	}
 	return false;

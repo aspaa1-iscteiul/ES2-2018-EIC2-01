@@ -19,13 +19,16 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 /**
- * Conta de email do grupo:<br>
+ * Group's email account:<br>
  * Email: ES22018EIC201@gmail.com<br>
+ * Password: ES2-2018-EIC2-01AGRS<br>
+ * Default Admin's email: problemsolving.group01@gmail.com<br>
  * Password: ES2-2018-EIC2-01AGRS
- * Email Admin: problemsolving.group01@gmail.com
- * Password: ES2-2018-EIC2-01AGRS
+ * 
+ * 
+ * @author Rodrigo
+ *
  */
-
 public class Email {
 
     private String to;
@@ -98,7 +101,8 @@ public class Email {
      * @param subject
      * @param messageText
      */
-    public void sendEmailWithAttachment(String subject, String messageText, String attachmentPath, String attachmentName) {
+    public void sendEmailWithAttachment(String subject, String messageText, String attachmentPath,
+	    String attachmentName) {
 	new Thread() {
 	    @Override
 	    public void run() {
@@ -136,7 +140,7 @@ public class Email {
 		    System.out.println(file);
 
 		    BodyPart textPart = new MimeBodyPart();
-		    textPart.setText(messageText); 
+		    textPart.setText(messageText);
 
 		    String fileName = attachmentName;
 		    DataSource source = new FileDataSource(file);
@@ -147,7 +151,6 @@ public class Email {
 
 		    message.setContent(multipart);
 
-
 		    Transport.send(message);
 
 		} catch (MessagingException e) {
@@ -157,34 +160,70 @@ public class Email {
 	}.start();
     }
 
+    /**
+     * 
+     * @return the receiver
+     */
     public String getTo() {
 	return to;
     }
 
+    /**
+     * 
+     * @param to
+     *            the receiver to set
+     */
     public void setTo(String to) {
 	this.to = to;
     }
-    
+
+    /**
+     * 
+     * @return the receiver of a copy of the email
+     */
     public String getToCC() {
-        return toCC;
+	return toCC;
     }
 
+    /**
+     * 
+     * @param toCC
+     *            the receiver of a copy to set
+     */
     public void setToCC(String toCC) {
-        this.toCC = toCC;
+	this.toCC = toCC;
     }
 
+    /**
+     * 
+     * @return the sender
+     */
     public String getFrom() {
 	return from;
     }
 
+    /**
+     * 
+     * @param from
+     *            the sender to set
+     */
     public void setFrom(String from) {
 	this.from = from;
     }
 
+    /**
+     * 
+     * @return the password
+     */
     public String getPassword() {
 	return password;
     }
 
+    /**
+     * 
+     * @param password
+     *            the password to set
+     */
     public void setPassword(String password) {
 	this.password = password;
     }
