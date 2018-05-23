@@ -121,7 +121,7 @@ public class HomeCenterPage extends SuperPage {
 
     @Override
     protected void onTop() {
-	userInterface.getFrame().setTitle("Problem Solving App");
+	userInterface.getFrame().setTitle("Help Center");
     }
 
     @Override

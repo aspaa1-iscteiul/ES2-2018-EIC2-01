@@ -205,19 +205,19 @@ public class OptimizationCriteriaPage extends SuperPage {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		if (JOptionPane.showConfirmDialog(userInterface.getFrame(),
-			"The imported file must only have one decision variable name per line. "
+			"The imported file must only have one optimization criteria name per line. "
 				+ System.lineSeparator()
-				+ "The decision variables name field does not support spaces between characters."
+				+ "The optimization criteria name field does not support spaces between characters."
 				+ System.lineSeparator()
 				+ "Therefore, if spaces are found while reading the document they will be automatically removed.",
-				"Import decision variables", JOptionPane.OK_CANCEL_OPTION,
+				"Import optimization criteria", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.WARNING_MESSAGE) != JOptionPane.OK_OPTION)
 		    return;
 
 		JFileChooser fileChooser = new JFileChooser();
 		// Launches the JFileChooser on the Desktop directory
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-		fileChooser.setDialogTitle("Select a file with the variables names");
+		fileChooser.setDialogTitle("Select a file with the optimization criteria names");
 		// Prevents selection of multiple options
 		fileChooser.setMultiSelectionEnabled(false);
 

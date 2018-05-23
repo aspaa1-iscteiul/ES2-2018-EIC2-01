@@ -134,7 +134,7 @@ public class SendEmailPage extends SuperPage {
 
     @Override
     protected void onTop() {
-	userInterface.getFrame().setTitle("Problem Solving App");
+	userInterface.getFrame().setTitle("Information Request");
     }
 
     @Override

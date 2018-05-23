@@ -63,11 +63,11 @@ public class UserInterface {
 	admin = Admin.getDefaultAdmin();
 
 	pages = new ArrayList<>();
-//	pages.add(new HomePage(this));
-//	pages.add(new IntroPage(this));
-//	pages.add(new RegisterUserPage(this));
-//	pages.add(new HomeCenterPage(this));
-//	pages.add(new ProblemIdPage(this));
+	pages.add(new HomePage(this));
+	pages.add(new IntroPage(this));
+	pages.add(new RegisterUserPage(this));
+	pages.add(new HomeCenterPage(this));
+	pages.add(new ProblemIdPage(this));
 	pages.add(new DecisionVariablesPage(this));
 	pages.add(new OptimizationCriteriaPage(this));
 	pages.add(new FitnessFunctionPage(this));
@@ -241,6 +241,7 @@ public class UserInterface {
 	    }
 	});
 	frame.add(pages.get(actualPageIndex));
+	pages.get(actualPageIndex).onTop();
 	frame.setSize(600, 440);
 	frame.setResizable(false);
 	frame.setLocation(new Point((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2,
