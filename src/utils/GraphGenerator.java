@@ -43,7 +43,7 @@ public class GraphGenerator extends JPanel {
     public GraphGenerator(List<Double> scores, List<Double> knownSolutions) {
 	this.scores = scores;
 	this.knownSolutions = knownSolutions;
-	knownSolutions.add(1.2);
+	knownSolutions.add(-3.1);
 	knownSolutions.add(6.2);
 	knownSolutions.add(3.5);
 	knownSolutions.add(8.2);
@@ -158,7 +158,15 @@ public class GraphGenerator extends JPanel {
     }
 
     private double getMinScore() {
-	return 0;
+	double minScoreValues = Double.MIN_VALUE;
+	for (Double score : scores) {
+	    minScoreValues = Math.min(minScoreValues, score);
+	}
+	double minScoreSolutions = Double.MIN_VALUE;
+	for (Double score : knownSolutions) {
+	    minScoreSolutions = Math.min(minScoreSolutions, score);
+	}
+	return Math.min(minScoreSolutions, minScoreValues);
     }
 
     private double getMaxScore() {

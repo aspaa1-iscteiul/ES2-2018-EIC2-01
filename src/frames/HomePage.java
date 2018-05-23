@@ -69,7 +69,6 @@ public class HomePage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("ES2-2018-EIC2-01");
-	System.out.println("Efectuei");
     }
 
     @Override
