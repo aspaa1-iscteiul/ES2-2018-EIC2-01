@@ -4,30 +4,16 @@ import java.io.IOException;
 
 public class TestDouble {
 
-    public static double evaluate(double[] solutions) {
-	double sum = 0;
-	for (int index = 0; index < solutions.length; index += 2)
-	    sum += solutions[index];
-	return sum;
-    }
-
-    public static double evaluate2(double[] solutions) {
-	double sum = 0;
-	for (int index = 1; index < solutions.length; index += 2)
-	    sum += solutions[index];
-	return sum;
-    }
-
     public static void main(String... args) throws IOException {
-	double[] solutions = new double[args.length - 1];
-	for (int index = 0; index < solutions.length; index++)
-	    solutions[index] = Double.parseDouble(args[index + 1]);
-
-	if (args[0].equals("1")) {
-	    System.out.println(evaluate(solutions));
-	} else {
-	    System.out.println(evaluate2(solutions));
+	double sum1 = 0, sum2 = 0;
+	for (int index = 0; index < args.length; index++) {
+	    double value = Double.parseDouble(args[index]);
+	    if (index % 2 == 0)
+		sum1 += value;
+	    else
+		sum2 += value;
 	}
+	System.out.println(sum1 + " " + sum2);
     }
 
 }

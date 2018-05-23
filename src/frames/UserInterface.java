@@ -68,17 +68,17 @@ public class UserInterface {
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
 	pages.add(new HomeCenterPage(this));
-//	pages.add(new ProblemIdPage(this));
-//	pages.add(new DecisionVariablesPage(this));
-//	pages.add(new OptimizationCriteriaPage(this));
-//	pages.add(new FitnessFunctionPage(this));
-//	pages.add(new KnownDecisionVariablesSolutionsPage(this));
-//	pages.add(new KnownOptimizationCriteriaSolutionsPage(this));
-//	pages.add(new AlgorithmsPage(this));
-//	pages.add(new TimeConstraintsPage(this));
-//	pages.add(new SaveProblemPage(this));
-//	pages.add(new OutputIntroPage(this));
-//	pages.add(new OutputKnownSolutionsPage(this));
+	pages.add(new ProblemIdPage(this));
+	pages.add(new DecisionVariablesPage(this));
+	pages.add(new OptimizationCriteriaPage(this));
+	pages.add(new FitnessFunctionPage(this));
+	pages.add(new KnownDecisionVariablesSolutionsPage(this));
+	pages.add(new KnownOptimizationCriteriaSolutionsPage(this));
+	pages.add(new AlgorithmsPage(this));
+	pages.add(new TimeConstraintsPage(this));
+	pages.add(new SaveProblemPage(this));
+	pages.add(new OutputIntroPage(this));
+	pages.add(new OutputKnownSolutionsPage(this));
     }
 
     /**
@@ -92,6 +92,9 @@ public class UserInterface {
      * Changes to the next page if {@linkplain SuperPage#areAllDataWellFilled()}
      */
     public void goToNextPage() {
+	if (!frame.isVisible())
+	    frame.setVisible(true);
+
 	SuperPage actualPage = pages.get(actualPageIndex);
 	if (!actualPage.areAllDataWellFilled())
 	    return;
@@ -654,12 +657,11 @@ public class UserInterface {
     public void setAdmin(Admin admin) {
 	this.admin = admin;
     }
-    
+
     public void runProblem() {
-	frame.dispose();
+	frame.setVisible(false);
 	setFinalProblem();
 	new JMetalRun(this, problem, getIsSingleobjective(), getUserEmail(), admin.getEmail()).run();
     }
-
 
 }

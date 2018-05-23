@@ -113,17 +113,14 @@ public class JMetalRun {
 
 	public Progress() {
 	    UIManager.put("ProgressBar.background", Color.LIGHT_GRAY);
-	    UIManager.put("ProgressBar.foreground", Color.GREEN);
+	    UIManager.put("ProgressBar.foreground", new Color(0, 190, 0));
 	    UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
 	    UIManager.put("ProgressBar.selectionForeground", Color.BLACK);
-	    UIManager.put("ProgressBar.repaintInterval", new Integer(1));
-	    UIManager.put("ProgressBar.cycleTime", new Integer(200));
 
 	    progressBar = new JProgressBar(0, iterations);
-	    progressBar.setPreferredSize(new Dimension(500, 22));
+	    progressBar.setPreferredSize(new Dimension(600, 30));
 	    progressBar.setStringPainted(true);
-	    progressBar.setFont(new Font("Consolas", Font.PLAIN, 18));
-	    progressBar.setIndeterminate(true);
+	    progressBar.setFont(new Font("Consolas", Font.PLAIN, 20));
 
 	    progressFrame = new JFrame();
 	    progressFrame.add(progressBar);
@@ -142,6 +139,7 @@ public class JMetalRun {
 	    boolean p25 = false, p50 = false, p75 = false;
 	    while (jMetalProblem.evaluateIteration() < iterations) {
 		double percentage = (jMetalProblem.evaluateIteration() / (double) iterations) * 100;
+		progressBar.setValue(jMetalProblem.evaluateIteration());
 		progressBar.setString(String.format("%.2f", percentage) + " %");
 		if (percentage >= 25 && !p25) {
 		    p25 = true;
