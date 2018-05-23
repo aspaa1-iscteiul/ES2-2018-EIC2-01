@@ -18,10 +18,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import frames.UserInterface;
 import frames.frameUtils.Email;
 import jMetal.binaryConfiguration.MyBinaryProblem;
 import jMetal.doubleConfiguration.MyDoubleProblem;
@@ -36,8 +36,10 @@ public class JMetalRun {
     private int iterations;
     private JMetalProblem jMetalProblem;
     private Email email;
+    private UserInterface userinterface;
 
-    public JMetalRun(Problem problem, boolean isSingleobjective, String userEmail) {
+    public JMetalRun(UserInterface userinterface, Problem problem, boolean isSingleobjective, String userEmail) {
+	this.userinterface = userinterface;
 	this.problem = problem;
 	this.isSingleobjective = isSingleobjective;
 	iterations = JMetalProblem.INDEPENDENT_RUNS * JMetalAlgorithms.MAX_EVALUATIONS
@@ -79,33 +81,28 @@ public class JMetalRun {
     }
 
     private void afterRunning() {
-	SwingUtilities.invokeLater(new Runnable() {
-	    @Override
-	    public void run() {
-		String problemName = problem.getProblemName();
-		String problemDir = "./experimentBaseDirectory/" + problemName;
-		try {
-		    ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "Rscript", "HV.Boxplot.R" });
-		    processBuilder.directory(new File(problemDir + "/R/").getAbsoluteFile());
-		    processBuilder.start().waitFor();
+	String problemName = problem.getProblemName();
+	String problemDir = "./experimentBaseDirectory/" + problemName;
+	try {
+	    ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "Rscript", "HV.Boxplot.R" });
+	    processBuilder.directory(new File(problemDir + "/R/").getAbsoluteFile());
+	    processBuilder.start().waitFor();
 
-		    Desktop.getDesktop().open(new File(problemDir + "/R/HV.Boxplot.eps"));
-		} catch (IOException | InterruptedException e) {
-		    new RException(null);
-		}
-		try {
-		    ProcessBuilder processBuilder = new ProcessBuilder(
-			    new String[] { "pdflatex", problemName + ".tex" });
-		    processBuilder.directory(new File(problemDir + "/latex/").getAbsoluteFile());
-		    processBuilder.start().waitFor();
+	    Desktop.getDesktop().open(new File(problemDir + "/R/HV.Boxplot.eps"));
+	} catch (IOException | InterruptedException e) {
+	    new RException(null);
+	}
+	try {
+	    ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "pdflatex", problemName + ".tex" });
+	    processBuilder.directory(new File(problemDir + "/latex/").getAbsoluteFile());
+	    processBuilder.start().waitFor();
 
-		    Desktop.getDesktop().open(new File(problemDir + "/latex/" + problemName + ".pdf"));
-		} catch (InterruptedException | IOException e) {
-		    new LatexException(null);
-		}
-	    }
-	});
+	    Desktop.getDesktop().open(new File(problemDir + "/latex/" + problemName + ".pdf"));
+	} catch (InterruptedException | IOException e) {
+	    new LatexException(null);
+	}
 	System.out.println("algorithms finished... show graphics with results...");
+	userinterface.goToNextPage();
     }
 
     private class Progress extends Thread {

@@ -32,7 +32,9 @@ import jMetal.JMetalAlgorithms;
 
 public class DoubleAlgorithms extends JMetalAlgorithms {
 
-    private static final SBXCrossover crossoverOperator = new SBXCrossover(1.0, 5);
+    private static SBXCrossover crossoverOperator() {
+	return new SBXCrossover(1.0, 5);
+    }
 
     private static PolynomialMutation mutationOperator(DoubleProblem problem) {
 	return new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 10.0);
@@ -76,7 +78,7 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<DoubleSolution>> getMOCell(DoubleProblem problem) {
-	return new MOCellBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new MOCellBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -106,7 +108,7 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<DoubleSolution>> getNSGAII(DoubleProblem problem) {
-	return new NSGAIIBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new NSGAIIBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -122,7 +124,7 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
 
     // TODO not working
     public Algorithm<List<DoubleSolution>> getPESA2(DoubleProblem problem) {
-	return new PESA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new PESA2Builder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -131,12 +133,12 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<DoubleSolution>> getSMSEMOA(DoubleProblem problem) {
-	return new SMSEMOABuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new SMSEMOABuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
     public Algorithm<List<DoubleSolution>> getSPEA2(DoubleProblem problem) {
-	return new SPEA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new SPEA2Builder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxIterations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -179,7 +181,7 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<DoubleSolution> getGeneticAlgorithm(DoubleProblem problem) {
-	return new GeneticAlgorithmBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new GeneticAlgorithmBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
