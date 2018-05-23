@@ -32,7 +32,8 @@ public class UserInterface {
     private boolean wasSomethingImported = false;
     private IntroPageAdmin introPageAdmin;
     private SendEmailPage emailPage;
-    private OutputAlgorithmsPage outputAlgorithmsPage;
+    private OutputAlgorithmRunChooserPage outputAlgorithmRunChooserPage;
+    private OutputAlgorithmRunPage outputAlgorithmRunPage;
     private OutputKnownSolutionsPage outputKnownSolutionsPage;
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
@@ -124,7 +125,7 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-    
+
     /**
      * Allows to go the SendEmailPage
      */
@@ -137,12 +138,24 @@ public class UserInterface {
     }
 
     /**
-     * Allows to go the OutputAlgorithmPage
+     * Allows to go the OutputAlgorithmRunChooserPage
      */
-    public void goToOutputAlgorithmPage() {
+    public void goToOutputAlgorithmRunChooserPage(String algorithmName) {
 	frame.remove(pages.get(actualPageIndex));
-	outputAlgorithmsPage = new OutputAlgorithmsPage(this);
-	SuperPage page = outputAlgorithmsPage;
+	outputAlgorithmRunChooserPage = new OutputAlgorithmRunChooserPage(this, algorithmName);
+	SuperPage page = outputAlgorithmRunChooserPage;
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+
+    /**
+     * Allows to go the OutputAlgorithmRunPage
+     */
+    public void goToOutputAlgorithmRunPage(String algorithmName, int runNumber) {
+	frame.remove(outputAlgorithmRunChooserPage);
+	outputAlgorithmRunPage = new OutputAlgorithmRunPage(this, algorithmName, runNumber);
+	SuperPage page = outputAlgorithmRunPage;
 	page.onTop();
 	frame.add(page);
 	refreshPage();
@@ -159,8 +172,8 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-    
-     /**
+
+    /**
      * Allows to go back from the IntroPageAdmin to the HomeCenterPage
      */
     public void returnFromIntroPageAdmin() {
@@ -170,7 +183,7 @@ public class UserInterface {
 	frame.add(page);
 	refreshPage();
     }
-    
+
     /**
      * Allows to go back from the SendEmailPage to the HomeCenterPage
      */
@@ -194,10 +207,21 @@ public class UserInterface {
     }
 
     /**
-     * Allows to go back from the SendEmailPage to the OutputAlgorithmPage
+     * Allows to go back from the SendEmailPage to the OutputAlgorithmRunChooserPage
      */
-    public void returnFromOutputAlgorithmPage() {
-	frame.remove(outputAlgorithmsPage);
+    public void returnFromOutputAlgorithmRunChooserPage() {
+	frame.remove(outputAlgorithmRunChooserPage);
+	SuperPage page = pages.get(actualPageIndex);
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+
+    /**
+     * Allows to go back from the SendEmailPage to the OutputAlgorithmRunPage
+     */
+    public void returnFromOutputAlgorithmRunPage() {
+	frame.remove(outputAlgorithmRunPage);
 	SuperPage page = pages.get(actualPageIndex);
 	page.onTop();
 	frame.add(page);

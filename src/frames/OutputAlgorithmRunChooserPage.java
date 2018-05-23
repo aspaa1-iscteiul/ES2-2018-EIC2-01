@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -17,23 +18,26 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import utils.FileReader;
 
-public class OutputIntroPage extends SuperPage{
+public class OutputAlgorithmRunChooserPage extends SuperPage{
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
-    private ArrayList<String> testAlgorithms;
+    private ArrayList<String> testRunsForAlgorithm;
     private JPanel subPanel;
+    private String algorithmName;
 
-    public OutputIntroPage(UserInterface userInterface) {
+    public OutputAlgorithmRunChooserPage(UserInterface userInterface, String algorithmName) {
 	super(userInterface);
+	this.algorithmName = algorithmName;
     }
 
     @Override
     protected void initialize() {
-	testAlgorithms = new ArrayList<String>();
+	testRunsForAlgorithm = new ArrayList<String>();
     }
 
     @Override
@@ -77,14 +81,13 @@ public class OutputIntroPage extends SuperPage{
 
     @Override
     protected void onTop() {
-	userInterface.getFrame().setTitle("Output Intro Page");
-	testAlgorithms.clear();
-	if(userInterface.getOptimizationAlgorithmsFromPage()!= null) {
-	    for(String str : userInterface.getOptimizationAlgorithmsFromPage()) {
-		testAlgorithms.add(str);
-	    }
+	userInterface.getFrame().setTitle(algorithmName);
+	testRunsForAlgorithm.clear();
+	FileReader fileReader = new FileReader();
+	int numberOfRuns = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt")).size();
+	for(int i = 0; i != numberOfRuns; i++) {
+	    testRunsForAlgorithm.add("Run " + i);
 	}
-	testAlgorithms.add("Known Solutions");
 	constructPage();
     }
 
@@ -106,10 +109,10 @@ public class OutputIntroPage extends SuperPage{
     private void constructPage() {
 	subPanel.removeAll();
 	int numberOfLines = 0;
-	if((testAlgorithms.size())%3==0){
-	    numberOfLines = (testAlgorithms.size())/3;
+	if((testRunsForAlgorithm.size())%3==0){
+	    numberOfLines = (testRunsForAlgorithm.size())/3;
 	} else { 
-	    numberOfLines = ((testAlgorithms.size())/3)+1;
+	    numberOfLines = ((testRunsForAlgorithm.size())/3)+1;
 	}
 
 	for(int i = 0; i != numberOfLines; i++ ) {
@@ -117,18 +120,16 @@ public class OutputIntroPage extends SuperPage{
 	    JPanel auxPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	    auxPanel.setBackground(Color.white);
 	    while(count > 0) {
-		if(testAlgorithms.size() > 0 ) {
-		    JButton button = FrameUtils.cuteButton(testAlgorithms.remove(0));
+		if(testRunsForAlgorithm.size() > 0 ) {
+		    String str = testRunsForAlgorithm.remove(0);
+		    String[] splittedStr = str.split("Run ");
+		    int runNumber = Integer.parseInt(splittedStr[1]);
+		    JButton button = FrameUtils.cuteButton(str);
 		    button.setPreferredSize(new Dimension(140,30));
 		    button.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			    if(button.getText().equals("Known Solutions")) {
-				userInterface.goToOutputKnownSolutionsPage();
-			    } else {
-				userInterface.goToOutputAlgorithmRunChooserPage(button.getText());
-			    }
+			   userInterface.goToOutputAlgorithmRunPage(algorithmName, runNumber);
 			}
 
 		    });

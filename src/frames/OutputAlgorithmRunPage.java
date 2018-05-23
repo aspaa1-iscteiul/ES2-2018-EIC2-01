@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import frames.frameUtils.FrameUtils;
 import utils.FileReader;
 
-public class OutputAlgorithmsPage extends SuperPage {
+public class OutputAlgorithmRunPage extends SuperPage {
 
     /**
      * 
@@ -27,15 +27,19 @@ public class OutputAlgorithmsPage extends SuperPage {
     private static final long serialVersionUID = 1L;
     private JPanel subPanel;
     private JPanel subPanel2;
+    private String algorithmName;
+    private int runNumber;
 
-    public OutputAlgorithmsPage(UserInterface userInterface) {
+    public OutputAlgorithmRunPage(UserInterface userInterface, String algorithmName, int runNumber) {
 	super(userInterface);
+	this.algorithmName = algorithmName;
+	this.runNumber = runNumber;
 	// TODO Auto-generated constructor stub
     }
 
     @Override
     protected void initialize() {
-	userInterface.getFrame().setTitle("Algorithm");
+	userInterface.getFrame().setTitle("Algorithm - Run " + runNumber);
     }
 
     @Override
@@ -111,7 +115,7 @@ public class OutputAlgorithmsPage extends SuperPage {
 	homeButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		userInterface.returnFromOutputAlgorithmPage();
+		userInterface.returnFromOutputAlgorithmRunPage();
 	    }
 	});
 	buttonsPanel.add(homeButton);
@@ -119,8 +123,8 @@ public class OutputAlgorithmsPage extends SuperPage {
 
     @Override
     protected void onTop() {
-	userInterface.getFrame().setTitle("Algorithm");
-	constructPage(0);
+	userInterface.getFrame().setTitle(algorithmName + " - Run " + runNumber);
+	constructPage(this.runNumber);
     }
 
     @Override
