@@ -16,7 +16,7 @@ import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFro
 
 public interface JMetalProblem {
 
-    public static final int INDEPENDENT_RUNS = 5;
+    public static final int INDEPENDENT_RUNS = 4;
 
     public int evaluateIteration();
 

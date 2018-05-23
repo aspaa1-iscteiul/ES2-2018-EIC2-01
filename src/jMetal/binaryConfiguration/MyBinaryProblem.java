@@ -17,7 +17,6 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import jMetal.JMetalProblem;
 import objects.DecisionVariable;
 import objects.FitnessFunction;
-import objects.OptimizationCriteria;
 import objects.Problem;
 
 @SuppressWarnings("serial")
@@ -28,6 +27,8 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     private BinaryAlgorithms algorithms = new BinaryAlgorithms();
     private boolean isSingleObjective;
     private int evaluateIteration = 0;
+
+    private String[] args;
 
     public MyBinaryProblem(Problem problem, boolean isSingleObjective) {
 	this.isSingleObjective = isSingleObjective;
@@ -42,6 +43,11 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
 	for (FitnessFunction fitness : fitnessFunctions)
 	    sum += fitness.getOptimizationCriteria().size();
 	setNumberOfObjectives(sum);
+
+	args = new String[3 + list.size()];
+	args[0] = "java";
+	args[1] = "-jar";
+	args[2] = fitnessFunctions.get(0).getJarFilePath();
     }
 
     @Override
@@ -54,27 +60,17 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     public void evaluate(BinarySolution solution) {
 	evaluateIteration++;
 
-	String[] args = new String[4 + solution.getNumberOfVariables()];
-	args[0] = "java";
-	args[1] = "-jar";
 	for (int index = 0; index < solution.getNumberOfVariables(); index++)
-	    args[4 + index] = solution.getVariableValueString(index);
+	    args[3 + index] = solution.getVariableValueString(index);
 
 	try {
-	    int index = 0;
-	    for (FitnessFunction f : fitnessFunctions) {
-		args[2] = f.getJarFilePath();
-		for (OptimizationCriteria o : f.getOptimizationCriteria()) {
-		    args[3] = o.getName();
+	    Process process = new ProcessBuilder(args).start();
+	    String output = IOUtils.toString(process.getInputStream());
+	    process.waitFor();
 
-		    Process p = new ProcessBuilder(args).start();
-		    String output = IOUtils.toString(p.getInputStream());
-		    p.waitFor();
-
-		    solution.setObjective(index, Integer.parseInt(output));
-		    index++;
-		}
-	    }
+	    String[] objectives = output.split(" ");
+	    for (int index = 0; index < objectives.length; index++)
+		solution.setObjective(index, Double.parseDouble(objectives[index]));
 	} catch (IOException | InterruptedException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
