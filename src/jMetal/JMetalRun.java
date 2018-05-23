@@ -103,7 +103,6 @@ public class JMetalRun {
 	} catch (InterruptedException | IOException e) {
 	    new LatexException(null);
 	}
-	System.out.println("algorithms finished... show graphics with results...");
 	userinterface.goToNextPage();
     }
 
