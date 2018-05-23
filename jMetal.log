@@ -2,58 +2,46 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702398</millis>
+  <date>2018-05-23T19:08:24</date>
+  <millis>1527098904816</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>1</thread>
+  <thread>31</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702477</millis>
+  <date>2018-05-23T19:08:24</date>
+  <millis>1527098904857</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.runner.multiobjective.ABYSSRunner</class>
-  <method>main</method>
-  <thread>1</thread>
-  <message>Total execution time: 836ms</message>
+  <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
+  <method>run</method>
+  <thread>31</thread>
+  <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702516</millis>
+  <date>2018-05-23T19:08:24</date>
+  <millis>1527098904879</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Random seed: 1526983701547</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>31</thread>
+  <message> Running algorithm: NSGAII, problem: ProblemaTeste, run: 0, funFile: experimentBaseDirectory/ProblemaTeste/data/NSGAII/ProblemaTeste/FUN0.tsv</message>
 </record>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702516</millis>
+  <date>2018-05-23T19:08:24</date>
+  <millis>1527098904913</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Objectives values have been written to file FUN.tsv</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>32</thread>
+  <message> Running algorithm: IBEA, problem: ProblemaTeste, run: 0, funFile: experimentBaseDirectory/ProblemaTeste/data/IBEA/ProblemaTeste/FUN0.tsv</message>
 </record>
-<record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702531</millis>
-  <sequence>4</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Variables values have been written to file VAR.tsv</message>
-</record>
-</log>

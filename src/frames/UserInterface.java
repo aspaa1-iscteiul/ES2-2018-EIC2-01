@@ -68,17 +68,17 @@ public class UserInterface {
 	pages.add(new IntroPage(this));
 	pages.add(new RegisterUserPage(this));
 	pages.add(new HomeCenterPage(this));
-//	pages.add(new ProblemIdPage(this));
-//	pages.add(new DecisionVariablesPage(this));
-//	pages.add(new OptimizationCriteriaPage(this));
-//	pages.add(new FitnessFunctionPage(this));
-//	pages.add(new KnownDecisionVariablesSolutionsPage(this));
-//	pages.add(new KnownOptimizationCriteriaSolutionsPage(this));
-//	pages.add(new AlgorithmsPage(this));
-//	pages.add(new TimeConstraintsPage(this));
-//	pages.add(new SaveProblemPage(this));
-//	pages.add(new OutputIntroPage(this));
-//	pages.add(new OutputKnownSolutionsPage(this));
+	pages.add(new ProblemIdPage(this));
+	pages.add(new DecisionVariablesPage(this));
+	pages.add(new OptimizationCriteriaPage(this));
+	pages.add(new FitnessFunctionPage(this));
+	pages.add(new KnownDecisionVariablesSolutionsPage(this));
+	pages.add(new KnownOptimizationCriteriaSolutionsPage(this));
+	pages.add(new AlgorithmsPage(this));
+	pages.add(new TimeConstraintsPage(this));
+	pages.add(new SaveProblemPage(this));
+	pages.add(new OutputIntroPage(this));
+	pages.add(new OutputKnownSolutionsPage(this));
     }
 
     /**
