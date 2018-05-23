@@ -27,7 +27,9 @@ import jMetal.JMetalAlgorithms;
 
 public class BinaryAlgorithms extends JMetalAlgorithms {
 
-    private static final SinglePointCrossover crossoverOperator = new SinglePointCrossover(1.0);
+    private static SinglePointCrossover crossoverOperator() {
+	return new SinglePointCrossover(1.0);
+    }
 
     private static BitFlipMutation mutationOperator(BinaryProblem problem) {
 	return new BitFlipMutation(1.0 / problem.getNumberOfBits(0));
@@ -57,7 +59,7 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<BinarySolution>> getMOCell(BinaryProblem problem) {
-	return new MOCellBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new MOCellBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -66,7 +68,7 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<BinarySolution>> getNSGAII(BinaryProblem problem) {
-	return new NSGAIIBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new NSGAIIBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -82,7 +84,7 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
 
     // TODO not working
     public Algorithm<List<BinarySolution>> getPESA2(BinaryProblem problem) {
-	return new PESA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new PESA2Builder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -91,12 +93,12 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<BinarySolution>> getSMSEMOA(BinaryProblem problem) {
-	return new SMSEMOABuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new SMSEMOABuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
     public Algorithm<List<BinarySolution>> getSPEA2(BinaryProblem problem) {
-	return new SPEA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new SPEA2Builder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxIterations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -134,7 +136,7 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<BinarySolution> getGeneticAlgorithm(BinaryProblem problem) {
-	return new GeneticAlgorithmBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new GeneticAlgorithmBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 }

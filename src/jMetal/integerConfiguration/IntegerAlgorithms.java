@@ -26,7 +26,9 @@ import jMetal.JMetalAlgorithms;
 
 public class IntegerAlgorithms extends JMetalAlgorithms {
 
-    private static final IntegerSBXCrossover crossoverOperator = new IntegerSBXCrossover(0.9, 20.0);
+    private static IntegerSBXCrossover crossoverOperator() {
+	return new IntegerSBXCrossover(0.9, 20.0);
+    }
 
     private static IntegerPolynomialMutation mutationOperator(IntegerProblem problem) {
 	return new IntegerPolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
@@ -57,12 +59,12 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<IntegerSolution>> getMOCell(IntegerProblem problem) {
-	return new MOCellBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new MOCellBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
     public Algorithm<List<IntegerSolution>> getNSGAII(IntegerProblem problem) {
-	return new NSGAIIBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new NSGAIIBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -78,7 +80,7 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
 
     // TODO not working
     public Algorithm<List<IntegerSolution>> getPESA2(IntegerProblem problem) {
-	return new PESA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new PESA2Builder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -87,12 +89,12 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<List<IntegerSolution>> getSMSEMOA(IntegerProblem problem) {
-	return new SMSEMOABuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new SMSEMOABuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
     public Algorithm<List<IntegerSolution>> getSPEA2(IntegerProblem problem) {
-	return new SPEA2Builder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new SPEA2Builder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxIterations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
@@ -130,7 +132,7 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
     }
 
     public Algorithm<IntegerSolution> getGeneticAlgorithm(IntegerProblem problem) {
-	return new GeneticAlgorithmBuilder<>(problem, crossoverOperator, mutationOperator(problem))
+	return new GeneticAlgorithmBuilder<>(problem, crossoverOperator(), mutationOperator(problem))
 		.setMaxEvaluations(MAX_EVALUATIONS).setPopulationSize(POPULATION_SIZE).build();
     }
 
