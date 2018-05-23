@@ -36,11 +36,11 @@ public class JMetalRun {
     private int iterations;
     private JMetalProblem jMetalProblem;
     private Email email;
-    private UserInterface userinterface;
+    private UserInterface userInterface;
 
     public JMetalRun(UserInterface userinterface, Problem problem, boolean isSingleobjective, String userEmail,
 	    String adminEmail) {
-	this.userinterface = userinterface;
+	this.userInterface = userinterface;
 	this.problem = problem;
 	this.isSingleobjective = isSingleobjective;
 	iterations = JMetalProblem.INDEPENDENT_RUNS * JMetalAlgorithms.MAX_EVALUATIONS
@@ -50,6 +50,8 @@ public class JMetalRun {
     }
 
     public void run() {
+	userInterface.showFrame(false);
+
 	// TODO change subject and message
 	email.sendEmail(problem.getProblemName() + " started", "");
 
@@ -103,8 +105,8 @@ public class JMetalRun {
 	} catch (InterruptedException | IOException e) {
 	    new LatexException(null);
 	}
-	System.out.println("algorithms finished... show graphics with results...");
-	userinterface.goToNextPage();
+	userInterface.showFrame(true);
+	userInterface.goToNextPage();
     }
 
     private class Progress extends Thread {
@@ -113,17 +115,14 @@ public class JMetalRun {
 
 	public Progress() {
 	    UIManager.put("ProgressBar.background", Color.LIGHT_GRAY);
-	    UIManager.put("ProgressBar.foreground", Color.GREEN);
+	    UIManager.put("ProgressBar.foreground", new Color(0, 190, 0));
 	    UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
 	    UIManager.put("ProgressBar.selectionForeground", Color.BLACK);
-	    UIManager.put("ProgressBar.repaintInterval", new Integer(1));
-	    UIManager.put("ProgressBar.cycleTime", new Integer(200));
 
 	    progressBar = new JProgressBar(0, iterations);
-	    progressBar.setPreferredSize(new Dimension(500, 22));
+	    progressBar.setPreferredSize(new Dimension(600, 30));
 	    progressBar.setStringPainted(true);
-	    progressBar.setFont(new Font("Consolas", Font.PLAIN, 18));
-	    progressBar.setIndeterminate(true);
+	    progressBar.setFont(new Font("Consolas", Font.PLAIN, 20));
 
 	    progressFrame = new JFrame();
 	    progressFrame.add(progressBar);
@@ -142,6 +141,7 @@ public class JMetalRun {
 	    boolean p25 = false, p50 = false, p75 = false;
 	    while (jMetalProblem.evaluateIteration() < iterations) {
 		double percentage = (jMetalProblem.evaluateIteration() / (double) iterations) * 100;
+		progressBar.setValue(jMetalProblem.evaluateIteration());
 		progressBar.setString(String.format("%.2f", percentage) + " %");
 		if (percentage >= 25 && !p25) {
 		    p25 = true;

@@ -93,6 +93,14 @@ public class UserFileUtils {
 	}
     }
 
+    /**
+     * This method returns the default file name:
+     * "ProblemName_2018.05.25_23.59.00.xml"
+     * 
+     * @param problemName
+     *            name of the problem configured in the file
+     * @return Default name for this problem
+     */
     private static String getDefaultName(String problemName) {
 	Calendar now = Calendar.getInstance();
 	int year = now.get(Calendar.YEAR);

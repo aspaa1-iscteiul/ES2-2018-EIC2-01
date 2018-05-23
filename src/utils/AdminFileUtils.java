@@ -84,7 +84,7 @@ public class AdminFileUtils {
      * @param defaultAdmin
      *            object you want to write on the XML file
      * @return adminNode element containing the root node and its child nodes
-     *         necessary for storing an Admin Object according to a determined XML
+     *         necessary for storing an Admin object according to a determined XML
      *         hierarchical structure
      */
     private static Node createAdminNode(Document doc, Admin defaultAdmin) {
@@ -157,9 +157,9 @@ public class AdminFileUtils {
      * @param filePath
      *            for the directory containing the XML file
      * 
-     * @return resulting Problem object
+     * @return resulting Admin object
      */
-    public static Admin readFromXML(String filePath) {
+    public static Admin loadAdmin(String filePath) {
 	File xmlFile = new File(filePath);
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder;
@@ -191,7 +191,7 @@ public class AdminFileUtils {
      * @param adminNode
      *            element containing the root node and its child nodes
      * 
-     * @return Problem object constructed from the XML document information
+     * @return Admin object constructed from the XML document information
      */
     private static Admin getAdminFromXMLNode(Document doc, Node adminNode) {
 	Admin admin = new Admin();

@@ -13,6 +13,12 @@ import objects.OptimizationCriteria;
 import objects.Problem;
 import utils.UserFileUtils;
 
+/**
+ * Created with the purpose of testing the class UserFileUtils.java
+ * 
+ * @author Ana Pestana
+ *
+ */
 public class TestUserFileUtils {
 
     /**
@@ -20,7 +26,7 @@ public class TestUserFileUtils {
      * 
      * @return Object Problem for testing
      */
-    public Problem contructProblem(int scenario) {
+    public static Problem contructProblem(int scenario) {
 	ArrayList<String> knownSolutionsInteger = new ArrayList<String>();
 	knownSolutionsInteger.add("3");
 	knownSolutionsInteger.add("4");
@@ -65,7 +71,7 @@ public class TestUserFileUtils {
      * Testing class initiation
      */
     @Test
-    public final void testClassUserFileUtils() {
+    public final static void testClassUserFileUtils() {
 	new UserFileUtils();
     }
 
@@ -78,7 +84,7 @@ public class TestUserFileUtils {
      * MaxTimeFrame
      */
     @Test
-    public final void successfullyTestWriteToAndReadFromXML1() {
+    public final static void successfullyTestWriteToAndReadFromXML1() {
 	Problem problemWrite = contructProblem(1);
 	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles", "/userConfigTest1.xml");
 	Problem problemRead = utils.UserFileUtils.readFromXML("./src/jUnitTests/testFiles/userConfigTest1.xml");
@@ -95,7 +101,7 @@ public class TestUserFileUtils {
      * MaxTimeFrame
      */
     @Test
-    public final void successfullyTestWriteToAndReadFromXML2() {
+    public final static void successfullyTestWriteToAndReadFromXML2() {
 	Problem problemWrite = contructProblem(2);
 	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles", "/userConfigTest2.xml");
 	utils.UserFileUtils.writeToXML(problemWrite, "./src/jUnitTests/testFiles", "/");
@@ -109,7 +115,7 @@ public class TestUserFileUtils {
      * and, therefore, it is necessary to handle exceptions
      */
     @Test
-    public final void unsuccessfullyTestWriteToAndReadFromXML() {
+    public final static void unsuccessfullyTestWriteToAndReadFromXML() {
 	Problem problemWrite = contructProblem(1);
 	// For testing purposes, the file path passed as an argument has a typographical
 	// error
@@ -121,7 +127,7 @@ public class TestUserFileUtils {
      * Testing the method getInvalidValuesInVector() from the DecisionVariable class
      */
     @Test
-    public final void testGetInvalidValuesInVector() {
+    public final static void testGetInvalidValuesInVector() {
 	Problem problem1 = contructProblem(1);
 	problem1.getInvalidValuesInVector();
 	Problem problem2 = contructProblem(2);
