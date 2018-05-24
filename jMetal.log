@@ -2,58 +2,134 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702398</millis>
+  <date>2018-05-23T10:50:26</date>
+  <millis>1527069026790</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>1</thread>
+  <thread>40</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702477</millis>
+  <date>2018-05-23T10:50:26</date>
+  <millis>1527069026802</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.runner.multiobjective.ABYSSRunner</class>
-  <method>main</method>
-  <thread>1</thread>
-  <message>Total execution time: 836ms</message>
+  <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
+  <method>run</method>
+  <thread>40</thread>
+  <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702516</millis>
+  <date>2018-05-23T10:50:26</date>
+  <millis>1527069026816</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Random seed: 1526983701547</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>41</thread>
+  <message>Creating experimentBaseDirectory/A/data/NSGAII/A</message>
 </record>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702516</millis>
+  <date>2018-05-23T10:50:26</date>
+  <millis>1527069026818</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Objectives values have been written to file FUN.tsv</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>41</thread>
+  <message> Running algorithm: NSGAII, problem: A, run: 0, funFile: experimentBaseDirectory/A/data/NSGAII/A/FUN0.tsv</message>
 </record>
 <record>
-  <date>2018-05-22T11:08:22</date>
-  <millis>1526983702531</millis>
+  <date>2018-05-23T10:50:26</date>
+  <millis>1527069026822</millis>
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
-  <method>printFinalSolutionSet</method>
-  <thread>1</thread>
-  <message>Variables values have been written to file VAR.tsv</message>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>40</thread>
+  <message>Creating experimentBaseDirectory/A/data/RandomSearch/A</message>
 </record>
-</log>
+<record>
+  <date>2018-05-23T10:50:26</date>
+  <millis>1527069026823</millis>
+  <sequence>5</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>40</thread>
+  <message> Running algorithm: RandomSearch, problem: A, run: 0, funFile: experimentBaseDirectory/A/data/RandomSearch/A/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-23T10:50:43</date>
+  <millis>1527069043602</millis>
+  <sequence>6</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>40</thread>
+  <message> Running algorithm: RandomSearch, problem: A, run: 1, funFile: experimentBaseDirectory/A/data/RandomSearch/A/FUN1.tsv</message>
+</record>
+<record>
+  <date>2018-05-23T10:50:43</date>
+  <millis>1527069043602</millis>
+  <sequence>7</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>41</thread>
+  <message> Running algorithm: NSGAII, problem: A, run: 1, funFile: experimentBaseDirectory/A/data/NSGAII/A/FUN1.tsv</message>
+</record>
+<record>
+  <date>2018-05-23T10:50:59</date>
+  <millis>1527069059535</millis>
+  <sequence>8</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>40</thread>
+  <message> Running algorithm: RandomSearch, problem: A, run: 2, funFile: experimentBaseDirectory/A/data/RandomSearch/A/FUN2.tsv</message>
+</record>
+<record>
+  <date>2018-05-23T10:50:59</date>
+  <millis>1527069059535</millis>
+  <sequence>9</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>41</thread>
+  <message> Running algorithm: NSGAII, problem: A, run: 2, funFile: experimentBaseDirectory/A/data/NSGAII/A/FUN2.tsv</message>
+</record>
+<record>
+  <date>2018-05-23T10:51:15</date>
+  <millis>1527069075465</millis>
+  <sequence>11</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>40</thread>
+  <message> Running algorithm: RandomSearch, problem: A, run: 3, funFile: experimentBaseDirectory/A/data/RandomSearch/A/FUN3.tsv</message>
+</record>
+<record>
+  <date>2018-05-23T10:51:15</date>
+  <millis>1527069075465</millis>
+  <sequence>10</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>41</thread>
+  <message> Running algorithm: NSGAII, problem: A, run: 3, funFile: experimentBaseDirectory/A/data/NSGAII/A/FUN3.tsv</message>
+</record>
