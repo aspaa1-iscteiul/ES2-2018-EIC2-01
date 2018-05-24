@@ -17,13 +17,10 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import jMetal.JMetalProblem;
 import objects.DecisionVariable;
-import objects.FitnessFunction;
 import objects.Problem;
 
 @SuppressWarnings("serial")
 public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalProblem {
-
-    private ArrayList<FitnessFunction> fitnessFunctions;
 
     private IntegerAlgorithms algorithms = new IntegerAlgorithms();
     private boolean isSingleObjective;
@@ -38,11 +35,7 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
 	setNumberOfVariables(list.size());
 
-	int sum = 0;
-	fitnessFunctions = new ArrayList<>(problem.getFitnessFunctions());
-	for (FitnessFunction fitness : fitnessFunctions)
-	    sum += fitness.getOptimizationCriteria().size();
-	setNumberOfObjectives(sum);
+	setNumberOfObjectives(problem.getOptimizationCriteria().size());
 
 	setLowerLimit(Collections.nCopies(getNumberOfVariables(),
 		Integer.parseInt(problem.getDecisionVariablesLowerBound())));
@@ -52,7 +45,7 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
 	args = new String[3 + list.size()];
 	args[0] = "java";
 	args[1] = "-jar";
-	args[2] = fitnessFunctions.get(0).getJarFilePath();
+	args[2] = problem.getFitnessFunction();
     }
 
     @Override

@@ -17,13 +17,10 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import jMetal.JMetalProblem;
 import objects.DecisionVariable;
-import objects.FitnessFunction;
 import objects.Problem;
 
 @SuppressWarnings("serial")
 public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProblem {
-
-    private ArrayList<FitnessFunction> fitnessFunctions;
 
     private DoubleAlgorithms algorithms = new DoubleAlgorithms();
     private boolean isSingleObjective;
@@ -38,11 +35,7 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
 	ArrayList<DecisionVariable> list = problem.getDecisionVariables();
 	setNumberOfVariables(list.size());
 
-	int sum = 0;
-	fitnessFunctions = new ArrayList<>(problem.getFitnessFunctions());
-	for (FitnessFunction fitness : fitnessFunctions)
-	    sum += fitness.getOptimizationCriteria().size();
-	setNumberOfObjectives(sum);
+	setNumberOfObjectives(problem.getOptimizationCriteria().size());
 
 	setLowerLimit(Collections.nCopies(getNumberOfVariables(),
 		Double.parseDouble(problem.getDecisionVariablesLowerBound())));
@@ -52,7 +45,7 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
 	args = new String[3 + list.size()];
 	args[0] = "java";
 	args[1] = "-jar";
-	args[2] = fitnessFunctions.get(0).getJarFilePath();
+	args[2] = problem.getFitnessFunction();
     }
 
     @Override
@@ -91,8 +84,7 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
     }
 
     private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureMultiObjectiveAlgorithmList(
-	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames)
-	    throws Exception {
+	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames) throws Exception {
 	List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
 	DoubleProblem problem = (DoubleProblem) experimentProblem.getProblem();
@@ -106,8 +98,7 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
     }
 
     private List<ExperimentAlgorithm<DoubleSolution, DoubleSolution>> configureSingleObjectiveAlgorithmList(
-	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames)
-	    throws Exception {
+	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames) throws Exception {
 	List<ExperimentAlgorithm<DoubleSolution, DoubleSolution>> algorithms = new ArrayList<>();
 
 	DoubleProblem problem = (DoubleProblem) experimentProblem.getProblem();
