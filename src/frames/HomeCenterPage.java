@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import objects.QABlock;
 
 /**
  * This class represents the Home Center page that contains FAQ and an option to
@@ -29,6 +30,7 @@ public class HomeCenterPage extends SuperPage {
     private static final long serialVersionUID = 1L;
     private JButton nextButton;
     private JButton emailButton;
+    private JPanel messagePanel;
 
     public HomeCenterPage(UserInterface userInterface) {
 	super(userInterface);
@@ -58,7 +60,7 @@ public class HomeCenterPage extends SuperPage {
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
-	JPanel messagePanel = new JPanel(new BorderLayout());
+	messagePanel = new JPanel(new BorderLayout());
 	messagePanel.setBackground(Color.WHITE);
 	JLabel messageLabel = new JLabel("<html>In this section you can get fast answers to most of your questions!"
 		+ "<br></br><br></br>" + "<font color=red><b>Question_1</b></font> " + "<br></br>"
@@ -122,6 +124,21 @@ public class HomeCenterPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Help Center");
+	if(userInterface.getAdmin().getFaq().size() > 0) {
+	    messagePanel.removeAll();
+	    JLabel messageLabel = new JLabel("<html>In this section you can get fast answers to most of your questions!" + "<br></br><br></br>");
+	    for(QABlock qa : userInterface.getAdmin().getFaq()) {
+		int R = (int)(Math.random()*256);
+		int G = (int)(Math.random()*256);
+		int B= (int)(Math.random()*256);
+		Color color = new Color(R, G, B);
+		messageLabel.setText(messageLabel.getText()+("<font color= " + color + "><b>" +  qa.getQuestion() 
+		+ "</b></font><br></br>" + qa.getAnswer() + "<br></br>"));
+		messageLabel.setFont(FrameUtils.cuteFont(12));
+		messagePanel.add(messageLabel, BorderLayout.WEST);
+		mainPanel.add(messagePanel);
+	    }
+	}
     }
 
     @Override
@@ -139,7 +156,7 @@ public class HomeCenterPage extends SuperPage {
     @Override
     protected void clearDataFromPage() {
 	// TODO Auto-generated method stub
-	
+
     }
 
 }

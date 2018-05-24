@@ -6,17 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.concurrent.Executors;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -36,20 +29,27 @@ public class JMetalRun {
     private int iterations;
     private JMetalProblem jMetalProblem;
     private Email email;
-    private UserInterface userinterface;
+    private UserInterface userInterface;
+    private Progress progress;
+    private RunProblem runProblem;
+    private MaximumTime maximumTime;
 
-    public JMetalRun(UserInterface userinterface, Problem problem, boolean isSingleobjective, String userEmail) {
-	this.userinterface = userinterface;
+    public JMetalRun(UserInterface userinterface, Problem problem, boolean isSingleobjective, String userEmail,
+	    String adminEmail) {
+	this.userInterface = userinterface;
 	this.problem = problem;
 	this.isSingleobjective = isSingleobjective;
 	iterations = JMetalProblem.INDEPENDENT_RUNS * JMetalAlgorithms.MAX_EVALUATIONS
 		* problem.getOptimizationAlgorithms().size();
 	email = new Email(userEmail);
+	email.setToCC(adminEmail);
     }
 
     public void run() {
+	userInterface.showFrame(false);
+
 	// TODO change subject and message
-	email.sendEmail(problem.getProblemName() + " started", "");
+	email.sendEmail(false, problem.getProblemName() + " started", "");
 
 	DataType type = problem.getDecisionVariablesDataType();
 	if (type == DataType.DOUBLE) {
@@ -60,49 +60,89 @@ public class JMetalRun {
 	    jMetalProblem = new MyBinaryProblem(problem, isSingleobjective);
 	}
 
-	Progress p = new Progress();
-	p.start();
+	progress = new Progress();
+	progress.start();
 
-	Executors.newSingleThreadExecutor().execute(new Runnable() {
-	    @Override
-	    public void run() {
-		try {
-		    jMetalProblem.run(problem.getOptimizationAlgorithms());
-		    p.interrupt();
-		    afterRunning();
-		} catch (IOException e) {
-		    // TODO change subject and message
-		    email.sendEmail("Error", "");
-		    e.printStackTrace();
-		    System.exit(1);
-		}
-	    }
-	});
+	runProblem = new RunProblem();
+	runProblem.start();
+
+	maximumTime = new MaximumTime();
+	maximumTime.start();
     }
 
-    private void afterRunning() {
-	String problemName = problem.getProblemName();
-	String problemDir = "./experimentBaseDirectory/" + problemName;
-	try {
-	    ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "Rscript", "HV.Boxplot.R" });
-	    processBuilder.directory(new File(problemDir + "/R/").getAbsoluteFile());
-	    processBuilder.start().waitFor();
+    private class MaximumTime extends Thread {
+	private boolean kill = false;
 
-	    Desktop.getDesktop().open(new File(problemDir + "/R/HV.Boxplot.eps"));
-	} catch (IOException | InterruptedException e) {
-	    new RException(null);
-	}
-	try {
-	    ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "pdflatex", problemName + ".tex" });
-	    processBuilder.directory(new File(problemDir + "/latex/").getAbsoluteFile());
-	    processBuilder.start().waitFor();
+	@Override
+	public void run() {
+	    try {
+		int maximumMilliseconds = Integer.parseInt(problem.getMaxTimeFrame()) * 60 * 1000;
+		int milliseconds = 0;
 
-	    Desktop.getDesktop().open(new File(problemDir + "/latex/" + problemName + ".pdf"));
-	} catch (InterruptedException | IOException e) {
-	    new LatexException(null);
+		while (milliseconds <= maximumMilliseconds) {
+		    long var = System.currentTimeMillis();
+		    try {
+			sleep(1000);
+		    } catch (InterruptedException e) {
+			if (kill)
+			    return;
+		    }
+		    milliseconds += System.currentTimeMillis() - var;
+		}
+		progress.closeProgress();
+		// TODO change subject and message
+		email.sendEmail(true, problem.getProblemName() + " maximum time exceeded", "");
+		System.exit(1);
+	    } catch (NumberFormatException e) {
+	    }
 	}
-	System.out.println("algorithms finished... show graphics with results...");
-	userinterface.goToNextPage();
+
+	public void kill() {
+	    kill = true;
+	    interrupt();
+	}
+    }
+
+    private class RunProblem extends Thread {
+	@Override
+	public void run() {
+	    try {
+		jMetalProblem.run(problem.getOptimizationAlgorithms());
+		maximumTime.kill();
+		afterRunning();
+	    } catch (Exception e) {
+		// TODO change subject and message
+		email.sendEmail(true, "Error", e.getMessage());
+		System.exit(1);
+	    }
+	}
+
+	private void afterRunning() {
+	    String problemName = problem.getProblemName();
+	    String problemDir = "./experimentBaseDirectory/" + problemName;
+	    try {
+		ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "Rscript", "HV.Boxplot.R" });
+		processBuilder.directory(new File(problemDir + "/R/").getAbsoluteFile());
+		processBuilder.start().waitFor();
+
+		Desktop.getDesktop().open(new File(problemDir + "/R/HV.Boxplot.eps"));
+	    } catch (IOException | InterruptedException e) {
+		new MyExceptions.RException(progress.getFrame());
+	    }
+	    try {
+		ProcessBuilder processBuilder = new ProcessBuilder(new String[] { "pdflatex", problemName + ".tex" });
+		processBuilder.directory(new File(problemDir + "/latex/").getAbsoluteFile());
+		processBuilder.start().waitFor();
+
+		Desktop.getDesktop().open(new File(problemDir + "/latex/" + problemName + ".pdf"));
+	    } catch (InterruptedException | IOException e) {
+		new MyExceptions.LatexException(progress.getFrame());
+	    }
+	    progress.closeProgress();
+	    userInterface.showFrame(true);
+	    userInterface.goToNextPage();
+	}
+
     }
 
     private class Progress extends Thread {
@@ -111,17 +151,14 @@ public class JMetalRun {
 
 	public Progress() {
 	    UIManager.put("ProgressBar.background", Color.LIGHT_GRAY);
-	    UIManager.put("ProgressBar.foreground", Color.GREEN);
+	    UIManager.put("ProgressBar.foreground", new Color(0, 190, 0));
 	    UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
 	    UIManager.put("ProgressBar.selectionForeground", Color.BLACK);
-	    UIManager.put("ProgressBar.repaintInterval", new Integer(1));
-	    UIManager.put("ProgressBar.cycleTime", new Integer(200));
 
 	    progressBar = new JProgressBar(0, iterations);
-	    progressBar.setPreferredSize(new Dimension(500, 22));
+	    progressBar.setPreferredSize(new Dimension(600, 30));
 	    progressBar.setStringPainted(true);
-	    progressBar.setFont(new Font("Consolas", Font.PLAIN, 18));
-	    progressBar.setIndeterminate(true);
+	    progressBar.setFont(new Font("Consolas", Font.PLAIN, 20));
 
 	    progressFrame = new JFrame();
 	    progressFrame.add(progressBar);
@@ -135,26 +172,35 @@ public class JMetalRun {
 	    progressFrame.setVisible(true);
 	}
 
+	public JFrame getFrame() {
+	    return progressFrame;
+	}
+
+	public void closeProgress() {
+	    progressFrame.dispose();
+	}
+
 	@Override
 	public void run() {
 	    boolean p25 = false, p50 = false, p75 = false;
 	    while (jMetalProblem.evaluateIteration() < iterations) {
 		double percentage = (jMetalProblem.evaluateIteration() / (double) iterations) * 100;
+		progressBar.setValue(jMetalProblem.evaluateIteration());
 		progressBar.setString(String.format("%.2f", percentage) + " %");
 		if (percentage >= 25 && !p25) {
 		    p25 = true;
 		    // TODO change subject and message
-		    email.sendEmail(problem.getProblemName() + " is 25% complete", "");
+		    email.sendEmail(false, problem.getProblemName() + " is 25% complete", "");
 		    System.out.println("email de 25% sended...");
 		} else if (percentage >= 50 && !p50) {
 		    p50 = true;
 		    // TODO change subject and message
-		    email.sendEmail(problem.getProblemName() + " is 50% complete", "");
+		    email.sendEmail(false, problem.getProblemName() + " is 50% complete", "");
 		    System.out.println("email de 50% sended...");
 		} else if (percentage >= 75 && !p75) {
 		    p75 = true;
 		    // TODO change subject and message
-		    email.sendEmail(problem.getProblemName() + " is 75% complete", "");
+		    email.sendEmail(false, problem.getProblemName() + " is 75% complete", "");
 		    System.out.println("email de 75% sended...");
 		}
 		try {
@@ -163,68 +209,11 @@ public class JMetalRun {
 		    e.printStackTrace();
 		}
 	    }
-	    progressFrame.dispose();
-	}
-    }
-
-    public static class RException extends MouseAdapter {
-	private static final String NEW_LINE = "<br/>";
-	private JLabel label;
-	private JFrame frame;
-
-	public RException(JFrame frame) {
-	    label = new JLabel("<html>Ocorreu um problema ao compilar com o Rscript.exe" + NEW_LINE + NEW_LINE
-		    + "Sugestão de resolução:" + NEW_LINE
-		    + "Por favor, verifique se tem uma aplicação para compilação de documentos .R instalada no seu computador e, caso"
-		    + NEW_LINE
-		    + "tenha, verifique ainda que o path para o executável Rscript.exe se encontra incluído na variável de ambiente PATH"
-		    + NEW_LINE + NEW_LINE
-		    + "(Poderá proceder ao download do pacote de software R em: <a href=\"\">https://cran.r-project.org/</a>)</html>");
-	    label.addMouseListener(this);
-	    this.frame = frame;
-	    JOptionPane.showMessageDialog(frame, label, "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
-	}
-
-	public void mousePressed(MouseEvent event) {
-	    if (event.getX() >= 342 && event.getX() <= 486 && event.getY() >= 96 && event.getY() <= 111)
-		try {
-		    Desktop.getDesktop().browse(new URI("https://cran.r-project.org/"));
-		} catch (IOException | URISyntaxException e) {
-		    JOptionPane.showMessageDialog(frame, "Por favor, verifique se tem um browser instalado.",
-			    "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
-		}
+	    // TODO change subject and message
+	    email.sendEmail(false, problem.getProblemName() + " completed", "");
+	    progressBar.setValue(iterations);
+	    progressBar.setString("99.99 %");
 	}
 
     }
-
-    public static class LatexException extends MouseAdapter {
-	private static final String NEW_LINE = "<br/>";
-	private JFrame frame;
-	private JLabel label;
-
-	public LatexException(JFrame frame) {
-	    label = new JLabel("<html>Ocorreu um problema ao compilar com o pdflatex.exe" + NEW_LINE + NEW_LINE
-		    + "Sugestão de resolução:" + NEW_LINE
-		    + "Por favor, verifique se tem uma aplicação para compilação de documentos .tex instalada no seu computador e, caso"
-		    + NEW_LINE
-		    + "tenha, verifique ainda que o path para o executável pdflatex.exe se encontra incluído na variável de ambiente PATH"
-		    + NEW_LINE + NEW_LINE
-		    + "(Poderá proceder ao download do pacote de software MiKTeX em: <a href=\"\">https://miktex.org/download</a>)</html>");
-	    label.addMouseListener(this);
-	    this.frame = frame;
-	    JOptionPane.showMessageDialog(frame, label, "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
-	}
-
-	public void mousePressed(MouseEvent event) {
-	    if (event.getX() >= 373 && event.getX() <= 533 && event.getY() >= 96 && event.getY() <= 111)
-		try {
-		    Desktop.getDesktop().browse(new URI("https://miktex.org/download"));
-		} catch (IOException | URISyntaxException e) {
-		    JOptionPane.showMessageDialog(frame, "Por favor, verifique se tem um browser instalado.",
-			    "Indicador Hypervolume", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-    }
-
 }

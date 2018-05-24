@@ -1,7 +1,7 @@
 package jMetal.doubleConfiguration;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,24 +45,20 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
      */
 
     // TODO PESA2 and NSGAIII not working
-    public static final List<String> MULTI_OBJECTIVE = Arrays.asList("DMOPSO", "GDE3", "IBEA", "MOCell",
-	    "ConstraintMOEAD", "MOEAD", "MOEADD", "MOEADDRA", "MOEADSTM", "NSGAII", "PAES", // "NSGAIII", "PESA2",
-	    "RandomSearch", "SMSEMOA", "SPEA2");
+    public static final ArrayList<String> MULTI_OBJECTIVE = new ArrayList<>(Arrays.asList("DMOPSO", "GDE3", "IBEA",
+	    "MOCell", "ConstraintMOEAD", "MOEAD", "MOEADD", "MOEADDRA", "MOEADSTM", "NSGAII", "PAES", // "NSGAIII",
+												      // "PESA2",
+	    "RandomSearch", "SMSEMOA", "SPEA2"));
 
     @SuppressWarnings("unchecked")
-    public Algorithm<List<DoubleSolution>> getMultiObjectiveAlgortihm(String algorithmName, DoubleProblem problem) {
+    public Algorithm<List<DoubleSolution>> getMultiObjectiveAlgortihm(String algorithmName, DoubleProblem problem)
+	    throws Exception {
 	if (!MULTI_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
 		    algorithmName + " is not a valid multiobjective algorithm for DoubleProblem");
 
-	try {
-	    Method method = getClass().getMethod("get" + algorithmName, DoubleProblem.class);
-	    return (Algorithm<List<DoubleSolution>>) method.invoke(this, problem);
-	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-		| InvocationTargetException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	Method method = getClass().getMethod("get" + algorithmName, DoubleProblem.class);
+	return (Algorithm<List<DoubleSolution>>) method.invoke(this, problem);
     }
 
     public Algorithm<List<DoubleSolution>> getDMOPSO(DoubleProblem problem) {
@@ -146,23 +142,18 @@ public class DoubleAlgorithms extends JMetalAlgorithms {
      * Single Objective
      */
 
-    public static final List<String> SINGLE_OBJECTIVE = Arrays.asList("DifferentialEvolution",
-	    "EvolutionStrategyElitist", "EvolutionStrategyNonElitist", "GeneticAlgorithm");
+    public static final ArrayList<String> SINGLE_OBJECTIVE = new ArrayList<>(Arrays.asList("DifferentialEvolution",
+	    "EvolutionStrategyElitist", "EvolutionStrategyNonElitist", "GeneticAlgorithm"));
 
     @SuppressWarnings("unchecked")
-    public Algorithm<DoubleSolution> getSingleObjectiveAlgortihm(String algorithmName, DoubleProblem problem) {
+    public Algorithm<DoubleSolution> getSingleObjectiveAlgortihm(String algorithmName, DoubleProblem problem)
+	    throws Exception {
 	if (!SINGLE_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
 		    algorithmName + " is not a valid singleobjective algorithm for DoubleProblem");
 
-	try {
-	    Method method = getClass().getMethod("get" + algorithmName, DoubleProblem.class);
-	    return (Algorithm<DoubleSolution>) method.invoke(problem);
-	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-		| InvocationTargetException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	Method method = getClass().getMethod("get" + algorithmName, DoubleProblem.class);
+	return (Algorithm<DoubleSolution>) method.invoke(problem);
     }
 
     public Algorithm<DoubleSolution> getDifferentialEvolution(DoubleProblem problem) {

@@ -172,9 +172,10 @@ public class SaveProblemPage extends SuperPage {
 		    // tem de terminar em .xml
 		    UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText(), "/" + fileName.getText());
 		    saveButton.setBackground(new Color(155, 226, 155).brighter());
-		    new Email(userInterface.getUserEmail()).sendEmailWithAttachment(
-			    ("Otimização em curso: " + fileName.getText() + " " + new Date()), messageText,
-			    filePath.getText(), fileName.getText());
+		    Email email = new Email(userInterface.getUserEmail());
+		    email.setToCC(userInterface.getAdmin().getEmail());
+		    email.sendEmailWithAttachment(("Otimização em curso: " + fileName.getText() + " " + new Date()),
+			    messageText, filePath.getText(), fileName.getText());
 		} catch (Exception e) {
 		    saveButton.setBackground(Color.RED.brighter());
 		}

@@ -21,7 +21,8 @@ public class Problem {
     private ArrayList<DecisionVariable> decisionVariables;
 
     private DataType optimizationCriteriaDataType;
-    private ArrayList<FitnessFunction> fitnessFunctions;
+    private ArrayList<OptimizationCriteria> optimizationCriteria;
+    private String fitnessFunction;
 
     private ArrayList<String> optimizationAlgorithms;
     private String idealTimeFrame;
@@ -66,8 +67,8 @@ public class Problem {
      * @param optimizationCriteriaDataType
      *            data type of the optimizationCriteria: {@code DataType.INTEGER} or
      *            {@code DataType.DOUBLE} or {@code DataType.BINARY}
-     * @param fitnessFunctions
-     *            List of all the problem's fitness functions
+     * @param fitnessFunction
+     *            String containing the path to the function's executable jar file
      * @param optimizationAlgorithms
      *            List of the optimization algorithms selected
      * @param idealTimeFrame
@@ -78,8 +79,9 @@ public class Problem {
     public Problem(String problemName, String problemDescription, String decisionVariablesSetName,
 	    DataType decisionVariablesDataType, String decisionVariablesLowerBound, String decisionVariablesUpperBound,
 	    String decisionVariablesInvalidValues, ArrayList<DecisionVariable> decisionVariables,
-	    DataType optimizationCriteriaDataType, ArrayList<FitnessFunction> fitnessFunctions,
-	    ArrayList<String> optimizationAlgorithms, String idealTimeFrame, String maxTimeFrame) {
+	    DataType optimizationCriteriaDataType, ArrayList<OptimizationCriteria> optimizationCriteria,
+	    String fitnessFunction, ArrayList<String> optimizationAlgorithms, String idealTimeFrame,
+	    String maxTimeFrame) {
 	super();
 	this.problemName = problemName;
 	this.problemDescription = problemDescription;
@@ -90,112 +92,219 @@ public class Problem {
 	this.decisionVariablesInvalidValues = decisionVariablesInvalidValues;
 	this.decisionVariables = decisionVariables;
 	this.optimizationCriteriaDataType = optimizationCriteriaDataType;
-	this.fitnessFunctions = fitnessFunctions;
+	this.optimizationCriteria = optimizationCriteria;
+	this.fitnessFunction = fitnessFunction;
 	this.optimizationAlgorithms = optimizationAlgorithms;
 	this.idealTimeFrame = idealTimeFrame;
 	this.maxTimeFrame = maxTimeFrame;
     }
 
+    /**
+     * @return the problemName
+     */
     public String getProblemName() {
 	return problemName;
     }
 
+    /**
+     * @param problemName
+     *            the problemName to set
+     */
     public void setProblemName(String problemName) {
 	this.problemName = problemName;
     }
 
+    /**
+     * @return the problemDescription
+     */
     public String getProblemDescription() {
 	return problemDescription;
     }
 
+    /**
+     * @param problemDescription
+     *            the problemDescription to set
+     */
     public void setProblemDescription(String problemDescription) {
 	this.problemDescription = problemDescription;
     }
 
+    /**
+     * @return the decisionVariablesSetName
+     */
     public String getDecisionVariablesSetName() {
 	return decisionVariablesSetName;
     }
 
+    /**
+     * @param decisionVariablesSetName
+     *            the decisionVariablesSetName to set
+     */
     public void setDecisionVariablesSetName(String decisionVariablesSetName) {
 	this.decisionVariablesSetName = decisionVariablesSetName;
     }
 
+    /**
+     * @return the decisionVariablesDataType
+     */
     public DataType getDecisionVariablesDataType() {
 	return decisionVariablesDataType;
     }
 
+    /**
+     * @param decisionVariablesDataType
+     *            the decisionVariablesDataType to set
+     */
     public void setDecisionVariablesDataType(DataType decisionVariablesDataType) {
 	this.decisionVariablesDataType = decisionVariablesDataType;
     }
 
+    /**
+     * @return the decisionVariablesLowerBound
+     */
     public String getDecisionVariablesLowerBound() {
 	return decisionVariablesLowerBound;
     }
 
+    /**
+     * @param decisionVariablesLowerBound
+     *            the decisionVariablesLowerBound to set
+     */
     public void setDecisionVariablesLowerBound(String decisionVariablesLowerBound) {
 	this.decisionVariablesLowerBound = decisionVariablesLowerBound;
     }
 
+    /**
+     * @return the decisionVariablesUpperBound
+     */
     public String getDecisionVariablesUpperBound() {
 	return decisionVariablesUpperBound;
     }
 
+    /**
+     * @param decisionVariablesUpperBound
+     *            the decisionVariablesUpperBound to set
+     */
     public void setDecisionVariablesUpperBound(String decisionVariablesUpperBound) {
 	this.decisionVariablesUpperBound = decisionVariablesUpperBound;
     }
 
+    /**
+     * @return the decisionVariablesInvalidValues
+     */
     public String getDecisionVariablesInvalidValues() {
 	return decisionVariablesInvalidValues;
     }
 
+    /**
+     * @param decisionVariablesInvalidValues
+     *            the decisionVariablesInvalidValues to set
+     */
     public void setDecisionVariablesInvalidValues(String decisionVariablesInvalidValues) {
 	this.decisionVariablesInvalidValues = decisionVariablesInvalidValues;
     }
 
+    /**
+     * @return the decisionVariables
+     */
     public ArrayList<DecisionVariable> getDecisionVariables() {
 	return decisionVariables;
     }
 
+    /**
+     * @param decisionVariables
+     *            the decisionVariables to set
+     */
     public void setDecisionVariables(ArrayList<DecisionVariable> decisionVariables) {
 	this.decisionVariables = decisionVariables;
     }
 
+    /**
+     * @return the optimizationCriteriaDataType
+     */
     public DataType getOptimizationCriteriaDataType() {
 	return optimizationCriteriaDataType;
     }
 
+    /**
+     * @param optimizationCriteriaDataType
+     *            the optimizationCriteriaDataType to set
+     */
     public void setOptimizationCriteriaDataType(DataType optimizationCriteriaDataType) {
 	this.optimizationCriteriaDataType = optimizationCriteriaDataType;
     }
 
-    public ArrayList<FitnessFunction> getFitnessFunctions() {
-	return fitnessFunctions;
+    /**
+     * @return the optimizationCriteria
+     */
+    public ArrayList<OptimizationCriteria> getOptimizationCriteria() {
+	return optimizationCriteria;
     }
 
-    public void setFitnessFunctions(ArrayList<FitnessFunction> fitnessFunctions) {
-	this.fitnessFunctions = fitnessFunctions;
+    /**
+     * @param optimizationCriteria
+     *            the optimizationCriteria to set
+     */
+    public void setOptimizationCriteria(ArrayList<OptimizationCriteria> optimizationCriteria) {
+	this.optimizationCriteria = optimizationCriteria;
     }
 
+    /**
+     * @return the fitnessFunction
+     */
+    public String getFitnessFunction() {
+	return fitnessFunction;
+    }
+
+    /**
+     * @param fitnessFunction
+     *            the fitnessFunction to set
+     */
+    public void setFitnessFunction(String fitnessFunction) {
+	this.fitnessFunction = fitnessFunction;
+    }
+
+    /**
+     * @return the optimizationAlgorithms
+     */
     public ArrayList<String> getOptimizationAlgorithms() {
 	return optimizationAlgorithms;
     }
 
+    /**
+     * @param optimizationAlgorithms
+     *            the optimizationAlgorithms to set
+     */
     public void setOptimizationAlgorithms(ArrayList<String> optimizationAlgorithms) {
 	this.optimizationAlgorithms = optimizationAlgorithms;
     }
 
+    /**
+     * @return the idealTimeFrame
+     */
     public String getIdealTimeFrame() {
 	return idealTimeFrame;
     }
 
+    /**
+     * @param idealTimeFrame
+     *            the idealTimeFrame to set
+     */
     public void setIdealTimeFrame(String idealTimeFrame) {
 	this.idealTimeFrame = idealTimeFrame;
     }
 
+    /**
+     * @return the maxTimeFrame
+     */
     public String getMaxTimeFrame() {
 	return maxTimeFrame;
     }
 
+    /**
+     * @param maxTimeFrame
+     *            the maxTimeFrame to set
+     */
     public void setMaxTimeFrame(String maxTimeFrame) {
 	this.maxTimeFrame = maxTimeFrame;
     }
@@ -215,9 +324,10 @@ public class Problem {
 		+ "Decision Variables' Upper Bound: " + decisionVariablesUpperBound + newLine
 		+ "Decision Variables' Invalid Values: " + decisionVariablesInvalidValues + newLine
 		+ "Decision Variables: " + decisionVariables + newLine + "Optimization Criteria's Data Type: "
-		+ optimizationCriteriaDataType + newLine + "Fitness Functions: " + fitnessFunctions + newLine
-		+ "Optimization Algorithms: " + optimizationAlgorithms + newLine + "Ideal Time Frame: " + idealTimeFrame
-		+ newLine + "Max Time Frame: " + maxTimeFrame + newLine;
+		+ optimizationCriteriaDataType + newLine + "Optimization Criteria: " + optimizationCriteria + newLine
+		+ "Fitness Function: " + fitnessFunction + newLine + "Optimization Algorithms: "
+		+ optimizationAlgorithms + newLine + "Ideal Time Frame: " + idealTimeFrame + newLine
+		+ "Max Time Frame: " + maxTimeFrame + newLine;
     }
 
     /**

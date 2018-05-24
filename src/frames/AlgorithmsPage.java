@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,7 +15,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import jMetal.binaryConfiguration.BinaryAlgorithms;
 import jMetal.doubleConfiguration.DoubleAlgorithms;
+import jMetal.integerConfiguration.IntegerAlgorithms;
+import objects.DataType;
 
 public class AlgorithmsPage extends SuperPage {
 
@@ -44,7 +46,7 @@ public class AlgorithmsPage extends SuperPage {
     protected void createMainPanel() {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	mainPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
-	
+
 	JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	titlePanel.setBackground(Color.WHITE);
 	title.setFont(FrameUtils.cuteFont(16));
@@ -74,11 +76,10 @@ public class AlgorithmsPage extends SuperPage {
 
 	title.setText((userInterface.getIsSingleobjective() ? "Single objective" : "Multi objective")
 		+ " optimization algorithms available");
-	// TODO
-	List<String> list = userInterface.getIsSingleobjective() ? DoubleAlgorithms.SINGLE_OBJECTIVE
-		: DoubleAlgorithms.MULTI_OBJECTIVE;
 
-	for (String algorithm : list)
+	
+
+	for (String algorithm : getAlgorithmsList())
 	    algorithmsList.add(new JCheckBox(algorithm));
 
 	for (JCheckBox checkBox : algorithmsList) {
@@ -140,16 +141,33 @@ public class AlgorithmsPage extends SuperPage {
      */
     public ArrayList<String> getTheCheckboxesSelected() {
 	ArrayList<String> tmp = new ArrayList<String>();
+	ArrayList<String> algorithms = getAlgorithmsList();
 	for (JCheckBox checkbox : algorithmsList) {
 	    if (checkbox.isSelected() == true) {
 		// TODO
-		if (userInterface.getIsSingleobjective() == true) {
-		    tmp.add(DoubleAlgorithms.SINGLE_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
-		} else {
-		    tmp.add(DoubleAlgorithms.MULTI_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
-		}
+		tmp.add(algorithms.get(algorithmsList.indexOf(checkbox)));
+//		if (userInterface.getIsSingleobjective() == true) {
+//		    tmp.add(DoubleAlgorithms.SINGLE_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
+//		} else {
+//		    tmp.add(DoubleAlgorithms.MULTI_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
+//		}
 	    }
 	}
 	return tmp;
+    }
+    
+    public ArrayList<String> getAlgorithmsList() {
+	ArrayList<String> list;
+	DataType problemType = userInterface.getDecisionVariablesFromPage().get(0).getDataTypeToProblem();
+	if (problemType == DataType.DOUBLE)
+	    list = userInterface.getIsSingleobjective() ? DoubleAlgorithms.SINGLE_OBJECTIVE
+		    : DoubleAlgorithms.MULTI_OBJECTIVE;
+	else if (problemType == DataType.INTEGER)
+	    list = userInterface.getIsSingleobjective() ? IntegerAlgorithms.SINGLE_OBJECTIVE
+		    : IntegerAlgorithms.MULTI_OBJECTIVE;
+	else
+	    list = userInterface.getIsSingleobjective() ? BinaryAlgorithms.SINGLE_OBJECTIVE
+		    : BinaryAlgorithms.MULTI_OBJECTIVE;
+	return list;
     }
 }

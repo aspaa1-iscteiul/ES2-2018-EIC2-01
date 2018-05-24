@@ -110,7 +110,9 @@ public class SendEmailPage extends SuperPage {
 	submitButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		new Email("ES22018EIC201@gmail.com").sendEmail(
+		Email email = new Email("ES22018EIC201@gmail.com");
+		email.setToCC(userInterface.getAdmin().getEmail());
+		email.sendEmail(false,
 			"Email to answer:" + userInterface.getUserEmail() + " Name:" + name.getText() + " Subject:"
 				+ subject.getText(),
 			"Email to answer:" + userInterface.getUserEmail() + "\n" + message.getText());

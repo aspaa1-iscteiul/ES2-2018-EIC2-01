@@ -1,7 +1,7 @@
 package jMetal.integerConfiguration;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,23 +39,19 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
      */
 
     // TODO PESA2 and NSGAIII not working
-    public static final List<String> MULTI_OBJECTIVE = Arrays.asList("MOCell", "NSGAII", "PAES", // "NSGAIII", "PESA2",
-	    "RandomSearch", "SMSEMOA", "SPEA2");
+    public static final ArrayList<String> MULTI_OBJECTIVE = new ArrayList<>(Arrays.asList("MOCell", "NSGAII", "PAES", // "NSGAIII",
+														      // "PESA2",
+	    "RandomSearch", "SMSEMOA", "SPEA2"));
 
     @SuppressWarnings("unchecked")
-    public Algorithm<List<IntegerSolution>> getMultiObjectiveAlgortihm(String algorithmName, IntegerProblem problem) {
+    public Algorithm<List<IntegerSolution>> getMultiObjectiveAlgortihm(String algorithmName, IntegerProblem problem)
+	    throws Exception {
 	if (!MULTI_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
 		    algorithmName + " is not a valid multiobjective algorithm for IntegerProblem");
 
-	try {
-	    Method method = getClass().getMethod("get" + algorithmName, IntegerProblem.class);
-	    return (Algorithm<List<IntegerSolution>>) method.invoke(problem);
-	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-		| InvocationTargetException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	Method method = getClass().getMethod("get" + algorithmName, IntegerProblem.class);
+	return (Algorithm<List<IntegerSolution>>) method.invoke(this, problem);
     }
 
     public Algorithm<List<IntegerSolution>> getMOCell(IntegerProblem problem) {
@@ -102,23 +98,18 @@ public class IntegerAlgorithms extends JMetalAlgorithms {
      * Single Objective
      */
 
-    public static final List<String> SINGLE_OBJECTIVE = Arrays.asList("EvolutionStrategyElitist",
-	    "EvolutionStrategyNonElitist", "GeneticAlgorithm");
+    public static final ArrayList<String> SINGLE_OBJECTIVE = new ArrayList<>(
+	    Arrays.asList("EvolutionStrategyElitist", "EvolutionStrategyNonElitist", "GeneticAlgorithm"));
 
     @SuppressWarnings("unchecked")
-    public Algorithm<IntegerSolution> getSingleObjectiveAlgortihm(String algorithmName, IntegerProblem problem) {
+    public Algorithm<IntegerSolution> getSingleObjectiveAlgortihm(String algorithmName, IntegerProblem problem)
+	    throws Exception {
 	if (!SINGLE_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
 		    algorithmName + " is not a valid singleobjective algorithm for IntegerProblem");
 
-	try {
-	    Method method = getClass().getMethod("get" + algorithmName, IntegerProblem.class);
-	    return (Algorithm<IntegerSolution>) method.invoke(problem);
-	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-		| InvocationTargetException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	Method method = getClass().getMethod("get" + algorithmName, IntegerProblem.class);
+	return (Algorithm<IntegerSolution>) method.invoke(this, problem);
     }
 
     public Algorithm<IntegerSolution> getEvolutionStrategyElitist(IntegerProblem problem) {

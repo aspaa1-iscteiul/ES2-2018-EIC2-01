@@ -16,15 +16,15 @@ import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFro
 
 public interface JMetalProblem {
 
-    public static final int INDEPENDENT_RUNS = 5;
+    public static final int INDEPENDENT_RUNS = 4;
 
     public int evaluateIteration();
 
-    public default void run(ArrayList<String> algorithmsNames) throws IOException {
+    public default void run(ArrayList<String> algorithmsNames) throws Exception {
 	execute(configure(algorithmsNames));
     }
 
-    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames);
+    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) throws Exception;
 
     public default void execute(ExperimentBuilder<?, ?> experimentBuilder) throws IOException {
 	String experimentBaseDirectory = "experimentBaseDirectory";
