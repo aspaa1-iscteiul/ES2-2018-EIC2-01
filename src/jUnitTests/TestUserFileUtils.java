@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import objects.DataType;
 import objects.DecisionVariable;
-import objects.FitnessFunction;
 import objects.OptimizationCriteria;
 import objects.Problem;
 import utils.UserFileUtils;
@@ -48,9 +47,6 @@ public class TestUserFileUtils {
 	ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
 	optimizationCriteria.add(oc1);
 	optimizationCriteria.add(oc2);
-	FitnessFunction ff = new FitnessFunction("path", optimizationCriteria);
-	ArrayList<FitnessFunction> fitnessFunctions = new ArrayList<>();
-	fitnessFunctions.add(ff);
 
 	ArrayList<String> optimizationAlgorithms = new ArrayList<>();
 	optimizationAlgorithms.add("NSGA");
@@ -59,11 +55,11 @@ public class TestUserFileUtils {
 	Problem problem;
 	if (scenario == 1)
 	    problem = new Problem("ProblemaTeste", null, null, DataType.INTEGER, null, null, null, decisionVariables,
-		    DataType.BINARY, fitnessFunctions, optimizationAlgorithms, "2.0", null);
+		    DataType.BINARY, optimizationCriteria, "path", optimizationAlgorithms, "2.0", null);
 	else
 	    problem = new Problem("ProblemaTeste", "Descrição do problema de teste", "Regras", DataType.DOUBLE, "-5.0",
-		    "+5.0", "0.0", decisionVariables, DataType.DOUBLE, fitnessFunctions, optimizationAlgorithms, "2.0",
-		    "4.0");
+		    "+5.0", "0.0", decisionVariables, DataType.DOUBLE, optimizationCriteria, "path",
+		    optimizationAlgorithms, "2.0", "4.0");
 	return problem;
     }
 

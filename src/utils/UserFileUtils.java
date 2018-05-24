@@ -24,7 +24,6 @@ import org.xml.sax.SAXException;
 
 import objects.DataType;
 import objects.DecisionVariable;
-import objects.FitnessFunction;
 import objects.OptimizationCriteria;
 import objects.Problem;
 
@@ -49,10 +48,8 @@ public class UserFileUtils {
 	    tagDecisionVariablesInvalidValues = "DecisionVariables_InvalidValues",
 	    tagDecisionVariablesList = "DecisionVariables_List", tagDecisionVariable = "DecisionVariable",
 	    tagName = "Name", tagKnownSolutionsList = "KnownSolutions_List", tagValue = "Value",
-	    tagOptimizationCriteriaDataType = "OptimizationCriteria_DataType",
-	    tagFitnessFunctions_List = "FitnessFunctions_List", tagFitnessFunction = "FitnessFunction",
-	    tagJarFilePath = "JarFilePath", tagOptimizationCriteriaList = "OptimizationCriteria_List",
-	    tagOptimizationCriteria = "OptimizationCriteria",
+	    tagOptimizationCriteriaDataType = "OptimizationCriteria_DataType", tagFitnessFunction = "FitnessFunction",
+	    tagOptimizationCriteriaList = "OptimizationCriteria_List", tagOptimizationCriteria = "OptimizationCriteria",
 	    tagOptimizationAlgorithmsList = "OptimizationAlgorithms_List", tagAlgorithmsName = "Algorithm_Name",
 	    tagIdealTimeFrame = "IdealTimeFrame", tagMaximumTimeFrame = "MaximumTimeFrame";
 
@@ -170,30 +167,25 @@ public class UserFileUtils {
 	createTextNode(doc, problemNode, tagOptimizationCriteriaDataType,
 		problem.getOptimizationCriteriaDataType().name());
 
-	// Create Fitness Functions Node and Sub-nodes
-	Element fitnessFunctionsNode = createEmptyNode(doc, problemNode, tagFitnessFunctions_List);
+	// Create Optimization Criteria Node and Sub-nodes
+	Element optimizationCriteriaNode = createEmptyNode(doc, problemNode, tagOptimizationCriteriaList);
 
-	for (FitnessFunction f : problem.getFitnessFunctions()) {
-	    Element fitnessFunctionNode = createEmptyNode(doc, fitnessFunctionsNode, tagFitnessFunction);
-	    createTextNode(doc, fitnessFunctionNode, tagJarFilePath, f.getJarFilePath());
+	for (OptimizationCriteria criteria : problem.getOptimizationCriteria()) {
+	    Element optimizationCriteriaElement = createEmptyNode(doc, optimizationCriteriaNode,
+		    tagOptimizationCriteria);
 
-	    Element optimizationCriteriaListNode = createEmptyNode(doc, fitnessFunctionNode,
-		    tagOptimizationCriteriaList);
+	    createTextNode(doc, optimizationCriteriaElement, tagName, criteria.getName());
 
-	    for (OptimizationCriteria criteria : f.getOptimizationCriteria()) {
-		Element optimizationCriteriaNode = createEmptyNode(doc, optimizationCriteriaListNode,
-			tagOptimizationCriteria);
-
-		createTextNode(doc, optimizationCriteriaNode, tagName, criteria.getName());
-
-		if (criteria.getKnownSolutions() != null) {
-		    Element knownSolutionsNode = createEmptyNode(doc, optimizationCriteriaNode, tagKnownSolutionsList);
-		    for (String solution : criteria.getKnownSolutions())
-			createTextNode(doc, knownSolutionsNode, tagValue, solution);
-		}
+	    if (criteria.getKnownSolutions() != null) {
+		Element knownSolutionsNode = createEmptyNode(doc, optimizationCriteriaElement, tagKnownSolutionsList);
+		for (String solution : criteria.getKnownSolutions())
+		    createTextNode(doc, knownSolutionsNode, tagValue, solution);
 	    }
 
 	}
+
+	// Create Fitness Function Node
+	createTextNode(doc, problemNode, tagFitnessFunction, problem.getFitnessFunction());
 
 	// Create Optimization Algorithms Node and Sub-nodes
 	Element optimizationAlgorithmsListNode = createEmptyNode(doc, problemNode, tagOptimizationAlgorithmsList);
@@ -319,13 +311,18 @@ public class UserFileUtils {
 	if (problemElement.getElementsByTagName(tagDecisionVariablesInvalidValues).getLength() > 0)
 	    problem.setDecisionVariablesInvalidValues(getTagValue(tagDecisionVariablesInvalidValues, problemElement));
 
-	// Create Optimization Criteria Data Type Node
+	// Retrieve Decision Variables and Optimization Algorithms
+	problem.setDecisionVariables(getDecisionVariables(doc));
+	problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));
+
+	// Retrieve Optimization Criteria Data Type
 	problem.setOptimizationCriteriaDataType(extractDataType(tagOptimizationCriteriaDataType, problemElement));
 
-	// Retrieve Decision Variables, Fitness Functions and Optimization Algorithms
-	problem.setDecisionVariables(getDecisionVariables(doc));
-	problem.setFitnessFunctions(getFitnessFunctions(doc));
-	problem.setOptimizationAlgorithms(getOptimizationAlgorithms(doc));
+	// Retrieve OptimizationCriteria
+	problem.setOptimizationCriteria(getOptimizationCriteria(doc));
+
+	// Retrieve Fitness Function
+	problem.setFitnessFunction(getTagValue(tagFitnessFunction, problemElement));
 
 	// Retrieve Ideal and Maximum Time Frame
 	problem.setIdealTimeFrame((getTagValue(tagIdealTimeFrame, problemElement)));
@@ -407,52 +404,36 @@ public class UserFileUtils {
      * 
      * @return ArrayList of the Problem's Fitness Functions
      */
-    private static ArrayList<FitnessFunction> getFitnessFunctions(Document doc) {
+    private static ArrayList<OptimizationCriteria> getOptimizationCriteria(Document doc) {
 
-	ArrayList<FitnessFunction> fitnessFunctions = new ArrayList<>();
-	NodeList fitnessFunctionsList = doc.getElementsByTagName(tagFitnessFunction);
+	ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
+	NodeList optimizationCriteriaNodeList = doc.getElementsByTagName(tagOptimizationCriteria);
 
-	for (int index = 0; index < fitnessFunctionsList.getLength(); index++) {
+	for (int index = 0; index < optimizationCriteriaNodeList.getLength(); index++) {
 
-	    ArrayList<OptimizationCriteria> optimizationCriteria = new ArrayList<>();
+	    Node optimizationCriteriaNode = optimizationCriteriaNodeList.item(index);
+	    Element optimizationCriteriaElement = (Element) optimizationCriteriaNode;
 
-	    Node fitnessFunctionNode = fitnessFunctionsList.item(index);
-	    Element fitnessFunctionElement = (Element) fitnessFunctionNode;
+	    String name = getTagValue(tagName, optimizationCriteriaElement);
+	    OptimizationCriteria optCriteria = new OptimizationCriteria(name, null);
 
-	    String jarFilePath = getTagValue(tagJarFilePath, fitnessFunctionElement);
-	    FitnessFunction fitnessFunction = new FitnessFunction(jarFilePath, null);
+	    Node knownSolutionsNode = optimizationCriteriaNode.getLastChild();
+	    if (knownSolutionsNode.getNodeName().equals(tagKnownSolutionsList)) {
 
-	    Node optimizationCriteriaListNode = fitnessFunctionNode.getLastChild();
-	    NodeList optimizationCriteriaNodeList = optimizationCriteriaListNode.getChildNodes();
+		ArrayList<String> knownSolutions = new ArrayList<>();
+		NodeList knownSolutionsList = knownSolutionsNode.getChildNodes();
 
-	    for (int index2 = 0; index2 < optimizationCriteriaNodeList.getLength(); index2++) {
+		for (int index3 = 0; index3 < knownSolutionsList.getLength(); index3++) {
+		    Node knownSolutionNode = knownSolutionsList.item(index3);
+		    String knownSolution = knownSolutionNode.getTextContent();
 
-		Node optimizationCriteriaNode = optimizationCriteriaNodeList.item(index2);
-		Element optimizationCriteriaElement = (Element) optimizationCriteriaNode;
-
-		String name = getTagValue(tagName, optimizationCriteriaElement);
-		OptimizationCriteria optCriteria = new OptimizationCriteria(name, null);
-
-		Node knownSolutionsNode = optimizationCriteriaNode.getLastChild();
-		if (knownSolutionsNode.getNodeName().equals(tagKnownSolutionsList)) {
-
-		    ArrayList<String> knownSolutions = new ArrayList<>();
-		    NodeList knownSolutionsList = knownSolutionsNode.getChildNodes();
-
-		    for (int index3 = 0; index3 < knownSolutionsList.getLength(); index3++) {
-			Node knownSolutionNode = knownSolutionsList.item(index3);
-			String knownSolution = knownSolutionNode.getTextContent();
-
-			knownSolutions.add(knownSolution);
-		    }
-		    optCriteria.setKnownSolutions(knownSolutions);
+		    knownSolutions.add(knownSolution);
 		}
-		optimizationCriteria.add(optCriteria);
+		optCriteria.setKnownSolutions(knownSolutions);
 	    }
-	    fitnessFunction.setOptimizationCriteria(optimizationCriteria);
-	    fitnessFunctions.add(fitnessFunction);
+	    optimizationCriteria.add(optCriteria);
 	}
-	return fitnessFunctions;
+	return optimizationCriteria;
     }
 
     /**
