@@ -15,12 +15,10 @@ import frames.graphicalObjects.DecisionVariablesObject;
 import frames.graphicalObjects.FitnessFunctionObject;
 import frames.graphicalObjects.KnownDecisionVariablesSolutionsObject;
 import frames.graphicalObjects.KnownOptimizationCriteriaSolutionsObject;
-import frames.graphicalObjects.OptimizationCriteriaCheckbox;
 import frames.graphicalObjects.OptimizationCriteriaObject;
 import jMetal.JMetalRun;
 import objects.Admin;
 import objects.DecisionVariable;
-import objects.FitnessFunction;
 import objects.OptimizationCriteria;
 import objects.Problem;
 
@@ -37,11 +35,11 @@ public class UserInterface {
     private OutputKnownSolutionsPage outputKnownSolutionsPage;
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
-    private ArrayList<FitnessFunctionObject> fitnessFunctionFromPage;
     private ArrayList<KnownDecisionVariablesSolutionsObject> knownSolutionsFromDecisionVariables;
     private ArrayList<KnownOptimizationCriteriaSolutionsObject> knownSolutionsFromOptimizationCriteria;
     private ArrayList<OptimizationCriteriaObject> optimizationCriteriaFromPage;
     private ArrayList<String> optimizationAlgorithmsFromPage;
+    private FitnessFunctionObject fitnessFunctionObject;
     private int actualPageIndex = 0;
     private Problem problem;
     private Admin admin;
@@ -53,8 +51,8 @@ public class UserInterface {
 	    xmlFileWasImported[i] = false;
 	}
 	emailPage = new SendEmailPage(this);
+	fitnessFunctionObject = new FitnessFunctionObject(null);
 	decisionVariablesFromPage = new ArrayList<DecisionVariablesObject>();
-	fitnessFunctionFromPage = new ArrayList<FitnessFunctionObject>();
 	knownSolutionsFromDecisionVariables = new ArrayList<KnownDecisionVariablesSolutionsObject>();
 	knownSolutionsFromOptimizationCriteria = new ArrayList<KnownOptimizationCriteriaSolutionsObject>();
 	optimizationCriteriaFromPage = new ArrayList<OptimizationCriteriaObject>();
@@ -338,13 +336,8 @@ public class UserInterface {
      * 
      * @return
      */
-    public ArrayList<FitnessFunction> createFitnessFunctionFinalList() {
-	ArrayList<FitnessFunction> ffList = new ArrayList<FitnessFunction>();
-	for (FitnessFunctionObject ffo : fitnessFunctionFromPage) {
-	    ffList.add(new FitnessFunction(ffo.getPath(),
-		    getOptimizationCriteriaObjectsFromGivenStrings(ffo.getTheCheckboxesSelected())));
-	}
-	return ffList;
+    public void createFitnessFunctionFinal() {
+	this.problem.setFitnessFunction(fitnessFunctionObject.getPath());
     }
 
     /**
@@ -355,13 +348,8 @@ public class UserInterface {
      * @return
      */
     public void createFitnessFunctionFromProblem(FitnessFunctionPage page) {
-	ArrayList<FitnessFunctionObject> tmp = new ArrayList<FitnessFunctionObject>();
-	for (FitnessFunction ff : problem.getFitnessFunctions()) {
-	    tmp.add(new FitnessFunctionObject(page, ff.getJarFilePath(),
-		    createOptimizationCriteriaCheckboxesFromProblem(ff.getOptimizationCriteria())));
-	}
+	fitnessFunctionObject = new FitnessFunctionObject(page, problem.getFitnessFunction());
 	xmlFileWasImported[2] = true;
-	this.fitnessFunctionFromPage = tmp;
     }
 
     /**
@@ -394,11 +382,9 @@ public class UserInterface {
      */
     public void createOptimizationCriteriaFromProblem(OptimizationCriteriaPage page) {
 	ArrayList<OptimizationCriteriaObject> tmp = new ArrayList<OptimizationCriteriaObject>();
-	for (FitnessFunction ff : problem.getFitnessFunctions()) {
-	    for (OptimizationCriteria oc : ff.getOptimizationCriteria()) {
-		tmp.add(new OptimizationCriteriaObject(page, oc.getName(),
-			problem.getOptimizationCriteriaDataType().toString()));
-	    }
+	for (OptimizationCriteria oc : problem.getOptimizationCriteria()) {
+	    tmp.add(new OptimizationCriteriaObject(page, oc.getName(),
+		    problem.getOptimizationCriteriaDataType().toString()));
 	}
 	xmlFileWasImported[3] = true;
 	this.optimizationCriteriaFromPage = tmp;
@@ -451,49 +437,12 @@ public class UserInterface {
      */
     public void createKnownOptimizationCriteriaSolutionsFromProblem(KnownOptimizationCriteriaSolutionsPage page) {
 	ArrayList<KnownOptimizationCriteriaSolutionsObject> tmp = new ArrayList<KnownOptimizationCriteriaSolutionsObject>();
-	for (OptimizationCriteria oc : problem.getFitnessFunctions().get(0).getOptimizationCriteria()) {
+	for (OptimizationCriteria oc : problem.getOptimizationCriteria()) {
 	    tmp.add(new KnownOptimizationCriteriaSolutionsObject(page, oc.getName(),
 		    problem.getOptimizationCriteriaDataType().toString(), oc.getKnownSolutions()));
 	}
 	xmlFileWasImported[5] = true;
 	this.knownSolutionsFromOptimizationCriteria = tmp;
-    }
-
-    /**
-     * Converts a arraylist of strings with the name of the checkboxes selected into
-     * an arraylist of optimization criteria to be used in the problem saving
-     * 
-     * @param strings
-     * @return
-     */
-    private ArrayList<OptimizationCriteria> getOptimizationCriteriaObjectsFromGivenStrings(ArrayList<String> strings) {
-	ArrayList<OptimizationCriteria> tmp = new ArrayList<OptimizationCriteria>();
-	for (String str : strings) {
-	    for (OptimizationCriteria oco : createOptimizationCriteriaFinalList()) {
-		if (oco.getName().equals(str)) {
-		    tmp.add(oco);
-		}
-	    }
-	}
-	return tmp;
-    }
-
-    /**
-     * Converts a arraylist of optimization criteria into an arraylist of
-     * optimization criteria checkboxes
-     * 
-     * @param strings
-     * @return
-     */
-    private ArrayList<OptimizationCriteriaCheckbox> createOptimizationCriteriaCheckboxesFromProblem(
-	    ArrayList<OptimizationCriteria> optimizationCriterias) {
-	ArrayList<OptimizationCriteriaCheckbox> tmp = new ArrayList<OptimizationCriteriaCheckbox>();
-	for (OptimizationCriteria oc : optimizationCriterias) {
-	    OptimizationCriteriaCheckbox occ = new OptimizationCriteriaCheckbox(oc.getName());
-	    occ.getCheckBox().setSelected(true);
-	    tmp.add(occ);
-	}
-	return tmp;
     }
 
     /**
@@ -524,8 +473,8 @@ public class UserInterface {
      */
     public void setFinalProblem() {
 	this.problem.setDecisionVariables(createDecisionVariableFinalList());
-	this.problem.setFitnessFunctions(createFitnessFunctionFinalList());
 	this.problem.setOptimizationAlgorithms(optimizationAlgorithmsFromPage);
+	createFitnessFunctionFinal();
     }
 
     /**
@@ -535,7 +484,7 @@ public class UserInterface {
 	problem = new Problem();
 	userEmail = null;
 	decisionVariablesFromPage.clear();
-	fitnessFunctionFromPage.clear();
+	fitnessFunctionObject = new FitnessFunctionObject(null);
 	knownSolutionsFromDecisionVariables.clear();
 	optimizationCriteriaFromPage.clear();
 	optimizationAlgorithmsFromPage.clear();
@@ -566,14 +515,6 @@ public class UserInterface {
 
     public void setDecisionVariablesFromPage(ArrayList<DecisionVariablesObject> decisionVariablesFromPage) {
 	this.decisionVariablesFromPage = decisionVariablesFromPage;
-    }
-
-    public ArrayList<FitnessFunctionObject> getFitnessFunctionFromPage() {
-	return fitnessFunctionFromPage;
-    }
-
-    public void setFitnessFunctionFromPage(ArrayList<FitnessFunctionObject> fitnessFunctionFromPage) {
-	this.fitnessFunctionFromPage = fitnessFunctionFromPage;
     }
 
     public ArrayList<KnownDecisionVariablesSolutionsObject> getKnownDecisionVariablesSolutionsList() {
@@ -638,6 +579,14 @@ public class UserInterface {
 
     public void setWasSomethingImported(boolean wasSomethingImported) {
 	this.wasSomethingImported = wasSomethingImported;
+    }
+    
+    public FitnessFunctionObject getFitnessFunctionObject() {
+        return fitnessFunctionObject;
+    }
+
+    public void setFitnessFunctionObject(FitnessFunctionObject fitnessFunctionObject) {
+        this.fitnessFunctionObject = fitnessFunctionObject;
     }
 
     /**

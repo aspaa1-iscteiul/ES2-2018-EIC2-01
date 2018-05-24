@@ -6,15 +6,11 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -32,8 +28,6 @@ public class FitnessFunctionObject {
     private JPanel fieldsPanel;
     private boolean jarFileUploaded;
     private JButton uploadButton;
-    private ArrayList<OptimizationCriteriaCheckbox> checkboxList;
-    private JLabel warning;
 
     public static String newLine = System.getProperty("line.separator");
 
@@ -44,17 +38,16 @@ public class FitnessFunctionObject {
     public FitnessFunctionObject(FitnessFunctionPage page) {
 	this.pageAssociated = page;
 	this.setJarFileUploaded(false);
-	this.checkboxList = new ArrayList<OptimizationCriteriaCheckbox>();
 	uploadButton = FrameUtils.cuteButton("Upload JAR file");
 	uploadButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 		JOptionPane.showMessageDialog(fieldsPanel,
 			"The JAR file chosen should behave according to the established evaluation protocol. " + newLine
-				+ "That is, it should receive as input the name of the optimization criteria to be "
-				+ newLine
-				+ "calculated as well as the solutions vector and it should return as an output the "
-				+ newLine + "value of the optimization criterion for this solution." + newLine,
+			+ "That is, it should receive as input the name of the optimization criteria to be "
+			+ newLine
+			+ "calculated as well as the solutions vector and it should return as an output the "
+			+ newLine + "value of the optimization criterion for this solution." + newLine,
 			"Exchange protocol", JOptionPane.INFORMATION_MESSAGE);
 
 		JFileChooser fileChooser = new JFileChooser();
@@ -77,9 +70,8 @@ public class FitnessFunctionObject {
 	});
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	uploadButton
-		.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
-	warning = new JLabel("No optimization criterias available");
     }
 
     /**
@@ -87,12 +79,9 @@ public class FitnessFunctionObject {
      * 
      * @param page
      * @param filePath
-     * @param checkboxList
      */
-    public FitnessFunctionObject(FitnessFunctionPage page, String filePath,
-	    ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
+    public FitnessFunctionObject(FitnessFunctionPage page, String filePath) {
 	this.pageAssociated = page;
-	this.checkboxList = checkboxList;
 	uploadButton = FrameUtils.cuteButton(filePath);
 	uploadButton.addActionListener(new ActionListener() {
 	    @Override
@@ -113,7 +102,7 @@ public class FitnessFunctionObject {
 	});
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	uploadButton
-		.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
 
     }
@@ -155,27 +144,6 @@ public class FitnessFunctionObject {
 	fieldsPanel.add(uploadButton);
 	uploadButton.setText(getPath());
 	jarFileUploaded = true;
-
-	if (pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
-	    for (OptimizationCriteriaObject oco : pageAssociated.userInterface.getOptimizationCriteriaFromPage()) {
-		boolean tmp = false;
-		for (OptimizationCriteriaCheckbox checkbox : this.checkboxList) {
-		    if (checkbox.getOptimizationCriteriaName().getText().equals(oco.getVariableName())) {
-			fieldsPanel.add(checkbox.getOptimizationCriteriaName());
-			fieldsPanel.add(checkbox.getCheckBox());
-			checkbox.getCheckBox().setSelected(true);
-			tmp = true;
-			break;
-		    }
-		}
-		if (tmp == false) {
-		    OptimizationCriteriaCheckbox ocoTmp = new OptimizationCriteriaCheckbox(oco.getVariableName());
-		    checkboxList.add(ocoTmp);
-		    fieldsPanel.add(ocoTmp.getOptimizationCriteriaName());
-		    fieldsPanel.add(ocoTmp.getCheckBox());
-		}
-	    }
-	}
 	overallPanel.add(fieldsPanel);
 	return overallPanel;
     }
@@ -196,14 +164,6 @@ public class FitnessFunctionObject {
 	return uploadButton;
     }
 
-    public ArrayList<OptimizationCriteriaCheckbox> getCheckboxList() {
-	return checkboxList;
-    }
-
-    public void setCheckboxList(ArrayList<OptimizationCriteriaCheckbox> checkboxList) {
-	this.checkboxList = checkboxList;
-    }
-
     public boolean isJarFileUploaded() {
 	return jarFileUploaded;
     }
@@ -217,98 +177,8 @@ public class FitnessFunctionObject {
      * be enabled or not
      */
     public void createComponents() {
-	if (pageAssociated.userInterface.getOptimizationCriteriaFromPage().size() > 0) {
-	    fieldsPanel.removeAll();
-	    fieldsPanel.add(uploadButton);
-	    for (OptimizationCriteriaObject oco : pageAssociated.userInterface.getOptimizationCriteriaFromPage()) {
-		final OptimizationCriteriaCheckbox checkbox = new OptimizationCriteriaCheckbox(oco.getVariableName());
-		checkbox.getCheckBox().addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent arg0) {
-			if (checkbox.getCheckBox().isSelected() == true) {
-			    for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
-				for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
-				    if (occ.getOptimizationCriteriaName().getText()
-					    .equals(checkbox.getOptimizationCriteriaName().getText())
-					    && !occ.equals(checkbox)) {
-					occ.getCheckBox().setEnabled(false);
-				    }
-				}
-			    }
-			} else {
-			    for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
-				for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
-				    if (occ.getOptimizationCriteriaName().getText()
-					    .equals(checkbox.getOptimizationCriteriaName().getText())
-					    && !occ.equals(checkbox)) {
-					occ.getCheckBox().setEnabled(true);
-				    }
-				}
-			    }
-			}
-		    }
-		});
-		checkboxList.add(checkbox);
-		fieldsPanel.add(checkbox.getOptimizationCriteriaName());
-		fieldsPanel.add(checkbox.getCheckBox());
-		verifyIfTheCheckboxShouldBeDisabled(checkbox);
-	    }
-	} else {
-	    fieldsPanel.removeAll();
-	    fieldsPanel.add(uploadButton);
-	    warning.setForeground(Color.red);
-	    fieldsPanel.add(warning);
-	}
-	SwingUtilities.invokeLater(new Runnable() {
-	    @Override
-	    public void run() {
-		pageAssociated.refreshPage();
-	    }
-	});
-    }
-
-    /**
-     * Verify if the checkbox shoud be disabled because the value was already
-     * selected on another checkbox
-     * 
-     * @param checkbox
-     */
-    public void verifyIfTheCheckboxShouldBeDisabled(OptimizationCriteriaCheckbox checkbox) {
-	for (FitnessFunctionObject ffo : pageAssociated.getFitnessFunctionList()) {
-	    for (OptimizationCriteriaCheckbox occ : ffo.getCheckboxList()) {
-		if (occ.getOptimizationCriteriaName().getText().equals(checkbox.getOptimizationCriteriaName().getText())
-			&& !occ.equals(checkbox)) {
-		    if (occ.getCheckBox().isSelected() == true) {
-			checkbox.getCheckBox().setEnabled(false);
-
-		    }
-		}
-	    }
-	}
-    }
-
-    /**
-     * Cleans the selection of all the checkboxes
-     */
-    public void cleanData() {
-	for (OptimizationCriteriaCheckbox occ : checkboxList) {
-	    occ.getCheckBox().setEnabled(true);
-	}
-    }
-
-    /**
-     * Get the names of the checkboxes selected of a fitness function
-     * 
-     * @return
-     */
-    public ArrayList<String> getTheCheckboxesSelected() {
-	ArrayList<String> tmp = new ArrayList<String>();
-	for (OptimizationCriteriaCheckbox occ : checkboxList) {
-	    if (occ.getCheckBox().isSelected() == true) {
-		tmp.add(occ.getOptimizationCriteriaName().getText());
-	    }
-	}
-	return tmp;
+	fieldsPanel.removeAll();
+	fieldsPanel.add(uploadButton);
     }
 
 }

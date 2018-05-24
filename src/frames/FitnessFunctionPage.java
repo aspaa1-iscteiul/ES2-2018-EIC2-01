@@ -1,56 +1,38 @@
 package frames;
 
+import java.awt.FlowLayout;
+
+import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
 import frames.graphicalObjects.FitnessFunctionObject;
-import frames.graphicalObjects.OptimizationCriteriaCheckbox;
-import frames.graphicalObjects.OptimizationCriteriaObject;
-
-/**
- * This class represents the Fitness Function Page
- */
 
 public class FitnessFunctionPage extends SuperPage {
 
-    private static final long serialVersionUID = 1L;
-    private JPanel subMainPanel;
-    private ArrayList<FitnessFunctionObject> fitnessFunctionList;
-    private ArrayList<ArrayList<OptimizationCriteriaCheckbox>> checkboxList;
-    private JButton nextButton;
-
     /**
      * 
-     * @param userInterface
      */
+    private static final long serialVersionUID = 1L;
+    private FitnessFunctionObject fitnessFunction;
+    private JPanel subMainPanel;
+
     public FitnessFunctionPage(UserInterface userInterface) {
 	super(userInterface);
+	// TODO Auto-generated constructor stub
     }
 
     @Override
     protected void initialize() {
-	nextButton = FrameUtils.cuteButton("Next");
-	fitnessFunctionList = new ArrayList<FitnessFunctionObject>();
-	checkboxList = new ArrayList<ArrayList<OptimizationCriteriaCheckbox>>();
+	fitnessFunction = new FitnessFunctionObject(this);
+	subMainPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+
     }
 
     @Override
@@ -87,130 +69,10 @@ public class FitnessFunctionPage extends SuperPage {
 	mainPanel.add(infoPanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-
-	subMainPanel = new JPanel(new BorderLayout());
 	subMainPanel.setBackground(Color.WHITE);
-	subMainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+	subMainPanel.add(fitnessFunction.transformIntoAPanel());
+	mainPanel.add(subMainPanel);
 
-	JPanel infoFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-	infoFieldPanel.setBackground(Color.WHITE);
-	JLabel name = new JLabel("Fitness Function");
-	name.setBorder(new EmptyBorder(0, 0, 0, 43)); // to add space between
-	name.setFont(FrameUtils.cuteFont(12));
-	// the labels
-	infoFieldPanel.add(name);
-	JLabel label = new JLabel("Optimization Criteria");
-	label.setFont(FrameUtils.cuteFont(12));
-	infoFieldPanel.add(label);
-
-	subMainPanel.add(infoFieldPanel, BorderLayout.NORTH);
-
-	continueCreateMainPanel(subMainPanel);
-
-	FrameUtils.addEmptyLabels(mainPanel, 1);
-    }
-
-    /**
-     * Method to create the main part of the page to be viewed
-     * @param subMainPanel
-     */
-    private void continueCreateMainPanel(JPanel subMainPanel) {
-	final JPanel subSubMainPanel = new JPanel();
-	subSubMainPanel.setBackground(Color.WHITE);
-	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
-
-	FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(this);
-	fitnessFunctionList.add(fitnessFunctionObject);
-	subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
-
-	subMainPanel.add(subSubMainPanel, BorderLayout.CENTER);
-
-	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-	addOptionPanel.setBackground(Color.WHITE);
-	JLabel addIcon = new JLabel();
-	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
-	final FitnessFunctionPage tmp = this;
-	addIcon.addMouseListener(new MouseListener() {
-	    @Override
-	    public void mouseClicked(MouseEvent arg0) {
-		EventQueue.invokeLater(new Runnable() {
-		    public void run() {
-			FitnessFunctionObject fitnessFunctionObject = new FitnessFunctionObject(tmp);
-			fitnessFunctionList.add(fitnessFunctionObject);
-			subSubMainPanel.add(fitnessFunctionObject.transformIntoAPanel());
-			validate(); // to update window
-			repaint(); // to update window
-		    }
-		});
-	    }
-
-	    @Override
-	    public void mouseEntered(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mouseExited(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mousePressed(MouseEvent arg0) {
-	    }
-
-	    @Override
-	    public void mouseReleased(MouseEvent arg0) {
-	    }
-	});
-	addOptionPanel.add(addIcon, BorderLayout.WEST);
-	addOptionPanel.add(new JLabel("Add new fitness function"));
-
-	subMainPanel.add(addOptionPanel, BorderLayout.SOUTH);
-
-	JScrollPane scrollPane = new JScrollPane(subMainPanel);
-	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-	scrollPane.setPreferredSize(new Dimension(0, 180));
-
-	mainPanel.add(scrollPane);
-    }
-
-    @Override
-    protected void createButtonsPanel() {
-	JButton backButton = FrameUtils.cuteButton("Back");
-	backButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToPreviousPage();
-		for(FitnessFunctionObject ffo : fitnessFunctionList) {
-		    checkboxList.add(ffo.getCheckboxList());
-		}
-	    }
-	});
-	buttonsPanel.add(backButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
-	cancelButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	    }
-	});
-	buttonsPanel.add(cancelButton);
-
-	buttonsPanel.add(new JLabel()); // to add space between the two buttons
-
-	nextButton.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		userInterface.goToNextPage();
-		for(FitnessFunctionObject ffo : fitnessFunctionList) {
-		    checkboxList.add(ffo.getCheckboxList());
-		}
-	    }
-	});
-	buttonsPanel.add(nextButton);
     }
 
     @Override
@@ -218,151 +80,41 @@ public class FitnessFunctionPage extends SuperPage {
 	userInterface.getFrame().setTitle("Problem Solving App");
 	if(userInterface.isXmlFileWasImportedAtIndex(2)==true) {
 	    subMainPanel.removeAll();
-	    fitnessFunctionList = userInterface.getFitnessFunctionFromPage();
-	    for(FitnessFunctionObject ffo : fitnessFunctionList) {
-		ffo.setPageAssociated(this);
-		subMainPanel.add(ffo.transformIntoAPanelWhenReadFromXML());
-	    }
-	    userInterface.putXmlFileWasImportedFalseAtIndex(2);
-	} else {
-	    if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==false) {
-		for(FitnessFunctionObject ff : fitnessFunctionList) {
-		    ff.setCheckboxList(checkboxList.get(fitnessFunctionList.indexOf(ff)));
-		}
-		checkboxList.clear();
-	    } else if(checkboxList.size()>0 && verifyIfOptimizationCriteriaChanged()==true) {
-		reconstructPage();
-	    } else {
-		//Primeira vez onde nada foi seleccionado
-		for (FitnessFunctionObject ffo : fitnessFunctionList) {
-		    ffo.createComponents();
-		    ffo.cleanData();
-		}
-		checkboxList.clear();
-	    }
+	    fitnessFunction = userInterface.getFitnessFunctionObject();
+	    fitnessFunction.setPageAssociated(this);
+	    subMainPanel.add(fitnessFunction.transformIntoAPanelWhenReadFromXML());
 	}
+	userInterface.putXmlFileWasImportedFalseAtIndex(2);
     }
-
 
     @Override
     protected boolean areAllDataWellFilled() {
-	boolean [] tmp = new boolean[userInterface.getOptimizationCriteriaFromPage().size()];
-	for(int i = 0; i != userInterface.getOptimizationCriteriaFromPage().size(); i++) {
-	    int count = 0;
-	    for(FitnessFunctionObject ffo : fitnessFunctionList) {
-		if(ffo.getCheckboxList().get(i).getCheckBox().isSelected()==true){
-		    count++;
-		    if(count >= 1) {
-			tmp[i] = true;
-			break;
-		    } else {
-			tmp[i] = false;
-		    }
-		}
-	    }
-	    if(tmp[i] == false) {
-		for(FitnessFunctionObject ffo : fitnessFunctionList) {	
-		    FrameUtils.errorFormatOfString(ffo.getCheckboxList().get(i).getOptimizationCriteriaName(), " All optimization criteria must be associated with a single fitness function");	
-		}
-	    } else {
-		for(FitnessFunctionObject ffo : fitnessFunctionList) {	
-		    FrameUtils.normalFormatOfString(ffo.getCheckboxList().get(i).getOptimizationCriteriaName());	  
-		}
-	    }
-	}
-	for(int i = 0; i != tmp.length; i++) {
-	    if(tmp[i] == false) {
-		return false;
-	    }
-	}
-	boolean[] jarFilesWereUploaded = verifyIfJarFilesWereUploaded();
-	for(int i = 0 ; i != jarFilesWereUploaded.length; i++) {
-	    if(jarFilesWereUploaded[i] == false) {
-		return false;
-	    }
-	}
-	return true;
+	return verifyIfJarFilesWereUploaded();
     }
 
     /**
-     * Goes over all the fitness function objects from the page and verifys
-     * if all of them have a jar file associated
+     * Goes over the fitness function objects from the page and verifys
+     * if they have a jar file associated
      */
-    public boolean[] verifyIfJarFilesWereUploaded() {
-	boolean[] tmp = new boolean[fitnessFunctionList.size()];
-	for(FitnessFunctionObject ffo : fitnessFunctionList) {	
-	    if(ffo.isJarFileUploaded()==false) {
-		FrameUtils.errorFormat(ffo.getUploadButton(), "Every fitness function must have a jar file uploaded");
-		tmp[fitnessFunctionList.indexOf(ffo)] = false;
-	    } else {
-		FrameUtils.normalFormat(ffo.getUploadButton());
-		tmp[fitnessFunctionList.indexOf(ffo)] = true;
-	    }
+    public boolean verifyIfJarFilesWereUploaded() {	
+	if(fitnessFunction.isJarFileUploaded()==false) {
+	    FrameUtils.errorFormat(fitnessFunction.getUploadButton(), "Every fitness function must have a jar file uploaded");
+	    return false;
+	} else {
+	    FrameUtils.normalFormat(fitnessFunction.getUploadButton());
+	    return true;
 	}
-	return tmp;
     }
 
     @Override
     protected void saveToProblem() {
-	userInterface.setFitnessFunctionFromPage(fitnessFunctionList);
+	userInterface.setFitnessFunctionObject(fitnessFunction);
     }
 
-    /**
-     * Refreshes the frame
-     * 
-     * @see #validate()
-     * @see #repaint()
-     */
-    public void refreshPage() {
-	userInterface.getFrame().validate();
-	userInterface.getFrame().repaint();
-    }
-
-    /**
-     * Verifys if the optimization criteria from the previous page changed and if so return true
-     * and it will enable all the checkboxes and cleans the data selected
-     * @return
-     */
-    private boolean verifyIfOptimizationCriteriaChanged() {
-	ArrayList<String> ocoNames = new ArrayList<String>();
-	ArrayList<String> ffoCheckboxesNames = new ArrayList<String>();
-	for(OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
-	    ocoNames.add(oco.getVariableName());
-	} 
-	for(OptimizationCriteriaCheckbox occ : fitnessFunctionList.get(0).getCheckboxList()) {
-	    ffoCheckboxesNames.add(occ.getOptimizationCriteriaName().getText());
-	}
-	if(ffoCheckboxesNames.containsAll(ocoNames) && ffoCheckboxesNames.size()==ocoNames.size()) {
-	    return false;
-	}
-	return true;
-    }
-
-    /**
-     * Cleans the current panel and places the original panel instead
-     */
-    private void reconstructPage(){
-	fitnessFunctionList.clear();
-	checkboxList.clear();
-	mainPanel.removeAll();
-	createMainPanel();
-    }
-
-    public ArrayList<FitnessFunctionObject> getFitnessFunctionList() {
-	return fitnessFunctionList;
-    }
-
-    public void setFitnessFunctionList(ArrayList<FitnessFunctionObject> fitnessFunctionList) {
-	this.fitnessFunctionList = fitnessFunctionList;
-    }
-
-    //TODO: A página não avança apesar de não dar nenhum erro, a valiadação não está a ser feita não sei porquê
     @Override
     protected void clearDataFromPage() {
-	fitnessFunctionList.clear();
-	checkboxList.clear();
-	mainPanel.removeAll();
-	createMainPanel();
+	// TODO Auto-generated method stub
+
     }
 
 }
