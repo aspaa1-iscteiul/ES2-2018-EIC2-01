@@ -112,7 +112,7 @@ public class SendEmailPage extends SuperPage {
 	    public void actionPerformed(ActionEvent e) {
 		Email email = new Email("ES22018EIC201@gmail.com");
 		email.setToCC(userInterface.getAdmin().getEmail());
-		email.sendEmail(
+		email.sendEmail(false,
 			"Email to answer:" + userInterface.getUserEmail() + " Name:" + name.getText() + " Subject:"
 				+ subject.getText(),
 			"Email to answer:" + userInterface.getUserEmail() + "\n" + message.getText());

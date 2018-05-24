@@ -56,43 +56,50 @@ public class Email {
      * @param subject
      * @param messageText
      */
-    public void sendEmail(String subject, String messageText) {
-	new Thread() {
-	    @Override
-	    public void run() {
-		// Get system properties
-		Properties properties = System.getProperties();
-
-		// Setup mail server
-		properties.setProperty("mail.smtp.host", host);
-		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.smtp.port", "587");
-
-		// Get the default Session object.
-		Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-		    protected PasswordAuthentication getPasswordAuthentication() {
-			return new PasswordAuthentication(from, password);
-		    }
-		});
-
-		try {
-		    Message message = new MimeMessage(session);
-		    message.setFrom(new InternetAddress(from));
-		    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-		    message.addRecipient(RecipientType.CC, new InternetAddress(toCC));
-		    message.setSubject(subject);
-		    message.setText(messageText);
-
-		    Transport.send(message);
-
-		} catch (MessagingException e) {
-		    throw new RuntimeException(e);
+    public void sendEmail(boolean wait, String subject, String messageText) {
+	if (wait) {
+	    sendEmail(subject, messageText);
+	} else
+	    new Thread() {
+		@Override
+		public void run() {
+		    sendEmail(subject, messageText);
 		}
+	    }.start();
+    }
+
+    private void sendEmail(String subject, String messageText) {
+	// Get system properties
+	Properties properties = System.getProperties();
+
+	// Setup mail server
+	properties.setProperty("mail.smtp.host", host);
+	properties.put("mail.smtp.starttls.enable", "true");
+	properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+	properties.put("mail.smtp.auth", "true");
+	properties.put("mail.smtp.host", "smtp.gmail.com");
+	properties.put("mail.smtp.port", "587");
+
+	// Get the default Session object.
+	Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+	    protected PasswordAuthentication getPasswordAuthentication() {
+		return new PasswordAuthentication(from, password);
 	    }
-	}.start();
+	});
+
+	try {
+	    Message message = new MimeMessage(session);
+	    message.setFrom(new InternetAddress(from));
+	    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+	    message.addRecipient(RecipientType.CC, new InternetAddress(toCC));
+	    message.setSubject(subject);
+	    message.setText(messageText);
+
+	    Transport.send(message);
+
+	} catch (MessagingException e) {
+	    throw new RuntimeException(e);
+	}
     }
 
     /**
