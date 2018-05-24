@@ -37,6 +37,7 @@ public class JMetalRun {
     private JMetalProblem jMetalProblem;
     private Email email;
     private UserInterface userInterface;
+    private Progress progress;
 
     public JMetalRun(UserInterface userinterface, Problem problem, boolean isSingleobjective, String userEmail,
 	    String adminEmail) {
@@ -64,17 +65,16 @@ public class JMetalRun {
 	    jMetalProblem = new MyBinaryProblem(problem, isSingleobjective);
 	}
 
-	Progress p = new Progress();
-	p.start();
+	progress = new Progress();
+	progress.start();
 
 	Executors.newSingleThreadExecutor().execute(new Runnable() {
 	    @Override
 	    public void run() {
 		try {
 		    jMetalProblem.run(problem.getOptimizationAlgorithms());
-		    p.interrupt();
 		    afterRunning();
-		} catch (IOException e) {
+		} catch (Exception e) {
 		    // TODO change subject and message
 		    email.sendEmail("Error", "");
 		    e.printStackTrace();
@@ -105,6 +105,7 @@ public class JMetalRun {
 	} catch (InterruptedException | IOException e) {
 	    new LatexException(null);
 	}
+	progress.interrupt();
 	userInterface.showFrame(true);
 	userInterface.goToNextPage();
     }

@@ -1,7 +1,7 @@
 package jMetal.binaryConfiguration;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,23 +39,19 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
      * Multi Objective
      */
     // TODO PESA2 and NSGAIII not working
-    public static final List<String> MULTI_OBJECTIVE = Arrays.asList("MOCell", "MOCHC", "NSGAII", // "NSGAIII", "PESA2",
-	    "PAES", "RandomSearch", "SMSEMOA", "SPEA2");
+    public static final ArrayList<String> MULTI_OBJECTIVE = new ArrayList<>(Arrays.asList("MOCell", "MOCHC", "NSGAII", // "NSGAIII",
+														       // "PESA2",
+	    "PAES", "RandomSearch", "SMSEMOA", "SPEA2"));
 
     @SuppressWarnings("unchecked")
-    public Algorithm<List<BinarySolution>> getMultiObjectiveAlgortihm(String algorithmName, BinaryProblem problem) {
+    public Algorithm<List<BinarySolution>> getMultiObjectiveAlgortihm(String algorithmName, BinaryProblem problem)
+	    throws Exception {
 	if (!MULTI_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
 		    algorithmName + " is not a valid multiobjective algorithm for BinaryProblem");
 
-	try {
-	    Method method = getClass().getMethod("get" + algorithmName, BinaryProblem.class);
-	    return (Algorithm<List<BinarySolution>>) method.invoke(problem);
-	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-		| InvocationTargetException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	Method method = getClass().getMethod("get" + algorithmName, BinaryProblem.class);
+	return (Algorithm<List<BinarySolution>>) method.invoke(this, problem);
     }
 
     public Algorithm<List<BinarySolution>> getMOCell(BinaryProblem problem) {
@@ -106,23 +102,18 @@ public class BinaryAlgorithms extends JMetalAlgorithms {
      * Single Objective
      */
 
-    public static final List<String> SINGLE_OBJECTIVE = Arrays.asList("EvolutionStrategyElitist",
-	    "EvolutionStrategyNonElitist", "GeneticAlgorithm");
+    public static final ArrayList<String> SINGLE_OBJECTIVE = new ArrayList<>(
+	    Arrays.asList("EvolutionStrategyElitist", "EvolutionStrategyNonElitist", "GeneticAlgorithm"));
 
     @SuppressWarnings("unchecked")
-    public Algorithm<BinarySolution> getSingleObjectiveAlgortihm(String algorithmName, BinaryProblem problem) {
+    public Algorithm<BinarySolution> getSingleObjectiveAlgortihm(String algorithmName, BinaryProblem problem)
+	    throws Exception {
 	if (!SINGLE_OBJECTIVE.contains(algorithmName))
 	    throw new IllegalArgumentException(
 		    algorithmName + " is not a valid singleobjective algorithm for BinaryProblem");
 
-	try {
-	    Method method = getClass().getMethod("get" + algorithmName, BinaryProblem.class);
-	    return (Algorithm<BinarySolution>) method.invoke(problem);
-	} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-		| InvocationTargetException e) {
-	    e.printStackTrace();
-	    return null;
-	}
+	Method method = getClass().getMethod("get" + algorithmName, BinaryProblem.class);
+	return (Algorithm<BinarySolution>) method.invoke(this, problem);
     }
 
     public Algorithm<BinarySolution> getEvolutionStrategyElitist(BinaryProblem problem) {

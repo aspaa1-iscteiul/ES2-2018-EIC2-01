@@ -77,7 +77,7 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
     }
 
     @Override
-    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
+    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) throws Exception {
 	ExperimentProblem<DoubleSolution> experimentProblem = new ExperimentProblem<>(this);
 
 	// TODO not using single objective
@@ -91,7 +91,8 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
     }
 
     private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureMultiObjectiveAlgorithmList(
-	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames)
+	    throws Exception {
 	List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
 	DoubleProblem problem = (DoubleProblem) experimentProblem.getProblem();
@@ -105,7 +106,8 @@ public class MyDoubleProblem extends AbstractDoubleProblem implements JMetalProb
     }
 
     private List<ExperimentAlgorithm<DoubleSolution, DoubleSolution>> configureSingleObjectiveAlgorithmList(
-	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	    ExperimentProblem<DoubleSolution> experimentProblem, ArrayList<String> algorithmsNames)
+	    throws Exception {
 	List<ExperimentAlgorithm<DoubleSolution, DoubleSolution>> algorithms = new ArrayList<>();
 
 	DoubleProblem problem = (DoubleProblem) experimentProblem.getProblem();

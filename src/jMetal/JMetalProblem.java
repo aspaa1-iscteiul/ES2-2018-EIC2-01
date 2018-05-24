@@ -20,11 +20,11 @@ public interface JMetalProblem {
 
     public int evaluateIteration();
 
-    public default void run(ArrayList<String> algorithmsNames) throws IOException {
+    public default void run(ArrayList<String> algorithmsNames) throws Exception {
 	execute(configure(algorithmsNames));
     }
 
-    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames);
+    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) throws Exception;
 
     public default void execute(ExperimentBuilder<?, ?> experimentBuilder) throws IOException {
 	String experimentBaseDirectory = "experimentBaseDirectory";

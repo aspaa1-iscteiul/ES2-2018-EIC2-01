@@ -77,7 +77,7 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
     }
 
     @Override
-    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
+    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) throws Exception {
 	ExperimentProblem<IntegerSolution> experimentProblem = new ExperimentProblem<>(this);
 
 	// TODO not using single objective
@@ -93,7 +93,7 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
     }
 
     private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> configureMultiObjectiveAlgorithmList(
-	    ExperimentProblem<IntegerSolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	    ExperimentProblem<IntegerSolution> experimentProblem, ArrayList<String> algorithmsNames) throws Exception {
 	List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithms = new ArrayList<>();
 
 	IntegerProblem problem = (IntegerProblem) experimentProblem.getProblem();
@@ -107,7 +107,7 @@ public class MyIntegerProblem extends AbstractIntegerProblem implements JMetalPr
     }
 
     private List<ExperimentAlgorithm<IntegerSolution, IntegerSolution>> configureSingleObjectiveAlgorithmList(
-	    ExperimentProblem<IntegerSolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	    ExperimentProblem<IntegerSolution> experimentProblem, ArrayList<String> algorithmsNames) throws Exception {
 	List<ExperimentAlgorithm<IntegerSolution, IntegerSolution>> algorithms = new ArrayList<>();
 
 	IntegerProblem problem = (IntegerProblem) experimentProblem.getProblem();

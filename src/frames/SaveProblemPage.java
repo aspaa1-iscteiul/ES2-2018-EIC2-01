@@ -174,8 +174,8 @@ public class SaveProblemPage extends SuperPage {
 		    saveButton.setBackground(new Color(155, 226, 155).brighter());
 		    Email email = new Email(userInterface.getUserEmail());
 		    email.setToCC(userInterface.getAdmin().getEmail());
-		    email.sendEmailWithAttachment(("Otimização em curso: " + fileName.getText() + 
-			    " " + new Date()), messageText, filePath.getText(), fileName.getText());
+		    email.sendEmailWithAttachment(("Otimização em curso: " + fileName.getText() + " " + new Date()),
+			    messageText, filePath.getText(), fileName.getText());
 		} catch (Exception e) {
 		    saveButton.setBackground(Color.RED.brighter());
 		}
@@ -211,8 +211,7 @@ public class SaveProblemPage extends SuperPage {
 	finishButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		//userInterface.runProblem();
-		userInterface.goToNextPage();
+		userInterface.runProblem();
 	    }
 	});
 	buttonsPanel.add(finishButton);

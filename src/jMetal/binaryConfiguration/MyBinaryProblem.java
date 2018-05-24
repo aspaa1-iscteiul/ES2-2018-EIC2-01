@@ -81,7 +81,7 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     }
 
     @Override
-    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) {
+    public ExperimentBuilder<?, ?> configure(ArrayList<String> algorithmsNames) throws Exception {
 	ExperimentProblem<BinarySolution> experimentProblem = new ExperimentProblem<>(this);
 
 	// TODO not using single objective
@@ -97,7 +97,7 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     }
 
     private List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureAlgorithmList(
-	    ExperimentProblem<BinarySolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	    ExperimentProblem<BinarySolution> experimentProblem, ArrayList<String> algorithmsNames) throws Exception {
 	List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithms = new ArrayList<>();
 
 	BinaryProblem problem = (BinaryProblem) experimentProblem.getProblem();
@@ -111,7 +111,7 @@ public class MyBinaryProblem extends AbstractBinaryProblem implements JMetalProb
     }
 
     private List<ExperimentAlgorithm<BinarySolution, BinarySolution>> configureSingleObjectiveAlgorithmList(
-	    ExperimentProblem<BinarySolution> experimentProblem, ArrayList<String> algorithmsNames) {
+	    ExperimentProblem<BinarySolution> experimentProblem, ArrayList<String> algorithmsNames) throws Exception {
 	List<ExperimentAlgorithm<BinarySolution, BinarySolution>> algorithms = new ArrayList<>();
 
 	BinaryProblem problem = (BinaryProblem) experimentProblem.getProblem();
