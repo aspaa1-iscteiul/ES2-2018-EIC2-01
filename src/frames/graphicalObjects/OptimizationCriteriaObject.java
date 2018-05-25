@@ -26,7 +26,7 @@ public class OptimizationCriteriaObject {
 
     private OptimizationCriteriaPage pageAssociated;
     private JTextField name;
-    private String[] dataTypes = { "Integer", "Double", "Binary"};
+    private String[] dataTypes = { "Integer", "Double", "Binary" };
     private JComboBox<String> dataType;
     private JLabel deleteIcon;
     private JPanel variablesPanel;
@@ -42,12 +42,12 @@ public class OptimizationCriteriaObject {
 	dataType = FrameUtils.cuteComboBox(dataTypes);
 	dataType.setSelectedItem(null);
 	deleteIcon = new JLabel();
-	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
+	deleteIcon.setIcon(new ImageIcon(getClass().getResource("../images/delete_icon2.png")));
     }
 
     /**
-     * Creates an optimization criteria object with the data read
-     * from a XML file
+     * Creates an optimization criteria object with the data read from a XML file
+     * 
      * @param ocp
      * @param name
      * @param variableDataType
@@ -57,15 +57,15 @@ public class OptimizationCriteriaObject {
 	variablesPanel = new JPanel();
 	this.name = new JTextField(name, name.length());
 	this.dataType = FrameUtils.cuteComboBox(dataTypes);
-	if(variableDataType.equals("INTEGER")) {
+	if (variableDataType.equals("INTEGER")) {
 	    dataType.setSelectedIndex(0);
-	} else if(variableDataType.equals("DOUBLE")){
+	} else if (variableDataType.equals("DOUBLE")) {
 	    dataType.setSelectedIndex(1);
 	} else {
 	    dataType.setSelectedIndex(2);
 	}
 	deleteIcon = new JLabel();
-	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
+	deleteIcon.setIcon(new ImageIcon(getClass().getResource("../images/delete_icon2.png")));
     }
 
     /**
@@ -133,7 +133,8 @@ public class OptimizationCriteriaObject {
      */
     private boolean isValidName() {
 	String text = name.getText();
-	String info = (text.equals("") ? "The optimization criteria's name field is a mandatory entry field and therefore must be filled in."
+	String info = (text.equals("")
+		? "The optimization criteria's name field is a mandatory entry field and therefore must be filled in."
 		: "") + (pageAssociated.isNameRepeated(text) ? "The optimization criteria's name must be unique." : "");
 	return !info.equals("") ? FrameUtils.errorFormat(name, info) : FrameUtils.normalFormat(name);
     }
@@ -144,10 +145,9 @@ public class OptimizationCriteriaObject {
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isDataTypeSelected() {
-	return dataType.getSelectedItem() == null
-		? FrameUtils.errorFormat(dataType,
-			"The optimization criteria's data type field is a mandatory entry field and therefore must be filled in.")
-			: FrameUtils.normalFormat(dataType);
+	return dataType.getSelectedItem() == null ? FrameUtils.errorFormat(dataType,
+		"The optimization criteria's data type field is a mandatory entry field and therefore must be filled in.")
+		: FrameUtils.normalFormat(dataType);
 
     }
 
@@ -167,7 +167,7 @@ public class OptimizationCriteriaObject {
     public DataType getDataTypeToProblem() {
 	if (dataType.getSelectedItem().toString().equals("Integer")) {
 	    return DataType.INTEGER;
-	} else if(dataType.getSelectedItem().toString().equals("Double")){
+	} else if (dataType.getSelectedItem().toString().equals("Double")) {
 	    return DataType.DOUBLE;
 	} else {
 	    return DataType.BINARY;
@@ -175,10 +175,10 @@ public class OptimizationCriteriaObject {
     }
 
     public void setDataType(String str) {
-	if(str != null) {
-	    if(str.equals("Integer")) {
+	if (str != null) {
+	    if (str.equals("Integer")) {
 		dataType.setSelectedIndex(0);
-	    } else if(str.equals("Double")) {
+	    } else if (str.equals("Double")) {
 		dataType.setSelectedIndex(1);
 	    } else {
 		dataType.setSelectedIndex(2);

@@ -120,7 +120,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
-	addIcon.setIcon(new ImageIcon("./src/frames/images/add_icon.png"));
+	addIcon.setIcon(new ImageIcon(getClass().getResource("images/add_icon.png")));
 
 	final OptimizationCriteriaPage tmp = this;
 	addIcon.addMouseListener(new MouseListener() {

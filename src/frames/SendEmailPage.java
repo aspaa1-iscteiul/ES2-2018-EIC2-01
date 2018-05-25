@@ -59,7 +59,7 @@ public class SendEmailPage extends SuperPage {
 	infoPanel.setLayout(new BorderLayout());
 	infoPanel.setBackground(Color.WHITE);
 	JLabel infoIcon = new JLabel();
-	infoIcon.setIcon(new ImageIcon("./src/frames/images/email_icon.png"));
+	infoIcon.setIcon(new ImageIcon(getClass().getResource("images/email_icon.png")));
 	infoPanel.add(infoIcon, BorderLayout.WEST);
 	infoPanel.add(new JLabel("   We will answer your email within 2 working days."), BorderLayout.CENTER);
 	mainPanel.add(infoPanel);

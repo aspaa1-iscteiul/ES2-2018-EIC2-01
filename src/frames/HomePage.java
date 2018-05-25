@@ -27,7 +27,7 @@ public class HomePage extends SuperPage {
     @Override
     protected void createMainPanel() {
 	JLabel cover = new JLabel();
-	cover.setIcon(new ImageIcon("./src/frames/images/cover.jpg"));
+	cover.setIcon(new ImageIcon(getClass().getResource("images/cover.jpg")));
 	mainPanel.add(cover);
     }
 
@@ -41,9 +41,9 @@ public class HomePage extends SuperPage {
 	    }
 	});
 	buttonsPanel.add(adminButton);
-	
+
 	FrameUtils.addEmptyLabels(buttonsPanel, 35);
-	
+
 	JButton startButton = FrameUtils.cuteButton("Start");
 	startButton.addActionListener(new ActionListener() {
 	    @Override
