@@ -87,16 +87,12 @@ public class FitnessFunctionPage extends SuperPage {
 	userInterface.putXmlFileWasImportedFalseAtIndex(2);
     }
 
-    @Override
-    protected boolean areAllDataWellFilled() {
-	return verifyIfJarFilesWereUploaded();
-    }
-
     /**
      * Goes over the fitness function objects from the page and verifys
      * if they have a jar file associated
      */
-    public boolean verifyIfJarFilesWereUploaded() {	
+    @Override
+    protected boolean areAllDataWellFilled() {
 	if(fitnessFunction.isJarFileUploaded()==false) {
 	    FrameUtils.errorFormat(fitnessFunction.getUploadButton(), "Every fitness function must have a jar file uploaded");
 	    return false;
@@ -105,7 +101,7 @@ public class FitnessFunctionPage extends SuperPage {
 	    return true;
 	}
     }
-
+    
     @Override
     protected void saveToProblem() {
 	userInterface.setFitnessFunctionObject(fitnessFunction);

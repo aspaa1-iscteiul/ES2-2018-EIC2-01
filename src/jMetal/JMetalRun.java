@@ -51,10 +51,10 @@ public class JMetalRun {
 	// TODO change subject and message
 	email.sendEmail(false, problem.getProblemName() + " started", "");
 
-	DataType type = problem.getDecisionVariablesDataType();
-	if (type == DataType.DOUBLE) {
+	DataType dataType = problem.getDecisionVariablesDataType();
+	if (dataType == DataType.DOUBLE) {
 	    jMetalProblem = new MyDoubleProblem(problem, isSingleobjective);
-	} else if (type == DataType.INTEGER) {
+	} else if (dataType == DataType.INTEGER) {
 	    jMetalProblem = new MyIntegerProblem(problem, isSingleobjective);
 	} else {
 	    jMetalProblem = new MyBinaryProblem(problem, isSingleobjective);
