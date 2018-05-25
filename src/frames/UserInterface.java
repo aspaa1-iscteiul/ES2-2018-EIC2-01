@@ -32,7 +32,8 @@ public class UserInterface {
     private SendEmailPage emailPage;
     private OutputAlgorithmRunChooserPage outputAlgorithmRunChooserPage;
     private OutputAlgorithmRunPage outputAlgorithmRunPage;
-    private OutputKnownSolutionsPage outputKnownSolutionsPage;
+    private OutputDecisionVariableKnownSolutionsPage outputDecisionVariableKnownSolutionsPage;
+    private OutputOptimizationCriteriaKnownSolutionsPage outputOptimizationCriteriaKnownSolutionsPage;
     private String userEmail;
     private ArrayList<DecisionVariablesObject> decisionVariablesFromPage;
     private ArrayList<KnownDecisionVariablesSolutionsObject> knownSolutionsFromDecisionVariables;
@@ -76,7 +77,6 @@ public class UserInterface {
 	pages.add(new TimeConstraintsPage(this));
 	pages.add(new SaveProblemPage(this));
 	pages.add(new OutputIntroPage(this));
-	pages.add(new OutputKnownSolutionsPage(this));
     }
 
     /**
@@ -160,12 +160,26 @@ public class UserInterface {
     }
 
     /**
-     * Allows to go the OutputKnownSolutionsPage(
+     * Allows to go the OutputDecisionVariableKnownSolutionsPage
+     * @param algorithmName 
      */
-    public void goToOutputKnownSolutionsPage() {
-	frame.remove(pages.get(actualPageIndex));
-	outputKnownSolutionsPage = new OutputKnownSolutionsPage(this);
-	SuperPage page = outputKnownSolutionsPage;
+    public void goToOutputDecisionVariablesKnownSolutionsPage(String algorithmName) {
+	frame.remove(outputAlgorithmRunChooserPage);
+	outputDecisionVariableKnownSolutionsPage = new OutputDecisionVariableKnownSolutionsPage(this, algorithmName);
+	SuperPage page = outputDecisionVariableKnownSolutionsPage;
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+
+    /**
+     * Allows to go the OutputOptimizationCriteriaKnownSolutionsPage
+     * @param algorithmName 
+     */
+    public void goToOutputOptimizationCriteriaKnownSolutionsPage(String algorithmName) {
+	frame.remove(outputAlgorithmRunChooserPage);
+	outputOptimizationCriteriaKnownSolutionsPage = new OutputOptimizationCriteriaKnownSolutionsPage(this, algorithmName);
+	SuperPage page = outputOptimizationCriteriaKnownSolutionsPage;
 	page.onTop();
 	frame.add(page);
 	refreshPage();
@@ -194,10 +208,10 @@ public class UserInterface {
     }
 
     /**
-     * Allows to go back from the SendEmailPage to the OutputAlgorithmPage
+     * Allows to go back from OutputDecisionVariablesKnownSolutionsPage
      */
-    public void returnFromOutputKnownSolutionsPage() {
-	frame.remove(outputKnownSolutionsPage);
+    public void returnFromOutputDecisionVariablesKnownSolutionsPage() {
+	frame.remove(outputDecisionVariableKnownSolutionsPage);
 	SuperPage page = pages.get(actualPageIndex);
 	page.onTop();
 	frame.add(page);
@@ -205,7 +219,18 @@ public class UserInterface {
     }
 
     /**
-     * Allows to go back from the SendEmailPage to the OutputAlgorithmRunChooserPage
+     * Allows to go back from OutputOptimizationCriteriaKnownSolutionsPage
+     */
+    public void returnFromOutputOptimizationCriteriaKnownSolutionsPage() {
+	frame.remove(outputOptimizationCriteriaKnownSolutionsPage);
+	SuperPage page = pages.get(actualPageIndex);
+	page.onTop();
+	frame.add(page);
+	refreshPage();
+    }
+
+    /**
+     * Allows to go back from OutputAlgorithmRunChooserPage
      */
     public void returnFromOutputAlgorithmRunChooserPage() {
 	frame.remove(outputAlgorithmRunChooserPage);
@@ -581,13 +606,13 @@ public class UserInterface {
     public void setWasSomethingImported(boolean wasSomethingImported) {
 	this.wasSomethingImported = wasSomethingImported;
     }
-    
+
     public FitnessFunctionObject getFitnessFunctionObject() {
-        return fitnessFunctionObject;
+	return fitnessFunctionObject;
     }
 
     public void setFitnessFunctionObject(FitnessFunctionObject fitnessFunctionObject) {
-        this.fitnessFunctionObject = fitnessFunctionObject;
+	this.fitnessFunctionObject = fitnessFunctionObject;
     }
 
     /**

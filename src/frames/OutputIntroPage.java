@@ -84,7 +84,6 @@ public class OutputIntroPage extends SuperPage{
 		testAlgorithms.add(str);
 	    }
 	}
-	testAlgorithms.add("Known Solutions");
 	constructPage();
     }
 
@@ -127,11 +126,7 @@ public class OutputIntroPage extends SuperPage{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			    if(button.getText().equals("Known Solutions")) {
-				userInterface.goToOutputKnownSolutionsPage();
-			    } else {
-				userInterface.goToOutputAlgorithmRunChooserPage(button.getText());
-			    }
+			    userInterface.goToOutputAlgorithmRunChooserPage(button.getText());
 			}
 
 		    });

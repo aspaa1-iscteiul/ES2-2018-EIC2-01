@@ -43,10 +43,6 @@ public class GraphGenerator extends JPanel {
     public GraphGenerator(List<Double> scores, List<Double> knownSolutions) {
 	this.scores = scores;
 	this.knownSolutions = knownSolutions;
-	knownSolutions.add(-3.1);
-	knownSolutions.add(6.2);
-	knownSolutions.add(3.5);
-	knownSolutions.add(8.2);
     }
 
     @Override
@@ -188,6 +184,14 @@ public class GraphGenerator extends JPanel {
 	}
 	return Math.max(maxScoreSolutions, maxScoreValues);
     }
+    
+    private static ArrayList<Double> parseListToDouble(ArrayList<String> solutions) {
+	ArrayList<Double> doubleSolutions = new ArrayList<Double>();
+	for(String str : solutions) {
+	    doubleSolutions.add(Double.parseDouble(str));
+	}
+	return doubleSolutions;
+    }
 
 
     public List<Double> getScores() {
@@ -208,7 +212,7 @@ public class GraphGenerator extends JPanel {
      */
     public static JPanel createAndShowGui(ArrayList<Double> list, String graphName) {
 	List<Double> scores = list;
-	List<Double> knownSolutions = new ArrayList<>();
+	List<Double> knownSolutions = new ArrayList<Double>();
 	JPanel mainPanel = new JPanel();
 	JLabel title = new JLabel("Variation of results with runs for " + graphName);
 	mainPanel.setLayout(new BorderLayout());

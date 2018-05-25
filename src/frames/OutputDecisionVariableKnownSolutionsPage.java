@@ -2,11 +2,10 @@ package frames;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,28 +16,27 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import frames.graphicalObjects.DecisionVariablesObject;
 import utils.FileReader;
+import utils.GraphGenerator;
 
-public class OutputAlgorithmRunPage extends SuperPage {
+public class OutputDecisionVariableKnownSolutionsPage extends SuperPage {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
-    private JPanel subPanel;
-    private JPanel subPanel2;
+    private JPanel subPanel, subPanel2;
     private String algorithmName;
-    private int runNumber;
 
-    public OutputAlgorithmRunPage(UserInterface userInterface, String algorithmName, int runNumber) {
+    public OutputDecisionVariableKnownSolutionsPage(UserInterface userInterface, String algorithmName) {
 	super(userInterface);
 	this.algorithmName = algorithmName;
-	this.runNumber = runNumber;
+
     }
 
     @Override
-    protected void initialize() {
-	userInterface.getFrame().setTitle("Algorithm - Run " + runNumber);
+    protected void initialize() {	
     }
 
     @Override
@@ -46,15 +44,11 @@ public class OutputAlgorithmRunPage extends SuperPage {
 	mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 	mainPanel.setBorder(new EmptyBorder(20, 0, 0, 0));
 
-	JPanel infoPanel = new JPanel();
-	infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
+	JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	infoPanel.setBackground(Color.white);
-	JLabel decisionVariableLabel = new JLabel("Instantiated decision variables     ");
+	JLabel decisionVariableLabel = new JLabel("Decision Variables     ");
 	decisionVariableLabel.setFont(FrameUtils.cuteFont(14));
 	infoPanel.add(decisionVariableLabel);
-	JLabel optimizationLabel = new JLabel("Resulting Optimization Criteria");
-	optimizationLabel.setFont(FrameUtils.cuteFont(14));
-	infoPanel.add(optimizationLabel);
 	mainPanel.add(infoPanel);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
@@ -71,7 +65,7 @@ public class OutputAlgorithmRunPage extends SuperPage {
 
 	JScrollPane scrollPane = new JScrollPane(subPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setPreferredSize(new Dimension(200, 260));
+	scrollPane.setPreferredSize(new Dimension(140, 300));
 	subMainPanel.add(scrollPane);
 
 	JLabel whiteSpace = new JLabel("       ");
@@ -81,34 +75,37 @@ public class OutputAlgorithmRunPage extends SuperPage {
 	subPanel2.setLayout(new BoxLayout(subPanel2, BoxLayout.Y_AXIS));
 	subPanel2.setBackground(Color.white);
 	subPanel2.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
-	JScrollPane scrollPane2 = new JScrollPane(subPanel2);
-	scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane2.setPreferredSize(new Dimension(200, 260));
-	subMainPanel.add(scrollPane2);
+		BorderFactory.createEmptyBorder(2, 2, 2, 2)));
+	subPanel2.setPreferredSize(new Dimension(350, 300));
+	subPanel2.setMaximumSize(new Dimension(350, 300));
+	subPanel2.setMinimumSize(new Dimension(350, 300));
+	subMainPanel.add(subPanel2);
 
 	mainPanel.add(subMainPanel);
 
     }
 
-    private void constructPage(int runNumber){
-	FileReader fileReader = new FileReader();
-	ArrayList<Double> list = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")
-		+ "/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
-		+ algorithmName + ".rs")).get(runNumber);
-	for(Double doub : list) {
-	    String str = userInterface.getProblem().getDecisionVariables().get(list.indexOf(doub)).getName() + "        " 
-		    + doub.toString();
-	    subPanel.add(new JLabel(str));
-	}
-	ArrayList<Double> list2 = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")
-		+ "/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
-		+ algorithmName + ".rf")).get(runNumber);
-	for(Double doub2 : list2) {
-	    String str = userInterface.getProblem().getOptimizationCriteria().get(list2.indexOf(doub2)).getName() + "        " 
-		    + doub2.toString();
-	    subPanel2.add(new JLabel(str));
+    private void constructPanel() {
+	for(DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
+	    JButton button = FrameUtils.cuteButton(dvo.getVariableName());
+	    button.setPreferredSize(new Dimension(50,30));
+	    FrameUtils.addEmptyLabels(subPanel, 1);
+	    button.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+		    // TODO Auto-generated method stub
+		    subPanel2.removeAll();
+		    FileReader fileReader = new FileReader();
+		    subPanel2.add(GraphGenerator.createAndShowGui(fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")
+			    +"/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
+			    + algorithmName + ".rs")).get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)), "Graph"));
+		    repaint();
+		    updateUI();
+		}
+
+	    });
+	    subPanel.add(button);
 	}
     }
 
@@ -118,7 +115,7 @@ public class OutputAlgorithmRunPage extends SuperPage {
 	homeButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		userInterface.returnFromOutputAlgorithmRunPage();
+		userInterface.returnFromOutputDecisionVariablesKnownSolutionsPage();
 	    }
 	});
 	buttonsPanel.add(homeButton);
@@ -126,8 +123,8 @@ public class OutputAlgorithmRunPage extends SuperPage {
 
     @Override
     protected void onTop() {
-	userInterface.getFrame().setTitle(algorithmName + " - Run " + runNumber);
-	constructPage(this.runNumber);
+	userInterface.getFrame().setTitle("Known Solutions - Decision Variables");
+	constructPanel();
     }
 
     @Override

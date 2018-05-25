@@ -76,6 +76,7 @@ public class FileReader {
      * @return
      */
     public ArrayList<ArrayList<Double>> readFileAndReturnList(File file) {
+	variableList.clear();
 	readFileInVariablePerspective(file);
 	return variableList;
     }
@@ -86,6 +87,7 @@ public class FileReader {
      * @return
      */
     public ArrayList<ArrayList<Double>> readFileAndReturnListInRunPerspective(File file) {
+	runList.clear();
 	readFileInRunPerspective(file);
 	return runList;
     }

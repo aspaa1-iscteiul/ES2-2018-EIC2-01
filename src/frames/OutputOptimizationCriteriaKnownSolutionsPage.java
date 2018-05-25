@@ -16,25 +16,26 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
-import frames.graphicalObjects.DecisionVariablesObject;
+import frames.graphicalObjects.OptimizationCriteriaObject;
 import utils.FileReader;
 import utils.GraphGenerator;
 
-public class OutputKnownSolutionsPage extends SuperPage {
+public class OutputOptimizationCriteriaKnownSolutionsPage extends SuperPage {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
     private JPanel subPanel, subPanel2;
+    private String algorithmName;
 
-    public OutputKnownSolutionsPage(UserInterface userInterface) {
+    public OutputOptimizationCriteriaKnownSolutionsPage(UserInterface userInterface, String algorithmName) {
 	super(userInterface);
+	this.algorithmName = algorithmName;
     }
 
     @Override
     protected void initialize() {
-	userInterface.getFrame().setTitle("Known Solutions");	
     }
 
     @Override
@@ -44,7 +45,7 @@ public class OutputKnownSolutionsPage extends SuperPage {
 
 	JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	infoPanel.setBackground(Color.white);
-	JLabel decisionVariableLabel = new JLabel("Decision Variables     ");
+	JLabel decisionVariableLabel = new JLabel("Optimization Criteria     ");
 	decisionVariableLabel.setFont(FrameUtils.cuteFont(14));
 	infoPanel.add(decisionVariableLabel);
 	mainPanel.add(infoPanel);
@@ -84,8 +85,8 @@ public class OutputKnownSolutionsPage extends SuperPage {
     }
     
     private void constructPanel() {
-	for(DecisionVariablesObject dvo : userInterface.getDecisionVariablesFromPage()) {
-	    JButton button = FrameUtils.cuteButton(dvo.getVariableName());
+	for(OptimizationCriteriaObject oco : userInterface.getOptimizationCriteriaFromPage()) {
+	    JButton button = FrameUtils.cuteButton(oco.getVariableName());
 	    button.setPreferredSize(new Dimension(50,30));
 	    FrameUtils.addEmptyLabels(subPanel, 1);
 	    button.addActionListener(new ActionListener() {
@@ -96,7 +97,9 @@ public class OutputKnownSolutionsPage extends SuperPage {
 		    subPanel2.removeAll();
 		    FileReader fileReader = new FileReader();
 		    subPanel2.add(GraphGenerator.createAndShowGui(fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")
-			    +"/src/utils/valuesTest.txt")).get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)), "Graph"));
+			    +"/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
+			    + algorithmName + ".rf")).get(userInterface.getOptimizationCriteriaFromPage().indexOf(oco)), 
+			    "Graph"));
 		    repaint();
 		    updateUI();
 		}
@@ -112,7 +115,7 @@ public class OutputKnownSolutionsPage extends SuperPage {
 	homeButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		userInterface.returnFromOutputKnownSolutionsPage();
+		userInterface.returnFromOutputOptimizationCriteriaKnownSolutionsPage();
 	    }
 	});
 	buttonsPanel.add(homeButton);
@@ -120,7 +123,7 @@ public class OutputKnownSolutionsPage extends SuperPage {
 
     @Override
     protected void onTop() {
-	userInterface.getFrame().setTitle("Known Solutions");
+	userInterface.getFrame().setTitle("Known Solutions - Optimization Criteria");
 	constructPanel();
     }
 

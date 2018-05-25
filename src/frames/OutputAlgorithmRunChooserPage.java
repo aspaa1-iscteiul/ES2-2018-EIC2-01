@@ -48,7 +48,7 @@ public class OutputAlgorithmRunChooserPage extends SuperPage{
 	JPanel infoPanel = new JPanel(new FlowLayout());
 	infoPanel.setBackground(Color.white);
 	JLabel messageLabel = new JLabel("<html>The optimization process is <font color=green><b>complete.</b></font> "
-		+ " Please <u>select one of the options</u> below to <br><font color=blue>view the results.</font></html>");
+		+ " Please <u>select one of the runs</u> below to <br><font color=blue>view the results.</font></html>");
 	messageLabel.setFont(FrameUtils.cuteFont(14));
 	infoPanel.add(messageLabel);
 	mainPanel.add(infoPanel);
@@ -63,17 +63,46 @@ public class OutputAlgorithmRunChooserPage extends SuperPage{
 
 	JScrollPane scrollPane = new JScrollPane(subPanel);
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setPreferredSize(new Dimension(510, 240));
+	scrollPane.setPreferredSize(new Dimension(510, 200));
 	mainPanel.add(scrollPane);
+
+	JPanel buttonsPanel1 = new JPanel();
+	buttonsPanel1.setLayout(new FlowLayout(FlowLayout.LEFT));
+	buttonsPanel1.setBackground(Color.white);
+	JButton graphDV = FrameUtils.cuteButton("Graph - Decision Variables");
+	graphDV.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		userInterface.goToOutputDecisionVariablesKnownSolutionsPage(algorithmName);
+	    }
+	});
+	buttonsPanel1.add(graphDV);
+	mainPanel.add(buttonsPanel1);
+
+	JPanel buttonsPanel2 = new JPanel();
+	buttonsPanel2.setLayout(new FlowLayout(FlowLayout.LEFT));
+	buttonsPanel2.setBackground(Color.white);
+	JButton graphOC = FrameUtils.cuteButton("Graph - Optimization Criteria");
+	graphOC.addActionListener(new ActionListener() {
+
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		userInterface.goToOutputOptimizationCriteriaKnownSolutionsPage(algorithmName);
+	    }
+
+	});
+
+	buttonsPanel2.add(graphOC);
+	mainPanel.add(buttonsPanel2);
     }
 
     @Override
     protected void createButtonsPanel() {
-	JButton cancelButton = FrameUtils.cuteButton("Cancel");
+	JButton cancelButton = FrameUtils.cuteButton("Home");
 	cancelButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		System.exit(0);
+		userInterface.returnFromOutputAlgorithmRunChooserPage();
 	    }
 	});
 	buttonsPanel.add(cancelButton);
@@ -84,7 +113,9 @@ public class OutputAlgorithmRunChooserPage extends SuperPage{
 	userInterface.getFrame().setTitle(algorithmName);
 	testRunsForAlgorithm.clear();
 	FileReader fileReader = new FileReader();
-	int numberOfRuns = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")+"/src/utils/valuesTest.txt")).size();
+	int numberOfRuns = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")
+		+ "/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
+		+ algorithmName + ".rf")).size();
 	for(int i = 0; i != numberOfRuns; i++) {
 	    testRunsForAlgorithm.add("Run " + i);
 	}
@@ -128,7 +159,7 @@ public class OutputAlgorithmRunChooserPage extends SuperPage{
 		    String[] splittedStr = str.split("Run ");
 		    int runNumber = Integer.parseInt(splittedStr[1]);
 		    JButton button = FrameUtils.cuteButton(str);
-		    button.setPreferredSize(new Dimension(140,30));
+		    button.setPreferredSize(new Dimension(140,20));
 		    button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
