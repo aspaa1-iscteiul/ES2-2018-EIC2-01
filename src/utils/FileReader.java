@@ -10,6 +10,10 @@ public class FileReader {
     private ArrayList<ArrayList<Double>> variableList = new ArrayList<ArrayList<Double>>();
     private ArrayList<ArrayList<Double>> runList = new ArrayList<ArrayList<Double>>();
 
+    /**
+     * Reads given file and fills the variableList with a ArrayList with the values from the file for which variable
+     * @param file
+     */
     private void readFileInVariablePerspective(File file) {
 	int lineNumber = 0;
 	try{
@@ -40,6 +44,10 @@ public class FileReader {
 	}
     }
 
+    /**
+     * Reads given file and fills the runList with a ArrayList with the values from the file for which run
+     * @param file
+     */
     private void readFileInRunPerspective(File file) {
 	try{
 	    Scanner scanner = new Scanner(file, "UTF-8");
@@ -62,11 +70,21 @@ public class FileReader {
 	}
     }
 
+    /**
+     * Returns variableList after performing {@linkplain #readFileInVariablePerspective}
+     * @param file
+     * @return
+     */
     public ArrayList<ArrayList<Double>> readFileAndReturnList(File file) {
 	readFileInVariablePerspective(file);
 	return variableList;
     }
 
+    /**
+     * Returns runList after performing {@linkplain #readFileInRunPerspective}
+     * @param file
+     * @return
+     */
     public ArrayList<ArrayList<Double>> readFileAndReturnListInRunPerspective(File file) {
 	readFileInRunPerspective(file);
 	return runList;

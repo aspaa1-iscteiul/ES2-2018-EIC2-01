@@ -106,6 +106,9 @@ public class OutputAlgorithmRunChooserPage extends SuperPage{
     protected void clearDataFromPage() {
     }
 
+    /**
+     * Constructs the page adapted to the number of runs given
+     */
     private void constructPage() {
 	subPanel.removeAll();
 	int numberOfLines = 0;
@@ -129,7 +132,7 @@ public class OutputAlgorithmRunChooserPage extends SuperPage{
 		    button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			   userInterface.goToOutputAlgorithmRunPage(algorithmName, runNumber);
+			    userInterface.goToOutputAlgorithmRunPage(algorithmName, runNumber);
 			}
 
 		    });

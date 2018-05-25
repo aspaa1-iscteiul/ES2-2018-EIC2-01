@@ -79,12 +79,10 @@ public class HomePage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-
     }
 
     @Override
     protected void clearDataFromPage() {
 	// TODO Auto-generated method stub
-	
     }
 }

@@ -157,6 +157,10 @@ public class GraphGenerator extends JPanel {
 	return new Dimension(width, heigth);
     }
 
+    /**
+     * Analyses the list of scores and the list of knownSolutions to find the lowest value
+     * @return
+     */
     private double getMinScore() {
 	double minScoreValues = Double.MIN_VALUE;
 	for (Double score : scores) {
@@ -169,6 +173,10 @@ public class GraphGenerator extends JPanel {
 	return Math.min(minScoreSolutions, minScoreValues);
     }
 
+    /**
+     * Analyses the list of scores and the list of knownSolutions to find the highest value
+     * @return
+     */
     private double getMaxScore() {
 	double maxScoreValues = Double.MIN_VALUE;
 	for (Double score : scores) {
@@ -181,16 +189,23 @@ public class GraphGenerator extends JPanel {
 	return Math.max(maxScoreSolutions, maxScoreValues);
     }
 
-    public void setScores(List<Double> scores) {
-	this.scores = scores;
-	invalidate();
-	this.repaint();
-    }
 
     public List<Double> getScores() {
 	return scores;
     }
 
+    public void setScores(List<Double> scores) {
+	this.scores = scores;
+	invalidate();
+	this.repaint();
+    }
+    
+    /**
+     * Creates the graph and it places the graph in a JPanel to be added to the GUI
+     * @param list
+     * @param graphName
+     * @return
+     */
     public static JPanel createAndShowGui(ArrayList<Double> list, String graphName) {
 	List<Double> scores = list;
 	List<Double> knownSolutions = new ArrayList<>();

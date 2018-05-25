@@ -103,6 +103,9 @@ public class OutputIntroPage extends SuperPage{
     protected void clearDataFromPage() {
     }
 
+    /**
+     * Constructs the page adapted to the algorithms selected in the previous pages
+     */
     private void constructPage() {
 	subPanel.removeAll();
 	int numberOfLines = 0;

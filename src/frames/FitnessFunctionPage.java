@@ -114,7 +114,6 @@ public class FitnessFunctionPage extends SuperPage {
     @Override
     protected void clearDataFromPage() {
 	// TODO Auto-generated method stub
-
     }
 
 }

@@ -125,7 +125,7 @@ public class DecisionVariablesPage extends SuperPage {
 	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	importFromFilePanel();
-	
+
 	FrameUtils.addEmptyLabels(buttonsPanel, 1);
     }
 

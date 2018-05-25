@@ -95,7 +95,10 @@ public class IntroPage extends SuperPage {
 	mainPanel.add(importButton);
 
     }
-
+    /**
+     * Imports the data from the xml file selected to the GUI
+     * @return
+     */
     private boolean importXMLFile() {
 	JFileChooser fileChooser = new JFileChooser();
 	// Launches the JFileChooser on the Desktop directory
@@ -125,7 +128,7 @@ public class IntroPage extends SuperPage {
 	return false;
     }
 
-    private static boolean isBrowsingSupported() {
+     private static boolean isBrowsingSupported() {
 	if (!Desktop.isDesktopSupported()) {
 	    return false;
 	}
@@ -133,6 +136,10 @@ public class IntroPage extends SuperPage {
 
     }
 
+    /**
+     * Redirects the user to the JMetal Website
+     * @param linkLabel
+     */
     private void goToWebsite(JLabel linkLabel) {
 	linkLabel.addMouseListener(new MouseAdapter() {
 	    public void mouseClicked(MouseEvent e) {
@@ -185,7 +192,6 @@ public class IntroPage extends SuperPage {
     @Override
     protected void clearDataFromPage() {
 	// TODO Auto-generated method stub
-
     }
 
 }

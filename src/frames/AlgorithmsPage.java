@@ -156,6 +156,10 @@ public class AlgorithmsPage extends SuperPage {
 	return tmp;
     }
     
+    /**
+     * Returns the list of algorithms that will be added to the GUI based on a SINGLE_OBJECTIVE or MULTI_OBJECTIVE perspective
+     * @return
+     */
     public ArrayList<String> getAlgorithmsList() {
 	ArrayList<String> list;
 	DataType problemType = userInterface.getDecisionVariablesFromPage().get(0).getDataTypeToProblem();

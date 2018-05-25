@@ -143,20 +143,17 @@ public class HomeCenterPage extends SuperPage {
 
     @Override
     protected boolean areAllDataWellFilled() {
-	// TODO Auto-generated method stub
 	return true;
     }
 
     @Override
     protected void saveToProblem() {
 	// TODO Auto-generated method stub
-
     }
 
     @Override
     protected void clearDataFromPage() {
 	// TODO Auto-generated method stub
-
     }
 
 }

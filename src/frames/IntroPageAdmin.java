@@ -73,6 +73,10 @@ public class IntroPageAdmin extends SuperPage {
 
     }
 
+    /**
+     * Imports the data from the xml file selected to the GUI
+     * @return
+     */
     private boolean importXMLFile() {
 	JFileChooser fileChooser = new JFileChooser();
 	// Launches the JFileChooser on the Desktop directory
@@ -135,7 +139,6 @@ public class IntroPageAdmin extends SuperPage {
     @Override
     protected void clearDataFromPage() {
 	// TODO Auto-generated method stub
-
     }
 
 }
