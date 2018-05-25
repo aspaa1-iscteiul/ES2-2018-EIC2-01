@@ -8,6 +8,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
@@ -112,7 +114,9 @@ public class JMetalRun {
 		afterRunning();
 	    } catch (Exception e) {
 		// TODO change subject and message
-		email.sendEmail(true, "Error", e.getMessage());
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		email.sendEmail(true, "Error", sw.toString());
 		System.exit(1);
 	    }
 	}

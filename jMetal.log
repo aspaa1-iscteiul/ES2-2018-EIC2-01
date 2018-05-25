@@ -2,36 +2,168 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-25T18:19:52</date>
-  <millis>1527268792740</millis>
+  <date>2018-05-25T18:44:32</date>
+  <millis>1527270272606</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>28</thread>
+  <thread>54</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-25T18:19:52</date>
-  <millis>1527268792760</millis>
+  <date>2018-05-25T18:44:32</date>
+  <millis>1527270272614</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>28</thread>
+  <thread>54</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-25T18:19:52</date>
-  <millis>1527268792789</millis>
+  <date>2018-05-25T18:44:32</date>
+  <millis>1527270272620</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>28</thread>
-  <message> Running algorithm: NSGAII, problem: Prob1, run: 0, funFile: experimentBaseDirectory/Prob1/data/NSGAII/Prob1/FUN0.tsv</message>
+  <thread>54</thread>
+  <message> Running algorithm: RandomSearch, problem: BinaryTest, run: 0, funFile: experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T18:45:52</date>
+  <millis>1527270352826</millis>
+  <sequence>3</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>54</thread>
+  <message> Running algorithm: RandomSearch, problem: BinaryTest, run: 1, funFile: experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest/FUN1.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T18:47:13</date>
+  <millis>1527270433026</millis>
+  <sequence>4</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>54</thread>
+  <message> Running algorithm: RandomSearch, problem: BinaryTest, run: 2, funFile: experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest/FUN2.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T18:48:33</date>
+  <millis>1527270513447</millis>
+  <sequence>5</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>54</thread>
+  <message> Running algorithm: RandomSearch, problem: BinaryTest, run: 3, funFile: experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest/FUN3.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599267</millis>
+  <sequence>6</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions</class>
+  <method>createOutputDirectory</method>
+  <thread>54</thread>
+  <message>Creating experimentBaseDirectory/referenceFronts. Status = true</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599274</millis>
+  <sequence>7</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>54</thread>
+  <message>Computing indicator: HV</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599274</millis>
+  <sequence>8</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>54</thread>
+  <message>RF: experimentBaseDirectory/referenceFronts/BinaryTest.rf</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599276</millis>
+  <sequence>9</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>resetFile</method>
+  <thread>54</thread>
+  <message>File experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest/HV does NOT exist.</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599278</millis>
+  <sequence>10</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>54</thread>
+  <message>HV: 0.45000000000000007</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599279</millis>
+  <sequence>11</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>54</thread>
+  <message>HV: 0.45000000000000007</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599280</millis>
+  <sequence>12</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>54</thread>
+  <message>HV: 0.45000000000000007</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599280</millis>
+  <sequence>13</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>54</thread>
+  <message>HV: 0.45000000000000007</message>
+</record>
+<record>
+  <date>2018-05-25T18:49:59</date>
+  <millis>1527270599303</millis>
+  <sequence>14</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics</class>
+  <method>generateLatexScript</method>
+  <thread>54</thread>
+  <message>Creating experimentBaseDirectory/BinaryTest/latex directory</message>
 </record>
 </log>
