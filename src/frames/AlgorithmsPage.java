@@ -77,8 +77,6 @@ public class AlgorithmsPage extends SuperPage {
 	title.setText((userInterface.getIsSingleobjective() ? "Single objective" : "Multi objective")
 		+ " optimization algorithms available");
 
-	
-
 	for (String algorithm : getAlgorithmsList())
 	    algorithmsList.add(new JCheckBox(algorithm));
 
@@ -143,21 +141,16 @@ public class AlgorithmsPage extends SuperPage {
 	ArrayList<String> tmp = new ArrayList<String>();
 	ArrayList<String> algorithms = getAlgorithmsList();
 	for (JCheckBox checkbox : algorithmsList) {
-	    if (checkbox.isSelected() == true) {
-		// TODO
+	    if (checkbox.isSelected())
 		tmp.add(algorithms.get(algorithmsList.indexOf(checkbox)));
-//		if (userInterface.getIsSingleobjective() == true) {
-//		    tmp.add(DoubleAlgorithms.SINGLE_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
-//		} else {
-//		    tmp.add(DoubleAlgorithms.MULTI_OBJECTIVE.get(algorithmsList.indexOf(checkbox)));
-//		}
-	    }
 	}
 	return tmp;
     }
-    
+
     /**
-     * Returns the list of algorithms that will be added to the GUI based on a SINGLE_OBJECTIVE or MULTI_OBJECTIVE perspective
+     * Returns the list of algorithms that will be added to the GUI based on a
+     * SINGLE_OBJECTIVE or MULTI_OBJECTIVE perspective
+     * 
      * @return
      */
     public ArrayList<String> getAlgorithmsList() {

@@ -86,7 +86,7 @@ public class DecisionVariablesObject {
 	    invalidValues = new JTextField(6);
 	}
 	deleteIcon = new JLabel();
-	deleteIcon.setIcon(new ImageIcon("./src/frames/images/delete_icon2.png"));
+	deleteIcon.setIcon(new ImageIcon(getClass().getResource("../images/delete_icon2.png")));
     }
 
     /**
