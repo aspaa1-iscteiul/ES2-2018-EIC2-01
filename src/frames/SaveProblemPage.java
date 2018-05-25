@@ -73,7 +73,7 @@ public class SaveProblemPage extends SuperPage {
 	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
 
-	FrameUtils.addEmptyLabels(mainPanel, 2);
+	FrameUtils.addEmptyLabels(mainPanel, 1);
 
 	JPanel namePanel = new JPanel(new BorderLayout());
 	namePanel.setBackground(Color.WHITE);
@@ -142,10 +142,12 @@ public class SaveProblemPage extends SuperPage {
 		"<html>Please note that, when indicating a path, you <b>must use ABSOLUTE <br> names</b>. "
 			+ "For instance, if you wish to save the document in your Desktop <br>"
 			+ "it <font color=red><b>isn't sufficient to write 'Desktop'</b></font>. Instead, you should opt for <u>one</u> of<br> "
-			+ "the variantions listed below: <br><br> "
-			+ "<font color=green><b>C://Users//Username//Desktop/</b></font><br>"
-			+ "<font color=green><b>C://Users//Username//Desktop</b></font><br>"
-			+ "<font color=green><b>C:/Users/Username/Desktop</b></font></html>");
+			+ "the variantions listed below: <br> "
+			+ "<font color=green><b>     C://Users//Username//Desktop/</b></font><br>"
+			+ "<font color=green><b>     C://Users//Username//Desktop</b></font><br>"
+			+ "<font color=green><b>     C:/Users/Username/Desktop</b></font><br><br>"
+			+ "In addition, the file name field can only contain letters and/or numbers<br>"
+			+ "and it must end with the extension .xml.</html>");
 	infoLabel.setFont(FrameUtils.cuteFont(12));
 	infoLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 	infoPanel.add(infoLabel, BorderLayout.CENTER);

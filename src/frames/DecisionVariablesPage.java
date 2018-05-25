@@ -48,6 +48,7 @@ public class DecisionVariablesPage extends SuperPage {
     private JTextField invalidValues;
     private JPanel subSubMainPanel;
     private JTextField decisionVariablesSetName;
+    private JButton importFromFile;
 
     /**
      * 
@@ -123,10 +124,6 @@ public class DecisionVariablesPage extends SuperPage {
 	mainPanel.add(scrollPane);
 
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-
-	importFromFilePanel();
-
-	FrameUtils.addEmptyLabels(buttonsPanel, 1);
     }
 
     /**
@@ -238,6 +235,40 @@ public class DecisionVariablesPage extends SuperPage {
 	userInterface.putXmlFileWasImportedFalseAtIndex(1);
     }
 
+    protected void createButtonsPanel() {
+	importFromFilePanel();
+	JButton backButton = FrameUtils.cuteButton("Back");
+	backButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToPreviousPage();
+	    }
+	});
+	buttonsPanel.add(backButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton cancelButton = FrameUtils.cuteButton("Cancel");
+	cancelButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	    }
+	});
+	buttonsPanel.add(cancelButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton nextButton = FrameUtils.cuteButton("Next");
+	nextButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToNextPage();
+	    }
+	});
+	buttonsPanel.add(nextButton);
+    }
+    
     @Override
     protected boolean areAllDataWellFilled() {
 	if (decisionVariableList.isEmpty()) {
@@ -317,7 +348,7 @@ public class DecisionVariablesPage extends SuperPage {
      * Imports the data of the file selected to the panel
      */
     private void importFromFilePanel() {
-	JButton importFromFile = FrameUtils.cuteButton("Import from file");
+	importFromFile = FrameUtils.cuteButton("Import from file");
 	importFromFile.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {

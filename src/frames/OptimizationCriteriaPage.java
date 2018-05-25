@@ -163,10 +163,6 @@ public class OptimizationCriteriaPage extends SuperPage {
 
 	mainPanel.add(scrollPane);
 	FrameUtils.addEmptyLabels(mainPanel, 1);
-	
-	importFromFilePanel();
-	
-	FrameUtils.addEmptyLabels(buttonsPanel, 1);
     }
 
     /**
@@ -229,6 +225,40 @@ public class OptimizationCriteriaPage extends SuperPage {
 	FrameUtils.addEmptyLabels(buttonsPanel, 21);
     }
 
+    protected void createButtonsPanel() {
+	importFromFilePanel();
+	JButton backButton = FrameUtils.cuteButton("Back");
+	backButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToPreviousPage();
+	    }
+	});
+	buttonsPanel.add(backButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton cancelButton = FrameUtils.cuteButton("Cancel");
+	cancelButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		System.exit(0);
+	    }
+	});
+	buttonsPanel.add(cancelButton);
+
+	buttonsPanel.add(new JLabel()); // to add space between the two buttons
+
+	JButton nextButton = FrameUtils.cuteButton("Next");
+	nextButton.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		userInterface.goToNextPage();
+	    }
+	});
+	buttonsPanel.add(nextButton);
+    }
+
     /**
      * Ask user to input values on variables created
      * 
@@ -247,7 +277,7 @@ public class OptimizationCriteriaPage extends SuperPage {
 	}
 	return null;
     }
-    
+
     /**
      * Reads an imported variable and creates variables with the read values and
      * places them on the frame

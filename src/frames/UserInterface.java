@@ -473,6 +473,7 @@ public class UserInterface {
      */
     public void setFinalProblem() {
 	this.problem.setDecisionVariables(createDecisionVariableFinalList());
+	this.problem.setOptimizationCriteria(createOptimizationCriteriaFinalList());
 	this.problem.setOptimizationAlgorithms(optimizationAlgorithmsFromPage);
 	createFitnessFunctionFinal();
     }
