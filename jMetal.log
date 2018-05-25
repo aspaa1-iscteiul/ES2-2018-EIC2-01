@@ -2,168 +2,35 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-25T18:52:20</date>
-  <millis>1527270740926</millis>
+  <date>2018-05-25T22:30:38</date>
+  <millis>1527283838585</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>43</thread>
+  <thread>29</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-25T18:52:20</date>
-  <millis>1527270740949</millis>
+  <date>2018-05-25T22:30:38</date>
+  <millis>1527283838626</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>43</thread>
+  <thread>29</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-25T18:52:20</date>
-  <millis>1527270740966</millis>
+  <date>2018-05-25T22:30:38</date>
+  <millis>1527283838643</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>43</thread>
+  <thread>29</thread>
   <message> Running algorithm: NSGAII, problem: Prob1, run: 0, funFile: experimentBaseDirectory/Prob1/data/NSGAII/Prob1/FUN0.tsv</message>
 </record>
-<record>
-  <date>2018-05-25T18:56:09</date>
-  <millis>1527270969695</millis>
-  <sequence>3</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
-  <method>runAlgorithm</method>
-  <thread>43</thread>
-  <message> Running algorithm: NSGAII, problem: Prob1, run: 1, funFile: experimentBaseDirectory/Prob1/data/NSGAII/Prob1/FUN1.tsv</message>
-</record>
-<record>
-  <date>2018-05-25T18:59:58</date>
-  <millis>1527271198478</millis>
-  <sequence>4</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
-  <method>runAlgorithm</method>
-  <thread>43</thread>
-  <message> Running algorithm: NSGAII, problem: Prob1, run: 2, funFile: experimentBaseDirectory/Prob1/data/NSGAII/Prob1/FUN2.tsv</message>
-</record>
-<record>
-  <date>2018-05-25T19:04:07</date>
-  <millis>1527271447714</millis>
-  <sequence>5</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
-  <method>runAlgorithm</method>
-  <thread>43</thread>
-  <message> Running algorithm: NSGAII, problem: Prob1, run: 3, funFile: experimentBaseDirectory/Prob1/data/NSGAII/Prob1/FUN3.tsv</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678323</millis>
-  <sequence>6</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions</class>
-  <method>createOutputDirectory</method>
-  <thread>43</thread>
-  <message>Creating experimentBaseDirectory/referenceFronts. Status = true</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678384</millis>
-  <sequence>7</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>43</thread>
-  <message>Computing indicator: HV</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678384</millis>
-  <sequence>8</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>43</thread>
-  <message>RF: experimentBaseDirectory/referenceFronts/Prob1.rf</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678388</millis>
-  <sequence>9</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>resetFile</method>
-  <thread>43</thread>
-  <message>File experimentBaseDirectory/Prob1/data/NSGAII/Prob1/HV does NOT exist.</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678392</millis>
-  <sequence>10</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>43</thread>
-  <message>HV: 0.45000000000000007</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678400</millis>
-  <sequence>11</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>43</thread>
-  <message>HV: 0.45000000000000007</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678404</millis>
-  <sequence>12</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>43</thread>
-  <message>HV: 0.45000000000000007</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678408</millis>
-  <sequence>13</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>43</thread>
-  <message>HV: 0.45000000000000007</message>
-</record>
-<record>
-  <date>2018-05-25T19:07:58</date>
-  <millis>1527271678540</millis>
-  <sequence>14</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics</class>
-  <method>generateLatexScript</method>
-  <thread>43</thread>
-  <message>Creating experimentBaseDirectory/Prob1/latex directory</message>
-</record>
-</log>

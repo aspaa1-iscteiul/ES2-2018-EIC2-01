@@ -99,7 +99,9 @@ public class OutputDecisionVariableKnownSolutionsPage extends SuperPage {
 		    FileReader fileReader = new FileReader();
 		    subPanel2.add(GraphGenerator.createAndShowGui(fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")
 			    +"/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
-			    + algorithmName + ".rs")).get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)), "Graph"));
+			    + algorithmName + ".rs")).get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)),
+			    userInterface.getProblem().getDecisionVariables().get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)).getKnownSolutions(),
+			    "Graph"));
 		    repaint();
 		    updateUI();
 		}

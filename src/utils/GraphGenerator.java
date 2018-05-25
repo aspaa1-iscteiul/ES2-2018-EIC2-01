@@ -210,9 +210,9 @@ public class GraphGenerator extends JPanel {
      * @param graphName
      * @return
      */
-    public static JPanel createAndShowGui(ArrayList<Double> list, String graphName) {
+    public static JPanel createAndShowGui(ArrayList<Double> list, ArrayList<String> solutions, String graphName) {
 	List<Double> scores = list;
-	List<Double> knownSolutions = new ArrayList<Double>();
+	List<Double> knownSolutions = parseListToDouble(solutions);
 	JPanel mainPanel = new JPanel();
 	JLabel title = new JLabel("Variation of results with runs for " + graphName);
 	mainPanel.setLayout(new BorderLayout());

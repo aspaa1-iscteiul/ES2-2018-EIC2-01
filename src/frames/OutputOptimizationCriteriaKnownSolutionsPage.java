@@ -90,15 +90,14 @@ public class OutputOptimizationCriteriaKnownSolutionsPage extends SuperPage {
 	    button.setPreferredSize(new Dimension(50,30));
 	    FrameUtils.addEmptyLabels(subPanel, 1);
 	    button.addActionListener(new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-		    // TODO Auto-generated method stub
 		    subPanel2.removeAll();
 		    FileReader fileReader = new FileReader();
 		    subPanel2.add(GraphGenerator.createAndShowGui(fileReader.readFileAndReturnList(new File(System.getProperty("user.dir")
 			    +"/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
-			    + algorithmName + ".rf")).get(userInterface.getOptimizationCriteriaFromPage().indexOf(oco)), 
+			    + algorithmName + ".rf")).get(userInterface.getOptimizationCriteriaFromPage().indexOf(oco)),
+			    userInterface.getProblem().getOptimizationCriteria().get(userInterface.getOptimizationCriteriaFromPage().indexOf(oco)).getKnownSolutions(),
 			    "Graph"));
 		    repaint();
 		    updateUI();
