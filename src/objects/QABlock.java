@@ -39,11 +39,14 @@ public class QABlock {
      */
     public static ArrayList<QABlock> getDefaultFAQ() {
 	String question1 = "How can I cancel the optimization process in case its taking to long to produce a solution?";
-	String answer1 = "The optimization process can not be canceled once it starts runnning. If your problem is time sensitive you should define a maximum time frame for the production of the solution. If this limit is surpassed then the optimization process is forcebly terminated.";
+	String answer1 = "The optimization process can not be canceled once it starts runnning."
+		+ "<br> If your problem is time sensitive you should define a maximum time frame for the production"
+		+ "<br> of the solution. If this limit is surpassed then the optimization process is forcebly terminated.";
 	QABlock qaBlock1 = new QABlock(question1, answer1);
 
 	String question2 = "What sort of indication will be sent to me via email?";
-	String answer2 = "You will be sent emails to update you on the progress of the optimization process when it has reached 25%, 50% and 75% of the estimated total duration.";
+	String answer2 = "You will be sent emails to update you on the progress of the optimization process when it"
+		+ "<br>has reached 25%, 50% and 75% of the estimated total duration.";
 	QABlock qaBlock2 = new QABlock(question2, answer2);
 
 	ArrayList<QABlock> faq = new ArrayList<>();

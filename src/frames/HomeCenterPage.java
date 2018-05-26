@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -31,6 +32,15 @@ public class HomeCenterPage extends SuperPage {
     private JButton nextButton;
     private JButton emailButton;
     private JPanel messagePanel;
+    private String[] colors = {"grey",
+	    "light_grey",
+	    "red",
+	    "orange",
+	    "yellow",
+	    "blue",
+	    "green",
+	    "pink",
+	    "brown"};
 
     public HomeCenterPage(UserInterface userInterface) {
 	super(userInterface);
@@ -128,16 +138,13 @@ public class HomeCenterPage extends SuperPage {
 	    messagePanel.removeAll();
 	    JLabel messageLabel = new JLabel("<html>In this section you can get fast answers to most of your questions!" + "<br></br><br></br>");
 	    for(QABlock qa : userInterface.getAdmin().getFaq()) {
-		int R = (int)(Math.random()*256);
-		int G = (int)(Math.random()*256);
-		int B= (int)(Math.random()*256);
-		Color color = new Color(R, G, B);
-		messageLabel.setText(messageLabel.getText()+("<font color= " + color + "><b>" +  qa.getQuestion() 
-		+ "</b></font><br></br>" + qa.getAnswer() + "<br></br>"));
+		Random random = new Random();
+		messageLabel.setText(messageLabel.getText()+("<font color=" + colors[random.nextInt(colors.length)] + "><b>" +  qa.getQuestion() 
+		+ "</b></font><br></br>" + qa.getAnswer() + "<br><br>"));
 		messageLabel.setFont(FrameUtils.cuteFont(12));
 		messagePanel.add(messageLabel, BorderLayout.WEST);
-		mainPanel.add(messagePanel);
 	    }
+	    messageLabel.setText(messageLabel.getText()+"</html>");
 	}
     }
 
