@@ -98,7 +98,7 @@ public class OutputOptimizationCriteriaKnownSolutionsPage extends SuperPage {
 			    +"/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
 			    + algorithmName + ".rf")).get(userInterface.getOptimizationCriteriaFromPage().indexOf(oco)),
 			    userInterface.getProblem().getOptimizationCriteria().get(userInterface.getOptimizationCriteriaFromPage().indexOf(oco)).getKnownSolutions(),
-			    "Graph"));
+			    oco.getVariableName()));
 		    repaint();
 		    updateUI();
 		}

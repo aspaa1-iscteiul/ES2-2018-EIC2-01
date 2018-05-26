@@ -101,7 +101,7 @@ public class OutputDecisionVariableKnownSolutionsPage extends SuperPage {
 			    +"/experimentBaseDirectory/referenceFronts/" + userInterface.getProblem().getProblemName() + "."
 			    + algorithmName + ".rs")).get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)),
 			    userInterface.getProblem().getDecisionVariables().get(userInterface.getDecisionVariablesFromPage().indexOf(dvo)).getKnownSolutions(),
-			    "Graph"));
+			    dvo.getVariableName()));
 		    repaint();
 		    updateUI();
 		}
