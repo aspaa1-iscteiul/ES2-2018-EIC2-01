@@ -1,0 +1,11 @@
+frames
+frames.frameUtils
+frames.graphicalObjects
+jMetal
+jMetal.binaryConfiguration
+jMetal.doubleConfiguration
+jMetal.integerConfiguration
+jUnitTests
+jarTests
+objects
+utils
