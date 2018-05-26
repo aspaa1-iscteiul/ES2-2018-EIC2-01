@@ -26,6 +26,19 @@ public class TestSuite {
 	TestAdminFileUtils.testClassadminFileUtils();
 	TestAdminFileUtils.successfullyTestCreateTemplateAndUploadConfigFile();
 	TestAdminFileUtils.unsuccessfullyTestCreateTemplateAndUploadConfigFile();
+	
+	TestFileReader.testClassFileReader();
+	TestFileReader.testFileReading();
+    }
+
+    /**
+     * Testing different classes initialization
+     */
+    @Test
+    public final void testClassInitialization() {
+	new TestUserFileUtils();
+	new TestAdminFileUtils();
+	new TestFileReader();
     }
 
 }

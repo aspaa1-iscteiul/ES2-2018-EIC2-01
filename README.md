@@ -16,4 +16,4 @@ Demonstration video: //TODO
 As indicated the language adopted for implementation / coding purposes, comments, interaction with the user and documentation was the English language. However, since the project statement is in Portuguese, we thought it would be more conducive to project development if we used our mother tongue for the planning and description of Sprints tasks on the Trello collaborative work platform.
 
 
-The unit test coverage for the objects and utils packages is higher than the established minimum of 50% for all coverage metrics. The classes in the frames package are not suitable for JUnit tests because they are modeling classes for the graphical interface.
+The unit test coverage for the objects and utils packages is higher than the established minimum of 50% for all coverage metrics. The classes in the frames and jMetal related packages are not suitable for JUnit tests because they are either modeling classes for the graphical interface or implementing interaction mechanisms for the JMetal framework.
