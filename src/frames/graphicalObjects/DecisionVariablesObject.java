@@ -79,7 +79,7 @@ public class DecisionVariablesObject {
 	}
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
-	if(values != null && !values.equals(null)) {
+	if(values != null) {
 	    String tmp1 =  StringUtils.remove(Arrays.toString(values), '[');
 	    String tmp2 = StringUtils.remove(tmp1, ']');
 	    invalidValues = new JTextField(tmp2,6);

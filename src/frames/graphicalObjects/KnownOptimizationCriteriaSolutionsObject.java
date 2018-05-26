@@ -192,6 +192,14 @@ public class KnownOptimizationCriteriaSolutionsObject {
 	this.name = name;
     }
 
+    public String getDataType() {
+	return dataType;
+    }
+
+    public void setDataType(String dataType) {
+	this.dataType = dataType;
+    }
+
     public KnownOptimizationCriteriaSolutionsPage getPage() {
 	return pageAssociated;
     }

@@ -143,6 +143,7 @@ public class KnownOptimizationCriteriaSolutionsPage extends SuperPage {
 	    setThisPage();
 	    knownSolutionsList = userInterface.getKnownOptimizationCriteriaSolutionsList();
 	    for(KnownOptimizationCriteriaSolutionsObject kso : knownSolutionsList) {
+		kso.setDataType(userInterface.getOptimizationCriteriaFromPage().get(0).getDataType());
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
 	    verifyIfAnyCriteriaWasAdded();

@@ -275,6 +275,30 @@ public class KnownDecisionVariablesSolutionsObject {
     public void setName(JTextField name) {
 	this.name = name;
     }
+    
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
+    }
+
+    public String getLowerBound() {
+        return lowerBound;
+    }
+
+    public void setLowerBound(String lowerBound) {
+        this.lowerBound = lowerBound;
+    }
+
+    public String getUpperBound() {
+        return upperBound;
+    }
+
+    public void setUpperBound(String upperBound) {
+        this.upperBound = upperBound;
+    }
 
     public KnownDecisionVariablesSolutionsPage getPage() {
 	return pageAssociated;
