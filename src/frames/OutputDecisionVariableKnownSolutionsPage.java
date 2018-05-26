@@ -16,9 +16,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import frames.frameUtils.FrameUtils;
+import frames.frameUtils.GraphGenerator;
 import frames.graphicalObjects.DecisionVariablesObject;
 import utils.FileReader;
-import utils.GraphGenerator;
 
 public class OutputDecisionVariableKnownSolutionsPage extends SuperPage {
 
