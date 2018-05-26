@@ -47,6 +47,7 @@ public class DecisionVariablesObject {
      * @param upperLimit
      * @param values
      */
+    
     public DecisionVariablesObject(final DecisionVariablesPage page, String variableName, String variableDataType,
 	    String lowerLimit, String upperLimit, String[] values) {
 	this.pageAssociated = page;
@@ -78,7 +79,7 @@ public class DecisionVariablesObject {
 	}
 	lowerBound = new JTextField(lowerLimit, 6);
 	upperBound = new JTextField(upperLimit, 6);
-	if(values != null) {
+	if(values != null && !values.equals(null)) {
 	    String tmp1 =  StringUtils.remove(Arrays.toString(values), '[');
 	    String tmp2 = StringUtils.remove(tmp1, ']');
 	    invalidValues = new JTextField(tmp2,6);

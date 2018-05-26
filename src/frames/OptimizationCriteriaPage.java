@@ -102,9 +102,12 @@ public class OptimizationCriteriaPage extends SuperPage {
 	subSubMainPanel.setBackground(Color.WHITE);
 	subSubMainPanel.setLayout(new BoxLayout(subSubMainPanel, BoxLayout.Y_AXIS));
 
-	OptimizationCriteriaObject optimizationCriteria = new OptimizationCriteriaObject(this);
-	optimizationCriteriaList.add(optimizationCriteria);
-	subSubMainPanel.add(optimizationCriteria.transformIntoAPanel());
+	OptimizationCriteriaObject optimizationCriteria1 = new OptimizationCriteriaObject(this);
+	OptimizationCriteriaObject optimizationCriteria2 = new OptimizationCriteriaObject(this);
+	optimizationCriteriaList.add(optimizationCriteria1);
+	optimizationCriteriaList.add(optimizationCriteria2);
+	subSubMainPanel.add(optimizationCriteria1.transformIntoAPanel());
+	subSubMainPanel.add(optimizationCriteria2.transformIntoAPanel());
 
 	subMainPanel.add(subSubMainPanel, BorderLayout.CENTER);
 
@@ -366,10 +369,10 @@ public class OptimizationCriteriaPage extends SuperPage {
 	for(OptimizationCriteriaObject oco : optimizationCriteriaList) {
 	    oco.setDataType(dataType.getSelectedItem().toString());
 	}
-	if (optimizationCriteriaList.isEmpty()) {
+	if (optimizationCriteriaList.size() < 2) {
 	    // XXX change message
 	    JOptionPane.showMessageDialog(userInterface.getFrame(),
-		    "In order to proceed, you need to declare at least one optimization criteria.",
+		    "In order to proceed, you need to declare at least two optimization criteria.",
 		    "Optimization criteria", JOptionPane.ERROR_MESSAGE);
 	    return false;
 	}
