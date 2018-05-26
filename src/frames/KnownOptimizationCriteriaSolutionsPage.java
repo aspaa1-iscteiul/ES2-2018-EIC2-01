@@ -143,7 +143,6 @@ public class KnownOptimizationCriteriaSolutionsPage extends SuperPage {
 	    setThisPage();
 	    knownSolutionsList = userInterface.getKnownOptimizationCriteriaSolutionsList();
 	    for(KnownOptimizationCriteriaSolutionsObject kso : knownSolutionsList) {
-		kso.setDataType(userInterface.getOptimizationCriteriaFromPage().get(0).getDataType());
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
 	    verifyIfAnyCriteriaWasAdded();
@@ -229,6 +228,7 @@ public class KnownOptimizationCriteriaSolutionsPage extends SuperPage {
     private void reconstructToLookNice() {
 	subSubMainPanel.removeAll();
 	for(KnownOptimizationCriteriaSolutionsObject kocso : knownSolutionsList) {
+	    kocso.setDataType(userInterface.getOptimizationCriteriaFromPage().get(0).getDataType());
 	    subSubMainPanel.add(kocso.transformIntoAPanel());
 	}
     }

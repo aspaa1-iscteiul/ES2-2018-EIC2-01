@@ -143,10 +143,6 @@ public class KnownDecisionVariablesSolutionsPage extends SuperPage {
 	    setThisPage();
 	    knownSolutionsList = userInterface.getKnownDecisionVariablesSolutionsList();
 	    for(KnownDecisionVariablesSolutionsObject kso : knownSolutionsList) {
-		kso.setDataType(userInterface.getDecisionVariablesFromPage().get(0).getDataType());
-		kso.setLowerBound(userInterface.getDecisionVariablesFromPage().get(0).getLowerBound());
-		kso.setUpperBound(userInterface.getDecisionVariablesFromPage().get(0).getUpperBound());
-		kso.setInvalidValues(userInterface.getDecisionVariablesFromPage().get(0).getInvalidValues());
 		subSubMainPanel.add(kso.transformIntoAPanel());
 	    }
 	    verifyIfAnyVariableWasAdded();
@@ -232,6 +228,10 @@ public class KnownDecisionVariablesSolutionsPage extends SuperPage {
     private void reconstructToLookNice() {
 	subSubMainPanel.removeAll();
 	for(KnownDecisionVariablesSolutionsObject kso : knownSolutionsList) {
+	    kso.setDataType(userInterface.getDecisionVariablesFromPage().get(0).getDataType());
+	    kso.setLowerBound(userInterface.getDecisionVariablesFromPage().get(0).getLowerBound());
+	    kso.setUpperBound(userInterface.getDecisionVariablesFromPage().get(0).getUpperBound());
+	    kso.setInvalidValues(userInterface.getDecisionVariablesFromPage().get(0).getInvalidValues());
 	    subSubMainPanel.add(kso.transformIntoAPanel());
 	}
     }
