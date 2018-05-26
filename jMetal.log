@@ -2,35 +2,35 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-26T10:13:10</date>
-  <millis>1527325990135</millis>
+  <date>2018-05-26T22:37:14</date>
+  <millis>1527370634422</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>29</thread>
+  <thread>38</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-26T10:13:10</date>
-  <millis>1527325990175</millis>
+  <date>2018-05-26T22:37:14</date>
+  <millis>1527370634430</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>29</thread>
+  <thread>38</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-26T10:13:10</date>
-  <millis>1527325990190</millis>
+  <date>2018-05-26T22:37:14</date>
+  <millis>1527370634435</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>29</thread>
-  <message> Running algorithm: NSGAII, problem: Prob1, run: 0, funFile: experimentBaseDirectory/Prob1/data/NSGAII/Prob1/FUN0.tsv</message>
+  <thread>38</thread>
+  <message> Running algorithm: NSGAII, problem: Rules, run: 0, funFile: experimentBaseDirectory/Rules/data/NSGAII/Rules/FUN0.tsv</message>
 </record>
