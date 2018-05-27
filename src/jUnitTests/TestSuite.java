@@ -27,8 +27,8 @@ public class TestSuite {
 	TestAdminFileUtils.successfullyTestCreateTemplateAndUploadConfigFile();
 	TestAdminFileUtils.unsuccessfullyTestCreateTemplateAndUploadConfigFile();
 	
-	TestFileReader.testClassFileReader();
-	TestFileReader.testFileReading();
+//	TestFileReader.testClassFileReader();
+//	TestFileReader.testFileReading();
     }
 
     /**
@@ -38,7 +38,7 @@ public class TestSuite {
     public final void testClassInitialization() {
 	new TestUserFileUtils();
 	new TestAdminFileUtils();
-	new TestFileReader();
+//	new TestFileReader();
     }
 
 }

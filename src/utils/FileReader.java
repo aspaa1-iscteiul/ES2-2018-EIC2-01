@@ -14,7 +14,7 @@ public class FileReader {
      * Reads given file and fills the variableList with a ArrayList with the values from the file for which variable
      * @param file
      */
-    private static void readFileInVariablePerspective(File file) {
+    private void readFileInVariablePerspective(File file) {
 	int lineNumber = 0;
 	try{
 	    Scanner scanner = new Scanner(file, "UTF-8");
@@ -48,7 +48,7 @@ public class FileReader {
      * Reads given file and fills the runList with a ArrayList with the values from the file for which run
      * @param file
      */
-    private static void readFileInRunPerspective(File file) {
+    private void readFileInRunPerspective(File file) {
 	try{
 	    Scanner scanner = new Scanner(file, "UTF-8");
 	    while (scanner.hasNext()) {
@@ -75,7 +75,7 @@ public class FileReader {
      * @param file
      * @return
      */
-    public static ArrayList<ArrayList<Double>> readFileAndReturnList(File file) {
+    public ArrayList<ArrayList<Double>> readFileAndReturnList(File file) {
 	variableList.clear();
 	readFileInVariablePerspective(file);
 	return variableList;
@@ -86,7 +86,7 @@ public class FileReader {
      * @param file
      * @return
      */
-    public static ArrayList<ArrayList<Double>> readFileAndReturnListInRunPerspective(File file) {
+    public ArrayList<ArrayList<Double>> readFileAndReturnListInRunPerspective(File file) {
 	runList.clear();
 	readFileInRunPerspective(file);
 	return runList;

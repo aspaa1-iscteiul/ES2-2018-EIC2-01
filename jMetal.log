@@ -2,48 +2,85 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
+<<<<<<< HEAD
   <date>2018-05-27T15:18:44</date>
   <millis>1527430724959</millis>
+=======
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916913</millis>
+>>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
+<<<<<<< HEAD
   <thread>41</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
   <date>2018-05-27T15:18:44</date>
   <millis>1527430724980</millis>
+=======
+  <thread>29</thread>
+  <message>Loggers configured with null</message>
+</record>
+<record>
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916939</millis>
+>>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
+<<<<<<< HEAD
   <thread>41</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
   <date>2018-05-27T15:18:45</date>
   <millis>1527430725007</millis>
+=======
+  <thread>29</thread>
+  <message>ExecuteAlgorithms: Preparing output directory</message>
+</record>
+<record>
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916954</millis>
+>>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
+<<<<<<< HEAD
   <thread>41</thread>
   <message>Creating experimentBaseDirectory/Prob1/data/MOCell/Prob1</message>
 </record>
 <record>
   <date>2018-05-27T15:18:45</date>
   <millis>1527430725008</millis>
+=======
+  <thread>29</thread>
+  <message>Creating experimentBaseDirectory/BinaryTest/data/SPEA2/BinaryTest</message>
+</record>
+<record>
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916955</millis>
+>>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
+<<<<<<< HEAD
   <thread>41</thread>
   <message> Running algorithm: MOCell, problem: Prob1, run: 0, funFile: experimentBaseDirectory/Prob1/data/MOCell/Prob1/FUN0.tsv</message>
+=======
+  <thread>29</thread>
+  <message> Running algorithm: SPEA2, problem: BinaryTest, run: 0, funFile: experimentBaseDirectory/BinaryTest/data/SPEA2/BinaryTest/FUN0.tsv</message>
+>>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
 </record>
 <record>
   <date>2018-05-27T15:23:25</date>
