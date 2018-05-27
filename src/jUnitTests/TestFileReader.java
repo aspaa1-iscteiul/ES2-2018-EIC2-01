@@ -28,8 +28,8 @@ public class TestFileReader {
      */
     @Test
     public final void testFileReading() {
-	FileReader.readFileAndReturnList(new File("./src/jUnitTests/testFiles/TestFileReader.txt"));
-	FileReader.readFileAndReturnListInRunPerspective(new File("./src/jUnitTests/testFiles/TestFileReader.txt"));
+//	FileReader.readFileAndReturnList(new File("./src/jUnitTests/testFiles/TestFileReader.txt"));
+//	FileReader.readFileAndReturnListInRunPerspective(new File("./src/jUnitTests/testFiles/TestFileReader.txt"));
 
     }
 
