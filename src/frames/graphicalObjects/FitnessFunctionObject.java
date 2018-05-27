@@ -52,18 +52,6 @@ public class FitnessFunctionObject {
 			JOptionPane.INFORMATION_MESSAGE) != JOptionPane.OK_OPTION))
 		    return;
 
-		// JOptionPane.showMessageDialog(fieldsPanel,
-		// "The JAR file chosen should behave according to the established evaluation
-		// protocol. " + newLine
-		// + "That is, it should receive as input the name of the optimization criteria
-		// to be "
-		// + newLine
-		// + "calculated as well as the solutions vector and it should return as an
-		// output the "
-		// + newLine + "value of the optimization criterion for this solution." +
-		// newLine,
-		// "Exchange protocol", JOptionPane.INFORMATION_MESSAGE);
-
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Upload fitness function");
 		// Launches the JFileChooser on the Desktop directory
