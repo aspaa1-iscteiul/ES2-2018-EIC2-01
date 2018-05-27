@@ -218,7 +218,8 @@ public class SaveProblemPage extends SuperPage {
 	finishButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		userInterface.runProblem();
+		//userInterface.runProblem();
+		userInterface.goToNextPage();
 	    }
 	});
 	buttonsPanel.add(finishButton);
