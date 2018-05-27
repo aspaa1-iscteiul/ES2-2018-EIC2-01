@@ -50,10 +50,9 @@ public class JMetalRun {
     public void run() {
 	userInterface.showFrame(false);
 
-	// TODO change subject and message
-	email.sendEmail(false, problem.getProblemName() + "Update do progresso - Inicio", "Olá! Gostaríamos de "
-		    + "informar que a execução do processo de otimização foi iniciado. "
-		    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
+	email.sendEmail(false, problem.getProblemName() + "Update do progresso - Inicio",
+		"Olá! Gostaríamos de " + "informar que a execução do processo de otimização foi iniciada. "
+			+ "Pedimos-lhe que aguarde pela chegada dos resultados.");
 	DataType dataType = problem.getDecisionVariablesDataType();
 	if (dataType == DataType.DOUBLE) {
 	    jMetalProblem = new MyDoubleProblem(problem, isSingleobjective);
@@ -93,10 +92,9 @@ public class JMetalRun {
 		    milliseconds += System.currentTimeMillis() - var;
 		}
 		progress.closeProgress();
-		// TODO change subject and message
-		email.sendEmail(true, problem.getProblemName() + "Tempo máximo excedido", "Olá! Gostaríamos de "
-			    + "informar que a execução do processo de otimização ultrapassou o tempo limite definido"
-			    + "Pedimos-lhe desculpa mas não foi possível concluir os resultados.");
+		email.sendEmail(true, problem.getProblemName() + "Processo de otimização interrompido",
+			"Olá! Gostaríamos de " + "informar que processo de otimização foi interrompido uma"
+				+ " vez que o tempo estabelecido pela Maximum Time Frame foi excedido.");
 		System.exit(1);
 	    } catch (NumberFormatException e) {
 	    }
@@ -116,7 +114,6 @@ public class JMetalRun {
 		maximumTime.kill();
 		afterRunning();
 	    } catch (Exception e) {
-		// TODO change subject and message
 		StringWriter sw = new StringWriter();
 		e.printStackTrace(new PrintWriter(sw));
 		email.sendEmail(true, "Error", sw.toString());
@@ -196,24 +193,24 @@ public class JMetalRun {
 		progressBar.setString(String.format("%.2f", percentage) + " %");
 		if (percentage >= 25 && !p25) {
 		    p25 = true;
-		    // TODO change subject and message
-		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 25%", "Olá! Gostaríamos de "
-			    + "informar que a execução do processo de otimização chegou aos 25%. "
-			    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
+		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 25%",
+			    "Olá! Gostaríamos de "
+				    + "informar que a execução do processo de otimização chegou aos 25%. "
+				    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
 		    System.out.println("email de 25% sended...");
 		} else if (percentage >= 50 && !p50) {
 		    p50 = true;
-		    // TODO change subject and message
-		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 50%", "Olá! Gostaríamos de "
-			    + "informar que a execução do processo de otimização chegou aos 50%. "
-			    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
+		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 50%",
+			    "Olá! Gostaríamos de "
+				    + "informar que a execução do processo de otimização chegou aos 50%. "
+				    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
 		    System.out.println("email de 50% sended...");
 		} else if (percentage >= 75 && !p75) {
 		    p75 = true;
-		    // TODO change subject and message
-		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 75%", "Olá! Gostaríamos de "
-			    + "informar que a execução do processo de otimização chegou aos 75%. "
-			    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
+		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 75%",
+			    "Olá! Gostaríamos de "
+				    + "informar que a execução do processo de otimização chegou aos 75%. "
+				    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
 		    System.out.println("email de 75% sended...");
 		}
 		try {
@@ -222,7 +219,6 @@ public class JMetalRun {
 		    e.printStackTrace();
 		}
 	    }
-	    // TODO change subject and message
 	    email.sendEmail(false, problem.getProblemName() + " completed", "");
 	    progressBar.setValue(iterations);
 	    progressBar.setString("99.99 %");
