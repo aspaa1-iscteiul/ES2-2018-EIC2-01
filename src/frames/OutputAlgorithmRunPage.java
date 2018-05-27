@@ -92,6 +92,7 @@ public class OutputAlgorithmRunPage extends SuperPage {
 
     }
 
+    @SuppressWarnings("static-access")
     private void constructPage(int runNumber){
 	FileReader fileReader = new FileReader();
 	ArrayList<Double> list = fileReader.readFileAndReturnListInRunPerspective(new File(System.getProperty("user.dir")

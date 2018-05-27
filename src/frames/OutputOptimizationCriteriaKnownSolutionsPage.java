@@ -90,6 +90,7 @@ public class OutputOptimizationCriteriaKnownSolutionsPage extends SuperPage {
 	    button.setPreferredSize(new Dimension(50,30));
 	    FrameUtils.addEmptyLabels(subPanel, 1);
 	    button.addActionListener(new ActionListener() {
+		@SuppressWarnings("static-access")
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 		    subPanel2.removeAll();

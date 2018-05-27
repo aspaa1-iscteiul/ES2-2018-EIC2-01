@@ -108,6 +108,7 @@ public class OutputAlgorithmRunChooserPage extends SuperPage{
 	buttonsPanel.add(cancelButton);
     }
 
+    @SuppressWarnings("static-access")
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle(algorithmName);

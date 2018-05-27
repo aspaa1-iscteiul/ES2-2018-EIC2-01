@@ -92,6 +92,7 @@ public class OutputDecisionVariableKnownSolutionsPage extends SuperPage {
 	    FrameUtils.addEmptyLabels(subPanel, 1);
 	    button.addActionListener(new ActionListener() {
 
+		@SuppressWarnings("static-access")
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 		    // TODO Auto-generated method stub
