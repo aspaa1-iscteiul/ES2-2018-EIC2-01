@@ -80,7 +80,7 @@ public class KnownOptimizationCriteriaSolutionsObject {
 
 	JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addPanel.setBackground(Color.WHITE);
-	addIcon.setIcon(new ImageIcon(getClass().getResource("../images/add_icon.png")));
+	addIcon.setIcon(new ImageIcon(getClass().getResource("/add_icon.png")));
 	addIcon.addMouseListener(new MouseListener() {
 	    @Override
 	    public void mouseClicked(MouseEvent arg0) {
