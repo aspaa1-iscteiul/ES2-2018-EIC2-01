@@ -51,8 +51,9 @@ public class JMetalRun {
 	userInterface.showFrame(false);
 
 	// TODO change subject and message
-	email.sendEmail(false, problem.getProblemName() + " started", "");
-
+	email.sendEmail(false, problem.getProblemName() + "Update do progresso - Inicio", "Olá! Gostaríamos de "
+		    + "informar que a execução do processo de otimização foi iniciado. "
+		    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
 	DataType dataType = problem.getDecisionVariablesDataType();
 	if (dataType == DataType.DOUBLE) {
 	    jMetalProblem = new MyDoubleProblem(problem, isSingleobjective);
@@ -93,7 +94,9 @@ public class JMetalRun {
 		}
 		progress.closeProgress();
 		// TODO change subject and message
-		email.sendEmail(true, problem.getProblemName() + " maximum time exceeded", "");
+		email.sendEmail(true, problem.getProblemName() + "Tempo máximo excedido", "Olá! Gostaríamos de "
+			    + "informar que a execução do processo de otimização ultrapassou o tempo limite definido"
+			    + "Pedimos-lhe desculpa mas não foi possível concluir os resultados.");
 		System.exit(1);
 	    } catch (NumberFormatException e) {
 	    }
@@ -194,17 +197,23 @@ public class JMetalRun {
 		if (percentage >= 25 && !p25) {
 		    p25 = true;
 		    // TODO change subject and message
-		    email.sendEmail(false, problem.getProblemName() + " is 25% complete", "");
+		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 25%", "Olá! Gostaríamos de "
+			    + "informar que a execução do processo de otimização chegou aos 25%. "
+			    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
 		    System.out.println("email de 25% sended...");
 		} else if (percentage >= 50 && !p50) {
 		    p50 = true;
 		    // TODO change subject and message
-		    email.sendEmail(false, problem.getProblemName() + " is 50% complete", "");
+		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 50%", "Olá! Gostaríamos de "
+			    + "informar que a execução do processo de otimização chegou aos 50%. "
+			    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
 		    System.out.println("email de 50% sended...");
 		} else if (percentage >= 75 && !p75) {
 		    p75 = true;
 		    // TODO change subject and message
-		    email.sendEmail(false, problem.getProblemName() + " is 75% complete", "");
+		    email.sendEmail(false, problem.getProblemName() + "Update do progresso 75%", "Olá! Gostaríamos de "
+			    + "informar que a execução do processo de otimização chegou aos 75%. "
+			    + "Pedimos-lhe que aguarde um pouco mais pela chegada dos resultados.");
 		    System.out.println("email de 75% sended...");
 		}
 		try {
