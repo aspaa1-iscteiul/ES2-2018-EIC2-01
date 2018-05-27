@@ -224,7 +224,7 @@ public class DecisionVariablesPage extends SuperPage {
 	    if (userInterface.getProblem().getDecisionVariablesUpperBound() != null) {
 		upperBound.setText(userInterface.getProblem().getDecisionVariablesUpperBound());
 	    }
-	    if (!userInterface.getProblem().getDecisionVariablesInvalidValues().equals("[null]")) {
+	    if (userInterface.getProblem().getDecisionVariablesInvalidValues() != null) {
 		invalidValues.setText(userInterface.getProblem().getDecisionVariablesInvalidValues());
 	    }
 	    for (DecisionVariablesObject dvo : decisionVariableList) {
