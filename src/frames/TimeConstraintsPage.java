@@ -64,7 +64,7 @@ public class TimeConstraintsPage extends SuperPage {
 	JPanel auxPanel = new JPanel(new BorderLayout());
 	auxPanel.setBackground(Color.WHITE);
 	JLabel infoIcon = new JLabel();
-	infoIcon.setIcon(new ImageIcon(getClass().getResource("images/info_icon.png")));
+	infoIcon.setIcon(new ImageIcon(getClass().getResource("/info_icon.png")));
 	auxPanel.add(infoIcon, BorderLayout.NORTH);
 	infoPanel.add(auxPanel, BorderLayout.WEST);
 	JLabel infoLabel = new JLabel("<html>In this section you can set constraints for the algorithm's runtime."

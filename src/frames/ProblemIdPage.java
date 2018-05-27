@@ -56,7 +56,7 @@ public class ProblemIdPage extends SuperPage {
 	infoPanel.setBackground(Color.WHITE);
 	infoPanel.setBorder(new EmptyBorder(0, 30, 0, 0));
 	JLabel infoIcon = new JLabel();
-	infoIcon.setIcon(new ImageIcon(getClass().getResource("images/info_icon.png")));
+	infoIcon.setIcon(new ImageIcon(getClass().getResource("/info_icon.png")));
 	infoPanel.add(infoIcon, BorderLayout.WEST);
 	JLabel infoLabel = new JLabel("<html>The name you choose must start with a capital letter and can "
 		+ "only <br> contain numbers and letters (from A to Z).<br></html>");

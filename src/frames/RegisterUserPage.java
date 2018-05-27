@@ -59,7 +59,7 @@ public class RegisterUserPage extends SuperPage {
 	JPanel iconPanel = new JPanel(new BorderLayout());
 	iconPanel.setBackground(Color.WHITE);
 	JLabel infoIcon = new JLabel();
-	infoIcon.setIcon(new ImageIcon(getClass().getResource("images/info_icon.png")));
+	infoIcon.setIcon(new ImageIcon(getClass().getResource("/info_icon.png")));
 	iconPanel.add(infoIcon, BorderLayout.NORTH);
 	infoPanel.add(iconPanel, BorderLayout.WEST);
 	JLabel infoLabel = new JLabel("<html>The e-mail provided will only be used to send help information "

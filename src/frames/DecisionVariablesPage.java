@@ -314,7 +314,7 @@ public class DecisionVariablesPage extends SuperPage {
 	JPanel addOptionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	addOptionPanel.setBackground(Color.WHITE);
 	JLabel addIcon = new JLabel();
-	addIcon.setIcon(new ImageIcon(getClass().getResource("images/add_icon.png")));
+	addIcon.setIcon(new ImageIcon(getClass().getResource("/add_icon.png")));
 	final DecisionVariablesPage tmp = this;
 	addIcon.addMouseListener(new MouseListener() {
 	    @Override

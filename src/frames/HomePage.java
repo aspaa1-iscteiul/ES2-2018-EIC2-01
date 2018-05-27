@@ -27,7 +27,7 @@ public class HomePage extends SuperPage {
     @Override
     protected void createMainPanel() {
 	JLabel cover = new JLabel();
-	cover.setIcon(new ImageIcon(getClass().getResource("images/cover.jpg")));
+	cover.setIcon(new ImageIcon(getClass().getResource("/cover.jpg")));
 	mainPanel.add(cover);
     }
 

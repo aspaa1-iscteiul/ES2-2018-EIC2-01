@@ -42,7 +42,7 @@ public class OptimizationCriteriaObject {
 	dataType = FrameUtils.cuteComboBox(dataTypes);
 	dataType.setSelectedItem(null);
 	deleteIcon = new JLabel();
-	deleteIcon.setIcon(new ImageIcon(getClass().getResource("../images/delete_icon2.png")));
+	deleteIcon.setIcon(new ImageIcon(getClass().getResource("/delete_icon2.png")));
     }
 
     /**

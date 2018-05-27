@@ -61,7 +61,7 @@ public class HomeCenterPage extends SuperPage {
 	JLabel infoLabel = new JLabel("  Frequently Asked Questions");
 	infoLabel.setFont(FrameUtils.cuteFont(16));
 	JLabel infoIcon = new JLabel();
-	infoIcon.setIcon(new ImageIcon(getClass().getResource("images/question_icon.png")));
+	infoIcon.setIcon(new ImageIcon(getClass().getResource("/question_icon.png")));
 	infoPanel.add(infoIcon, BorderLayout.WEST);
 	infoPanel.add(infoLabel, BorderLayout.CENTER);
 	mainPanel.add(infoPanel);
