@@ -1,0 +1,2 @@
+frames.AlgorithmsPage::public ArrayList<java.lang.String> getAlgorithmsList() 
+jMetal.JMetalRun::public void run() 

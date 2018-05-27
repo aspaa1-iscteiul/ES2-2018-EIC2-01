@@ -1,0 +1,95 @@
+frames.IntroPage	private boolean importXMLFile() 	userInterface	B2	0/10
+frames.KnownDecisionVariablesSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B1	0/8
+frames.KnownDecisionVariablesSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B2	0/6
+frames.KnownDecisionVariablesSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B3	0/5
+frames.KnownDecisionVariablesSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B4	0/3
+frames.KnownOptimizationCriteriaSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B1	0/8
+frames.KnownOptimizationCriteriaSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B2	0/6
+frames.KnownOptimizationCriteriaSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B3	0/5
+frames.KnownOptimizationCriteriaSolutionsPage	protected boolean areAllDataWellFilled() 	tmp	B4	0/3
+jMetal.JMetalRun	public void run() 	jMetalProblem	B1	0/6
+utils.AdminFileUtils	private static ArrayList<objects.QABlock> getFAQSection(org.w3c.dom.Document) 	qaBlock	B3	0/5
+utils.FileReader	private static void readFileInRunPerspective(java.io.File) 	parsedVariablesValues	B3	0/5
+utils.FileReader	private static void readFileInRunPerspective(java.io.File) 	parsedVariablesValues	B4	0/2
+utils.FileReader	private static void readFileInVariablePerspective(java.io.File) 	parsedVariablesValues	B3	0/5
+utils.FileReader	private static void readFileInVariablePerspective(java.io.File) 	parsedVariablesValues	B4	0/2
+frames.FitnessFunctionPage	protected void onTop() 	fitnessFunction	B2	0/4
+frames.KnownDecisionVariablesSolutionsPage	private void reconstructToLookNice() 	kso	B3	0/4
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	numberOfLines	B1	0/4
+frames.OutputIntroPage	private void constructPage() 	numberOfLines	B1	0/4
+frames.UserInterface	public ArrayList<objects.DecisionVariable> createDecisionVariableFinalList() 	problem	B4	0/4
+frames.AlgorithmsPage	protected boolean areAllDataWellFilled() 	count	B1	0/4
+frames.AlgorithmsPage	protected boolean areAllDataWellFilled() 	count	B2	0/3
+frames.AlgorithmsPage	protected boolean areAllDataWellFilled() 	count	B3	0/2
+frames.UserInterface	public ArrayList<objects.OptimizationCriteria> createOptimizationCriteriaFinalList() 	solutionsAux	B3	0/4
+frames.UserInterface	public ArrayList<objects.OptimizationCriteria> createOptimizationCriteriaFinalList() 	solutionsAux	B4	0/3
+frames.UserInterface	public ArrayList<objects.OptimizationCriteria> createOptimizationCriteriaFinalList() 	solutionsAux	B5	0/2
+frames.UserInterface	public void goToIntroPageAdmin() 	page	B1	0/3
+frames.UserInterface	public void goToOutputAlgorithmRunChooserPage(java.lang.String) 	page	B1	0/3
+frames.UserInterface	public void goToOutputAlgorithmRunPage(java.lang.String, int) 	page	B1	0/3
+frames.UserInterface	public void goToOutputDecisionVariablesKnownSolutionsPage(java.lang.String) 	page	B1	0/3
+frames.UserInterface	public void goToOutputOptimizationCriteriaKnownSolutionsPage(java.lang.String) 	page	B1	0/3
+frames.frameUtils.GraphGenerator	public static javax.swing.JPanel createAndShowGui(ArrayList<java.lang.Double>, ArrayList<java.lang.String>, java.lang.String) 	graphPanel	B1	0/3
+objects.QABlock	public static ArrayList<objects.QABlock> getDefaultFAQ() 	qaBlock1	B1	0/3
+objects.QABlock	public static ArrayList<objects.QABlock> getDefaultFAQ() 	qaBlock2	B1	0/3
+frames.frameUtils.GraphGenerator	private double getMaxScore() 	maxScoreSolutions	B4	0/3
+frames.frameUtils.GraphGenerator	private double getMaxScore() 	maxScoreSolutions	B5	0/2
+frames.frameUtils.GraphGenerator	private double getMinScore() 	minScoreSolutions	B4	0/3
+frames.frameUtils.GraphGenerator	private double getMinScore() 	minScoreSolutions	B5	0/2
+frames.frameUtils.GraphGenerator	private double getMaxScore() 	maxScoreValues	B1	0/3
+frames.frameUtils.GraphGenerator	private double getMaxScore() 	maxScoreValues	B2	0/2
+frames.frameUtils.GraphGenerator	private double getMinScore() 	minScoreValues	B1	0/3
+frames.frameUtils.GraphGenerator	private double getMinScore() 	minScoreValues	B2	0/2
+jMetal.JMetalRun.MaximumTime	public void run() 	milliseconds	B3	0/2
+utils.UserFileUtils	public static void writeToXML(objects.Problem, java.lang.String, java.lang.String) 	fileName	B1	0/2
+frames.KnownDecisionVariablesSolutionsPage	private void verifyIfAnyVariableWasAdded() 	nova	B3	0/5
+frames.KnownDecisionVariablesSolutionsPage	private void verifyIfAnyVariableWasAdded() 	nova	B4	0/4
+frames.KnownDecisionVariablesSolutionsPage	private void verifyIfAnyVariableWasAdded() 	nova	B5	1/2
+frames.KnownDecisionVariablesSolutionsPage	private void verifyIfAnyVariableWasDeleted() 	toDelete	B3	0/5
+frames.KnownDecisionVariablesSolutionsPage	private void verifyIfAnyVariableWasDeleted() 	toDelete	B4	0/4
+frames.KnownDecisionVariablesSolutionsPage	private void verifyIfAnyVariableWasDeleted() 	toDelete	B5	1/2
+frames.KnownOptimizationCriteriaSolutionsPage	private void verifyIfAnyCriteriaWasAdded() 	nova	B3	0/5
+frames.KnownOptimizationCriteriaSolutionsPage	private void verifyIfAnyCriteriaWasAdded() 	nova	B4	0/4
+frames.KnownOptimizationCriteriaSolutionsPage	private void verifyIfAnyCriteriaWasAdded() 	nova	B5	1/2
+frames.KnownOptimizationCriteriaSolutionsPage	private void verifyIfAnyVariableWasDeleted() 	toDelete	B3	0/5
+frames.KnownOptimizationCriteriaSolutionsPage	private void verifyIfAnyVariableWasDeleted() 	toDelete	B4	0/4
+frames.KnownOptimizationCriteriaSolutionsPage	private void verifyIfAnyVariableWasDeleted() 	toDelete	B5	1/2
+frames.SaveProblemPage	protected void createButtonsPanel() 	email	B1	1/4
+frames.SaveProblemPage	protected void createButtonsPanel() 	userInterface	B1	1/4
+utils.AdminFileUtils	public static objects.Admin loadAdmin(java.lang.String) 	dBuilder	B1	1/4
+utils.AdminFileUtils	public static void createTemplate(java.lang.String) 	dBuilder	B1	1/4
+utils.UserFileUtils	public static objects.Problem readFromXML(java.lang.String) 	dBuilder	B1	1/4
+utils.UserFileUtils	public static void writeToXML(objects.Problem, java.lang.String, java.lang.String) 	dBuilder	B1	1/4
+frames.HomeCenterPage	protected void createButtonsPanel() 	userInterface	B1	1/3
+frames.KnownDecisionVariablesSolutionsPage	protected void createButtonsPanel() 	userInterface	B1	1/3
+frames.KnownOptimizationCriteriaSolutionsPage	protected void createButtonsPanel() 	userInterface	B1	1/3
+frames.TimeConstraintsPage	protected void createButtonsPanel() 	userInterface	B1	1/3
+frames.UserInterface	public void goToIntroPageAdmin() 	introPageAdmin	B1	1/3
+frames.UserInterface	public void goToOutputAlgorithmRunChooserPage(java.lang.String) 	outputAlgorithmRunChooserPage	B1	1/3
+frames.UserInterface	public void goToOutputAlgorithmRunPage(java.lang.String, int) 	outputAlgorithmRunPage	B1	1/3
+frames.UserInterface	public void goToOutputDecisionVariablesKnownSolutionsPage(java.lang.String) 	outputDecisionVariableKnownSolutionsPage	B1	1/3
+frames.UserInterface	public void goToOutputOptimizationCriteriaKnownSolutionsPage(java.lang.String) 	outputOptimizationCriteriaKnownSolutionsPage	B1	1/3
+frames.IntroPage	protected void createButtonsPanel() 	userInterface	B1	1/2
+frames.IntroPageAdmin	protected void createMainPanel() 	userInterface	B1	1/2
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	count	B7	1/2
+frames.OutputIntroPage	private void constructPage() 	count	B7	1/2
+frames.UserInterface	public ArrayList<objects.OptimizationCriteria> createOptimizationCriteriaFinalList() 	problem	B2	1/2
+frames.UserInterface	public void goToEmailPage() 	emailPage	B1	1/2
+frames.DecisionVariablesPage	protected void createButtonsPanel() 	userInterface	B1	2/4
+frames.HomePage	protected void createButtonsPanel() 	userInterface	B1	2/4
+frames.IntroPage	protected void createMainPanel() 	userInterface	B3	2/4
+frames.OptimizationCriteriaPage	protected void createButtonsPanel() 	userInterface	B1	2/4
+frames.OutputAlgorithmRunChooserPage	protected void createMainPanel() 	userInterface	B1	2/4
+frames.SuperPage	protected void createButtonsPanel() 	userInterface	B1	2/4
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	userInterface	B1	12/15
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	userInterface	B4	8/11
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	userInterface	B5	7/10
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	userInterface	B6	6/9
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	userInterface	B7	3/6
+frames.OutputAlgorithmRunChooserPage	private void constructPage() 	userInterface	B8	2/5
+frames.OutputIntroPage	private void constructPage() 	userInterface	B1	11/12
+frames.OutputIntroPage	private void constructPage() 	userInterface	B4	7/8
+frames.OutputIntroPage	private void constructPage() 	userInterface	B5	6/7
+frames.OutputIntroPage	private void constructPage() 	userInterface	B6	5/6
+frames.OutputIntroPage	private void constructPage() 	userInterface	B7	2/3
+frames.OutputIntroPage	private void constructPage() 	userInterface	B8	1/2

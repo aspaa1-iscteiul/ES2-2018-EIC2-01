@@ -94,7 +94,7 @@ public class FitnessFunctionPage extends SuperPage {
     @Override
     protected boolean areAllDataWellFilled() {
 	if(fitnessFunction.isJarFileUploaded()==false) {
-	    FrameUtils.errorFormat(fitnessFunction.getUploadButton(), "Every fitness function must have a jar file uploaded");
+	    FrameUtils.errorFormat(fitnessFunction.getUploadButton(), "You must upload a jar file in order to proceed.");
 	    return false;
 	} else {
 	    FrameUtils.normalFormat(fitnessFunction.getUploadButton());
