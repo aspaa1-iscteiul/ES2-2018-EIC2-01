@@ -42,13 +42,27 @@ public class FitnessFunctionObject {
 	uploadButton.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
-		JOptionPane.showMessageDialog(fieldsPanel,
+		if ((JOptionPane.showConfirmDialog(pageAssociated,
 			"The JAR file chosen should behave according to the established evaluation protocol. " + newLine
-			+ "That is, it should receive as input the name of the optimization criteria to be "
-			+ newLine
-			+ "calculated as well as the solutions vector and it should return as an output the "
-			+ newLine + "value of the optimization criterion for this solution." + newLine,
-			"Exchange protocol", JOptionPane.INFORMATION_MESSAGE);
+				+ "That is, it should receive as input the name of the optimization criteria to be "
+				+ newLine
+				+ "calculated as well as the solutions vector and it should return as an output the "
+				+ newLine + "value of the optimization criterion for this solution." + newLine,
+			"Exchange protocol", JOptionPane.OK_CANCEL_OPTION,
+			JOptionPane.INFORMATION_MESSAGE) != JOptionPane.OK_OPTION))
+		    return;
+
+		// JOptionPane.showMessageDialog(fieldsPanel,
+		// "The JAR file chosen should behave according to the established evaluation
+		// protocol. " + newLine
+		// + "That is, it should receive as input the name of the optimization criteria
+		// to be "
+		// + newLine
+		// + "calculated as well as the solutions vector and it should return as an
+		// output the "
+		// + newLine + "value of the optimization criterion for this solution." +
+		// newLine,
+		// "Exchange protocol", JOptionPane.INFORMATION_MESSAGE);
 
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Upload fitness function");
@@ -70,7 +84,7 @@ public class FitnessFunctionObject {
 	});
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	uploadButton
-	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+		.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
     }
 
@@ -102,7 +116,7 @@ public class FitnessFunctionObject {
 	});
 	Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 	uploadButton
-	.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
+		.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 10, 0, 10)));
 	uploadButton.setPreferredSize(new Dimension(135, 22));
 
     }
