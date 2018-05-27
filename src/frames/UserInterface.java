@@ -340,9 +340,13 @@ public class UserInterface {
 	this.problem.setDecisionVariablesUpperBound(decisionVariablesFromPage.get(0).getUpperBound());
 	if (decisionVariablesFromPage.get(0).getInvalidValues() == null)
 	    this.problem.setDecisionVariablesInvalidValues(null);
-	else
-	    this.problem.setDecisionVariablesInvalidValues(
-		    Arrays.toString(decisionVariablesFromPage.get(0).getInvalidValues()));
+	else {
+	    String invalidValues = "";
+	    for (String value : decisionVariablesFromPage.get(0).getInvalidValues()) {
+		invalidValues += value;
+	    }
+	    this.problem.setDecisionVariablesInvalidValues(invalidValues);
+	}
 	return dvList;
     }
 
