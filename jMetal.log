@@ -2,216 +2,179 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-<<<<<<< HEAD
-  <date>2018-05-27T15:18:44</date>
-  <millis>1527430724959</millis>
-=======
-  <date>2018-05-27T14:31:56</date>
-  <millis>1527427916913</millis>
->>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
+  <date>2018-05-27T15:59:06</date>
+  <millis>1527433146096</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-<<<<<<< HEAD
-  <thread>41</thread>
+  <thread>43</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-27T15:18:44</date>
-  <millis>1527430724980</millis>
-=======
-  <thread>29</thread>
-  <message>Loggers configured with null</message>
-</record>
-<record>
-  <date>2018-05-27T14:31:56</date>
-  <millis>1527427916939</millis>
->>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
+  <date>2018-05-27T15:59:06</date>
+  <millis>1527433146103</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-<<<<<<< HEAD
-  <thread>41</thread>
+  <thread>43</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-27T15:18:45</date>
-  <millis>1527430725007</millis>
-=======
-  <thread>29</thread>
-  <message>ExecuteAlgorithms: Preparing output directory</message>
-</record>
-<record>
-  <date>2018-05-27T14:31:56</date>
-  <millis>1527427916954</millis>
->>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
+  <date>2018-05-27T15:59:06</date>
+  <millis>1527433146110</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-<<<<<<< HEAD
-  <thread>41</thread>
-  <message>Creating experimentBaseDirectory/Prob1/data/MOCell/Prob1</message>
+  <thread>43</thread>
+  <message>Creating experimentBaseDirectory/BinaryTest/data/NSGAII/BinaryTest</message>
 </record>
 <record>
-  <date>2018-05-27T15:18:45</date>
-  <millis>1527430725008</millis>
-=======
-  <thread>29</thread>
-  <message>Creating experimentBaseDirectory/BinaryTest/data/SPEA2/BinaryTest</message>
-</record>
-<record>
-  <date>2018-05-27T14:31:56</date>
-  <millis>1527427916955</millis>
->>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
+  <date>2018-05-27T15:59:06</date>
+  <millis>1527433146111</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-<<<<<<< HEAD
-  <thread>41</thread>
-  <message> Running algorithm: MOCell, problem: Prob1, run: 0, funFile: experimentBaseDirectory/Prob1/data/MOCell/Prob1/FUN0.tsv</message>
-=======
-  <thread>29</thread>
-  <message> Running algorithm: SPEA2, problem: BinaryTest, run: 0, funFile: experimentBaseDirectory/BinaryTest/data/SPEA2/BinaryTest/FUN0.tsv</message>
->>>>>>> a739b7e5760ef9f2e15f9936e316463cb20b0bd8
+  <thread>43</thread>
+  <message> Running algorithm: NSGAII, problem: BinaryTest, run: 0, funFile: experimentBaseDirectory/BinaryTest/data/NSGAII/BinaryTest/FUN0.tsv</message>
 </record>
 <record>
-  <date>2018-05-27T15:23:25</date>
-  <millis>1527431005918</millis>
+  <date>2018-05-27T16:00:26</date>
+  <millis>1527433226843</millis>
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>41</thread>
-  <message> Running algorithm: MOCell, problem: Prob1, run: 1, funFile: experimentBaseDirectory/Prob1/data/MOCell/Prob1/FUN1.tsv</message>
+  <thread>43</thread>
+  <message> Running algorithm: NSGAII, problem: BinaryTest, run: 1, funFile: experimentBaseDirectory/BinaryTest/data/NSGAII/BinaryTest/FUN1.tsv</message>
 </record>
 <record>
-  <date>2018-05-27T15:27:24</date>
-  <millis>1527431244921</millis>
+  <date>2018-05-27T16:01:47</date>
+  <millis>1527433307672</millis>
   <sequence>5</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>41</thread>
-  <message> Running algorithm: MOCell, problem: Prob1, run: 2, funFile: experimentBaseDirectory/Prob1/data/MOCell/Prob1/FUN2.tsv</message>
+  <thread>43</thread>
+  <message> Running algorithm: NSGAII, problem: BinaryTest, run: 2, funFile: experimentBaseDirectory/BinaryTest/data/NSGAII/BinaryTest/FUN2.tsv</message>
 </record>
 <record>
-  <date>2018-05-27T15:31:21</date>
-  <millis>1527431481873</millis>
+  <date>2018-05-27T16:03:08</date>
+  <millis>1527433388318</millis>
   <sequence>6</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>41</thread>
-  <message> Running algorithm: MOCell, problem: Prob1, run: 3, funFile: experimentBaseDirectory/Prob1/data/MOCell/Prob1/FUN3.tsv</message>
+  <thread>43</thread>
+  <message> Running algorithm: NSGAII, problem: BinaryTest, run: 3, funFile: experimentBaseDirectory/BinaryTest/data/NSGAII/BinaryTest/FUN3.tsv</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722134</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469213</millis>
   <sequence>7</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions</class>
   <method>createOutputDirectory</method>
-  <thread>41</thread>
+  <thread>43</thread>
   <message>Creating experimentBaseDirectory/referenceFronts. Status = true</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722161</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469225</millis>
   <sequence>8</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>41</thread>
+  <thread>43</thread>
   <message>Computing indicator: HV</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722162</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469225</millis>
   <sequence>9</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>41</thread>
-  <message>RF: experimentBaseDirectory/referenceFronts/Prob1.rf</message>
+  <thread>43</thread>
+  <message>RF: experimentBaseDirectory/referenceFronts/BinaryTest.rf</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722169</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469227</millis>
   <sequence>10</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>resetFile</method>
-  <thread>41</thread>
-  <message>File experimentBaseDirectory/Prob1/data/MOCell/Prob1/HV does NOT exist.</message>
+  <thread>43</thread>
+  <message>File experimentBaseDirectory/BinaryTest/data/NSGAII/BinaryTest/HV does NOT exist.</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722173</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469229</millis>
   <sequence>11</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>41</thread>
-  <message>HV: 0.475</message>
+  <thread>43</thread>
+  <message>HV: 0.45000000000000007</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722181</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469230</millis>
   <sequence>12</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>41</thread>
-  <message>HV: 0.475</message>
+  <thread>43</thread>
+  <message>HV: 0.45000000000000007</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722184</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469231</millis>
   <sequence>13</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>41</thread>
-  <message>HV: 0.475</message>
+  <thread>43</thread>
+  <message>HV: 0.45000000000000007</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722187</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469232</millis>
   <sequence>14</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>41</thread>
-  <message>HV: 0.475</message>
+  <thread>43</thread>
+  <message>HV: 0.45000000000000007</message>
 </record>
 <record>
-  <date>2018-05-27T15:35:22</date>
-  <millis>1527431722286</millis>
+  <date>2018-05-27T16:04:29</date>
+  <millis>1527433469257</millis>
   <sequence>15</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics</class>
   <method>generateLatexScript</method>
-  <thread>41</thread>
-  <message>Creating experimentBaseDirectory/Prob1/latex directory</message>
+  <thread>43</thread>
+  <message>Creating experimentBaseDirectory/BinaryTest/latex directory</message>
 </record>
 </log>
