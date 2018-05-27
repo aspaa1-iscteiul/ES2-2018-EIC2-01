@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -173,6 +174,10 @@ public class SaveProblemPage extends SuperPage {
 		    // TODO O fileName não pode conter caracteres especiais e
 		    // tem de terminar em .xml
 		    UserFileUtils.writeToXML(userInterface.getProblem(), filePath.getText(), "/" + fileName.getText());
+		    File file = new File(filePath.getText() + "\\" + filePath.getText());
+		    file.setExecutable(true);
+		    file.setReadable(true);
+		    file.setWritable(true);
 		    saveButton.setBackground(new Color(155, 226, 155).brighter());
 		    Email email = new Email(userInterface.getUserEmail());
 		    email.setToCC(userInterface.getAdmin().getEmail());

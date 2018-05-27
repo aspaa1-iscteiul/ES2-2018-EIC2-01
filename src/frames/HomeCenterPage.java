@@ -32,15 +32,13 @@ public class HomeCenterPage extends SuperPage {
     private JButton nextButton;
     private JButton emailButton;
     private JPanel messagePanel;
-    private String[] colors = {"grey",
-	    "light_grey",
+    private String[] colors = {
 	    "red",
 	    "orange",
 	    "yellow",
 	    "blue",
 	    "green",
-	    "pink",
-	    "brown"};
+            "#cc0052"};
 
     public HomeCenterPage(UserInterface userInterface) {
 	super(userInterface);
