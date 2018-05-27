@@ -80,7 +80,7 @@ public class DecisionVariablesPage extends SuperPage {
 	JPanel introPanel = new JPanel(new BorderLayout());
 	introPanel.setBackground(Color.WHITE);
 	introPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-		BorderFactory.createEmptyBorder(10, 10, 10, 10))); 
+		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
 	JPanel decisionVariablesSetPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 	decisionVariablesSetPanel.setBackground(Color.WHITE);
@@ -127,8 +127,9 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     /**
-     * Creates the panel with the labels that display information 
-     * about the decision variables attributes
+     * Creates the panel with the labels that display information about the decision
+     * variables attributes
+     * 
      * @return
      */
     private JPanel labelsPanel() {
@@ -145,8 +146,9 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     /**
-     * Creates the panel with the labels that display information 
-     * about the decision variables attributes
+     * Creates the panel with the labels that display information about the decision
+     * variables attributes
+     * 
      * @return
      */
     private JPanel labelsPanel2() {
@@ -174,6 +176,7 @@ public class DecisionVariablesPage extends SuperPage {
 
     /**
      * Creates the panel with the inputs of the decision variables attributes
+     * 
      * @return
      */
     private JPanel valuesPanel() {
@@ -203,32 +206,32 @@ public class DecisionVariablesPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(userInterface.isXmlFileWasImportedAtIndex(1)==true) {
+	if (userInterface.isXmlFileWasImportedAtIndex(1) == true) {
 	    subSubMainPanel.removeAll();
 	    decisionVariableList = userInterface.getDecisionVariablesFromPage();
-	    if(userInterface.getProblem().getDecisionVariablesDataType() != null) {
-		if(userInterface.getProblem().getDecisionVariablesDataType().name().equals("INTEGER")) {
+	    if (userInterface.getProblem().getDecisionVariablesDataType() != null) {
+		if (userInterface.getProblem().getDecisionVariablesDataType().name().equals("INTEGER")) {
 		    dataType.setSelectedIndex(0);
-		} else if(userInterface.getProblem().getDecisionVariablesDataType().name().equals("DOUBLE")) {
+		} else if (userInterface.getProblem().getDecisionVariablesDataType().name().equals("DOUBLE")) {
 		    dataType.setSelectedIndex(1);
 		} else {
 		    dataType.setSelectedIndex(2);
 		}
 	    }
-	    if(userInterface.getProblem().getDecisionVariablesLowerBound() != null) {
+	    if (userInterface.getProblem().getDecisionVariablesLowerBound() != null) {
 		lowerBound.setText(userInterface.getProblem().getDecisionVariablesLowerBound());
 	    }
-	    if(userInterface.getProblem().getDecisionVariablesUpperBound() != null) {
+	    if (userInterface.getProblem().getDecisionVariablesUpperBound() != null) {
 		upperBound.setText(userInterface.getProblem().getDecisionVariablesUpperBound());
 	    }
-	    if(!userInterface.getProblem().getDecisionVariablesInvalidValues().equals("[null]")) {
+	    if (!userInterface.getProblem().getDecisionVariablesInvalidValues().equals("[null]")) {
 		invalidValues.setText(userInterface.getProblem().getDecisionVariablesInvalidValues());
 	    }
-	    for(DecisionVariablesObject dvo : decisionVariableList) {
+	    for (DecisionVariablesObject dvo : decisionVariableList) {
 		subSubMainPanel.add(dvo.transformIntoAPanel());
 		dvo.setPageAssociated(this);
 	    }
-	    if(userInterface.getProblem().getDecisionVariablesSetName()!=null) {
+	    if (userInterface.getProblem().getDecisionVariablesSetName() != null) {
 		decisionVariablesSetName.setText(userInterface.getProblem().getDecisionVariablesSetName());
 	    }
 	}
@@ -268,7 +271,7 @@ public class DecisionVariablesPage extends SuperPage {
 	});
 	buttonsPanel.add(nextButton);
     }
-    
+
     @Override
     protected boolean areAllDataWellFilled() {
 	if (decisionVariableList.isEmpty()) {
@@ -289,18 +292,22 @@ public class DecisionVariablesPage extends SuperPage {
 
     @Override
     protected void saveToProblem() {
-	for(DecisionVariablesObject dvo : decisionVariableList) {
+	for (DecisionVariablesObject dvo : decisionVariableList) {
 	    dvo.setLowerBound(lowerBound.getText());
 	    dvo.setUpperBound(upperBound.getText());
 	    dvo.setVariableDataType(dataType.getSelectedItem().toString());
 	    dvo.setInvalidValues(invalidValues.getText());
 	}
 	userInterface.setDecisionVariablesFromPage(decisionVariableList);
-	userInterface.getProblem().setDecisionVariablesSetName(decisionVariablesSetName.getText());
+	if (decisionVariablesSetName.getText().isEmpty())
+	    userInterface.getProblem().setDecisionVariablesSetName(null);
+	else
+	    userInterface.getProblem().setDecisionVariablesSetName(decisionVariablesSetName.getText());
     }
 
     /**
      * Creates the panel that allows to add new decision variables to the interface
+     * 
      * @return
      */
     private JPanel addOptionPanel() {
@@ -358,8 +365,8 @@ public class DecisionVariablesPage extends SuperPage {
 				+ "The decision variables name field does not support spaces between characters."
 				+ System.lineSeparator()
 				+ "Therefore, if spaces are found while reading the document they will be automatically removed.",
-				"Import decision variables", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.WARNING_MESSAGE) != JOptionPane.OK_OPTION)
+			"Import decision variables", JOptionPane.OK_CANCEL_OPTION,
+			JOptionPane.WARNING_MESSAGE) != JOptionPane.OK_OPTION)
 		    return;
 
 		JFileChooser fileChooser = new JFileChooser();
@@ -442,8 +449,9 @@ public class DecisionVariablesPage extends SuperPage {
 	    while (scn.hasNextLine()) {
 		String line = scn.nextLine().replaceAll(" ", "");
 		if (!line.equals("")) {
-		    //TODO: Read invalid values from file
-		    DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this, line, values[0], values[1], values[2], null);
+		    // TODO: Read invalid values from file
+		    DecisionVariablesObject decisionVariable = new DecisionVariablesObject(this, line, values[0],
+			    values[1], values[2], null);
 		    lowerBound.setText(values[0]);
 		    upperBound.setText(values[1]);
 		    invalidValues.setText(values[2]);
@@ -460,8 +468,9 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     /**
-     * Removes a variable from the list of decision variables and 
-     * updates the interface
+     * Removes a variable from the list of decision variables and updates the
+     * interface
+     * 
      * @param dvo
      */
     public void removeDecisionVariableFromList(DecisionVariablesObject dvo) {
@@ -476,10 +485,10 @@ public class DecisionVariablesPage extends SuperPage {
 
     /**
      * @param varName
-     *            the {@code String} to compare to the other variable names in
-     *            the {@linkplain #decisionVariableList}
-     * @return {@code true} if there is at least other variable with the same
-     *         name, otherwise {@code false}
+     *            the {@code String} to compare to the other variable names in the
+     *            {@linkplain #decisionVariableList}
+     * @return {@code true} if there is at least other variable with the same name,
+     *         otherwise {@code false}
      */
     public boolean isNameRepeated(String varName) {
 	int count = 0;
@@ -500,10 +509,11 @@ public class DecisionVariablesPage extends SuperPage {
 
     /**
      * Get invalid values of the variable on a vector of strings
+     * 
      * @return
      */
-    public String[] getInvalidValuesOnVector(){
-	if(!invalidValues.getText().trim().isEmpty()) {
+    public String[] getInvalidValuesOnVector() {
+	if (!invalidValues.getText().trim().isEmpty()) {
 	    String[] v = invalidValues.getText().split(",");
 	    return v;
 	}
@@ -511,44 +521,44 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     /**
-     * Returns {@code true} if {@linkplain DecisionVariablesObject} the {@linkplain #dataType} 
-     * is selected and have a valid bound and
-     * valid inputs in the invalid values
-     * otherwise {@code false}
+     * Returns {@code true} if {@linkplain DecisionVariablesObject} the
+     * {@linkplain #dataType} is selected and have a valid bound and valid inputs in
+     * the invalid values otherwise {@code false}
      * 
-     * @return {@code true} if {@linkplain DecisionVariablesObject} the {@linkplain #dataType} is 
-     * selected and have a valid bound, otherwise {@code false}
+     * @return {@code true} if {@linkplain DecisionVariablesObject} the
+     *         {@linkplain #dataType} is selected and have a valid bound, otherwise
+     *         {@code false}
      * @see #isDataTypeSelected()
      * @see #isValidBound()
      * @see #isValidValues()
      */
     public boolean isWellFilled() {
 	// methods separated to run all
-	boolean isDataTypeSelected = isDataTypeSelected(), isValidBound = isValidBound(), isValidValues = isValidValues();
+	boolean isDataTypeSelected = isDataTypeSelected(), isValidBound = isValidBound(),
+		isValidValues = isValidValues();
 	return isDataTypeSelected && isValidBound && isValidValues;
     }
 
     /**
-     * @return {@code true} if the {@link #dataType} has an item selected,
-     *         otherwise {@code false} and evidence the error
+     * @return {@code true} if the {@link #dataType} has an item selected, otherwise
+     *         {@code false} and evidence the error
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isDataTypeSelected() {
-	return dataType.getSelectedItem() == null
-		? FrameUtils.errorFormat(dataType,
-			"The decision variable's data type field is a mandatory entry field and therefore must be filled in.")
-			: FrameUtils.normalFormat(dataType);
+	return dataType.getSelectedItem() == null ? FrameUtils.errorFormat(dataType,
+		"The decision variable's data type field is a mandatory entry field and therefore must be filled in.")
+		: FrameUtils.normalFormat(dataType);
 
     }
 
     /**
      * @param lower
      *            {@code true} if it is to validate the number in
-     *            {@linkplain #lowerBound}, otherwise it is to validate the
-     *            number in {@linkplain #upperBound}
-     * @return {@code true} if the {@code JTextField}, indicated by
-     *         <b>lower</b>, contains a valid number, otherwise {@code false}
-     *         and evidence the error
+     *            {@linkplain #lowerBound}, otherwise it is to validate the number
+     *            in {@linkplain #upperBound}
+     * @return {@code true} if the {@code JTextField}, indicated by <b>lower</b>,
+     *         contains a valid number, otherwise {@code false} and evidence the
+     *         error
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidNumber(boolean lower) {
@@ -558,7 +568,7 @@ public class DecisionVariablesPage extends SuperPage {
 	    return FrameUtils.errorFormat(bound,
 		    "The " + boundStr + " bound field is a mandatory entry field and therefore must be filled in.");
 	if (dataType.getSelectedItem().toString().equals("Binary")) {
-	    if(bound.getText().matches("[01]+")){
+	    if (bound.getText().matches("[01]+")) {
 		return FrameUtils.normalFormat(bound);
 	    } else {
 		return FrameUtils.errorFormat(bound, "The " + boundStr + " bound provided is not a valid number.");
@@ -567,9 +577,9 @@ public class DecisionVariablesPage extends SuperPage {
 	try {
 	    if (dataType.getSelectedItem().toString().equals("Integer")) {
 		Integer.parseInt(bound.getText());
-	    } else if(dataType.getSelectedItem().toString().equals("Double")) {
+	    } else if (dataType.getSelectedItem().toString().equals("Double")) {
 		Double.parseDouble(bound.getText());
-	    } 
+	    }
 	} catch (NumberFormatException e) {
 	    return FrameUtils.errorFormat(bound, "The " + boundStr + " bound provided is not a valid number.");
 	} catch (NullPointerException e) {
@@ -580,10 +590,9 @@ public class DecisionVariablesPage extends SuperPage {
     }
 
     /**
-     * @return {@code true} if {@linkplain #lowerBound} and
-     *         {@linkplain #upperBound} have valid numbers and if the lower
-     *         limit is less than the upper limit, otherwise {@code false} and
-     *         evidence the error
+     * @return {@code true} if {@linkplain #lowerBound} and {@linkplain #upperBound}
+     *         have valid numbers and if the lower limit is less than the upper
+     *         limit, otherwise {@code false} and evidence the error
      * @see #isValidNumber(boolean)
      * @see FrameUtils#errorFormat(JComponent, String)
      */
@@ -598,48 +607,51 @@ public class DecisionVariablesPage extends SuperPage {
 		    : Double.parseDouble(upperBound.getText());
 	    return upper <= lower
 		    ? FrameUtils.errorFormat(upperBound, "The upper bound must be bigger than the lower bound")
-			    : FrameUtils.normalFormat(upperBound);
+		    : FrameUtils.normalFormat(upperBound);
 	}
 	return false;
     }
 
     /**
-     * @return {@code true} if {@linkplain #invalidValues}
-     *         have valid numbers separated by ',' or is empty,
-     *          otherwise {@code false} and evidence the error
+     * @return {@code true} if {@linkplain #invalidValues} have valid numbers
+     *         separated by ',' or is empty, otherwise {@code false} and evidence
+     *         the error
      * @see FrameUtils#errorFormat(JComponent, String)
      */
     private boolean isValidValues() {
 	boolean tmp = true;
-	if(invalidValues.getText().isEmpty()) {
+	if (invalidValues.getText().isEmpty()) {
 	    FrameUtils.normalFormat(invalidValues);
-	} else if(Pattern.matches("[.,0-9]+", invalidValues.getText())) {
+	} else if (Pattern.matches("[.,0-9]+", invalidValues.getText())) {
 	    FrameUtils.normalFormat(invalidValues);
-	    if(dataType.getSelectedItem().equals("Integer")) {
+	    if (dataType.getSelectedItem().equals("Integer")) {
 		String[] v = invalidValues.getText().split(",");
 		try {
-		    for(int i = 0; i != v.length; i++) {
+		    for (int i = 0; i != v.length; i++) {
 			Integer.parseInt(v[i]);
 		    }
 		    FrameUtils.normalFormat(invalidValues);
-		}catch(NumberFormatException e) {
-		    FrameUtils.errorFormat(invalidValues, "The invalid values provided must be in agreement with the data type selected.");
+		} catch (NumberFormatException e) {
+		    FrameUtils.errorFormat(invalidValues,
+			    "The invalid values provided must be in agreement with the data type selected.");
 		    return false;
 		}
-	    }else if(dataType.getSelectedItem().equals("Double")) {
+	    } else if (dataType.getSelectedItem().equals("Double")) {
 		String[] v = invalidValues.getText().split(",");
 		try {
-		    for(int i = 0; i != v.length; i++) {
+		    for (int i = 0; i != v.length; i++) {
 			Double.parseDouble(v[i]);
 		    }
 		    FrameUtils.normalFormat(invalidValues);
-		}catch(NumberFormatException e) {
-		    FrameUtils.errorFormat(invalidValues, "The invalid values must in agreement with the data type selected");
+		} catch (NumberFormatException e) {
+		    FrameUtils.errorFormat(invalidValues,
+			    "The invalid values must in agreement with the data type selected");
 		    return false;
 		}
 	    }
-	}else {
-	    FrameUtils.errorFormat(invalidValues, "The invalid values provided can only contain numbers and/or commas.");
+	} else {
+	    FrameUtils.errorFormat(invalidValues,
+		    "The invalid values provided can only contain numbers and/or commas.");
 	    return false;
 	}
 	return tmp;
@@ -649,7 +661,6 @@ public class DecisionVariablesPage extends SuperPage {
 	return lowerBound;
     }
 
-
     public JTextField getUpperBound() {
 	return upperBound;
     }
@@ -657,6 +668,5 @@ public class DecisionVariablesPage extends SuperPage {
     public JTextField getInvalidValues() {
 	return invalidValues;
     }
-
 
 }

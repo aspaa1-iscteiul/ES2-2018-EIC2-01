@@ -2,46 +2,46 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-27T02:20:14</date>
-  <millis>1527384014596</millis>
+  <date>2018-05-27T11:19:11</date>
+  <millis>1527416351293</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>61</thread>
+  <thread>33</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-27T02:20:14</date>
-  <millis>1527384014629</millis>
+  <date>2018-05-27T11:19:11</date>
+  <millis>1527416351337</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>61</thread>
+  <thread>33</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-27T02:20:14</date>
-  <millis>1527384014645</millis>
+  <date>2018-05-27T11:19:11</date>
+  <millis>1527416351365</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>61</thread>
-  <message>Creating experimentBaseDirectory/A/data/NSGAII/A</message>
+  <thread>33</thread>
+  <message>Creating experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest</message>
 </record>
 <record>
-  <date>2018-05-27T02:20:14</date>
-  <millis>1527384014646</millis>
+  <date>2018-05-27T11:19:11</date>
+  <millis>1527416351366</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>61</thread>
-  <message> Running algorithm: NSGAII, problem: A, run: 0, funFile: experimentBaseDirectory/A/data/NSGAII/A/FUN0.tsv</message>
+  <thread>33</thread>
+  <message> Running algorithm: RandomSearch, problem: BinaryTest, run: 0, funFile: experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest/FUN0.tsv</message>
 </record>

@@ -161,7 +161,8 @@ public class UserInterface {
 
     /**
      * Allows to go the OutputDecisionVariableKnownSolutionsPage
-     * @param algorithmName 
+     * 
+     * @param algorithmName
      */
     public void goToOutputDecisionVariablesKnownSolutionsPage(String algorithmName) {
 	frame.remove(outputAlgorithmRunChooserPage);
@@ -174,11 +175,13 @@ public class UserInterface {
 
     /**
      * Allows to go the OutputOptimizationCriteriaKnownSolutionsPage
-     * @param algorithmName 
+     * 
+     * @param algorithmName
      */
     public void goToOutputOptimizationCriteriaKnownSolutionsPage(String algorithmName) {
 	frame.remove(outputAlgorithmRunChooserPage);
-	outputOptimizationCriteriaKnownSolutionsPage = new OutputOptimizationCriteriaKnownSolutionsPage(this, algorithmName);
+	outputOptimizationCriteriaKnownSolutionsPage = new OutputOptimizationCriteriaKnownSolutionsPage(this,
+		algorithmName);
 	SuperPage page = outputOptimizationCriteriaKnownSolutionsPage;
 	page.onTop();
 	frame.add(page);
@@ -326,14 +329,20 @@ public class UserInterface {
     public ArrayList<DecisionVariable> createDecisionVariableFinalList() {
 	ArrayList<DecisionVariable> dvList = new ArrayList<DecisionVariable>();
 	for (DecisionVariablesObject dvo : decisionVariablesFromPage) {
-	    dvList.add(new DecisionVariable(dvo.getVariableName(),
-		    getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
+	    if (getKnownSolutionsOfGivenVariable(dvo.getVariableName()).isEmpty())
+		dvList.add(new DecisionVariable(dvo.getVariableName(), null));
+	    else
+		dvList.add(new DecisionVariable(dvo.getVariableName(),
+			getKnownSolutionsOfGivenVariable(dvo.getVariableName())));
 	}
 	this.problem.setDecisionVariablesDataType(decisionVariablesFromPage.get(0).getDataTypeToProblem());
 	this.problem.setDecisionVariablesLowerBound(decisionVariablesFromPage.get(0).getLowerBound());
 	this.problem.setDecisionVariablesUpperBound(decisionVariablesFromPage.get(0).getUpperBound());
-	this.problem.setDecisionVariablesInvalidValues(
-		Arrays.toString(decisionVariablesFromPage.get(0).getInvalidValues()));
+	if (decisionVariablesFromPage.get(0).getInvalidValues() == null)
+	    this.problem.setDecisionVariablesInvalidValues(null);
+	else
+	    this.problem.setDecisionVariablesInvalidValues(
+		    Arrays.toString(decisionVariablesFromPage.get(0).getInvalidValues()));
 	return dvList;
     }
 
@@ -392,7 +401,10 @@ public class UserInterface {
 		    solutionsAux = ksoco.getSolutionListInString();
 		}
 	    }
-	    ocList.add(new OptimizationCriteria(oco.getVariableName(), solutionsAux));
+	    if (solutionsAux.isEmpty())
+		ocList.add(new OptimizationCriteria(oco.getVariableName(), null));
+	    else
+		ocList.add(new OptimizationCriteria(oco.getVariableName(), solutionsAux));
 	    this.problem.setOptimizationCriteriaDataType(optimizationCriteriaFromPage.get(0).getDataTypeToProblem());
 	}
 	return ocList;

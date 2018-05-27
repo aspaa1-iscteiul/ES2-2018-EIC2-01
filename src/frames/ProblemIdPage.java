@@ -93,8 +93,8 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(userInterface.isXmlFileWasImportedAtIndex(0)==true) {
-	    problemName.setText(userInterface.getProblem().getProblemName());	 
+	if (userInterface.isXmlFileWasImportedAtIndex(0) == true) {
+	    problemName.setText(userInterface.getProblem().getProblemName());
 	    problemDescription.setText(userInterface.getProblem().getProblemDescription());
 	    userInterface.putXmlFileWasImportedFalseAtIndex(0);
 	}
@@ -111,9 +111,12 @@ public class ProblemIdPage extends SuperPage {
     @Override
     protected void saveToProblem() {
 	userInterface.getProblem().setProblemName(problemName.getText());
-	userInterface.getProblem().setProblemDescription(problemDescription.getText());
+	if (problemDescription.getText().isEmpty())
+	    userInterface.getProblem().setProblemDescription(null);
+	else
+	    userInterface.getProblem().setProblemDescription(problemDescription.getText());
     }
-    
+
     @Override
     protected void clearDataFromPage() {
 	problemName.setText(null);

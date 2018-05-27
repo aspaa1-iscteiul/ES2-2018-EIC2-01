@@ -153,11 +153,11 @@ public class TimeConstraintsPage extends SuperPage {
     @Override
     protected void onTop() {
 	userInterface.getFrame().setTitle("Problem Solving App");
-	if(userInterface.isXmlFileWasImportedAtIndex(6)==true) {
-	    if(userInterface.getProblem().getIdealTimeFrame()!=null) {
+	if (userInterface.isXmlFileWasImportedAtIndex(6) == true) {
+	    if (userInterface.getProblem().getIdealTimeFrame() != null) {
 		idealTime.setText(userInterface.getProblem().getIdealTimeFrame());
 	    }
-	    if(userInterface.getProblem().getMaxTimeFrame()!=null) {
+	    if (userInterface.getProblem().getMaxTimeFrame() != null) {
 		maxTime.setText(userInterface.getProblem().getMaxTimeFrame());
 	    }
 	    userInterface.putXmlFileWasImportedFalseAtIndex(6);
@@ -168,24 +168,24 @@ public class TimeConstraintsPage extends SuperPage {
     protected boolean areAllDataWellFilled() {
 	Boolean tmp = false;
 	if (idealTime.getText().trim().isEmpty()) {
-	    FrameUtils.errorFormat(idealTime, "The ideal time field is a mandatory entry field and therefore must be filled in.");
+	    FrameUtils.errorFormat(idealTime,
+		    "The ideal time field is a mandatory entry field and therefore must be filled in.");
 	} else {
 	    FrameUtils.normalFormat(idealTime);
 	}
 	try {
 	    Integer.parseInt(idealTime.getText());
-	    if(Integer.parseInt(idealTime.getText()) > 0) {
-		idealOk = true;  
+	    if (Integer.parseInt(idealTime.getText()) > 0) {
+		idealOk = true;
 		FrameUtils.normalFormat(idealTime);
 
 		if (!maxTime.getText().trim().isEmpty()) {
 		    Integer.parseInt(maxTime.getText());
-		    if(Integer.parseInt(maxTime.getText()) > 0) {
-			maxOk = true;  
+		    if (Integer.parseInt(maxTime.getText()) > 0) {
+			maxOk = true;
 			FrameUtils.normalFormat(maxTime);
 		    } else {
-			FrameUtils.errorFormat(maxTime,
-				"The max time frame must be bigger than zero");
+			FrameUtils.errorFormat(maxTime, "The max time frame must be bigger than zero");
 		    }
 		    if (idealOk == true && maxOk == true
 			    && (Integer.parseInt(idealTime.getText()) <= Integer.parseInt(maxTime.getText()))) {
@@ -200,25 +200,23 @@ public class TimeConstraintsPage extends SuperPage {
 		}
 
 	    } else {
-		FrameUtils.errorFormat(idealTime,
-			"The ideal time frame must be bigger than zero");
+		FrameUtils.errorFormat(idealTime, "The ideal time frame must be bigger than zero");
 	    }
 	} catch (NumberFormatException e1) {
 	    tmp = false;
 	    try {
 		Double.parseDouble(idealTime.getText());
-		if(Double.parseDouble(idealTime.getText()) > 0) {
-		    idealOk = true;  
+		if (Double.parseDouble(idealTime.getText()) > 0) {
+		    idealOk = true;
 		    FrameUtils.normalFormat(idealTime);
 
 		    if (!maxTime.getText().trim().isEmpty()) {
 			Double.parseDouble(maxTime.getText());
-			if( Double.parseDouble(maxTime.getText()) > 0) {
-			    maxOk = true;  
+			if (Double.parseDouble(maxTime.getText()) > 0) {
+			    maxOk = true;
 			    FrameUtils.normalFormat(maxTime);
 			} else {
-			    FrameUtils.errorFormat(maxTime,
-				    "The max time frame must be bigger than zero");
+			    FrameUtils.errorFormat(maxTime, "The max time frame must be bigger than zero");
 			}
 			if (idealOk == true && maxOk == true
 				&& (Double.parseDouble(idealTime.getText()) <= Double.parseDouble(maxTime.getText()))) {
@@ -232,8 +230,7 @@ public class TimeConstraintsPage extends SuperPage {
 		    }
 
 		} else {
-		    FrameUtils.errorFormat(idealTime,
-			    "The ideal time frame must be bigger than zero");
+		    FrameUtils.errorFormat(idealTime, "The ideal time frame must be bigger than zero");
 		}
 	    } catch (NumberFormatException e2) {
 		tmp = false;
@@ -246,13 +243,16 @@ public class TimeConstraintsPage extends SuperPage {
     protected void saveToProblem() {
 	userInterface.getProblem().setIdealTimeFrame(idealTime.getText());
 	try {
-	    userInterface.getProblem().setMaxTimeFrame(maxTime.getText());
+	    if (maxTime.getText().isEmpty())
+		userInterface.getProblem().setMaxTimeFrame(null);
+	    else
+		userInterface.getProblem().setMaxTimeFrame(maxTime.getText());
 	} catch (NumberFormatException e) {
 	    Double tmp = Double.MAX_VALUE;
 	    userInterface.getProblem().setMaxTimeFrame(tmp.toString());
 	}
     }
-    
+
     @Override
     protected void clearDataFromPage() {
 	idealTime.setText(null);
