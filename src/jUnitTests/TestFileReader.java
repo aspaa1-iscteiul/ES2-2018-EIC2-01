@@ -18,7 +18,7 @@ public class TestFileReader {
      * Testing class initiation
      */
     @Test
-    public final static void testClassFileReader() {
+    public final void testClassFileReader() {
 	new FileReader();
     }
 
@@ -27,7 +27,7 @@ public class TestFileReader {
      * methods
      */
     @Test
-    public final static void testFileReading() {
+    public final void testFileReading() {
 	FileReader.readFileAndReturnList(new File("./src/jUnitTests/testFiles/TestFileReader.txt"));
 	FileReader.readFileAndReturnListInRunPerspective(new File("./src/jUnitTests/testFiles/TestFileReader.txt"));
 

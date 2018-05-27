@@ -2,46 +2,46 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-27T11:19:11</date>
-  <millis>1527416351293</millis>
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916913</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>33</thread>
+  <thread>29</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-27T11:19:11</date>
-  <millis>1527416351337</millis>
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916939</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>33</thread>
+  <thread>29</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-27T11:19:11</date>
-  <millis>1527416351365</millis>
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916954</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>33</thread>
-  <message>Creating experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest</message>
+  <thread>29</thread>
+  <message>Creating experimentBaseDirectory/BinaryTest/data/SPEA2/BinaryTest</message>
 </record>
 <record>
-  <date>2018-05-27T11:19:11</date>
-  <millis>1527416351366</millis>
+  <date>2018-05-27T14:31:56</date>
+  <millis>1527427916955</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>33</thread>
-  <message> Running algorithm: RandomSearch, problem: BinaryTest, run: 0, funFile: experimentBaseDirectory/BinaryTest/data/RandomSearch/BinaryTest/FUN0.tsv</message>
+  <thread>29</thread>
+  <message> Running algorithm: SPEA2, problem: BinaryTest, run: 0, funFile: experimentBaseDirectory/BinaryTest/data/SPEA2/BinaryTest/FUN0.tsv</message>
 </record>
