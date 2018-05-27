@@ -10,7 +10,7 @@ Members:
 73174, Guilherme Azevedo, Developer (EIC2), Guilherme_Azevedo@iscte-iul.pt
 73289, Susana Gomes, Developer (EIC1), Susana_Chambel@iscte-iul.pt
 
-Demonstration video: //TODO
+Demonstration video: https://youtu.be/ws79zAWX9B0
 
 
 As indicated the language adopted for implementation / coding purposes, comments, interaction with the user and documentation was the English language. However, since the project statement is in Portuguese, we thought it would be more conducive to project development if we used our mother tongue for the planning and description of Sprints tasks on the Trello collaborative work platform.
