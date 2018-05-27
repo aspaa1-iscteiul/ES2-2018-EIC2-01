@@ -1,0 +1,20 @@
+5th Sprint - From May 13 to May 27 (2 weeks)
+
+What went well?
+1)	The group presented a great work dynamic
+2)	All constituents of the team followed the SCRUM methodology working collaboratively and making significant contributions to improve the features developed in the Sprint. 
+3)	During the daily Sprint meetings the different members communicated to the team their progress and impediments to the continuation of the work in a clear way. 
+4)	The workload was distributed equally among team members
+
+What did not go as well?
+1)	Due to the appearance of a new requirement in the final phase of the work, complications arose that caused a significant delay in delivery.
+
+What should we start doing?
+1)	All in all, we should start to make a more realistic planning, prioritizing the essential functionalities and disregarding to some extent the concern with the user’s Quality of Experience (QoE).
+
+What should we keep doing?
+1)	At the beginning of Sprint, we set out in a very detailed way the Sprint Backlog tasks on the Trello collaborative work platform. We must continue to do so because this practice has allowed us to have a clear and structured view of the work to be developed during the iteration.
+2)	We should continue to resort to Trello checklists to keep track of what still needs to be done.
+
+What should we stop doing?
+1)	For the next projects, we must confirm our implementation decisions with the client (teacher) instead of just discussing them as a team. Involving the customer in decision making will allow us to minimize the risk of developing an application that does not conform to customer requirements.
