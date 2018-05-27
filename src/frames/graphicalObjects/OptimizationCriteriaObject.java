@@ -65,7 +65,7 @@ public class OptimizationCriteriaObject {
 	    dataType.setSelectedIndex(2);
 	}
 	deleteIcon = new JLabel();
-	deleteIcon.setIcon(new ImageIcon(getClass().getResource("../images/delete_icon2.png")));
+	deleteIcon.setIcon(new ImageIcon(getClass().getResource("/delete_icon2.png")));
     }
 
     /**
